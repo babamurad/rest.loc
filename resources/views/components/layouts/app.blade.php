@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+
     <title>FoodPark || Restaurant Template</title>
     <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
@@ -22,6 +22,165 @@
 </head>
 
 <body>
+
+<!--=============================
+    TOPBAR START
+==============================-->
+<section class="fp__topbar">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-6 col-md-8">
+                <ul class="fp__topbar_info d-flex flex-wrap">
+                    <li><a href="mailto:example@gmail.com"><i class="fas fa-envelope"></i> Unifood@gmail.com</a>
+                    </li>
+                    <li><a href="callto:123456789"><i class="fas fa-phone-alt"></i> +96487452145214</a></li>
+                </ul>
+            </div>
+            <div class="col-xl-6 col-md-4 d-none d-md-block">
+                <ul class="topbar_icon d-flex flex-wrap">
+                    @guest
+                        <li><a href="{{ route('login') }}" wire:navigate>Login</a></li>
+                        <li><a href="{{ route('register') }}" wire:navigate>Register</a></li>
+                    @endguest
+                    @auth
+                        <li><a href="#" wire:navigate>Dashboard</a></li>
+                        <li><a href="#" wire:navigate>Profile</a></li>
+                        <livewire:user.logout-component />
+                    @endauth
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+<!--=============================
+    TOPBAR END
+==============================-->
+
+
+<!--=============================
+    MENU START
+==============================-->
+{{--@livewire('partials.nav')--}}
+<livewire:partials.nav />
+
+
+<div class="fp__menu_cart_area">
+    <div class="fp__menu_cart_boody">
+        <div class="fp__menu_cart_header">
+            <h5>total item (05)</h5>
+            <span class="close_cart"><i class="fal fa-times"></i></span>
+        </div>
+        <ul>
+            <li>
+                <div class="menu_cart_img">
+                    <img src="{{ asset('assets/images/menu8.png') }}" alt="menu" class="img-fluid w-100">
+                </div>
+                <div class="menu_cart_text">
+                    <a class="title" href="#">Hyderabadi Biryani </a>
+                    <p class="size">small</p>
+                    <span class="extra">coca-cola</span>
+                    <span class="extra">7up</span>
+                    <p class="price">$99.00 <del>$110.00</del></p>
+                </div>
+                <span class="del_icon"><i class="fal fa-times"></i></span>
+            </li>
+            <li>
+                <div class="menu_cart_img">
+                    <img src="{{ asset('assets/images/menu4.png') }}" alt="menu" class="img-fluid w-100">
+                </div>
+                <div class="menu_cart_text">
+                    <a class="title" href="#">Chicken Masalas</a>
+                    <p class="size">medium</p>
+                    <span class="extra">7up</span>
+                    <p class="price">$70.00</p>
+                </div>
+                <span class="del_icon"><i class="fal fa-times"></i></span>
+            </li>
+            <li>
+                <div class="menu_cart_img">
+                    <img src="{{ asset('assets/images/menu5.png') }}" alt="menu" class="img-fluid w-100">
+                </div>
+                <div class="menu_cart_text">
+                    <a class="title" href="#">Competently Supply Customized Initiatives</a>
+                    <p class="size">large</p>
+                    <span class="extra">coca-cola</span>
+                    <span class="extra">7up</span>
+                    <p class="price">$120.00 <del>$150.00</del></p>
+                </div>
+                <span class="del_icon"><i class="fal fa-times"></i></span>
+            </li>
+            <li>
+                <div class="menu_cart_img">
+                    <img src="{{ asset('assets/images/menu6.png') }}" alt="menu" class="img-fluid w-100">
+                </div>
+                <div class="menu_cart_text">
+                    <a class="title" href="#">Hyderabadi Biryani</a>
+                    <p class="size">small</p>
+                    <span class="extra">7up</span>
+                    <p class="price">$59.00</p>
+                </div>
+                <span class="del_icon"><i class="fal fa-times"></i></span>
+            </li>
+            <li>
+                <div class="menu_cart_img">
+                    <img src="{{ asset('assets/images/menu1.png') }}" alt="menu" class="img-fluid w-100">
+                </div>
+                <div class="menu_cart_text">
+                    <a class="title" href="#">Competently Supply</a>
+                    <p class="size">medium</p>
+                    <span class="extra">coca-cola</span>
+                    <span class="extra">7up</span>
+                    <p class="price">$99.00 <del>$110.00</del></p>
+                </div>
+                <span class="del_icon"><i class="fal fa-times"></i></span>
+            </li>
+        </ul>
+        <p class="subtotal">sub total <span>$1220.00</span></p>
+        <a class="cart_view" href="cart_view.html"> view cart</a>
+        <a class="checkout" href="check_out.html">checkout</a>
+    </div>
+</div>
+
+<div class="fp__reservation">
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+         aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Book a Table</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="fp__reservation_form">
+                        <input class="reservation_input" type="text" placeholder="Name">
+                        <input class="reservation_input" type="text" placeholder="Phone">
+                        <input class="reservation_input" type="date">
+                        <select class="reservation_input" id="select_js">
+                            <option value="">select time</option>
+                            <option value="">08.00 am to 09.00 am</option>
+                            <option value="">10.00 am to 11.00 am</option>
+                            <option value="">12.00 pm to 01.00 pm</option>
+                            <option value="">02.00 pm to 03.00 pm</option>
+                            <option value="">04.00 pm to 05.00 pm</option>
+                        </select>
+                        <select class="reservation_input" id="select_js2">
+                            <option value="">select person</option>
+                            <option value="">1 person</option>
+                            <option value="">2 person</option>
+                            <option value="">3 person</option>
+                            <option value="">4 person</option>
+                            <option value="">5 person</option>
+                        </select>
+                        <button type="submit">book table</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--=============================
+    MENU END
+==============================-->
 
 {{ $slot }}
 

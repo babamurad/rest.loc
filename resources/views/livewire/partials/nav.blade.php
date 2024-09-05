@@ -10,10 +10,10 @@
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav m-auto">
                 <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="/">Home</a>
+                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" aria-current="page" href="/" wire:navigate>Home</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="about.html">about us</a>
+                    <a class="nav-link {{ request()->is('about') ? 'active' : '' }}" href="{{ route('about') }}" wire:navigate>about</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="menu.html">menu</a>

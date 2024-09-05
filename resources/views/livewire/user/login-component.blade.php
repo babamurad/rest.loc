@@ -36,13 +36,19 @@
                                     <div class="col-xl-12">
                                         <div class="fp__login_imput">
                                             <label>email</label>
-                                            <input type="email" placeholder="Email">
+                                            <input type="email" placeholder="Email" wire:model="email">
+                                            @error('email')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="fp__login_imput">
                                             <label>password</label>
-                                            <input type="password" placeholder="Password">
+                                            <input type="password" placeholder="Password" wire:model="password">
+                                            @error('password')
+                                            <span class="text-danger">{{ $message }}</span>
+                                            @enderror
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
@@ -59,7 +65,7 @@
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="fp__login_imput">
-                                            <button type="submit" class="common_btn">login</button>
+                                            <button type="button" class="common_btn" wire:click.prevent="login">login</button>
                                         </div>
                                     </div>
                                 </div>

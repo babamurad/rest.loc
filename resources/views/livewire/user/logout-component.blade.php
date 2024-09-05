@@ -1,3 +1,1 @@
-<div>
-    {{-- Because she competes with no one, no one can compete with her. --}}
-</div>
+<li><a href="#" wire:click.prevent="logout">Logout</a></li>

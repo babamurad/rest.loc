@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\HomeComponent;
+use App\Livewire\Pages\About;
 use App\Livewire\User\ForgotPasswordComponent;
 use App\Livewire\User\LoginComponent;
 use App\Livewire\User\LogoutComponent;
@@ -9,6 +10,7 @@ use Illuminate\Support\Facades\Route;
 
 
 Route::get('/', HomeComponent::class)->name('home');
+Route::get('about', About::class)->name('about');
 
 Route::get('register', RegisterComponent::class)->name('register');
 Route::get('login', LoginComponent::class)->name('login');
