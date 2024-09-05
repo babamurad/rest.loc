@@ -35,11 +35,10 @@
             <div class="row justify-content-between">
                 <div class="col-lg-4 col-sm-8 col-md-6">
                     <div class="fp__footer_content">
-                        <a class="footer_logo" href="index.html">
+                        <a class="footer_logo" href="/">
                             <img src="{{ asset('assets/images/footer_logo.png') }}" alt="FoodPark" class="img-fluid w-100">
                         </a>
-                        <span>There are many variations of Lorem Ipsum available, but the majority have
-                                suffered.</span>
+                        <span>There are many variations of Lorem Ipsum available, but the majority have suffered.</span>
                         <p class="info"><i class="far fa-map-marker-alt"></i> 7232 Broadway Suite 308, Jackson
                             Heights, 11372, NY, United States</p>
                         <a class="info" href="callto:1234567890123"><i class="fas fa-phone-alt"></i>
