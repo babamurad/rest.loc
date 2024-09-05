@@ -41,6 +41,7 @@ class LoginComponent extends Component
         } else {
             $this->addError('email', 'The provided credentials do not match our records.');
         }
+        return;
     }
 
     public function render()

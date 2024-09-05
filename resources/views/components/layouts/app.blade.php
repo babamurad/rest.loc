@@ -43,7 +43,7 @@
                         <li><a href="{{ route('register') }}" wire:navigate>Register</a></li>
                     @endguest
                     @auth
-                        <li><a href="#" wire:navigate>Dashboard</a></li>
+                        <li><a href="{{ route('dashboard') }}" wire:navigate>Dashboard</a></li>
                         <li><a href="#" wire:navigate>Profile</a></li>
                         <livewire:user.logout-component />
                     @endauth
