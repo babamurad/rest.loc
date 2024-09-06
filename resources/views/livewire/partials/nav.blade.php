@@ -63,7 +63,7 @@
                 </li>
                 <li>
                     @auth
-                        <a href="dashboard.html"><i class="fas fa-user"></i></a>
+                        <a href="{{ route('dashboard') }}" wire:navigate><i class="fas fa-user"></i></a>
                     @endauth
 
                     @guest

@@ -1,6 +1,7 @@
 <?php
 
 use App\Livewire\Admin\AdminDashboardComponent;
+use App\Livewire\Admin\AdminProfileComponent;
 use App\Livewire\Dashboard\Dashboard;
 use App\Livewire\HomeComponent;
 use App\Livewire\Pages\About;
@@ -23,4 +24,5 @@ Route::get('/dashboard', Dashboard::class)->name('dashboard');
 
 Route::middleware(['admin:admin'])->prefix('admin')->group(function () {
     Route::get('dashboard', AdminDashboardComponent::class)->name('admin.dashboard');
+    Route::get('profile', AdminProfileComponent::class)->name('admin.profile');
 });

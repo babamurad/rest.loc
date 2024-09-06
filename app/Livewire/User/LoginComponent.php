@@ -31,7 +31,8 @@ class LoginComponent extends Component
 
             // Redirect or do something after successful login
             if(Auth::user()->role == 'admin') {
-                return $this->redirect('/', navigate:true);
+//                return $this->redirect('/admin/dashboard', navigate:true);
+                return $this->redirect('/admin/dashboard');
             } elseif (Auth::user()->role == 'user') {
                 return $this->redirect('/', navigate:true);
             } else {
