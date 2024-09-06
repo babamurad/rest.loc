@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="{{ asset('admin/assets/modules/weather-icon/css/weather-icons-wind.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/assets/modules/summernote/summernote-bs4.css') }}">--}}
 
+    @stack('toast-css')
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/assets/css/components.css') }}">
@@ -63,6 +64,8 @@
 {{--<script src="{{ asset('admin/assets/modules/moment.min.js') }}"></script>--}}
 <script src="{{ asset('admin/assets/js/stisla.js') }}"></script>
 
+
+
 <!-- JS Libraies -->
 {{--<script src="{{ asset('admin/assets/modules/simple-weather/jquery.simpleWeather.min.js') }}"></script>
 <script src="{{ asset('admin/assets/modules/chart.min.js') }}"></script>
@@ -77,5 +80,6 @@
 <!-- Template JS File -->
 <script src="{{ asset('admin/assets/js/scripts.js') }}"></script>
 <script src="{{ asset('admin/assets/js/custom.js') }}"></script>
+@stack('toast')
 </body>
 </html>
