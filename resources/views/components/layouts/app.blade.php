@@ -18,6 +18,7 @@
 
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
+
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
 </head>
 
@@ -43,8 +44,12 @@
                         <li><a href="{{ route('register') }}" wire:navigate>Register</a></li>
                     @endguest
                     @auth
-                        <li><a href="{{ route('dashboard') }}" wire:navigate>Dashboard</a></li>
-                        <li><a href="#" wire:navigate>Profile</a></li>
+                        @if(auth()->user()->role === 'admin')
+                                <li><a href="{{ route('admin.dashboard') }}" wire:navigate>Dashboard</a></li>
+                                <li><a href="{{ route('dashboard') }}" wire:navigate>User Dashboard</a></li>
+                        @else
+                                <li><a href="{{ route('dashboard') }}" wire:navigate>Dashboard</a></li>
+                        @endif
                         <livewire:user.logout-component />
                     @endauth
                 </ul>
@@ -315,6 +320,7 @@
 
 <!--main/custom js-->
 <script src="{{ asset('assets/js/main.js') }}"></script>
+
 
 </body>
 

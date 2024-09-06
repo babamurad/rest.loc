@@ -1,5 +1,6 @@
 <?php
 
+use App\Livewire\Admin\AdminDashboardComponent;
 use App\Livewire\Dashboard\Dashboard;
 use App\Livewire\HomeComponent;
 use App\Livewire\Pages\About;
@@ -19,3 +20,7 @@ Route::get('logout', LogoutComponent::class)->name('logout');
 Route::get('forgot-password', ForgotPasswordComponent::class)->name('forgot-password');
 
 Route::get('/dashboard', Dashboard::class)->name('dashboard');
+
+Route::middleware(['admin:admin'])->prefix('admin')->group(function () {
+    Route::get('dashboard', AdminDashboardComponent::class)->name('admin.dashboard');
+});
