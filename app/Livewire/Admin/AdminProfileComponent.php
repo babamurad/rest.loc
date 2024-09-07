@@ -40,7 +40,6 @@ class AdminProfileComponent extends Component
 
     public function updatePassword()
     {
-
         $this->validate([
             'password' => 'required|min:6|confirmed',
             'current_password' => 'required|current_password',
