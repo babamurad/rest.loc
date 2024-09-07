@@ -30,14 +30,24 @@ class Profile extends Component
     {
         $this->name = auth()->user()->name;
         $this->email = auth()->user()->email;
-        $this->phone = auth()->user()->phone->phone;
+        if (auth()->user()->phone) {
+            $this->phone = auth()->user()->phone->phone;
+        } else {
+            $this->phone = '';
+        }
+
+    }
+
+    public function cancel()
+    {
+        $this->mount();
     }
 
     public function updateUser()
     {
         $this->validate();
 
-        $user = User::FindOrFail(auth()->user()->id)->first();
+        $user = User::FindOrFail(auth()->user()->id);
         /*if ($this->newimage){
             if (file_exists('images/' . $user->avatar)) {
                 try {
@@ -64,7 +74,8 @@ class Profile extends Component
                 $phone->update();
             }
 
-
+        $user->name = $this->name;
+        $user->email = $this->email;
         $user->update();
         $this->dispatch('avatar-changed');
         flash()->success('User data has been updated successfully!');

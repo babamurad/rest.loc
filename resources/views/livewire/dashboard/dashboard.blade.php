@@ -34,14 +34,14 @@
                                     @if($newimage)
                                         <img class="img-fluid w-100" src="{{ $newimage->temporaryUrl() }}" alt="{{auth()->user()->name}}">
                                     @else
-                                        <img class="img-fluid w-100" src="{{  asset($image) }}" alt="{{auth()->user()->name}}">
+                                        <img class="img-fluid w-100" src="{{  asset('images/' . $image) }}" alt="{{auth()->user()->name}}">
                                     @endif
                                     @error('newimage')
                                     <p class="text-danger">{{$message}}</p>
                                     @enderror
 
                                     <label for="upload"><i class="far fa-camera"></i></label>
-                                    <input type="file" id="upload" hidden wire:model="newimage" wire:changed="changeImage">
+                                    <input type="file" id="upload" hidden wire:model="newimage">
                                 </div>
                                 <h2>{{auth()->user()->name}}</h2>
                             </div>
@@ -76,7 +76,7 @@
                                         aria-controls="v-pills-settings" aria-selected="false"><span><i
                                             class="fas fa-user-lock"></i></span> Change Password </button>
 
-                                <button class="nav-link" type="button"><span> <i class="fas fa-sign-out-alt"></i>
+                                <button class="nav-link" type="button" wire:click="logout"><span> <i class="fas fa-sign-out-alt"></i>
                                     </span> Logout</button>
                             </div>
                         </div>

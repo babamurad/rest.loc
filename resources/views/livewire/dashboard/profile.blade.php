@@ -30,7 +30,7 @@
             <h4>Parsonal Information
                 <a class="dash_info_btn">
                     <span class="edit">edit</span>
-                    <span class="cancel">cancel</span>
+                    <span class="cancel" wire:click="cancel">cancel</span>
                 </a>
             </h4>
 
@@ -46,19 +46,19 @@
                         <div class="col-12">
                             <div class="fp__comment_imput_single">
                                 <label>name</label>
-                                <input type="text" placeholder="Name" wire:model="name">
+                                <input type="text" name="name" placeholder="Name" wire:model="name">
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6">
                             <div class="fp__comment_imput_single">
                                 <label>email</label>
-                                <input type="email" placeholder="Email" wire:model="email">
+                                <input type="email" name="email" placeholder="Email" wire:model="email">
                             </div>
                         </div>
                         <div class="col-xl-6 col-lg-6">
                             <div class="fp__comment_imput_single">
                                 <label>phone</label>
-                                <input type="text" placeholder="Phone" wire:model="phone">
+                                <input type="text" name="phone" placeholder="Phone" wire:model="phone">
                             </div>
                         </div>
                         <div class="col-xl-12">
