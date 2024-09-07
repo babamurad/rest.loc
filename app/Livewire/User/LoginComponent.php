@@ -40,7 +40,8 @@ class LoginComponent extends Component
             }
 
         } else {
-            $this->addError('email', 'The provided credentials do not match our records.');
+//            $this->addError('email', 'Предоставленные учетные данные не соответствуют нашим записям.');
+            flash()->error('Предоставленные учетные данные не соответствуют нашим записям.');
         }
         return;
     }

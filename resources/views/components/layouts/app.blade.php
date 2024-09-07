@@ -320,7 +320,16 @@
 
 <!--main/custom js-->
 <script src="{{ asset('assets/js/main.js') }}"></script>
+<script>
+    toastr.options.progressBar = true;
 
+    @if ($errors->any())
+    @foreach ($errors->all() as $error)
+    toastr.error('{{ $error }}');
+    @endforeach
+    @endif
+
+</script>
 
 </body>
 

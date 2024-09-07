@@ -3,13 +3,17 @@
 namespace App\Livewire\Admin;
 
 use App\Models\User;
+use Carbon\Carbon;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Livewire\WithFileUploads;
 
 class AdminProfileComponent extends Component
 {
+    use WithFileUploads;
     public $name;
     public $email;
+    public $image, $newimage;
 
     public $password;
     public $current_password;
@@ -27,15 +31,33 @@ class AdminProfileComponent extends Component
     {
         $this->name = auth()->user()->name;
         $this->email = auth()->user()->email;
+        $this->image = auth()->user()->avatar;
     }
 
     public function updateUser()
     {
-        $validated = $this->validate();
+        $validated = $this->validate();  // Попытка валидации
+        // Если валидация успешна
         $user = User::FindOrFail(auth()->user()->id)->first();
-        $user->update($validated);
-        session()->flash('success', 'User name and email has been updated!');
-//        $this->dispatch('show-toast', ['type' => 'success', 'message' => 'Your data has been saved successfully!']);
+        if ($this->newimage){
+            if (file_exists('images/' . $user->avatar)) {
+                try {
+                    unlink('images/' . $user->avatar);
+                } catch (Exception $ex){
+
+                };
+            }
+            $imageName = Carbon::now()->timestamp.'.'.$this->newimage->extension();
+
+            $this->newimage->storeAs($imageName);
+            $user->avatar = $imageName;
+        }
+
+        $user->name = $this->name;
+        $user->email = $this->email;
+        $user->update();
+        $this->dispatch('avatar-changed');
+        flash()->success('User name and email has been updated!');
     }
 
     public function updatePassword()
@@ -49,7 +71,7 @@ class AdminProfileComponent extends Component
         $user->update([
             'password' => $this->password,
         ]);
-        session()->flash('success', 'User password has been updated!');
+        flash()->success('User password has been updated!');
     }
 
     #[Layout('livewire.admin.layouts.admin-app')]
