@@ -10,7 +10,7 @@
                     <h4>Card Header</h4>
                     <div class="card-header-action">
                         <a href="#" class="btn btn-primary">
-                            View All
+                            Create New
                         </a>
                     </div>
                 </div>
