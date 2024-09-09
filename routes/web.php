@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::middleware(['admin:admin'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'admin:admin'])->prefix('admin')->group(function () {
     Route::get('dashboard', AdminDashboardComponent::class)->name('admin.dashboard');
     Route::get('profile', AdminProfileComponent::class)->name('admin.profile');
 

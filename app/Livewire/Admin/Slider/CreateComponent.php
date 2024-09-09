@@ -24,7 +24,7 @@ class CreateComponent extends Component
         'image' =>'required|image|mimes:jpeg,png,jpg|max:2048',
         'title' =>'required|string|max:255',
         'description' =>'required|string',
-        'link' =>'required|url',
+//        'link' =>'required|url',
         'subtitle' =>'required|string|max:255',
         'offer' =>'required|string|max:255',
         'sort_order' =>'required|integer|min:0',
@@ -32,7 +32,9 @@ class CreateComponent extends Component
 
     public function createSlider()
     {
+
         $this->validate();
+        dd('validate');
         $slider = new Slider();
         $slider->title = $this->title;
         $slider->description = $this->description;

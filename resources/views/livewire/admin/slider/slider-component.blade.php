@@ -14,7 +14,7 @@
                     </div>
                 </div>
                 <div class="card-body">
-
+                    @if($sliders)
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -46,47 +46,58 @@
                                             class="far fa-edit"></i></a>
                                 </td>
                                 <td>
-                                    <a href="#" class="btn btn-icon icon-left btn-danger"><i class="fas fa-trash"></i></a>
+
+                                    <div x-data="{ showModal: false }">
+                                        <!-- Кнопка для вызова модального окна -->
+                                        <a href="#" class="btn btn-icon icon-left btn-danger"  @click="showModal = true" wire:click="deleteSlide({{ $slider->id }})"><i class="fas fa-trash"></i></a>
+
+                                        <!-- Модальное окно -->
+                                        <div x-show="showModal"
+                                             x-transition:enter="transition ease-out duration-300"
+                                             x-transition:enter-start="opacity-0 scale-90"
+                                             x-transition:enter-end="opacity-100 scale-100"
+                                             x-transition:leave="transition ease-in duration-300"
+                                             x-transition:leave-start="opacity-100 scale-100"
+                                             x-transition:leave-end="opacity-0 scale-90"
+                                             class="modal" style="display: none;">
+                                            <div class="modal-content">
+                                                <h2>Подтверждение удаления</h2>
+                                                <p>Вы уверены, что хотите удалить этот элемент?</p>
+                                                <div class="row">
+                                                    <div class="col-6">
+                                                        <button wire:click="cancel" @click="showModal = false" class="btn btn-secondary">Нет</button>
+                                                    </div>
+                                                    <div class="col-6">
+                                                        <button wire:click="confirmDeleteSlide" @click="showModal = false; $dispatch('delete-item')" class="btn btn-danger">Да</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <!-- Кнопки подтверждения и отмены -->
+                                            <button @click="showModal = false; $dispatch('delete-item')" class="btn btn-danger">
+                                                Подтвердить удаление
+                                            </button>
+                                            <button @click="showModal = false" class="btn btn-secondary">
+                                                Отмена
+                                            </button>
+                                        </div>
+                                    </div>
+                </div>
                                 </td>
                             </tr>
                         @endforeach
 
                         </tbody>
                     </table>
+                    @else
+                    <p class="text-center">No items found.</p>
+                    @endif
                 </div>
             </div>
         </div>
     </div>
 
-    <div x-data="{ showModal: false }">
-        <!-- Кнопка для вызова модального окна -->
-        <button @click="showModal = true" class="btn btn-danger">
-            Удалить элемент
-        </button>
 
-        <!-- Модальное окно -->
-        <div x-show="showModal"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0 scale-90"
-             x-transition:enter-end="opacity-100 scale-100"
-             x-transition:leave="transition ease-in duration-300"
-             x-transition:leave-start="opacity-100 scale-100"
-             x-transition:leave-end="opacity-0 scale-90"
-             class="modal" style="display: none;">
-            <div class="modal-content">
-                <h2>Подтверждение удаления</h2>
-                <p>Вы уверены, что хотите удалить этот элемент?</p>
-
-                <!-- Кнопки подтверждения и отмены -->
-                <button @click="showModal = false; $dispatch('delete-item')" class="btn btn-danger">
-                    Подтвердить удаление
-                </button>
-                <button @click="showModal = false" class="btn btn-secondary">
-                    Отмена
-                </button>
-            </div>
-        </div>
-    </div>
 
     <!-- Скрипты для модального окна -->
     <style>

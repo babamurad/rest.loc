@@ -12,7 +12,19 @@ class SliderComponent extends Component
 
     public function deleteSlide($id)
     {
-        dd('deleteSlide-' . $id);
+        $this->slide_id = $id;
+    }
+
+    public function confirmDeleteSlide()
+    {
+        Slider::destroy($this->slide_id);
+        $this->slide_id = null;
+        flash()->error('Slider deleted successfully!');
+    }
+
+    public function cancel()
+    {
+        $this->slide_id = null;
     }
 
     #[Layout('livewire.admin.layouts.admin-app')]
