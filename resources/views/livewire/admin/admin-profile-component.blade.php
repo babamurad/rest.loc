@@ -35,7 +35,7 @@
                                              @if($newimage)
                                              background-image: url({{ $newimage->temporaryUrl() }});
                                              @else
-                                             background-image: url({{ asset('images/' . auth()->user()->avatar) }});
+                                             background-image: url({{ asset(auth()->user()->avatar) }});
                                              @endif
                                              background-size: cover;
                                              background-position: center center;"
