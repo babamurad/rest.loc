@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Slider;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Factories\SliderFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -20,6 +22,7 @@ class DatabaseSeeder extends Seeder
 //            'email' => 'test@example.com',
 //        ]);
 
-        $this->call(UserSeeder::class);
+//        $this->call(UserSeeder::class);
+        Slider::factory(3)->create();
     }
 }

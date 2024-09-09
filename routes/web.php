@@ -2,7 +2,8 @@
 
 use App\Livewire\Admin\AdminDashboardComponent;
 use App\Livewire\Admin\AdminProfileComponent;
-use App\Livewire\Admin\SliderComponent;
+use App\Livewire\Admin\Slider\CreateComponent;
+use App\Livewire\Admin\Slider\SliderComponent;
 use App\Livewire\Dashboard\ChangePassword;
 use App\Livewire\Dashboard\Dashboard;
 use App\Livewire\HomeComponent;
@@ -35,5 +36,7 @@ Route::middleware('auth')->group(function () {
 Route::middleware(['admin:admin'])->prefix('admin')->group(function () {
     Route::get('dashboard', AdminDashboardComponent::class)->name('admin.dashboard');
     Route::get('profile', AdminProfileComponent::class)->name('admin.profile');
+
     Route::get('slider', SliderComponent::class)->name('admin.slider');
+    Route::get('slider/create', CreateComponent::class)->name('admin.slider.create');
 });

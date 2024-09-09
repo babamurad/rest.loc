@@ -64,7 +64,7 @@
 {{--<script src="{{ asset('admin/assets/modules/moment.min.js') }}"></script>--}}
 <script src="{{ asset('admin/assets/js/stisla.js') }}"></script>
 
-
+@stack('scripts')
 
 <!-- JS Libraies -->
 {{--<script src="{{ asset('admin/assets/modules/simple-weather/jquery.simpleWeather.min.js') }}"></script>
