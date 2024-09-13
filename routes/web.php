@@ -45,4 +45,5 @@ Route::middleware(['auth', 'admin:admin'])->prefix('admin')->group(function () {
     Route::get('slider/edit/{id}', EditSliderComponent::class)->name('admin.slider.edit');
 
     Route::get('why-choose-us', WhyChooseUsComponent::class)->name('admin.why-choose-us');
+    Route::get('wcu-create', \App\Livewire\Admin\WhyChooseUs\CreateComponent::class)->name('admin.wcu-create');
 });

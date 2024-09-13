@@ -19,6 +19,7 @@
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/assets/css/components.css') }}">
+    @stack('icon-css')
     <!-- Start GA -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
     <script>
@@ -65,6 +66,7 @@
 <script src="{{ asset('admin/assets/js/stisla.js') }}"></script>
 
 @stack('scripts')
+@stack('icon-js')
 
 <!-- JS Libraies -->
 {{--<script src="{{ asset('admin/assets/modules/simple-weather/jquery.simpleWeather.min.js') }}"></script>
