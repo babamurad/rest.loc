@@ -7,7 +7,7 @@ use Livewire\Component;
 
 class CreateComponent extends Component
 {
-    public $icon;
+    public $icon = 'fas fa-icons';
 
 
     public function createItem()
