@@ -5,7 +5,9 @@
     <!--=============================
         BANNER START
     ==============================-->
-    <livewire:partials.carousel />
+{{--    <livewire:components.slider-component />--}}
+{{--    <livewire:partials.carousel />--}}
+    @livewire('components.slider-component')
     <!--=============================
         BANNER END
     ==============================-->
