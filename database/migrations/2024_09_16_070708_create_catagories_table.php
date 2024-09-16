@@ -13,6 +13,12 @@ return new class extends Migration
     {
         Schema::create('catagories', function (Blueprint $table) {
             $table->id();
+            $table->string('name');
+            $table->string('slug');
+            $table->boolean('status')->default(1);
+            $table->boolean('show_at_home')->default(0);
+            $table->unsignedBigInteger('parent_id')->nullable();
+            $table->smallInteger('order')->default(0);
             $table->timestamps();
         });
     }

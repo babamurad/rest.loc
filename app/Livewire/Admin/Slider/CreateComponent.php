@@ -64,6 +64,7 @@ class CreateComponent extends Component
         $this->sort_order = 0;
         $this->status = 1;
         $this->image = '';
+        $this->reset(['image', 'description', 'link', 'subtitle', 'offer', 'sort_order','status'  ] );
         $this->redirect(route('admin.slider'), navigate:true);
     }
 

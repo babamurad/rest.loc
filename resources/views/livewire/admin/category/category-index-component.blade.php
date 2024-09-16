@@ -123,7 +123,7 @@
                 <div class="card-header">
                     <h4>{{ __('Why choose us section items list') }}</h4>
                     <div class="card-header-action">
-                        <a href="{{ route('admin.wcu-create') }}" class="btn btn-primary">
+                        <a href="{{ route('admin.category.create') }}" class="btn btn-primary">
                             Create New
                         </a>
                     </div>
@@ -134,42 +134,42 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Icon</th>
-                            <th scope="col">Title</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Slug</th>
                             <th scope="col">Status</th>
                             <th scope="col">Order</th>
                             <th scope="col" colspan="2" class="text-center">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @if($chooses)
-                            @foreach ($chooses as $choose)
+                        @if($categories)
+                            @foreach ($categories as $category)
                                 <tr>
-                                    <th scope="row">{{ $loop->index + 1 }} - {{ $choose->id }}</th>
+                                    <th scope="row">{{ $loop->index + 1 }}</th>
                                     <td style="width: 20%;">
-                                        <a href="{{ route('admin.wcu-edit', ['id' => $choose->id]) }}">
-                                            <i class="{{ $choose->icon }}" style="font-size: 32px;"></i>
+                                        <a href="{{ route('admin.category.edit', ['id' => $category->id]) }}">
+                                            {{ ucfirst($category->name)  }}
                                         </a>
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.wcu-edit', ['id' => $choose->id]) }}">{{ $choose->title }}</a>
+                                        {{ $category->slug  }}
                                     </td>
                                     <td>
-                                        @if ($choose->status)
+                                        @if ($category->status)
                                             <span class="badge badge-success">Active</span>
                                         @else
                                             <span class="badge badge-danger">Inactive</span>
                                         @endif
                                     </td>
 
-                                    <td>{{ $choose->order }}</td>
+                                    <td>{{ $category->order }}</td>
                                     <td class="flex pr-0 m-0">
-                                        <a href="{{ route('admin.wcu-edit', ['id' => $choose->id]) }}" class="btn btn-icon btn-primary">
+                                        <a href="{{ route('admin.category.edit', ['id' => $category->id]) }}" class="btn btn-icon btn-primary">
                                             <i class="far fa-edit"></i>
                                         </a>
                                     </td>
                                     <td class="flex pl-0 m-0">
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#ConfirmDelete" wire:click="deleteId({{ $choose->id }})">
+                                        <button class="btn btn-danger" data-toggle="modal" data-target="#ConfirmDelete" wire:click="deleteId({{ $category->id }})">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </td>
@@ -178,7 +178,7 @@
                         @endif
                         </tbody>
                     </table>
-                    @if(!$chooses)
+                    @if(!$categories->isEmpty())
                         <p>No items found.</p>
                     @endif
                 </div>
