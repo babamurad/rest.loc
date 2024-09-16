@@ -84,7 +84,7 @@
                                         @error('status') <div class="invalid-feedback">{{$message}}</div> @enderror
                                     </div>
                                 </div>
-                           </div>
+                            </div>
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
@@ -96,15 +96,12 @@
                             </div>
 
                             <div class="card-footer text-left">
-                                <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="createItem">Submit</button>
+                                <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="updateItem">Submit</button>
                                 <button class="btn btn-secondary" type="reset" wire:click="cancel">Cancel</button>
                             </div>
 
                         </div>
                         <div class="col-sm-12 col-md-6">
-
-
-
                             <div x-data="iconPicker" class="p-3">
                                 <div class="d-flex align-items-center mb-3">
                                     <input type="text" x-model="icon" class="form-control me-2" placeholder="Выберите иконку" readonly wire:model.live="icon" />

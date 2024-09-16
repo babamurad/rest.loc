@@ -20,6 +20,12 @@ class WhyChooseUsSeeder extends Seeder
             'title' => 'Why Choose Us',
             'sub_title' => 'Objectively pontificate quality models before intuitive information. Dramatically recaptiualize multifunctional materials.',
         ],
+        [
+            'key' => '2',
+            'top_title' => 'Daily Offer',
+            'title' => 'Up To 75% Off For This Day',
+            'sub_title' => 'Objectively pontificate quality models before intuitive information. Dramatically recaptiualize multifunctional materials.',
+        ],
         );
     }
 }

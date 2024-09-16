@@ -2,6 +2,7 @@
 
 use App\Livewire\Admin\AdminDashboardComponent;
 use App\Livewire\Admin\AdminProfileComponent;
+use App\Livewire\Admin\Category\CategoryIndexComponent;
 use App\Livewire\Admin\Slider\CreateComponent;
 use App\Livewire\Admin\Slider\EditSliderComponent;
 use App\Livewire\Admin\Slider\SliderComponent;
@@ -46,4 +47,7 @@ Route::middleware(['auth', 'admin:admin'])->prefix('admin')->group(function () {
 
     Route::get('why-choose-us', WhyChooseUsComponent::class)->name('admin.why-choose-us');
     Route::get('wcu-create', \App\Livewire\Admin\WhyChooseUs\CreateComponent::class)->name('admin.wcu-create');
+    Route::get('wcu-edit/{id}', \App\Livewire\Admin\WhyChooseUs\EditComponent::class)->name('admin.wcu-edit');
+
+    Route::get('category', CategoryIndexComponent::class)->name('admin.category.index');
 });

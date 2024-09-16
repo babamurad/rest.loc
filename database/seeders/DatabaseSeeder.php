@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
 
 //        $this->call(UserSeeder::class);
 //        Slider::factory(3)->create();
-//        $this->call(class: WhyChooseUsSeeder::class);
-        $this->call(WcuSectionSeeder ::class);
+        $this->call(class: WhyChooseUsSeeder::class);
+//        $this->call(WcuSectionSeeder ::class);
     }
 }
