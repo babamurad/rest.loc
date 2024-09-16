@@ -11,12 +11,18 @@ class CategoryCreateComponent extends Component
 {
     public $name;
     public $slug;
-    public $status;
+    public $status = 1;
     public $order = 0;
-    public $show_at_home;
+    public $show_at_home = 1;
+
+    protected $rules = [
+        'name' => ['required','string','max:255'],
+        'slug' => ['required','string','max:255','unique:categories,slug'],
+    ];
 
     public function createCategory()
     {
+        $this->validate();
         $category = new Category();
         $category->name = $this->name;
         $category->slug = $this->slug;
@@ -25,14 +31,14 @@ class CategoryCreateComponent extends Component
         $category->show_at_home = $this->show_at_home;
         $category->save();
         $this->reset(['name','slug','status','order','show_at_home']);
-        toastr()->session('message', 'Category created successfully!');
-        $this->redirect(route('admin.categories'), navigate:true);
+        toastr()->success('Category created successfully!');
+        return redirect()->route('admin.category.index');
     }
 
     public function cancel()
     {
         $this->reset(['name','slug','status','order','show_at_home']);
-        $this->redirect(route('admin.categories'), navigate:true);
+        $this->redirect(route('admin.categories.index'), navigate:true);
     }
 
     #[Layout('livewire.admin.layouts.admin-app')]

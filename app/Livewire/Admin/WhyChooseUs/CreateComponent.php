@@ -30,7 +30,7 @@ class CreateComponent extends Component
         $item->status = $this->status;
         $item->order = $this->order;
         $item->save();
-        $this->redirect(route('admin.why-choose-us'), navigate:true);
+        $this->redirect(route('admin.why-choose-us'));
         toastr()->success('Item creates successfully!' );
     }
 

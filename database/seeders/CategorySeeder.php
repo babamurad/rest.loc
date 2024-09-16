@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use App\Models\Catagory;
+use App\Models\Category;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,7 +13,7 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        Catagory::insert([
+        Category::insert([
             [
                 'name' => 'burger',
                 'slug' => 'burger',
