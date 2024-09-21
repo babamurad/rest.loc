@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
 use App\Models\Slider;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -27,6 +28,7 @@ class DatabaseSeeder extends Seeder
 //        Slider::factory(3)->create();
 //        $this->call(class: WhyChooseUsSeeder::class);
 //        $this->call(WcuSectionSeeder ::class);
-        $this->call(CategorySeeder::class);
+//        $this->call(CategorySeeder::class);
+        Product::factory(20)->create();
     }
 }

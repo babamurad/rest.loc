@@ -1,12 +1,12 @@
 <section class="section">
     <div class="section-header">
-        <h1>Category</h1>
+        <h1>Product</h1>
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>Create Category</h4>
+                    <h4>Create Product</h4>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -56,7 +56,7 @@
                     </div>
                 </div>
                 <div class="card-footer text-left">
-                    <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="update">Submit</button>
+                    <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="createCategory">Submit</button>
                     <button class="btn btn-secondary" type="reset" wire:click="cancel">Cancel</button>
                 </div>
 

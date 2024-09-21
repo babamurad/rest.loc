@@ -38,7 +38,12 @@ class CategoryCreateComponent extends Component
     public function cancel()
     {
         $this->reset(['name','slug','status','order','show_at_home']);
-        $this->redirect(route('admin.categories.index'), navigate:true);
+        $this->redirect(route('admin.category.index'), navigate:true);
+    }
+
+    public function generateSlug()
+    {
+        $this->slug = Str::slug($this->name);
     }
 
     #[Layout('livewire.admin.layouts.admin-app')]
@@ -47,8 +52,4 @@ class CategoryCreateComponent extends Component
         return view('livewire.admin.category.category-create-component');
     }
 
-    public function generateSlug()
-    {
-        $this->slug = Str::slug($this->name);
-    }
 }

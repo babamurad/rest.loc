@@ -24,7 +24,7 @@
                             <th scope="col">Slug</th>
                             <th scope="col">Status</th>
                             <th scope="col">Order</th>
-                            <th scope="col" colspan="2" class="text-center">Actions</th>
+                            <th scope="col" class="text-center">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -49,12 +49,12 @@
                                     </td>
 
                                     <td>{{ $category->order }}</td>
-                                    <td class="flex pr-0 m-0">
+                                    <td class="text-center" style="width: 10%;">
                                         <a href="{{ route('admin.category.edit', ['id' => $category->id]) }}" class="btn btn-icon btn-primary">
                                             <i class="far fa-edit"></i>
                                         </a>
-                                    </td>
-                                    <td class="flex pl-0 m-0">
+{{--                                    </td>--}}
+{{--                                    <td class="text-left" style="width: 6%;">--}}
                                         <button class="btn btn-danger" data-toggle="modal" data-target="#ConfirmDelete" wire:click="deleteId({{ $category->id }})">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>

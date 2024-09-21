@@ -83,16 +83,30 @@
 <script src="{{ asset('admin/assets/js/scripts.js') }}"></script>
 <script src="{{ asset('admin/assets/js/custom.js') }}"></script>
     <script>
-        toastr.options.progressBar = true;
+        // toastr.options.progressBar = true;
+        // toastr.options.closeButton = true;
+        toastr.options = {
+            "closeButton": true, // Если нужно оставить кнопку закрытия
+            "progressBar": true, // Если хотите прогресс-бар
+            "positionClass": "toast-top-right", // Позиция уведомления
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut",
+            "preventDuplicates": true // Предотвращает повторяющиеся уведомления
+            "title": "",
+        };
 
         @if ($errors->any())
-        @foreach ($errors->all() as $error)
-        toastr.error('{{ $error }}');
-        @endforeach
+            @foreach ($errors->all() as $error)
+            toastr.error('{{ $error }}');
+            @endforeach
         @endif
-
     </script>
-
 
 </body>
 </html>

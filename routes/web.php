@@ -5,6 +5,9 @@ use App\Livewire\Admin\AdminProfileComponent;
 use App\Livewire\Admin\Category\CategoryCreateComponent;
 use App\Livewire\Admin\Category\CategoryEditComponent;
 use App\Livewire\Admin\Category\CategoryIndexComponent;
+use App\Livewire\Admin\Product\ProductCreateComponent;
+use App\Livewire\Admin\Product\ProductEditComponent;
+use App\Livewire\Admin\Product\ProductIndexComponent;
 use App\Livewire\Admin\Slider\CreateComponent;
 use App\Livewire\Admin\Slider\EditSliderComponent;
 use App\Livewire\Admin\Slider\SliderComponent;
@@ -54,4 +57,8 @@ Route::middleware(['auth', 'admin:admin'])->prefix('admin')->group(function () {
     Route::get('category', CategoryIndexComponent::class)->name('admin.category.index');
     Route::get('category/create', CategoryCreateComponent::class)->name('admin.category.create');
     Route::get('category/edit/{id}', CategoryEditComponent::class)->name('admin.category.edit');
+
+    Route::get('product', ProductIndexComponent::class)->name('admin.product.index');
+    Route::get('product/create', ProductCreateComponent::class)->name('admin.product.create');
+    Route::get('product/edit/{id}', ProductEditComponent::class)->name('admin.product.edit');
 });
