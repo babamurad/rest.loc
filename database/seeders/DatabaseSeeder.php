@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
+use App\Models\Product;
 use App\Models\Slider;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Database\Factories\SliderFactory;
+use Database\Seeders\WhyChooseUsSeeder;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -23,6 +25,10 @@ class DatabaseSeeder extends Seeder
 //        ]);
 
 //        $this->call(UserSeeder::class);
-        Slider::factory(3)->create();
+//        Slider::factory(3)->create();
+//        $this->call(class: WhyChooseUsSeeder::class);
+//        $this->call(WcuSectionSeeder ::class);
+//        $this->call(CategorySeeder::class);
+        Product::factory(20)->create();
     }
 }

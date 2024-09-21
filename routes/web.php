@@ -2,10 +2,19 @@
 
 use App\Livewire\Admin\AdminDashboardComponent;
 use App\Livewire\Admin\AdminProfileComponent;
+use App\Livewire\Admin\Category\CategoryCreateComponent;
+use App\Livewire\Admin\Category\CategoryEditComponent;
+use App\Livewire\Admin\Category\CategoryIndexComponent;
+use App\Livewire\Admin\Product\ProductCreateComponent;
+use App\Livewire\Admin\Product\ProductEditComponent;
+use App\Livewire\Admin\Product\ProductIndexComponent;
 use App\Livewire\Admin\Slider\CreateComponent;
+use App\Livewire\Admin\Slider\EditSliderComponent;
 use App\Livewire\Admin\Slider\SliderComponent;
+use App\Livewire\Admin\WhyChooseUs\WhyChooseUsComponent;
 use App\Livewire\Dashboard\ChangePassword;
 use App\Livewire\Dashboard\Dashboard;
+use App\Livewire\Dashboard\Profile;
 use App\Livewire\HomeComponent;
 use App\Livewire\Pages\About;
 use App\Livewire\User\ForgotPasswordComponent;
@@ -27,8 +36,8 @@ Route::middleware('guest')->group(function () {
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', Dashboard::class)->name('dashboard');
-    Route::get('profile', \App\Livewire\Dashboard\Profile::class)->name('profile');
+    Route::get('dashboard', Dashboard::class)->name('dashboard');
+    Route::get('profile', Profile::class)->name('profile');
     Route::get('change-password', ChangePassword::class)->name('change-password');
 });
 
@@ -39,4 +48,17 @@ Route::middleware(['auth', 'admin:admin'])->prefix('admin')->group(function () {
 
     Route::get('slider', SliderComponent::class)->name('admin.slider');
     Route::get('slider/create', CreateComponent::class)->name('admin.slider.create');
+    Route::get('slider/edit/{id}', EditSliderComponent::class)->name('admin.slider.edit');
+
+    Route::get('why-choose-us', WhyChooseUsComponent::class)->name('admin.why-choose-us');
+    Route::get('wcu-create', \App\Livewire\Admin\WhyChooseUs\CreateComponent::class)->name('admin.wcu-create');
+    Route::get('wcu-edit/{id}', \App\Livewire\Admin\WhyChooseUs\EditComponent::class)->name('admin.wcu-edit');
+
+    Route::get('category', CategoryIndexComponent::class)->name('admin.category.index');
+    Route::get('category/create', CategoryCreateComponent::class)->name('admin.category.create');
+    Route::get('category/edit/{id}', CategoryEditComponent::class)->name('admin.category.edit');
+
+    Route::get('product', ProductIndexComponent::class)->name('admin.product.index');
+    Route::get('product/create', ProductCreateComponent::class)->name('admin.product.create');
+    Route::get('product/edit/{id}', ProductEditComponent::class)->name('admin.product.edit');
 });

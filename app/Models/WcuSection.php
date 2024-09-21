@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Slider extends Model
+class WcuSection extends Model
 {
     use HasFactory;
-    protected $fillable = ['title', 'description', 'subtitle', 'offer', 'image', 'button_link', 'sort_order', 'status'];
+    protected $fillable = ['icon', 'title', 'description', 'status', 'order'];
 
     public function scopeStatus($query)
     {
