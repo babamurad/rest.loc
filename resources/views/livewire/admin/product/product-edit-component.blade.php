@@ -71,18 +71,20 @@
                             <div class="image-preview"
                                  style="
                                  @if(strlen($image) == 0 || $image == '')
-                                     background-image: url({{ asset('uploads/sliders/placeholder.jpg') }});
+                                     background-image: url({{ asset('uploads/products/1727079252_menu2_img_2.jpg') }});
+                                     @elseif($newimage)
+                                     background-image: url({{ $newimage->temporaryUrl() }});
                                      @else
-                                     background-image: url({{ $image->temporaryUrl() }});
+                                     background-image: url({{ asset($image) }});
                                  @endif
                                  background-size: cover;
-                                 @error('image') border: 2px dashed #dc3545; @enderror
+                                 @error('newimage') border: 2px dashed #dc3545; @enderror
                                  background-position: center center;">
                                 <label for="image-upload" id="image-label">Choose File</label>
-                                <input type="file" name="image" id="image-upload" wire:model="image">
+                                <input type="file" name="image" id="image-upload" wire:model="newimage">
                             </div>
                             <!-- Загрузка в процессе -->
-                            <div wire:loading wire:target="image">
+                            <div wire:loading wire:target="newimage">
                                 <p>Идет загрузка...</p> <!-- Сообщение, пока идет загрузка -->
                             </div>
                         </div>
@@ -144,7 +146,7 @@
 
                 </div>
                 <div class="card-footer text-left">
-                    <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="createProduct">Submit</button>
+                    <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="updateProduct">Submit</button>
                     <button class="btn btn-secondary" type="reset" wire:click="cancel">Cancel</button>
                 </div>
 

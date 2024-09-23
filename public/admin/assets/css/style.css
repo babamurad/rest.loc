@@ -2820,3 +2820,7 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
     background-color: #6777ef;
     border-color: #6777ef;
 }
+
+.rounded-5 {
+    border-radius: 0.4rem !important;
+}

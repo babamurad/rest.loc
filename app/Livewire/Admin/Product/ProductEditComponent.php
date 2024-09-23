@@ -25,8 +25,8 @@ class ProductEditComponent extends Component
 
     public function cancel()
     {
-        $this->reset(['name','slug','status','order','show_at_home']);
-        $this->redirect(route('admin.category.index'), navigate:true);
+        $this->reset(['name','slug','status','show_at_home']);
+        $this->redirect(route('admin.product.index'), navigate:true);
     }
 
     public function generateSlug()
@@ -71,7 +71,7 @@ class ProductEditComponent extends Component
         $product->seo_title = $this->seo_title;
         $product->seo_description = $this->seo_description;
         $product->save();
-        $this->reset(['name','slug','status', 'show_at_home']);
+        $this->reset(['name','slug','status','show_at_home']);
         toastr()->success('Product has been added.');
         return redirect()->route('admin.product.index');
     }
@@ -102,6 +102,7 @@ class ProductEditComponent extends Component
     #[Layout('livewire.admin.layouts.admin-app')]
     public function render()
     {
-        return view('livewire.admin.product.product-edit-component');
+        $categories = Category::all();
+        return view('livewire.admin.product.product-edit-component', compact('categories'));
     }
 }

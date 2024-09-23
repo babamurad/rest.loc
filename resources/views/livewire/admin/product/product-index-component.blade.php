@@ -20,8 +20,8 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
+                            <th scope="col">{{__('Image')}}</th>
                             <th scope="col">{{__('Name')}}</th>
-                            <th scope="col">{{__('Slug')}}</th>
                             <th scope="col">{{__('Status')}}</th>
                             <th scope="col">{{__('Price')}}</th>
                             <th scope="col" class="text-center">{{__('Actions')}}</th>
@@ -35,13 +35,15 @@
                             @foreach ($products as $product)
                                 <tr wire:key="{{ $product->id }}">
                                     <th scope="row">{{ ++$i }}</th>
+                                    <td style="width: 25%;">
+                                        <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}">
+                                            <img class="w-25 p-1 rounded-5" src="{{ asset($product->thumb_image) }}" alt="">
+                                        </a>
+                                    </td>
                                     <td style="width: 20%;">
                                         <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}">
                                             {{ ucfirst($product->name)  }}
                                         </a>
-                                    </td>
-                                    <td>
-                                        {{ $product->slug  }}
                                     </td>
                                     <td>
                                         @if ($product->status)
