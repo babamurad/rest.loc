@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Product;
 
 use App\Models\Category;
+use App\Models\Product;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -37,6 +38,33 @@ class ProductCreateComponent extends Component
         return strtoupper(substr($category, 0, 3)) . '-' . $model . '-' . strtoupper(substr($color, 0, 3));
     }
 
+    public function createProduct()
+    {
+        $this->validate();
+//        dd($this->category_id);
+        $product = new Product();
+        $product->name = $this->name;
+        $product->slug = $this->slug;
+        $product->thumb_image = $this->thumb_image->store('product_thumbnails', 'public');
+        $product->price = $this->price;
+        $product->offer_price = $this->offer_price;
+        $product->short_description = $this->short_description;
+        $product->long_description = $this->long_description;
+        $product->category_id = $this->category_id; // используйте id категории
+
+        $categoryName = Category::find($this->category_id)->name; // Либо используйте имя категории
+        $product->sku = $this->generateSKU($categoryName, $this->name, $this->price);
+
+        $product->status = $this->status;
+        $product->is_featured = $this->is_featured;
+        $product->show_at_home = $this->show_at_home;
+        $product->seo_title = $this->seo_title;
+        $product->seo_description = $this->seo_description;
+        $product->save();
+        $this->reset(['name','slug','status', 'show_at_home']);
+        toastr()->success('Produt has been added.');
+        return redirect()->route('admin.product.index');
+    }
 
     #[Layout('livewire.admin.layouts.admin-app')]
     public function render()

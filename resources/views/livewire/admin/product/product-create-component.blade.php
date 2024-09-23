@@ -13,19 +13,15 @@
                         <div class="col-sm-6 col-md-6">
                             <div class="form-group">
                                 <label>Name</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror"
-                                       wire:model="name" wire:keyup="generateSlug()">
-                                @error('name')
-                                <div class="invalid-feedback">{{$message}}</div> @enderror
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" wire:keyup="generateSlug()">
+                                @error('name') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                         <div class="col-sm-6 col-md-6">
                             <div class="form-group">
                                 <label>Slug</label>
-                                <input type="text" class="form-control @error('slug') is-invalid @enderror"
-                                       wire:model="slug" disabled>
-                                @error('slug')
-                                <div class="invalid-feedback">{{$message}}</div> @enderror
+                                <input type="text" class="form-control @error('slug') is-invalid @enderror" wire:model="slug" disabled>
+                                @error('slug') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                     </div>
@@ -44,10 +40,8 @@
                         <div class="col-sm-3 col-md-3">
                             <div class="form-group">
                                 <label>Sort Order</label>
-                                <input type="number" class="form-control @error('order') is-invalid @enderror"
-                                       wire:model="order">
-                                @error('order')
-                                <div class="invalid-feedback">{{$message}}</div> @enderror
+                                <input type="number" class="form-control @error('order') is-invalid @enderror" wire:model="order">
+                                @error('order') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                         <div class="col-sm-3 col-md-3">
@@ -65,10 +59,8 @@
                         <div class="col-sm-3">
                             <div class="form-group">
                                 <label>SKU</label>
-                                <input type="text" class="form-control @error('sku') is-invalid @enderror"
-                                       wire:model="sku">
-                                @error('sku')
-                                <div class="invalid-feedback">{{$message}}</div> @enderror
+                                <input type="text" class="form-control @error('sku') is-invalid @enderror" wire:model="sku">
+                                @error('sku') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
 
@@ -97,29 +89,23 @@
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <label>Price</label>
-                                <input type="number" class="form-control @error('price') is-invalid @enderror"
-                                       wire:model="price" min="0" step="0.01">
-                                @error('price')
-                                <div class="invalid-feedback">{{$message}}</div> @enderror
+                                <input type="number" class="form-control @error('price') is-invalid @enderror" wire:model="price" min="0" step="0.01">
+                                @error('price') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                         <div class="col-sm-2">
                             <div class="form-group">
                                 <label>Offer Price</label>
-                                <input type="number" class="form-control @error('offer_order') is-invalid @enderror"
-                                       wire:model="offer_order" min="0" step="0.01">
-                                @error('offer_order')
-                                <div class="invalid-feedback">{{$message}}</div> @enderror
+                                <input type="number" class="form-control @error('offer_price') is-invalid @enderror" wire:model="offer_price" min="0" step="0.01">
+                                @error('offer_price') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                         <div class="col-sm-4 col-md-4">
                             <div class="form-group">
                                 <label>Category</label>
-                                <select class="form-control @error('cateory_id') is-invalid @enderror"
-                                        wire:model="cateory_id">
+                                <select class="form-control @error('cateory_id') is-invalid @enderror" wire:model="category_id">
                                     @foreach($categories as $category)
-                                        <option value="{{ $category->id }}"
-                                                wire:key="{{ $category->id }}">{{ ucfirst($category->name) }}</option>
+                                        <option value="{{ $category->id }}" wire:key="{{ $category->id }}">{{ ucfirst($category->name) }}</option>
                                     @endforeach
 
                                 </select>
@@ -158,7 +144,7 @@
 
                 </div>
                 <div class="card-footer text-left">
-                    <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="createCategory">Submit</button>
+                    <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="createProduct">Submit</button>
                     <button class="btn btn-secondary" type="reset" wire:click="cancel">Cancel</button>
                 </div>
 
