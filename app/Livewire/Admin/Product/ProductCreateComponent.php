@@ -4,6 +4,7 @@ namespace App\Livewire\Admin\Product;
 
 use App\Models\Category;
 use App\Models\Product;
+use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -33,19 +34,22 @@ class ProductCreateComponent extends Component
         $this->slug = Str::slug($this->name);
     }
 
-    public function generateSKU($category, $model, $color)
+    public function generateSKU($category, $name, $price)
     {
-        return strtoupper(substr($category, 0, 3)) . '-' . $model . '-' . strtoupper(substr($color, 0, 3));
+        return strtoupper(substr($category, 0, 3)) . '-' . strtoupper(substr($name, 0, 3)) . '-' . strtoupper(substr($price, 0, 3));
     }
 
     public function createProduct()
     {
         $this->validate();
-//        dd($this->category_id);
         $product = new Product();
         $product->name = $this->name;
         $product->slug = $this->slug;
-        $product->thumb_image = $this->thumb_image->store('product_thumbnails', 'public');
+
+        $imageName ='uploads/products/' . Carbon::now()->timestamp.'.'.$this->newimage->getClientOriginalName();
+        $this->thumb_image->storeAs($imageName);
+        $product->thumb_image = $imageName;
+
         $product->price = $this->price;
         $product->offer_price = $this->offer_price;
         $product->short_description = $this->short_description;
@@ -62,7 +66,7 @@ class ProductCreateComponent extends Component
         $product->seo_description = $this->seo_description;
         $product->save();
         $this->reset(['name','slug','status', 'show_at_home']);
-        toastr()->success('Produt has been added.');
+        toastr()->success('Product has been added.');
         return redirect()->route('admin.product.index');
     }
 
