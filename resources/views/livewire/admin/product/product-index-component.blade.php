@@ -14,16 +14,42 @@
                         </a>
                     </div>
                 </div>
+                <div class="card-header-action">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <label class="mr-2" for="perp">Show</label>
+                                    <select class="custom-select" wire:model.live="perPage">
+                                        <option selected="8">8</option>
+                                        <option value="16">16</option>
+                                        <option value="25">25</option>
+                                        <option value="40">40</option>
+                                    </select>
+                                    <label class="ml-2">
+                                        entries
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 offset-6">
+                            <div class="input-group mt-2">
+                                <input type="text" class="form-control" placeholder="Search" wire:model.live.debounce.250ms="{{__('Search') }}">
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body">
-
                     <table class="table table-hover">
                         <thead>
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">{{__('Image')}}</th>
-                            <th scope="col">{{__('Name')}}</th>
-                            <th scope="col">{{__('Status')}}</th>
-                            <th scope="col">{{__('Price')}}</th>
+                            <th scope="col"><a href="#" type="button" wire:click.prevent="sortType('name')">@if($sortBy == 'name'){!! $sortIcon !!}@else<i class="fas fa-sort mr-1 text-muted"></i>@endif</a>{{__('Name')}}</th>
+                            <th scope="col"><a href="#" type="button" wire:click.prevent="sortType('show_at_home')">@if($sortBy == 'status') {!! $sortIcon !!} @else <i class="fas fa-sort mr-1 text-muted"></i>@endif</a>{{__('Show')}}<br>{{__(' at home')}}</th>
+                            <th scope="col"><a href="#" type="button" wire:click.prevent="sortType('price')">@if($sortBy == 'price') {!! $sortIcon !!} @else <i class="fas fa-sort mr-2 text-muted"></i>@endif</a>{{__('Price')}}</th>
+                            <th scope="col"><a href="#" type="button" wire:click.prevent="sortType('created_at')">@if($sortBy == 'created_at') {!! $sortIcon !!} @else <i class="fas fa-sort mr-1 text-muted"></i>@endif</a>{{__('Date')}}</th>
+{{--                            <th scope="col">{{__('Date')}}<a href="#" type="button" wire:click.prevent="sortType('created_at')">@if($sortBy == 'created_at'){!! $sortIcon !!}@else<i class="fas fa-sort ml-1 text-muted"></i>@endif</a></th>--}}
                             <th scope="col" class="text-center">{{__('Actions')}}</th>
                         </tr>
                         </thead>
@@ -46,22 +72,22 @@
                                         </a>
                                     </td>
                                     <td>
-                                        @if ($product->status)
-                                            <span class="badge badge-success">{{__('Active')}}</span>
+                                        @if ($product->show_at_home)
+                                            <span class="badge badge-success">{{__('Yes')}}</span>
                                         @else
-                                            <span class="badge badge-danger">{{__('Inactive')}}</span>
+                                            <span class="badge badge-danger">{{__('No')}}</span>
                                         @endif
                                     </td>
-
                                     <td>
                                         <span class="badge badge-light">{{ $product->price }} m.</span>
                                     </td>
+                                    <td>
+                                        <span class="badge badge-info">{{ \Carbon\Carbon::create($product->created_at)->format('d.m.Y') }}</span>
+                                    </td>
                                     <td class="text-center" style="width: 10%;">
-                                        <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}" class="btn btn-icon btn-primary">
+                                        <a class="btn btn-icon btn-primary" href="{{ route('admin.product.edit', ['id' => $product->id]) }}">
                                             <i class="far fa-edit"></i>
                                         </a>
-                                        {{--                                    </td>--}}
-                                        {{--                                    <td class="text-left" style="width: 6%;">--}}
                                         <button class="btn btn-danger" data-toggle="modal" data-target="#ConfirmDelete" wire:click="deleteId({{ $product->id }})">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>

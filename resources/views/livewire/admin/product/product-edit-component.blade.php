@@ -1,3 +1,46 @@
+@section('title', 'Edit Product')
+@push('summernote-css')
+    <link rel="stylesheet" href="{{ asset('admin/assets/modules/summernote/summernote-bs4.css') }}">
+@endpush
+@push('summernote-js')
+    <script src="{{ asset('admin/assets/modules/summernote/summernote-bs4.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#summernote').summernote({
+                height: 300,
+                tabsize: 2,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['codeview']],
+                ],
+            });
+            $('#summernote2').summernote({
+                height: 300,
+                tabsize: 2,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video']],
+                    ['view', ['codeview']],
+                ],
+            });
+            $('#summernote').on('summernote.change', function(we, contents, $editable) {
+            @this.set('long_description', contents)
+            });
+            $('#summernote2').on('summernote.change', function(we, contents, $editable) {
+            @this.set('seo_description', contents)
+            });
+        });
+    </script>
+@endpush
 <section class="section">
     <div class="section-header">
         <h1>Product</h1>
@@ -135,11 +178,23 @@
                                 <label>Short description</label>
                                 <textarea class="form-control" wire:model="short_description"></textarea>
                             </div>
+                            <div class="form-group">
+                                <label>Long description</label>
+                                <div wire:ignore>
+                                    <textarea id="summernote" class="form-control" wire:model="long_description"></textarea>
+                                </div>
+                            </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Long description</label>
-                                <textarea class="form-control" wire:model="long_description"></textarea>
+                                <label>SEO title</label>
+                                <textarea class="form-control" wire:model="seo_title"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>SEO description</label>
+                                <div wire:ignore>
+                                    <textarea id="summernote2" class="form-control" wire:model="seo_description"></textarea>
+                                </div>
                             </div>
                         </div>
                     </div>

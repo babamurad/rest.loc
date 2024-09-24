@@ -67,6 +67,7 @@
 
 @stack('scripts')
 @stack('icon-js')
+@stack('summernote-css')
 
 <!-- JS Libraies -->
 {{--<script src="{{ asset('admin/assets/modules/simple-weather/jquery.simpleWeather.min.js') }}"></script>
@@ -107,6 +108,6 @@
             @endforeach
         @endif
     </script>
-
+@stack('summernote-js')
 </body>
 </html>

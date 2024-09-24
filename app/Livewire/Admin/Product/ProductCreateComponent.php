@@ -34,9 +34,25 @@ class ProductCreateComponent extends Component
         $this->slug = Str::slug($this->name);
     }
 
-    public function generateSKU($category, $name, $price)
+    public function generateSKU()
     {
-        return strtoupper(substr($category, 0, 3)) . '-' . strtoupper(substr($name, 0, 3)) . '-' . strtoupper(substr($price, 0, 3));
+        $categoryName = Category::find($this->category_id)->name;
+        return $this->sku = strtoupper(substr($categoryName, 0, 3)) . '-' . strtoupper(substr($this->name, 0, 3)) . '-' . strtoupper(substr($this->price, 0, 5));
+    }
+
+    public function updatedPrice()
+    {
+        $this->generateSKU();
+    }
+
+    public function updatedName()
+    {
+        $this->generateSKU();
+    }
+
+    public function updatedCategoryId()
+    {
+        $this->generateSKU();
     }
 
     public function createProduct()
@@ -46,7 +62,7 @@ class ProductCreateComponent extends Component
         $product->name = $this->name;
         $product->slug = $this->slug;
 
-        $imageName ='uploads/products/' . Carbon::now()->timestamp.'.'.$this->newimage->getClientOriginalName();
+        $imageName ='uploads/products/' . Carbon::now()->timestamp.'.'.$this->thumb_image->getClientOriginalName();
         $this->thumb_image->storeAs($imageName);
         $product->thumb_image = $imageName;
 

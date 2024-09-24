@@ -72,7 +72,7 @@ class ProductEditComponent extends Component
         $product->seo_description = $this->seo_description;
         $product->save();
         $this->reset(['name','slug','status','show_at_home']);
-        toastr()->success('Product has been added.');
+        toastr()->success('Product has been updated.');
         return redirect()->route('admin.product.index');
     }
 
