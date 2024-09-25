@@ -1,8 +1,27 @@
-
+@push('tosastr-css')
+    <!-- CSS Libraries -->
+    <link rel="stylesheet" href="{{ asset('admin/assets/modules/izitoast/css/iziToast.min.css') }}">
+@endpush
+@push('toastr-js')
+    <!-- JS Libraies -->
+    <script src="{{ asset('admin/assets/modules/izitoast/js/iziToast.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $("#toastr-5").click(function() {
+                iziToast.show({
+                    title: 'Hello, world!',
+                    message: 'This awesome plugin is made by iziToast',
+                    position: 'bottomRight'
+                });
+            });
+        });
+    </script>
+@endpush
 <section class="section">
     <div class="section-header">
         <h1>{{ __('Products') }}</h1>
     </div>
+<p>{{$err}}</p>
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">
@@ -12,6 +31,7 @@
                         <a href="{{ route('admin.product.create') }}" class="btn btn-primary">
                             {{ __('Create New') }}
                         </a>
+                        <button class="btn btn-primary" id="toastr-2">Launch</button>
                     </div>
                 </div>
                 <div class="card-header-action">
@@ -19,22 +39,36 @@
                         <div class="col-sm-3">
                             <div class="form-inline">
                                 <div class="form-group">
-                                    <label class="mr-2" for="perp">Show</label>
-                                    <select class="custom-select" wire:model.live="perPage">
+                                    <label class="mr-2" for="perp">{{__('Show')}}</label>
+                                    <select class="custom-select" id="perp" wire:model.live="perPage">
                                         <option selected="8">8</option>
                                         <option value="16">16</option>
                                         <option value="25">25</option>
                                         <option value="40">40</option>
                                     </select>
                                     <label class="ml-2">
-                                        entries
+                                        {{__('entries')}}
                                     </label>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-3 offset-6">
+
+                        <div class="col-sm-3">
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <label class="mr-2" for="cat" style="font-size: 1rem;">{{__('Category') }}</label>
+                                    <select class="custom-select" id="cat" wire:model.live.debounce.250ms="selectedCat">
+                                        <option value="" selected>{{__('Select Category')}}</option>
+                                        @foreach($categories as $category)
+                                            <option value="{{$category->id}}" wire:key="{{$category->id}}">{{ ucfirst($category->name) }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 offset-3">
                             <div class="input-group mt-2">
-                                <input type="text" class="form-control" placeholder="Search" wire:model.live.debounce.250ms="{{__('Search') }}">
+                                <input type="text" class="form-control" placeholder="Search" wire:model.live.debounce.250ms="search">
                             </div>
                         </div>
                     </div>
@@ -44,6 +78,7 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
+                            <th scope="col">{{__('Category')}}</th>
                             <th scope="col">{{__('Image')}}</th>
                             <th scope="col"><a href="#" type="button" wire:click.prevent="sortType('name')">@if($sortBy == 'name'){!! $sortIcon !!}@else<i class="fas fa-sort mr-1 text-muted"></i>@endif</a>{{__('Name')}}</th>
                             <th scope="col"><a href="#" type="button" wire:click.prevent="sortType('show_at_home')">@if($sortBy == 'status') {!! $sortIcon !!} @else <i class="fas fa-sort mr-1 text-muted"></i>@endif</a>{{__('Show')}}<br>{{__(' at home')}}</th>
@@ -61,6 +96,7 @@
                             @foreach ($products as $product)
                                 <tr wire:key="{{ $product->id }}">
                                     <th scope="row">{{ ++$i }}</th>
+                                    <td><strong>{{ ucfirst($product->category->name) }}</strong></td>
                                     <td style="width: 25%;">
                                         <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}">
                                             <img class="w-25 p-1 rounded-5" src="{{ asset($product->thumb_image) }}" alt="">

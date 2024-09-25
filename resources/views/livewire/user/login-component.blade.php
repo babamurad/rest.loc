@@ -67,7 +67,7 @@
                                 </div>
                             </form>
                             <p class="or"><span>or</span></p>
-                            <p class="create_account">Dont’t have an aceount ? <a href="{{ route('register') }}" wire:navigate>Create Account</a>
+                            <p class="create_account">Dont’t have an account ? <a href="{{ route('register') }}">Create Account</a>
                             </p>
                         </div>
                     </div>

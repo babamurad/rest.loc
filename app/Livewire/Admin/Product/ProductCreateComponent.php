@@ -17,11 +17,19 @@ class ProductCreateComponent extends Component
     public $name, $slug, $thumb_image, $category_id;
     public $price, $offer_price, $short_description, $long_description;
     public $sku, $status, $is_featured, $show_at_home, $seo_title, $seo_description;
+    public $images = [];
+    public $activeTab = 'main';
+
 
     protected $rules = [
         'name' => ['required','string','max:255'],
         'slug' => ['required','string','max:255','unique:categories,slug'],
     ];
+
+    public function changeTab($tabName)
+    {
+        $this->activeTab = $tabName;
+    }
 
     public function cancel()
     {
@@ -65,6 +73,22 @@ class ProductCreateComponent extends Component
         $imageName ='uploads/products/' . Carbon::now()->timestamp.'.'.$this->thumb_image->getClientOriginalName();
         $this->thumb_image->storeAs($imageName);
         $product->thumb_image = $imageName;
+
+        if ($this->images)
+        {
+            $iamgesName = '';
+            foreach ($this->images as $key=>$image)
+            {
+                $imageName = Carbon::now()->timestamp.$key.'.'.$image->extension();
+                $image->storeAs('uploads/products', $imageName);
+                if ($iamgesName == '')
+                {
+                    $iamgesName = $imageName;
+                } else { $iamgesName =$iamgesName.','. $imageName; }
+
+            }
+            $product->images = $iamgesName;
+        }
 
         $product->price = $this->price;
         $product->offer_price = $this->offer_price;
