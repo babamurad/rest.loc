@@ -17,6 +17,7 @@ class ProductEditComponent extends Component
     public $name, $slug, $image, $newimage, $category_id;
     public $price, $offer_price, $short_description, $long_description;
     public $sku, $status, $is_featured, $show_at_home, $seo_title, $seo_description;
+    public $images, $newimages;
 
     protected $rules = [
         'name' => ['required','string','max:255'],
@@ -27,6 +28,12 @@ class ProductEditComponent extends Component
     {
         $this->reset(['name','slug','status','show_at_home']);
         $this->redirect(route('admin.product.index'), navigate:true);
+    }
+
+    public function delImageItem($key)
+    {
+        unset($this->images[$key]);
+        toastr()->error('Image has been removed.');
     }
 
     public function generateSlug()
@@ -71,6 +78,36 @@ class ProductEditComponent extends Component
         $product->seo_title = $this->seo_title;
         $product->seo_description = $this->seo_description;
         $product->save();
+
+        $productId = $product->id;
+
+        if ($this->newimage){
+            if (file_exists('uploads/products/'.$productId)){
+                unlink('uploads/products/' . $productId);
+            }
+            $imageName ='uploads/products/' . $productId . '/' . Carbon::now()->timestamp.'.'.$this->thumb_image->getClientOriginalName();
+        }
+
+        $this->thumb_image->storeAs($imageName);
+        $product->thumb_image = $imageName;
+
+        if ($this->images)
+        {
+            $iamgesName = '';
+            foreach ($this->images as $key=>$image)
+            {
+                $imageName = 'uploads/products/' . $productId . '/' . Carbon::now()->timestamp.$key.'.'.$image->extension();
+                $image->storeAs($imageName);
+                if ($iamgesName == '')
+                {
+                    $iamgesName = $imageName;
+                } else { $iamgesName =$iamgesName.','. $imageName; }
+
+            }
+            $product->images = $iamgesName;
+        }
+        $product->update();
+
         $this->reset(['name','slug','status','show_at_home']);
         toastr()->success('Product has been updated.');
         return redirect()->route('admin.product.index');
@@ -88,7 +125,7 @@ class ProductEditComponent extends Component
         $this->short_description = $product->short_description;
         $this->long_description = $product->long_description;
         $this->category_id = $product->category_id; // используйте id категории
-
+        $this->images = explode(',', $product->images);
         $categoryName = Category::find($this->category_id)->name; // Либо используйте имя категории
 
         $this->status = $product->status;

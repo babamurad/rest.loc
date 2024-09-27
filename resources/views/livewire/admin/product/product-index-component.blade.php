@@ -31,7 +31,6 @@
                         <a href="{{ route('admin.product.create') }}" class="btn btn-primary">
                             {{ __('Create New') }}
                         </a>
-                        <button class="btn btn-primary" id="toastr-2">Launch</button>
                     </div>
                 </div>
                 <div class="card-header-action">
@@ -78,7 +77,7 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">{{__('Category')}}</th>
+                            <th scope="col"><a href="#" type="button" wire:click.prevent="sortType('categories.name')">@if($sortBy == 'categories.name'){!! $sortIcon !!}@else<i class="fas fa-sort mr-1 text-muted"></i>@endif</a>{{__('Category')}}</th>
                             <th scope="col">{{__('Image')}}</th>
                             <th scope="col"><a href="#" type="button" wire:click.prevent="sortType('name')">@if($sortBy == 'name'){!! $sortIcon !!}@else<i class="fas fa-sort mr-1 text-muted"></i>@endif</a>{{__('Name')}}</th>
                             <th scope="col"><a href="#" type="button" wire:click.prevent="sortType('show_at_home')">@if($sortBy == 'status') {!! $sortIcon !!} @else <i class="fas fa-sort mr-1 text-muted"></i>@endif</a>{{__('Show')}}<br>{{__(' at home')}}</th>

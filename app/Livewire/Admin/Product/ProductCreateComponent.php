@@ -76,6 +76,7 @@ class ProductCreateComponent extends Component
         $product = new Product();
         $product->name = $this->name;
         $product->slug = $this->slug;
+        $product->thumb_image = 'uploads/products/placeholder.jpg';
 
         $product->price = $this->price;
         $product->offer_price = $this->offer_price;
@@ -104,8 +105,8 @@ class ProductCreateComponent extends Component
             $iamgesName = '';
             foreach ($this->images as $key=>$image)
             {
-                $imageName = Carbon::now()->timestamp.$key.'.'.$image->extension();
-                $image->storeAs('uploads/products/' . $productId . 'gallery'  , $imageName);
+                $imageName = 'uploads/products/' . $productId . '/' . Carbon::now()->timestamp.$key.'.'.$image->extension();
+                $image->storeAs($imageName);
                 if ($iamgesName == '')
                 {
                     $iamgesName = $imageName;

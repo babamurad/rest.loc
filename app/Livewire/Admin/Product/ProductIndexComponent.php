@@ -51,10 +51,9 @@ class ProductIndexComponent extends Component
 
     public function sortType($fieldName)
     {
-//        dd('sortType');
         $this->sortBy = $fieldName;
         $this->sortDirection = $this->sortDirection === 'asc'? 'desc' : 'asc';
-        $this->sortIcon = $this->sortDirection === 'asc'? '<i class="fas fa-sort-up ml-1"></i>':'<i class="fas fa-sort-down ml-1"></i>';
+        $this->sortIcon = $this->sortDirection === 'asc'? '<i class="fas fa-sort-up mr-1"></i>':'<i class="fas fa-sort-down mr-1"></i>';
     }
 
     // Метод для обновления выбранного количества записей
@@ -85,7 +84,7 @@ class ProductIndexComponent extends Component
         $categories = Category::all();
         $products_query = Product::query();
 
-// Применяем поиск по названию, если введено не менее 3 символов
+// Применяем поиск по названию продукта, если введено не менее 3 символов
         if (!empty($this->search) && strlen($this->search) >= 3) {
             $products_query->where('name', 'LIKE', '%' . $this->search . '%');
         }
@@ -95,10 +94,15 @@ class ProductIndexComponent extends Component
             $products_query->where('category_id', $this->selectedCat);
         }
 
+// Присоединяем таблицу категорий, чтобы сортировать по имени категории
+        $products_query->join('categories', 'products.category_id', '=', 'categories.id')
+            ->select('products.*') // Выбираем поля из таблицы products
+            ->with('category'); // Загружаем связанные категории
+
 // Выполняем запрос с сортировкой и пагинацией
         $products = $products_query
-            ->with('category') // Загружаем связанные категории
-            ->orderBy($this->sortBy, $this->sortDirection) // Сортировка
+//            ->orderBy('categories.name', 'asc') // Сортировка по имени категории
+            ->orderBy($this->sortBy, $this->sortDirection) // Ваша дополнительная сортировка
             ->paginate($this->perPage); // Пагинация
 
         return view('livewire.admin.product.product-index-component', compact('products', 'categories'));
