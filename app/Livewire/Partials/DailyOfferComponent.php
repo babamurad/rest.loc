@@ -2,14 +2,14 @@
 
 namespace App\Livewire\Partials;
 
-use App\Models\WhyChooseUs;
+use App\Models\WcuSection;
 use Livewire\Component;
 
 class DailyOfferComponent extends Component
 {
     public function render()
     {
-        $titles = WhyChooseUs::where('key', 2)->first();
+        $titles = WcuSection::where('id', 2)->first();
         return view('livewire.partials.daily-offer-component', compact('titles'));
     }
 }
