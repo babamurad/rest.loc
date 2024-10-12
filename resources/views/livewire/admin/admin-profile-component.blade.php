@@ -27,7 +27,7 @@
                                 @error('email') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                             <div class="form-group mb-4">
-                                <label class="col-form-label text-md-right">Thumbnail</label>
+                                <label class="col-form-label text-md-right">Profile Image</label>
                                 <div class="row">
                                     <div class="col-sm-12 col-md-7">
                                         <div class="image-preview"

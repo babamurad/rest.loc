@@ -194,7 +194,7 @@
 
     <!-- Modal -->
 
-    <div wire:ignore.self class="modal fade" id="ConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="ConfirmDelete" aria-hidden="true">
+    <div wire:ignore.self class="modal fade" id="ConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="ConfirmDelete" aria-hidden="true" style="background-color: rgb(70 70 70 / 50%);">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">

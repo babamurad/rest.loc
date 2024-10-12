@@ -70,13 +70,17 @@ class WhyChooseUsComponent extends Component
     public function mount()
     {
         $titles = WhyChooseUs::where('key', 1)->first();
-        $this->title = $titles->title;
-        $this->top_title = $titles->top_title;
-        $this->sub_title = $titles->sub_title;
+        if ($titles) {
+            $this->title = $titles->title;
+            $this->top_title = $titles->top_title;
+            $this->sub_title = $titles->sub_title;
+        }
         $dtitles = WhyChooseUs::where('key', 2)->first();
-        $this->dtitle = $dtitles->title;
-        $this->dtop_title = $dtitles->top_title;
-        $this->dsub_title = $dtitles->sub_title;
+        if ($dtitles) {
+            $this->dtitle = $dtitles->title;
+            $this->dtop_title = $dtitles->top_title;
+            $this->dsub_title = $dtitles->sub_title;
+        }
     }
 
     #[Layout('livewire.admin.layouts.admin-app')]
