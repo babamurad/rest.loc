@@ -43,8 +43,8 @@ class WhyChooseUsComponent extends Component
             ]
         );
         WhyChooseUs::where('key', 1)->update([
-            'title' => $this->title,
-            'top_title' => $this->top_title,
+           'title' => $this->title,
+           'top_title' => $this->top_title,
            'sub_title' => $this->sub_title,
         ]);
         toastr()->success('Заголовки сохранены');
