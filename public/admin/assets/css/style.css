@@ -2847,3 +2847,10 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
 .view:hover .delete-button {
     display: block;
 }
+.invalid-feedback {
+    /*display: block;*/
+    width: 100%;
+    margin-top: .25rem;
+    font-size: 80%;
+    color: #dc3545;
+}
