@@ -23,7 +23,7 @@ class EditSliderComponent extends Component
     public $status;
 
     protected $rules = [
-        'image' =>'required|image|mimes:jpeg,png,jpg|max:2048',
+//        'image' =>'required|image|mimes:jpeg,png,jpg|max:2048',
         'title' =>'required|string|max:255',
         'description' =>'required|string',
         'link' =>'required|url',
@@ -51,6 +51,7 @@ class EditSliderComponent extends Component
             $this->newimage->storeAs($imageName);
             $slider->image = $imageName;
         }
+        $slider->thumb_image = $this->image;
         $slider->update();
         toastr()->success('Slider updated successfully');
         $this->redirect(route('admin.slider'), navigate:true);

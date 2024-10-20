@@ -21,7 +21,7 @@ class CreateComponent extends Component
     public $status;
 
     protected $rules = [
-        'image' =>'required|image|mimes:jpeg,png,jpg|max:2048',
+//        'image' =>'required|image|mimes:jpeg,png,jpg|max:2048',
         'title' =>'required|string|max:255',
         'description' =>'required|string',
 //        'link' =>'required|url',
@@ -34,7 +34,7 @@ class CreateComponent extends Component
     {
 
         $this->validate();
-        dd('validate');
+        //dd('validate');
         $slider = new Slider();
         $slider->title = $this->title;
         $slider->description = $this->description;
