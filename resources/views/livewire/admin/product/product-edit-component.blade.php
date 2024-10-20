@@ -50,6 +50,10 @@
             <div class="card card-primary">
                 <div class="card-header">
                     <h4>Create Product</h4>
+                    <div class="card-header-action">
+                    <button class="btn btn-primary mr-1" type="button" wire:click="updateProduct">Save</button>
+                    <button class="btn btn-secondary" type="reset" wire:click="cancel">Cancel</button>
+                    </div>
                 </div>
             </div>
 
@@ -273,7 +277,9 @@
                                                 <div class="col-sm-3">
                                                     <div class="card">
                                                         <div class="view overlay text-center position-relative">
-                                                            <div class="text-danger h-25 delete-button" wire:key="{{ $key }}" wire:click="delImageItem({{ $key }})" style="cursor: pointer;">x</div>
+                                                            <div class="text-danger h-25 delete-button" wire:key="{{ $key }}" wire:click="delImageItem({{ $key }})" style="cursor: pointer;">
+                                                                <i class="fas fa-times"></i>
+                                                            </div>
                                                             <img class="card-img-top" src="{{ $newimage->temporaryUrl() }}" alt="Product Image Gallery">
                                                         </div>
                                                     </div>
@@ -298,14 +304,8 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
-
-
             </div>
-
-
-
         </div>
         <div class="card-footer text-left">
             <button class="btn btn-primary mr-1" type="button" wire:click="updateProduct">Submit</button>

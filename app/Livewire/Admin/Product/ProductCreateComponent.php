@@ -24,7 +24,7 @@ class ProductCreateComponent extends Component
     protected $rules = [
         'name' => ['required','string','max:255'],
         'slug' => ['required','string','max:255','unique:products,slug'],
-//        'thumb_image' => ['rewuired', 'image', 'max:2048']
+        'thumb_image' => ['required', 'image', 'max:2048']
     ];
 
     public function changeTab($tabName)
@@ -34,8 +34,8 @@ class ProductCreateComponent extends Component
 
     public function cancel()
     {
-        $this->reset(['name','slug','status','order','show_at_home']);
-        $this->redirect(route('admin.category.index'), navigate:true);
+        $this->reset(['name','slug','status', 'show_at_home']);
+        $this->redirect(route('admin.product.index'), navigate:true);
     }
 
     public function generateSlug()
@@ -115,6 +115,7 @@ class ProductCreateComponent extends Component
             }
             $product->images = $iamgesName;
         }
+
         $product->update();
 
         $this->reset(['name','slug','status', 'show_at_home']);

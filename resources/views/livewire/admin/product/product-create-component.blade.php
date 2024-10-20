@@ -50,7 +50,12 @@
             <div class="card card-primary">
                 <div class="card-header">
                     <h4>Create Product</h4>
+                    <div class="card-header-action">
+                        <a class="btn btn-primary mr-1 text-white" type="button" wire:click="createProduct">Save</a>
+                        <a class="btn btn-secondary" type="reset" wire:click="cancel">Cancel</a>
+                    </div>
                 </div>
+
             </div>
 
             <div class="">
@@ -61,6 +66,9 @@
                         </li>
                         <li class="nav-item" @click="currentTab = 2">
                             <a :class="{ 'active-tab-btn text-white': currentTab === 2 }" class=" nav-link" href="#">Images</a>
+                        </li>
+                        <li class="nav-item" @click="currentTab = 3">
+                            <a :class="{ 'active-tab-btn text-white': currentTab === 3 }" class=" nav-link" href="#">Seo</a>
                         </li>
                     </ul>
                     <div class="" x-show="currentTab === 1">
@@ -98,30 +106,6 @@
                                                 </div>
                                             </div>
 
-
-
-                                            <div class="col-sm-12" x-data="{ open: false }">
-                                                <div class="form-group">
-                                                    <label class="custom-switch mt-2" style="cursor: pointer;">
-                                                        <input type="checkbox" name="custom-switch-checkbox" class="custom-switch-input">
-                                                        <span class="custom-switch-indicator" x-on:click="open = !open"></span>
-                                                        <span class="custom-switch-description" x-on:click="open = !open">Show SEO</span>
-                                                    </label>
-                                                </div>
-{{--                                                <button class="btn btn-secondary" x-on:click="open = !open">Переключить раскрывающийся список</button>--}}
-                                                <div x-show="open" x-transition>
-                                                    <div class="form-group">
-                                                        <label>SEO title</label>
-                                                        <textarea class="form-control" wire:model="seo_title"></textarea>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <label>SEO description</label>
-                                                        <div wire:ignore>
-                                                            <textarea id="summernote2" class="form-control" wire:model="seo_description"></textarea>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -223,8 +207,7 @@
                                         <h4>Main Image Upload</h4>
                                     </div>
                                     <div class="card-body">
-                                        <div class="image-preview"
-                                             style="
+                                        <div class="image-preview @error('thumb_image') border-danger @enderror" style="
                                              @if(strlen($thumb_image) == 0 || $thumb_image == '')
                                                  background-image: url({{ asset('uploads/sliders/placeholder.jpg') }});
                                              @else
@@ -236,6 +219,8 @@
                                             <label for="image-upload" id="image-label">Choose File</label>
                                             <input type="file" name="thumb_image" id="image-upload" wire:model="thumb_image">
                                         </div>
+                                        @error('thumb_image') <div class="invalid-feedback" style="display: block;">{{$message}}</div> @enderror
+
                                         <!-- Загрузка в процессе -->
                                         <div wire:loading wire:target="thumb_image">
                                             <p>Идет загрузка...</p> <!-- Сообщение, пока идет загрузка -->
@@ -253,7 +238,7 @@
                                             <input type="file" id="images" class="custom-file-input @error('images') is-invalid @enderror" wire:model="images" multiple>
                                             <label class="custom-file-label" for="images" aria-describedby="inputGroupFileAddon02">Product Image Gallery </label>
 
-                                            @error('images') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                            @error('newimages') <div class="invalid-feedback">{{$message}}</div> @enderror
                                         </div>
                                     </div>
                                 </div>
@@ -275,7 +260,28 @@
                             </div>
                         </div>
                     </div>
-
+                    <div x-show="currentTab === 3">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="col-sm-12">
+                                                <div class="form-group">
+                                                    <label>SEO title</label>
+                                                    <textarea class="form-control" wire:model="seo_title"></textarea>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>SEO description</label>
+                                                    <div wire:ignore>
+                                                        <textarea id="summernote2" class="form-control" wire:model="seo_description"></textarea>
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
 

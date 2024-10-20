@@ -32,7 +32,23 @@ class ProductEditComponent extends Component
 
     public function delImageItem($key)
     {
-        unset($this->images[$key]);
+        $product = Product::find($this->editId);
+        $images = explode(',', $product->images);
+        //dd($images[$id]);
+        $img = $images[$key];//название файла которое нужно удалить
+        unset($images[$key]);//удалить название выбранного изображение с поля таблицы images
+        if (file_exists('uploads/products/' . $img)) {
+            // Удалить файл если существует
+            unlink('uploads/products/' . $img);
+        }
+        $imeNames = '';
+        foreach ($images as $image) {
+            $imeNames = $imeNames . ',' . $image;
+        }
+        $product->images = $imeNames;
+
+        $product->update();
+        $this->images = explode(',', $imeNames);
         toastr()->error('Image has been removed.');
     }
 
@@ -83,25 +99,25 @@ class ProductEditComponent extends Component
 
         if ($this->newimage){
             if (file_exists('uploads/products/'.$productId)){
-                unlink('uploads/products/' . $productId);
+                unlink('uploads/products/' . $productId . '/' . $this->image);
             }
             $imageName ='uploads/products/' . $productId . '/' . Carbon::now()->timestamp.'.'.$this->thumb_image->getClientOriginalName();
+            $this->thumb_image->storeAs($imageName);
+            $product->thumb_image = $imageName;
         }
 
-        $this->thumb_image->storeAs($imageName);
-        $product->thumb_image = $imageName;
 
-        if ($this->images)
+        if ($this->newimages)
         {
             $iamgesName = '';
             foreach ($this->images as $key=>$image)
             {
-                $imageName = 'uploads/products/' . $productId . '/' . Carbon::now()->timestamp.$key.'.'.$image->extension();
+                $imageName = 'uploads/products/' . $productId . '/' . Carbon::now()->timestamp . $key . '.' . $image->extension();
                 $image->storeAs($imageName);
                 if ($iamgesName == '')
                 {
                     $iamgesName = $imageName;
-                } else { $iamgesName =$iamgesName.','. $imageName; }
+                } else { $iamgesName =$iamgesName . ',' . $imageName; }
 
             }
             $product->images = $iamgesName;

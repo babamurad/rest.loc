@@ -73,6 +73,7 @@
                     </div>
                 </div>
                 <div class="card-body">
+                    @if($products->count() > 0)
                     <table class="table table-hover">
                         <thead>
                         <tr>
@@ -91,7 +92,6 @@
                         @php
                             $i = ($products->currentPage()-1)*$products->perPage();
                         @endphp
-                        @if($products)
                             @foreach ($products as $product)
                                 <tr wire:key="{{ $product->id }}">
                                     <th scope="row">{{ ++$i }}</th>
@@ -129,12 +129,11 @@
                                     </td>
                                 </tr>
                             @endforeach
-                        @endif
                         </tbody>
                     </table>
                     {{ $products->links() }}
-                    @if(!$products)
-                        <p>No items found.</p>
+                    @else
+                        <p><b>{{__('No items found.')}}</b></p>
                     @endif
                 </div>
             </div>

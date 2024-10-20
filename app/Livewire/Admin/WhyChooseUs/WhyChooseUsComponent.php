@@ -59,11 +59,13 @@ class WhyChooseUsComponent extends Component
                 'dsub_title' => 'required|max:255',
             ]
         );
+
         WhyChooseUs::where('key', 2)->update([
             'title' => $this->dtitle,
             'top_title' => $this->dtop_title,
             'sub_title' => $this->dsub_title,
         ]);
+//        dd('validate');
         toastr()->success('Заголовки сохранены');
     }
 
