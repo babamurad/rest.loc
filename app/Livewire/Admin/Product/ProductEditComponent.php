@@ -7,9 +7,11 @@ use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
+#[Title('Product Edit')]
 class ProductEditComponent extends Component
 {
     use WithFileUploads;
@@ -93,7 +95,7 @@ class ProductEditComponent extends Component
         $product->show_at_home = $this->show_at_home;
         $product->seo_title = $this->seo_title;
         $product->seo_description = $this->seo_description;
-        $product->save();
+        $product->update();
 
         $productId = $product->id;
 
@@ -142,7 +144,7 @@ class ProductEditComponent extends Component
         $this->long_description = $product->long_description;
         $this->category_id = $product->category_id; // используйте id категории
         $this->images = explode(',', $product->images);
-        $categoryName = Category::find($this->category_id)->name; // Либо используйте имя категории
+        //$categoryName = Category::find($this->category_id)->name; // Либо используйте имя категории
 
         $this->status = $product->status;
         $this->sku = $product->sku;

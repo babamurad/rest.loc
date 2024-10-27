@@ -21,7 +21,6 @@
     <div class="section-header">
         <h1>{{ __('Products') }}</h1>
     </div>
-<p>{{$err}}</p>
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">

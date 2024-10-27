@@ -6,9 +6,13 @@ use App\Models\Category;
 use App\Models\Product;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Livewire\Attributes\Title;
+use Livewire\Attributes\Lazy;
 use Livewire\WithPagination;
 use App\Traits\ImageUploadTrait;
 
+#[Title('Products List')]
+//#[Lazy]
 class ProductIndexComponent extends Component
 {
     use WithPagination;
@@ -106,5 +110,20 @@ class ProductIndexComponent extends Component
             ->paginate($this->perPage); // Пагинация
 
         return view('livewire.admin.product.product-index-component', compact('products', 'categories'));
+    }
+
+    public function placeholder()
+    {
+        return <<<'HTML'
+            <section class="section">
+                <div class="section-header">
+                    <h4>{{ __('All Products') }}</h4>
+                </div>
+                <div class="card card-primary">
+                    <h4>Loading...</h4>
+                </div>
+            </section>
+        HTML;
+
     }
 }
