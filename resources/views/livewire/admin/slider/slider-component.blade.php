@@ -31,7 +31,7 @@
                             <tr>
                                 <th scope="row">{{ $loop->index + 1 }}</th>
                                 <td style="width: 20%;"><img class="img-fluid w-25 rounded"
-                                                             src="{{ asset('images/' . $slider->image) }}" alt=""></td>
+                                                             src="{{ asset($slider->image) }}" alt=""></td>
                                 <td>{{ $slider->title }}</td>
                                 <td>{{ $slider->offer }}</td>
                                 <td>
@@ -42,7 +42,7 @@
                                     @endif
                                 </td>
                                 <td class="flex">
-                                    <a href="#" class="btn btn-icon icon-left btn-primary"><i
+                                    <a href="{{ route('admin.slider.edit', ['id' => $slider->id]) }}" class="btn btn-icon icon-left btn-primary"><i
                                             class="far fa-edit"></i></a>
                                 </td>
                                 <td>

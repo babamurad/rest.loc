@@ -7,9 +7,11 @@ use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
+#[Title('Create Product')]
 class ProductCreateComponent extends Component
 {
     use WithFileUploads;
@@ -73,6 +75,7 @@ class ProductCreateComponent extends Component
     public function createProduct()
     {
         $this->validate();
+        //dd('validate');
         $product = new Product();
         $product->name = $this->name;
         $product->slug = $this->slug;
@@ -96,7 +99,7 @@ class ProductCreateComponent extends Component
 
         $productId = $product->id;
 
-        $imageName ='uploads/products/' . $productId . '/' . Carbon::now()->timestamp.'.'.$this->thumb_image->getClientOriginalName();
+        $imageName ='uploads/products/' . $productId . '/' . Carbon::now()->timestamp.'-'.$this->thumb_image->getClientOriginalName();
         $this->thumb_image->storeAs($imageName);
         $product->thumb_image = $imageName;
 
