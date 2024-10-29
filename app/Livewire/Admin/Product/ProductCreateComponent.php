@@ -4,9 +4,13 @@ namespace App\Livewire\Admin\Product;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductOption;
+use App\Models\ProductSize;
+use App\Models\TempOption;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Rule;
 use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -20,14 +24,22 @@ class ProductCreateComponent extends Component
     public $price, $offer_price, $short_description, $long_description;
     public $sku, $status, $is_featured, $show_at_home, $seo_title, $seo_description;
     public $images;
-    public $activeTab = 'main';
+    public $productId;
+    #[Rule(['required', 'string'])]
+    public $sizeName;
+    #[Rule(['required','string'])]
+    public $optionName;
+    #[Rule(['required','numeric','min:0'])]
+    public $sizePrice;
+    #[Rule(['required','numeric','min:0'])]
+    public $optionPrice;
 
 
-    protected $rules = [
+    /*protected $rules = [
         'name' => ['required','string','max:255'],
         'slug' => ['required','string','max:255','unique:products,slug'],
         'thumb_image' => ['required', 'image', 'max:2048']
-    ];
+    ];*/
 
     public function changeTab($tabName)
     {
@@ -74,7 +86,12 @@ class ProductCreateComponent extends Component
 
     public function createProduct()
     {
-        $this->validate();
+        $this->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'slug' => ['required', 'string', 'max:255'], //, 'unique:products,slug'
+            'thumb_image' => ['required', 'image', 'max:2048']
+        ]);
+
         //dd('validate');
         $product = new Product();
         $product->name = $this->name;
@@ -97,9 +114,9 @@ class ProductCreateComponent extends Component
         $product->seo_description = $this->seo_description;
         $product->save();
 
-        $productId = $product->id;
+        $this->productId = $product->id;
 
-        $imageName ='uploads/products/' . $productId . '/' . Carbon::now()->timestamp.'-'.$this->thumb_image->getClientOriginalName();
+        $imageName ='uploads/products/' . $this->productId . '/' . Carbon::now()->timestamp.'-'.$this->thumb_image->getClientOriginalName();
         $this->thumb_image->storeAs($imageName);
         $product->thumb_image = $imageName;
 
@@ -108,7 +125,7 @@ class ProductCreateComponent extends Component
             $iamgesName = '';
             foreach ($this->images as $key=>$image)
             {
-                $imageName = 'uploads/products/' . $productId . '/' . Carbon::now()->timestamp.$key.'.'.$image->extension();
+                $imageName = 'uploads/products/' . $this->productId . '/' . Carbon::now()->timestamp.$key.'.'.$image->extension();
                 $image->storeAs($imageName);
                 if ($iamgesName == '')
                 {
@@ -119,6 +136,32 @@ class ProductCreateComponent extends Component
             $product->images = $iamgesName;
         }
 
+        $sizes = TempOption::where('temp_id', 1)->get();
+
+        $productSizes = $sizes->map(function ($size) {
+            return [
+                'product_id' => $this->productId,
+                'name' => $size->name,
+                'price' => $size->price,
+            ];
+        })->toArray(); // Added missing closing parenthesis for the map function
+
+        ProductSize::insert($productSizes);
+
+        $options = TempOption::where('temp_id', 2)->get();
+
+        $productOptions = $options->map(function($option) {
+            return [
+                'product_id' => $this->productId,
+                'name' => $option->name,
+                'price' => $option->price,
+                'created_at' => now(),
+                'updated_at' => now(),
+            ];
+        })->toArray();
+
+        ProductOption::insert($productOptions);
+
         $product->update();
 
         $this->reset(['name','slug','status', 'show_at_home']);
@@ -126,10 +169,50 @@ class ProductCreateComponent extends Component
         return redirect()->route('admin.product.index');
     }
 
+    public function saveSize()
+    {
+        /*$this->validate([
+           'sizeName' => ['required','string'],
+           'sizePrice' => ['required','numeric','min:0']
+        ]);*/
+        //dd('validate');
+        $size = new TempOption();
+        $size->temp_id = $this->productId ?? 1;
+        $size->name = $this->sizeName;
+        $size->price = $this->sizePrice;
+        $size->save();
+        $this->sizeName = '';
+        $this->sizePrice = '';
+        toastr()->success(__('Size has been added.'));
+    }
+
+    public function saveOption()
+    {
+        /*$this->validate([
+           'optionName' => ['required','string'],
+           'optionPrice' => ['required','numeric','min:0']
+        ]);*/
+        $option = new TempOption();
+        $option->temp_id = $this->productId ?? 2;
+        $option->name = $this->optionName;
+        $option->price = $this->optionPrice;
+        $option->save();
+        $this->optionName = '';
+        $this->optionPrice = '';
+        toastr()->success(__('Option has been added.'));
+    }
+
+    public function mount()
+    {
+        TempOption::truncate();
+    }
+
     #[Layout('livewire.admin.layouts.admin-app')]
     public function render()
     {
+        $sizes = TempOption::where('temp_id', 1)->get();
+        $options = TempOption::where('temp_id', 2)->get();
         $categories = Category::all();
-        return view('livewire.admin.product.product-create-component', compact('categories'));
+        return view('livewire.admin.product.product-create-component', compact('categories', 'sizes', 'options'));
     }
 }

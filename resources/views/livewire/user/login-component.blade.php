@@ -49,11 +49,16 @@
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="fp__login_imput fp__login_check_area">
-                                            <div class="form-check">
+                                            <div class="form-check" x-data="{ rememberMe: false }">
                                                 <input class="form-check-input" type="checkbox" value=""
-                                                       id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    Remeber Me
+                                                       id="flexCheckDefault"
+                                                       wire:model="rememberMe"
+                                                       :checked="rememberMe"
+                                                       @mouseover="cursor = 'pointer'"
+                                                       @mouseout="cursor = 'default'"
+                                                >
+                                                <label class="form-check-label" for="flexCheckDefault" :style="{ cursor: cursor }">
+                                                    Запомнить меня
                                                 </label>
                                             </div>
                                             <a href="{{ route('forgot-password') }}" wire:navigate>Forgot Password ?</a>

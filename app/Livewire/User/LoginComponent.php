@@ -9,6 +9,7 @@ class LoginComponent extends Component
 {
     public $email;
     public $password;
+    public $rememberMe = false;
 
     protected $rules = [
         'email' => 'required|email|max:255|exists:users,email',
@@ -27,23 +28,24 @@ class LoginComponent extends Component
     {
         $this->validate();
 
-        if (Auth::attempt(['email' => $this->email, 'password' => $this->password])) {
-
-            // Redirect or do something after successful login
-            if(Auth::user()->role == 'admin') {
-//                return $this->redirect('/admin/dashboard', navigate:true);
-                return $this->redirect('/admin/dashboard');
-            } elseif (Auth::user()->role == 'user') {
-                return $this->redirect('/', navigate:true);
-            } else {
-                return redirect()->intended('/');
-            }
-
+        if (Auth::attempt(['email' => $this->email, 'password' => $this->password], $this->rememberMe)) {
+            $this->handleSuccessfulLogin();
         } else {
-//            $this->addError('email', 'Предоставленные учетные данные не соответствуют нашим записям.');
             flash()->error('Предоставленные учетные данные не соответствуют нашим записям.');
         }
+
         return;
+    }
+
+    private function handleSuccessfulLogin()
+    {
+        if(Auth::user()->role == 'admin') {
+            return $this->redirect('/admin/dashboard');
+        } elseif (Auth::user()->role == 'user') {
+            return $this->redirect('/', navigate:true);
+        } else {
+            return redirect()->intended('/');
+        }
     }
 
     public function render()

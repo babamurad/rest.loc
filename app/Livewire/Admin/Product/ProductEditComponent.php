@@ -29,7 +29,7 @@ class ProductEditComponent extends Component
     public function cancel()
     {
         $this->reset(['name','slug','status','show_at_home']);
-        $this->redirect(route('admin.product.index'), navigate:true);
+        return $this->redirect(route('admin.product.index'), navigate:true);
     }
 
     public function delImageItem($key)
@@ -155,6 +155,7 @@ class ProductEditComponent extends Component
     }
 
     #[Layout('livewire.admin.layouts.admin-app')]
+    #[Title('Edit Product')]
     public function render()
     {
         $categories = Category::all();

@@ -18,21 +18,28 @@
     </script>
 @endpush
 <section class="section">
-    <div class="section-header">
-        <h1>{{ __('Products') }}</h1>
+    <div class="section-header d-flex justify-content-between align-items-center mb-0">
+{{--        <h1>{{ __('Products') }}</h1>--}}
+        <h4>{{ __('All Products') }}</h4>
+
+
+            <a href="{{ route('admin.product.create') }}" class="btn btn-primary">
+                <i class="fas fa-plus"></i>
+                {{ __('Create New') }}
+            </a>
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">
-                <div class="card-header">
+                {{--<div class="card-header">
                     <h4>{{ __('All Products') }}</h4>
                     <div class="card-header-action">
                         <a href="{{ route('admin.product.create') }}" class="btn btn-primary">
                             {{ __('Create New') }}
                         </a>
                     </div>
-                </div>
-                <div class="card-header-action">
+                </div>--}}
+                <div class="card-header-action mt-3">
                     <div class="row">
                         <div class="col-sm-3">
                             <div class="form-inline">
