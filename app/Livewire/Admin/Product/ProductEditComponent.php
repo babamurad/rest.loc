@@ -198,6 +198,32 @@ class ProductEditComponent extends Component
         $this->optionEdit = false;
     }
 
+    public function destroySize($size_id)
+    {
+        $size = TempOption::findOrFail($size_id);
+        $this->size_id = $size->id;
+        try {
+            $size = TempOption::findOrFail($this->size_id)->delete();
+            //$this->dispatch('closeModalSize');
+            toastr()->error(__('Option has been deleted.'));
+        } catch (\Exception $e) {
+            toastr()->error(__('Failed to delete option.'));
+        }
+    }
+
+    public function destroyOption($option_id)
+    {
+        $option = TempOption::findOrFail($option_id);
+        $this->option_id = $option->id;
+        try {
+            $option = TempOption::findOrFail($this->option_id)->delete();
+            $this->dispatch('closeModalOption');
+            toastr()->error(__('Option has been deleted.'));
+        } catch (\Exception $e) {
+            toastr()->error(__('Failed to delete option.'));
+        }
+    }
+
     public function mount($id)
     {
         $this->editId = $id;

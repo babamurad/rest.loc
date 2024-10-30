@@ -381,14 +381,15 @@
                                         <tbody>
                                         @foreach($product->sizes as $size)
                                             <tr>
-                                                <th scope="row">{{ $loop->index+1 }}</th>
-                                                <td>{{ $product->id }} {{ $size->name }}</td>
+                                                <th scope="row">{{ ++$loop->index }}</th>
+                                                <td style="width: 50%;">{{ $product->id }} {{ $size->name }}</td>
                                                 <td>{{ $size->price }}</td>
                                                 <td>
-                                                    <a class="btn btn-icon btn-primary btn-sm" href="#">
+                                                    <button class="btn btn-primary btn-sm" wire:click.prevent="editSize({{ $size->id }})">
                                                         <i class="far fa-edit"></i>
-                                                    </a>
-                                                    <button class="btn btn-danger btn-sm" wire:click="">
+                                                    </button>
+                                                    <button class="btn btn-danger btn-sm"
+                                                            onclick="if (confirm('Подтвердите удаление')) { @this.call('destroySize', {{ $size->id }}) }">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </td>
@@ -421,7 +422,8 @@
                                                     <a class="btn btn-icon btn-primary btn-sm" href="#">
                                                         <i class="far fa-edit"></i>
                                                     </a>
-                                                    <button class="btn btn-danger btn-sm" wire:click="">
+                                                    <button class="btn btn-danger btn-sm"
+                                                            onclick="if (confirm('Подтвердите удаление')) { @this.call('destroyOption', {{ $option->id }}) }">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </td>
