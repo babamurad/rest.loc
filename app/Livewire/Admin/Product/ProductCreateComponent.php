@@ -34,6 +34,8 @@ class ProductCreateComponent extends Component
     #[Rule(['required','numeric','min:0'])]
     public $optionPrice;
 
+    public $size_id, $option_id;
+
 
     /*protected $rules = [
         'name' => ['required','string','max:255'],
@@ -205,8 +207,29 @@ class ProductCreateComponent extends Component
     public function editSize($size_id)
     {
         $size = TempOption::findOrFail($size_id);
+        $this->size_id = $size->id;
         $this->sizeName = $size->name;
         $this->sizePrice = $size->price;
+    }
+
+    public function deleteSize($size_id)
+    {
+        $size = TempOption::findOrFail($size_id);
+        $this->size_id = $size->id;
+    }
+
+    public function deleteOption($option_id)
+    {
+         $option = TempOption::findOrFail($option_id);
+         $this->option_id = $option->id;
+    }
+
+    public function editOption($option_id)
+    {
+         $option = TempOption::findOrFail($option_id);
+         $this->option_id = $option->id;
+         $this->optionName = $option->name;
+         $this->optionPrice = $option->price;
     }
 
     public function updateSize($size_id)
@@ -223,15 +246,27 @@ class ProductCreateComponent extends Component
         toastr()->success(__('Option has been updated.'));
     }
 
-    public function destroySize($size_id)
+    public function destroySize()
     {
         try {
-            $size = TempOption::findOrFail($size_id)->delete();
+            $size = TempOption::findOrFail($this->size_id)->delete();
+            $this->dispatch('closeModalSize');
             toastr()->error(__('Option has been deleted.'));
         } catch (\Exception $e) {
             toastr()->error(__('Failed to delete option.'));
         }
     }
+
+    public function destroyOption()
+        {
+            try {
+                $option = TempOption::findOrFail($this->option_id)->delete();
+                $this->dispatch('closeModalOption');
+                toastr()->error(__('Option has been deleted.'));
+            } catch (\Exception $e) {
+                toastr()->error(__('Failed to delete option.'));
+            }
+        }
 
     public function mount()
     {

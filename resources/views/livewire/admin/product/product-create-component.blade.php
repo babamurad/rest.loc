@@ -364,7 +364,7 @@
                                                     <button class="btn btn-primary btn-sm" wire:click.prevent="editSize({{ $size->id }})">
                                                         <i class="far fa-edit"></i>
                                                     </button>
-                                                    <button class="btn btn-danger btn-sm"  data-toggle="modal" data-target="#ConfirmDelete" wire:click="destroySize({{ $size->id }})">
+                                                    <button class="btn btn-danger btn-sm"  data-toggle="modal" data-target="#ConfirmDelete" wire:click="deleteSize({{ $size->id }})">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </td>
@@ -375,19 +375,9 @@
                                             <tr>
                                                 <td colspan="4" class="text-center">No data found!</td>
                                             </tr>
-                                        @else
-                                            {{--<button class="btn btn-sm btn-success">
-                                                <i class="fas fa-plus"></i>
-                                                {{__('Add')}}
-                                            </button>--}}
                                         @endif
                                         </tbody>
                                     </table>
-
-                                    {{--<button class="btn btn-sm btn-success" @click="editing = false"  $wire.editSize({{ $size->id }})">
-                                                        <i class="fas fa-check"></i>
-                                                        {{__('Save')}}
-                                                    </button>--}}
                                 </div>
                             </div>
                         </div>
@@ -413,7 +403,7 @@
                                                     <button class="btn btn-icon btn-primary btn-sm">
                                                         <i class="far fa-edit"></i>
                                                     </button>
-                                                    <button class="btn btn-danger btn-sm" wire:click="">
+                                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#ConfirmDeleteOption" wire:click="deleteOption({{ $option->id }})">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </td>
@@ -448,5 +438,58 @@
             </div>
         </div>
     </div>
+
+    <script>
+        window.addEventListener('closeModalSize', event=> {
+            $('#ConfirmDelete').modal('hide');
+        })
+        window.addEventListener('closeModalOption', event=> {
+            $('#ConfirmDeleteOption').modal('hide');
+        })
+    </script>
+
+    <!-- Modal -->
+
+    <div wire:ignore class="modal fade" id="ConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="ConfirmDelete" aria-hidden="true" style="background-color: rgb(70 70 70 / 50%);">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ConfirmDelete">{{__('Удаление')}}</h5>
+                    <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close"></button>
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>{{__('Вы действительно хотите удалить?')}}</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">{{__('Отмена')}}</button>
+                    <button type="button" class="btn btn-danger waves-effect waves-light" wire:click="destroySize">{{__('Удалить')}}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div wire:ignore class="modal fade" id="ConfirmDeleteOption" tabindex="-1" role="dialog" aria-labelledby="ConfirmDelete" aria-hidden="true" style="background-color: rgb(70 70 70 / 50%);">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="ConfirmDelete">{{__('Удаление')}}</h5>
+                        <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close"></button>
+                        <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <p>{{__('Вы действительно хотите удалить?')}}</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">{{__('Отмена')}}</button>
+                        <button type="button" class="btn btn-danger waves-effect waves-light" wire:click="destroyOption">{{__('Удалить')}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- /Modal -->
 </section>
 
