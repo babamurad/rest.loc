@@ -386,7 +386,7 @@
                                         <tbody>
                                         @foreach($sizes as $size)
                                             <tr>
-                                                <th scope="row">{{ $size->id }}</th>
+                                                <th scope="row">{{ ++$loop->index }}</th>
                                                 <td style="width: 50%;">{{ $size->name }}</td>
                                                 <td>{{ $size->price }}</td>
                                                 <td>
@@ -426,18 +426,15 @@
                                         <tbody>
                                         @foreach($options as $option)
                                             <tr>
-                                                <th scope="row">{{ $option->id }}</th>
+                                                <th scope="row">{{ ++$loop->index }}</th>
                                                 <td style="width: 50%;">{{ $option->name }}</td>
                                                 <td>{{ $option->price }}</td>
                                                 <td>
                                                     <button class="btn btn-icon btn-primary btn-sm" wire:click="editOption({{ $option->id }})">
                                                         <i class="far fa-edit"></i>
                                                     </button>
-                                                    <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#ConfirmDeleteOption" wire:click="deleteOption({{ $option->id }})">
-                                                        <i class="fas fa-trash-alt"></i>
-                                                    </button>
                                                     <button class="btn btn-danger btn-sm"
-                                                            onclick="if (confirm('Подтвердите удаление')) { @this.call('deleteOption', {{ $option->id }}) }">
+                                                            onclick="if (confirm('Подтвердите удаление')) { @this.call('destroyOption', {{ $option->id }}) }">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </td>

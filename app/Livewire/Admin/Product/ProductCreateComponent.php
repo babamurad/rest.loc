@@ -257,13 +257,6 @@ class ProductCreateComponent extends Component
          $this->optionEdit = true;
     }
 
-    public function confirmDelete($sizeId)
-    {
-        if (confirm('Вы действительно хотите удалить запись?')) {
-            $this->destroySize($sizeId);
-        }
-    }
-
     public function destroySize($size_id)
     {
         $size = TempOption::findOrFail($size_id);
@@ -277,8 +270,10 @@ class ProductCreateComponent extends Component
         }
     }
 
-    public function destroyOption()
+    public function destroyOption($option_id)
         {
+            $option = TempOption::findOrFail($option_id);
+            $this->option_id = $option->id;
             try {
                 $option = TempOption::findOrFail($this->option_id)->delete();
                 $this->dispatch('closeModalOption');
