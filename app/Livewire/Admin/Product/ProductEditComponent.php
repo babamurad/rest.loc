@@ -4,6 +4,9 @@ namespace App\Livewire\Admin\Product;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductOption;
+use App\Models\ProductSize;
+use App\Models\TempOption;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 use Livewire\Attributes\Layout;
@@ -11,15 +14,21 @@ use Livewire\Attributes\Title;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 
-#[Title('Product Edit')]
+#[Title('Edit Product')]
 class ProductEditComponent extends Component
 {
     use WithFileUploads;
+    public $product;
     public $editId;
     public $name, $slug, $image, $newimage, $category_id;
     public $price, $offer_price, $short_description, $long_description;
     public $sku, $status, $is_featured, $show_at_home, $seo_title, $seo_description;
     public $images, $newimages;
+
+    public $sizeName;
+    public $optionName;
+    public $sizePrice;
+    public $optionPrice;
 
     protected $rules = [
         'name' => ['required','string','max:255'],
@@ -131,10 +140,43 @@ class ProductEditComponent extends Component
         return redirect()->route('admin.product.index');
     }
 
+    public function saveSize()
+    {
+        $this->validate([
+           'sizeName' => ['required','string'],
+           'sizePrice' => ['required','numeric','min:0']
+        ]);
+        $size = new ProductSize();
+        $size->product_id = $this->editId;
+        $size->name = $this->sizeName;
+        $size->price = $this->sizePrice;
+        $size->save();
+        $this->sizeName = '';
+        $this->sizePrice = '';
+        toastr()->success(__('Size has been added.'));
+    }
+
+    public function saveOption()
+    {
+        $this->validate([
+           'optionName' => ['required','string'],
+           'optionPrice' => ['required','numeric','min:0']
+        ]);
+        $option = new ProductOption();
+        $option->product_id = $this->editId;
+        $option->name = $this->optionName;
+        $option->price = $this->optionPrice;
+        $option->save();
+        $this->optionName = '';
+        $this->optionPrice = '';
+        toastr()->success(__('Option has been added.'));
+    }
+
     public function mount($id)
     {
         $this->editId = $id;
         $product = Product::find($this->editId);
+        $this->product = $product;
         $this->name = $product->name;
         $this->slug = $product->slug;
         $this->image = $product->thumb_image;
@@ -155,10 +197,10 @@ class ProductEditComponent extends Component
     }
 
     #[Layout('livewire.admin.layouts.admin-app')]
-    #[Title('Edit Product')]
     public function render()
     {
         $categories = Category::all();
+
         return view('livewire.admin.product.product-edit-component', compact('categories'));
     }
 }

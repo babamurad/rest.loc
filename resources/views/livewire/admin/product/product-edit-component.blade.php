@@ -69,6 +69,9 @@
                     <li class="nav-item" @click="currentTab = 3">
                         <a :class="{ 'active-tab-btn text-white': currentTab === 3 }" class=" nav-link" href="#">Seo</a>
                     </li>
+                    <li class="nav-item" @click="currentTab = 4">
+                        <a :class="{ 'active-tab-btn text-white': currentTab === 4 }" class=" nav-link" href="#">Options</a>
+                    </li>
                 </ul>
                 <div class="" x-show="currentTab === 1">
                     <div class="row">
@@ -305,6 +308,132 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div x-show="currentTab === 4">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="card mb-3">
+                                <div class="card-header">{{__('Create size')}}</div>
+                                <div class="card-body">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>{{__('Size')}}</label>
+                                            <input type="text" class="form-control form-control-sm @error('sizeName') is-invalid @enderror" wire:model="sizeName">
+                                            @error('sizeName') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{__('Price')}}</label>
+                                            <div>
+                                                <input type="number" class="form-control form-control-sm @error('sizePrice') is-invalid @enderror" wire:model="sizePrice">
+                                                @error('sizePrice') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <a class="btn btn-primary mr-1 text-white btn-sm" type="button" wire:click="saveSize">
+                                            <i class="fas fa-plus"></i>
+                                            {{__('Create')}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card mb-3">
+                                <div class="card-header">{{__('Create options(optional)')}}</div>
+                                <div class="card-body">
+                                    <div class="col-sm-6">
+                                        <div class="form-group">
+                                            <label>{{__('Size')}}</label>
+                                            <input type="text" class="form-control form-control-sm @error('optionName') is-invalid @enderror" wire:model="optionName">
+                                            @error('optionName') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <label>{{__('Price')}}</label>
+                                            <div>
+                                                <input type="number" class="form-control form-control-sm @error('optionPrice') is-invalid @enderror" wire:model="optionPrice">
+                                                @error('optionPrice') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <a class="btn btn-primary mr-1 text-white btn-sm" type="button">
+                                            <i class="fas fa-plus"></i>
+                                            {{__('Create')}}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="card card-primary">
+                                <div class="card-body">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($product->sizes as $size)
+                                            <tr>
+                                                <th scope="row">{{ $loop->index+1 }}</th>
+                                                <td>{{ $product->id }} {{ $size->name }}</td>
+                                                <td>{{ $size->price }}</td>
+                                                <td>
+                                                    <a class="btn btn-icon btn-primary btn-sm" href="#">
+                                                        <i class="far fa-edit"></i>
+                                                    </a>
+                                                    <button class="btn btn-danger btn-sm" wire:click="">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="card card-primary">
+                                <div class="card-body">
+                                    <table class="table table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">#</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Price</th>
+                                            <th scope="col">Action</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        @foreach($product->options as $option)
+                                            <tr>
+                                                <th scope="row">{{ $loop->index+1 }}</th>
+                                                <td>{{ $product->id }} {{ $option->name }}</td>
+                                                <td>{{ $option->price }}</td>
+                                                <td>
+                                                    <a class="btn btn-icon btn-primary btn-sm" href="#">
+                                                        <i class="far fa-edit"></i>
+                                                    </a>
+                                                    <button class="btn btn-danger btn-sm" wire:click="">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
 

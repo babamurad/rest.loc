@@ -1,4 +1,3 @@
-@section('title', 'Create Product')
 @push('summernote-css')
     <link rel="stylesheet" href="{{ asset('admin/assets/modules/summernote/summernote-bs4.css') }}">
 @endpush
@@ -41,6 +40,7 @@
         });
     </script>
 @endpush
+
 <section class="section">
     <div class="section-header d-flex justify-content-between align-items-center">
             <h4>Create Product</h4>
@@ -51,12 +51,7 @@
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12">
-            <div class="card card-primary">
-
-
-            </div>
-
-
+            <div class="card card-primary"></div>
             <div x-data="{ currentTab: 1 }">
                 <ul class="nav nav-tabs">
                     <li class="nav-item" @click="currentTab = 1">
@@ -286,55 +281,62 @@
                 <div x-show="currentTab === 4">
                     <div class="row">
                         <div class="col-sm-6">
-                            <div class="card mb-0">
+                            <div class="card mb-3">
                                 <div class="card-header">{{__('Create size')}}</div>
                                 <div class="card-body">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>{{__('Size')}}</label>
-                                            <input type="text" class="form-control form-control-sm @error('sizeName') is-invalid @enderror" wire:model="sizeName">
-                                            @error('sizeName') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>{{__('Size')}}</label>
+                                                <input type="text" class="form-control form-control-sm @error('sizeName') is-invalid @enderror" wire:model="sizeName">
+                                                @error('sizeName') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label>{{__('Price')}}</label>
-                                            <div>
-                                                <input type="number" class="form-control form-control-sm @error('sizePrice') is-invalid @enderror" wire:model="sizePrice">
-                                                @error('sizePrice') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>{{__('Price')}}</label>
+                                                <div>
+                                                    <input type="number" class="form-control form-control-sm @error('sizePrice') is-invalid @enderror" wire:model="sizePrice">
+                                                    @error('sizePrice') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <a class="btn btn-primary mr-1 text-white btn-sm" type="button" wire:click="saveSize">
-                                            <i class="fas fa-plus"></i>
-                                            {{__('Create')}}</a>
-                                    </div>
+
+                                    <a class="btn btn-primary mr-1 text-white btn-sm" type="button" wire:click="saveSize">
+                                        <i class="fas fa-plus"></i>
+                                        {{__('Create')}}
+                                    </a>
                                 </div>
                             </div>
                         </div>
                         <div class="col-sm-6">
-                            <div class="card mb-0">
+                            <div class="card mb-3">
                                 <div class="card-header">{{__('Create options(optional)')}}</div>
                                 <div class="card-body">
-                                    <div class="col-sm-6">
-                                        <div class="form-group">
-                                            <label>{{__('Size')}}</label>
-                                            <input type="text" class="form-control form-control-sm" wire:model="optionName">
-                                            @error('optionName') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>{{__('Size')}}</label>
+                                                <input type="text" class="form-control form-control-sm" wire:model="optionName">
+                                                @error('optionName') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                            </div>
                                         </div>
-                                        <div class="form-group">
-                                            <label>{{__('Price')}}</label>
-                                            <div>
-                                                <input type="number" class="form-control form-control-sm" wire:model="optionPrice">
-                                             @error('optionPrice') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                        <div class="col-sm-6">
+                                            <div class="form-group">
+                                                <label>{{__('Price')}}</label>
+                                                <div>
+                                                    <input type="number" class="form-control form-control-sm" wire:model="optionPrice">
+                                                    @error('optionPrice') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-6">
-                                        <a class="btn btn-primary mr-1 text-white btn-sm" type="button" wire:click="saveOption">
-                                            <i class="fas fa-plus"></i>
-                                            {{__('Create')}}
-                                        </a>
-                                    </div>
+
+                                    <a class="btn btn-primary mr-1 text-white btn-sm" type="button" wire:click="saveOption">
+                                        <i class="fas fa-plus"></i>
+                                        {{__('Create')}}
+                                    </a>
                                 </div>
                             </div>
                         </div>
@@ -354,22 +356,38 @@
                                         </thead>
                                         <tbody>
                                         @foreach($sizes as $size)
-                                        <tr>
-                                            <th scope="row">1</th>
-                                            <td>{{ $size->name }}</td>
-                                            <td>{{ $size->price }}</td>
-                                            <td>
-                                                <a class="btn btn-icon btn-primary btn-sm" href="#">
-                                                    <i class="far fa-edit"></i>
-                                                </a>
-                                                <button class="btn btn-danger btn-sm" wire:click="">
-                                                    <i class="fas fa-trash-alt"></i>
-                                                </button>
-                                            </td>
-                                        </tr>
+                                            <tr>
+                                                <th scope="row">{{ $size->id }}</th>
+                                                <td>{{ $size->name }}</td>
+                                                <td>{{ $size->price }}</td>
+                                                <td>
+                                                    <button class="btn btn-primary btn-sm" wire:click.prevent="editSize({{ $size->id }})">
+                                                        <i class="far fa-edit"></i>
+                                                    </button>
+                                                    <button class="btn btn-danger btn-sm"  data-toggle="modal" data-target="#ConfirmDelete" wire:click="destroySize({{ $size->id }})">
+                                                        <i class="fas fa-trash-alt"></i>
+                                                    </button>
+                                                </td>
+                                            </tr>
                                         @endforeach
+
+                                        @if(count($sizes) === 0)
+                                            <tr>
+                                                <td colspan="4" class="text-center">No data found!</td>
+                                            </tr>
+                                        @else
+                                            {{--<button class="btn btn-sm btn-success">
+                                                <i class="fas fa-plus"></i>
+                                                {{__('Add')}}
+                                            </button>--}}
+                                        @endif
                                         </tbody>
                                     </table>
+
+                                    {{--<button class="btn btn-sm btn-success" @click="editing = false"  $wire.editSize({{ $size->id }})">
+                                                        <i class="fas fa-check"></i>
+                                                        {{__('Save')}}
+                                                    </button>--}}
                                 </div>
                             </div>
                         </div>
@@ -388,19 +406,29 @@
                                         <tbody>
                                         @foreach($options as $option)
                                             <tr>
-                                                <th scope="row">1</th>
+                                                <th scope="row">{{ $option->id }}</th>
                                                 <td>{{ $option->name }}</td>
                                                 <td>{{ $option->price }}</td>
                                                 <td>
-                                                    <a class="btn btn-icon btn-primary btn-sm" href="#">
+                                                    <button class="btn btn-icon btn-primary btn-sm">
                                                         <i class="far fa-edit"></i>
-                                                    </a>
+                                                    </button>
                                                     <button class="btn btn-danger btn-sm" wire:click="">
                                                         <i class="fas fa-trash-alt"></i>
                                                     </button>
                                                 </td>
                                             </tr>
                                         @endforeach
+                                        @if(count($options) === 0)
+                                            <tr>
+                                                <td colspan="4" class="text-center">No data found!</td>
+                                            </tr>
+                                        @else
+                                            {{--<button class="btn btn-sm btn-success">
+                                                <i class="fas fa-plus"></i>
+                                                {{__('Add')}}
+                                            </button>--}}
+                                        @endif
                                         </tbody>
                                     </table>
                                 </div>
@@ -410,12 +438,7 @@
 
                 </div>
             </div>
-
-
             </div>
-
-
-
                 </div>
                 <div class="card-footer text-left">
                     <button class="btn btn-primary mr-1" type="button" wire:click="createProduct">Submit</button>

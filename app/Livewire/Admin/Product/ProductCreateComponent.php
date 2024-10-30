@@ -171,13 +171,12 @@ class ProductCreateComponent extends Component
 
     public function saveSize()
     {
-        /*$this->validate([
+        $this->validate([
            'sizeName' => ['required','string'],
            'sizePrice' => ['required','numeric','min:0']
-        ]);*/
-        //dd('validate');
+        ]);
         $size = new TempOption();
-        $size->temp_id = $this->productId ?? 1;
+        $size->temp_id = 1;
         $size->name = $this->sizeName;
         $size->price = $this->sizePrice;
         $size->save();
@@ -188,18 +187,50 @@ class ProductCreateComponent extends Component
 
     public function saveOption()
     {
-        /*$this->validate([
+        $this->validate([
            'optionName' => ['required','string'],
            'optionPrice' => ['required','numeric','min:0']
-        ]);*/
+        ]);
+
         $option = new TempOption();
-        $option->temp_id = $this->productId ?? 2;
+        $option->temp_id = 2;
         $option->name = $this->optionName;
         $option->price = $this->optionPrice;
         $option->save();
         $this->optionName = '';
         $this->optionPrice = '';
         toastr()->success(__('Option has been added.'));
+    }
+
+    public function editSize($size_id)
+    {
+        $size = TempOption::findOrFail($size_id);
+        $this->sizeName = $size->name;
+        $this->sizePrice = $size->price;
+    }
+
+    public function updateSize($size_id)
+    {
+        $this->validate([
+            'optionName' => ['required','string'],
+            'optionPrice' => ['required','numeric','min:0']
+        ]);
+        $size = TempOption::findOrFail($size_id);
+        $size->name = $this->sizeName;
+        $size->price = $this->sizePrice;
+        $size->update();
+        $this->isEditing = false;
+        toastr()->success(__('Option has been updated.'));
+    }
+
+    public function destroySize($size_id)
+    {
+        try {
+            $size = TempOption::findOrFail($size_id)->delete();
+            toastr()->error(__('Option has been deleted.'));
+        } catch (\Exception $e) {
+            toastr()->error(__('Failed to delete option.'));
+        }
     }
 
     public function mount()
