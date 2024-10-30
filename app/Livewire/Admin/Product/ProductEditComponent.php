@@ -30,6 +30,10 @@ class ProductEditComponent extends Component
     public $sizePrice;
     public $optionPrice;
 
+    public $size_id, $option_id;
+    public $sizeEdit = false;
+    public $optionEdit = false;
+
     protected $rules = [
         'name' => ['required','string','max:255'],
         'slug' => ['required','string','max:255','unique:categories,slug'],
@@ -143,33 +147,55 @@ class ProductEditComponent extends Component
     public function saveSize()
     {
         $this->validate([
-           'sizeName' => ['required','string'],
-           'sizePrice' => ['required','numeric','min:0']
+            'sizeName' => ['required', 'string'],
+            'sizePrice' => ['required', 'numeric', 'min:0'],
         ]);
-        $size = new ProductSize();
-        $size->product_id = $this->editId;
+
+        // Находим или создаем объект Size
+        $size = $this->sizeEdit ? TempOption::find($this->size_id) : new TempOption();
+
+        // Заполняем свойства объекта
+        $size->temp_id = 1;
         $size->name = $this->sizeName;
         $size->price = $this->sizePrice;
+
+        // Обновляем или создаем запись
+//        $this->sizeEdit ? $size->update() : $size->save();
         $size->save();
+
+        // Отображаем сообщение об успешном действии
+        toastr()->success($this->sizeEdit ? __('Size has been updated.') : __('Size has been added.'));
+
         $this->sizeName = '';
         $this->sizePrice = '';
-        toastr()->success(__('Size has been added.'));
+        $this->sizeEdit = false;
     }
 
     public function saveOption()
     {
         $this->validate([
-           'optionName' => ['required','string'],
-           'optionPrice' => ['required','numeric','min:0']
+            'optionName' => ['required','string'],
+            'optionPrice' => ['required','numeric','min:0']
         ]);
-        $option = new ProductOption();
-        $option->product_id = $this->editId;
+
+        // Находим или создаем объект Size
+        $option = $this->optionEdit ? TempOption::find($this->option_id) : new TempOption();
+
+        // Заполняем свойства объекта
+        $option->temp_id = 2;
         $option->name = $this->optionName;
         $option->price = $this->optionPrice;
+
+        // Обновляем или создаем запись
+//        $this->$this->optionEdit ? $option->update() : $option->save();
         $option->save();
+
+        // Отображаем сообщение об успешном действии
+        toastr()->success($this->optionEdit ? __('Option has been updated.') : __('Option has been added.'));
+
         $this->optionName = '';
         $this->optionPrice = '';
-        toastr()->success(__('Option has been added.'));
+        $this->optionEdit = false;
     }
 
     public function mount($id)

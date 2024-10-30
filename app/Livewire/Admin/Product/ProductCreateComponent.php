@@ -35,6 +35,8 @@ class ProductCreateComponent extends Component
     public $optionPrice;
 
     public $size_id, $option_id;
+    public $sizeEdit = false;
+    public $optionEdit = false;
 
 
     /*protected $rules = [
@@ -174,17 +176,28 @@ class ProductCreateComponent extends Component
     public function saveSize()
     {
         $this->validate([
-           'sizeName' => ['required','string'],
-           'sizePrice' => ['required','numeric','min:0']
+            'sizeName' => ['required', 'string'],
+            'sizePrice' => ['required', 'numeric', 'min:0'],
         ]);
-        $size = new TempOption();
+
+        // Находим или создаем объект Size
+        $size = $this->sizeEdit ? TempOption::find($this->size_id) : new TempOption();
+
+        // Заполняем свойства объекта
         $size->temp_id = 1;
         $size->name = $this->sizeName;
         $size->price = $this->sizePrice;
+
+        // Обновляем или создаем запись
+//        $this->sizeEdit ? $size->update() : $size->save();
         $size->save();
+
+        // Отображаем сообщение об успешном действии
+        toastr()->success($this->sizeEdit ? __('Size has been updated.') : __('Size has been added.'));
+
         $this->sizeName = '';
         $this->sizePrice = '';
-        toastr()->success(__('Size has been added.'));
+        $this->sizeEdit = false;
     }
 
     public function saveOption()
@@ -194,14 +207,24 @@ class ProductCreateComponent extends Component
            'optionPrice' => ['required','numeric','min:0']
         ]);
 
-        $option = new TempOption();
+        // Находим или создаем объект Size
+        $option = $this->optionEdit ? TempOption::find($this->option_id) : new TempOption();
+
+        // Заполняем свойства объекта
         $option->temp_id = 2;
         $option->name = $this->optionName;
         $option->price = $this->optionPrice;
+
+        // Обновляем или создаем запись
+//        $this->$this->optionEdit ? $option->update() : $option->save();
         $option->save();
+
+        // Отображаем сообщение об успешном действии
+        toastr()->success($this->optionEdit ? __('Option has been updated.') : __('Option has been added.'));
+
         $this->optionName = '';
         $this->optionPrice = '';
-        toastr()->success(__('Option has been added.'));
+        $this->optionEdit = false;
     }
 
     public function editSize($size_id)
@@ -210,6 +233,7 @@ class ProductCreateComponent extends Component
         $this->size_id = $size->id;
         $this->sizeName = $size->name;
         $this->sizePrice = $size->price;
+        $this->sizeEdit = true;
     }
 
     public function deleteSize($size_id)
@@ -230,27 +254,23 @@ class ProductCreateComponent extends Component
          $this->option_id = $option->id;
          $this->optionName = $option->name;
          $this->optionPrice = $option->price;
+         $this->optionEdit = true;
     }
 
-    public function updateSize($size_id)
+    public function confirmDelete($sizeId)
     {
-        $this->validate([
-            'optionName' => ['required','string'],
-            'optionPrice' => ['required','numeric','min:0']
-        ]);
+        if (confirm('Вы действительно хотите удалить запись?')) {
+            $this->destroySize($sizeId);
+        }
+    }
+
+    public function destroySize($size_id)
+    {
         $size = TempOption::findOrFail($size_id);
-        $size->name = $this->sizeName;
-        $size->price = $this->sizePrice;
-        $size->update();
-        $this->isEditing = false;
-        toastr()->success(__('Option has been updated.'));
-    }
-
-    public function destroySize()
-    {
+        $this->size_id = $size->id;
         try {
             $size = TempOption::findOrFail($this->size_id)->delete();
-            $this->dispatch('closeModalSize');
+            //$this->dispatch('closeModalSize');
             toastr()->error(__('Option has been deleted.'));
         } catch (\Exception $e) {
             toastr()->error(__('Failed to delete option.'));
