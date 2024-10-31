@@ -10,7 +10,9 @@ class FoodMenuComponent extends Component
 {
     public $product;
     public $selectedId;
-    public $showModal = false;
+    public $name;
+    public $price;
+    public $offer_price;
 
     public function render()
     {
@@ -21,16 +23,31 @@ class FoodMenuComponent extends Component
         return view('livewire.components.food-menu-component', compact('categories', 'products'));
     }
 
+    public function mount()
+    {
+        $product = Product::first();
+    }
+
     public function openModal($id)
     {
         $this->selectedId = $id;
-        $this->product = Product::find($id);
-        $this->showModal = true;
+        $product = Product::find($id)->with('sizes', 'options');
+        $this->name = $product->name;
+        $this->price = $product->price;
+        $this->offer_price = $product->offer_price;
+        //dd($this->name);
+        $this->dispatch('show-modal');
     }
 
     public function closeModal()
     {
         $this->showModal = false;
         $this->selectedId = null;
+    }
+
+    public function toggleModal()
+    {
+        //dd('mod');
+        $this->showModal = !$this->showModal;
     }
 }
