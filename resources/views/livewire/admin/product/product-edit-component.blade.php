@@ -331,8 +331,8 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <a class="btn btn-primary mr-1 text-white btn-sm" type="button" wire:click="saveSize">
-                                            <i class="fas fa-plus"></i>
-                                            {{__('Create')}}</a>
+                                            <i class="far fa-save"></i>
+                                            {{__('Save')}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -356,9 +356,9 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
-                                        <a class="btn btn-primary mr-1 text-white btn-sm" type="button">
-                                            <i class="fas fa-plus"></i>
-                                            {{__('Create')}}
+                                        <a class="btn btn-primary mr-1 text-white btn-sm" type="button" wire:click="saveOption()">
+                                            <i class="far fa-save"></i>
+                                            {{__('Save')}}
                                         </a>
                                     </div>
                                 </div>
@@ -382,7 +382,7 @@
                                         @foreach($product->sizes as $size)
                                             <tr>
                                                 <th scope="row">{{ ++$loop->index }}</th>
-                                                <td style="width: 50%;">{{ $product->id }} {{ $size->name }}</td>
+                                                <td class="w-50">{{ $size->name }}</td>
                                                 <td>{{ $size->price }}</td>
                                                 <td>
                                                     <button class="btn btn-primary btn-sm" wire:click.prevent="editSize({{ $size->id }})">
@@ -416,10 +416,10 @@
                                         @foreach($product->options as $option)
                                             <tr>
                                                 <th scope="row">{{ $loop->index+1 }}</th>
-                                                <td>{{ $product->id }} {{ $option->name }}</td>
+                                                <td class="w-50">{{ $option->name }}</td>
                                                 <td>{{ $option->price }}</td>
                                                 <td>
-                                                    <a class="btn btn-icon btn-primary btn-sm" href="#">
+                                                    <a class="btn btn-icon btn-primary btn-sm" href="#" wire:click.prevent="editOption({{ $option->id }})">
                                                         <i class="far fa-edit"></i>
                                                     </a>
                                                     <button class="btn btn-danger btn-sm"
@@ -441,8 +441,8 @@
 
         </div>
         <div class="card-footer text-left">
-            <button class="btn btn-primary mr-1" type="button" wire:click="updateProduct">Submit</button>
-            <button class="btn btn-secondary" type="reset" wire:click="cancel">Cancel</button>
+            <button class="btn btn-primary mr-1" type="button" wire:click="updateProduct"><i class="fas fa-save mr-1"></i>Submit</button>
+            <button class="btn btn-secondary" type="reset" wire:click="cancel"><i class="far fa-window-close mr-1"></i>Cancel</button>
         </div>
 
     </div>

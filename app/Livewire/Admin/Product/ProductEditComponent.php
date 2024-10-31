@@ -152,10 +152,10 @@ class ProductEditComponent extends Component
         ]);
 
         // Находим или создаем объект Size
-        $size = $this->sizeEdit ? TempOption::find($this->size_id) : new TempOption();
+        $size = $this->sizeEdit ? ProductSize::find($this->size_id) : new ProductSize();
 
         // Заполняем свойства объекта
-        $size->temp_id = 1;
+        $size->product_id = $this->product->id;
         $size->name = $this->sizeName;
         $size->price = $this->sizePrice;
 
@@ -179,10 +179,10 @@ class ProductEditComponent extends Component
         ]);
 
         // Находим или создаем объект Size
-        $option = $this->optionEdit ? TempOption::find($this->option_id) : new TempOption();
+        $option = $this->optionEdit ? ProductOption::find($this->option_id) : new ProductOption();
 
         // Заполняем свойства объекта
-        $option->temp_id = 2;
+        $option->product_id = $this->product->id;
         $option->name = $this->optionName;
         $option->price = $this->optionPrice;
 
@@ -200,11 +200,8 @@ class ProductEditComponent extends Component
 
     public function destroySize($size_id)
     {
-        $size = TempOption::findOrFail($size_id);
-        $this->size_id = $size->id;
         try {
-            $size = TempOption::findOrFail($this->size_id)->delete();
-            //$this->dispatch('closeModalSize');
+            $size = ProductSize::findOrFail($size_id)->delete();
             toastr()->error(__('Option has been deleted.'));
         } catch (\Exception $e) {
             toastr()->error(__('Failed to delete option.'));
@@ -213,15 +210,30 @@ class ProductEditComponent extends Component
 
     public function destroyOption($option_id)
     {
-        $option = TempOption::findOrFail($option_id);
-        $this->option_id = $option->id;
         try {
-            $option = TempOption::findOrFail($this->option_id)->delete();
-            $this->dispatch('closeModalOption');
+            $option = ProductOption::findOrFail($option_id)->delete();
             toastr()->error(__('Option has been deleted.'));
         } catch (\Exception $e) {
             toastr()->error(__('Failed to delete option.'));
         }
+    }
+
+    public function editSize($size_id)
+    {
+        $size = ProductSize::findOrFail($size_id);
+        $this->size_id = $size->id;
+        $this->sizeName = $size->name;
+        $this->sizePrice = $size->price;
+        $this->sizeEdit = true;
+    }
+
+    public function editOption($option_id)
+    {
+        $option = ProductOption::findOrFail($option_id);
+        $this->option_id = $option->id;
+        $this->optionName = $option->name;
+        $this->optionPrice = $option->price;
+        $this->optionEdit = true;
     }
 
     public function mount($id)
