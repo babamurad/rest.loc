@@ -61,6 +61,4 @@ Route::middleware(['auth', 'admin:admin'])->prefix('admin')->group(function () {
     Route::get('product', ProductIndexComponent::class)->name('admin.product.index');
     Route::get('product/create', ProductCreateComponent::class)->name('admin.product.create');
     Route::get('product/edit/{id}', ProductEditComponent::class)->name('admin.product.edit');
-
-
 });
