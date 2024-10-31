@@ -36,14 +36,14 @@
                                     <div class="col-xl-12">
                                         <div class="fp__login_imput">
                                             <label>email</label>
-                                            <input class="is-invalid" type="email" placeholder="Email" wire:model="email">
+                                            <input class="@error('email') is-invalid @enderror" type="email" placeholder="Email" wire:model="email">
                                             @error('email') <div class="invalid-feedback">{{$message}}</div> @enderror
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="fp__login_imput">
                                             <label>password</label>
-                                            <input type="password" placeholder="Password" wire:model="password">
+                                            <input class="@error('password') is-invalid @enderror" type="password" placeholder="Password" wire:model="password">
                                             @error('password') <div class="invalid-feedback">{{$message}}</div> @enderror
                                         </div>
                                     </div>
