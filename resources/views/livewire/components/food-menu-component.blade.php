@@ -86,7 +86,7 @@
                                         <div class="fp__cart_popup_img">
                                             <img src="{{ asset($product->thumb_image) }}" alt="menu" class="img-fluid w-100">
                                         </div>
-                                        <div class="fp__cart_popup_text">
+                                        <div class="fp__cart_popup_text" x-data="{sum:0}">
                                             <a href="#" class="title">{{ $product->name }}</a>
                                             <p class="rating">
                                                 <i class="fas fa-star"></i>
@@ -105,7 +105,7 @@
                                                     <input class="form-check-input" type="radio" name="flexRadioDefault" id="large{{$size->id}}"
                                                            checked>
                                                     <h6 class="form-check-label" for="large">
-                                                        {{ Str::words($size->name, 1, '') }} <span>+ ${{ $size->price }}</span>
+                                                        {{ Str::words($size->name, 1, '') }} <span x-model="size">+ ${{ $size->price }}</span>
                                                     </h6>
                                                 </div>
                                                 @endforeach
@@ -118,7 +118,7 @@
                                                 <div class="form-check">
                                                     <input class="form-check-input" type="checkbox" value="" id="coca-cola">
                                                     <h6 class="form-check-label" for="coca-cola">
-                                                        {{ Str::words($option->name, 1, '') }} <span>+ ${{ $option->price }}</span>
+                                                        {{ Str::words($option->name, 1, '') }} <span x-model="option">+ ${{ $option->price }}</span>
                                                     </h6>
                                                 </div>
                                                 @endforeach
@@ -131,9 +131,9 @@
                                                         <button class="btn btn-danger" x-on:click="count--"><i class="fal fa-minus"></i></button>
 {{--                                                        <input type="text" placeholder="1"  >--}}
                                                         <span class="mx-2" x-text="count"></span>
-                                                        <button class="btn btn-success" x-on:click="count++"><i class="fal fa-plus"></i></button>
+                                                        <button class="btn btn-success" x-on:click="count++" x-on:click="sum=size+option"><i class="fal fa-plus"></i></button>
                                                     </div>
-                                                    <h3>$320.00</h3>
+                                                    <h3 x-text="sum"></h3>
                                                 </div>
                                             </div>
                                             <ul class="details_button_area d-flex flex-wrap">
