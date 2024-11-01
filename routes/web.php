@@ -17,6 +17,7 @@ use App\Livewire\Dashboard\Dashboard;
 use App\Livewire\Dashboard\Profile;
 use App\Livewire\HomeComponent;
 use App\Livewire\Pages\About;
+use App\Livewire\ProductDetails;
 use App\Livewire\User\ForgotPasswordComponent;
 use App\Livewire\User\LoginComponent;
 use App\Livewire\User\LogoutComponent;
@@ -26,6 +27,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', HomeComponent::class)->name('home');
 Route::get('about', About::class)->name('about');
+Route::get('product-details/{slug}', ProductDetails::class)->name('product-details');
 
 Route::middleware('guest')->group(function () {
     Route::get('register', RegisterComponent::class)->name('register');

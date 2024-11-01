@@ -213,7 +213,7 @@
                                     <div class="image-preview"
                                          style="
                                          @if(strlen($newimage) == 0 || $newimage == '')
-                                             background-image: url({{ asset( $image ) }});
+                                             background-image: url({{ asset( $thumb_image ) }});
                                          @else
                                              background-image: url({{ $newimage->temporaryUrl() }});
                                          @endif
@@ -224,7 +224,7 @@
                                         <input type="file" name="image" id="image-upload" wire:model="newimage">
                                     </div>
                                     <!-- Загрузка в процессе -->
-                                    <div wire:loading wire:target="image">
+                                    <div wire:loading wire:target="thumb_image">
                                         <p>Идет загрузка...</p> <!-- Сообщение, пока идет загрузка -->
                                     </div>
                                 </div>

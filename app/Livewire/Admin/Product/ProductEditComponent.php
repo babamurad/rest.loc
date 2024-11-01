@@ -20,7 +20,7 @@ class ProductEditComponent extends Component
     use WithFileUploads;
     public $product;
     public $editId;
-    public $name, $slug, $image, $newimage, $category_id;
+    public $name, $slug, $thumb_image, $newimage, $category_id;
     public $price, $offer_price, $short_description, $long_description;
     public $sku, $status, $is_featured, $show_at_home, $seo_title, $seo_description;
     public $images, $newimages;
@@ -86,8 +86,8 @@ class ProductEditComponent extends Component
         $product->slug = $this->slug;
 
         if ($this->newimage){
-            if (file_exists('uploads/products/'.$this->image)){
-                unlink('uploads/products/' . $this->image);
+            if (file_exists('uploads/products/'.$this->thumb_image)){
+                unlink('uploads/products/' . $this->thumb_image);
             }
             $imageName ='uploads/products/' . Carbon::now()->timestamp.'.'.$this->newimage->getClientOriginalName();
             $this->newimage->storeAs($imageName);
@@ -108,26 +108,32 @@ class ProductEditComponent extends Component
         $product->show_at_home = $this->show_at_home;
         $product->seo_title = $this->seo_title;
         $product->seo_description = $this->seo_description;
-        $product->update();
 
-        $productId = $product->id;
-
-        if ($this->newimage){
-            if (file_exists('uploads/products/'.$productId)){
-                unlink('uploads/products/' . $productId . '/' . $this->image);
+        if ($this->newimage) {
+            if (file_exists('uploads/products/' . $this->editId)) {
+                try {
+                    //unlink('uploads/products/' . $this->editId . '/' . $this->thumb_image);
+                } catch (Exception $e) {
+                    // Handle the exception, e.g., log the error or display a user-friendly message
+                    //error_log("Error deleting thumbnail image: " . $e->getMessage());
+                }finally {
+                    // Закрыть соединение с базой данных или выполнить другие действия
+                    $imageName = 'uploads/products/' . $this->editId . '/' . Carbon::now()->timestamp . '-' . $this->newimage->getClientOriginalName();
+                    $this->newimage->storeAs($imageName); // Use $this->newimage, not $this->thumb_image
+                    $product->thumb_image = $imageName;
+                }
             }
-            $imageName ='uploads/products/' . $productId . '/' . Carbon::now()->timestamp.'.'.$this->thumb_image->getClientOriginalName();
-            $this->thumb_image->storeAs($imageName);
-            $product->thumb_image = $imageName;
+
+
         }
 
 
         if ($this->newimages)
         {
             $iamgesName = '';
-            foreach ($this->images as $key=>$image)
+            foreach ($this->newimages as $key=>$image)
             {
-                $imageName = 'uploads/products/' . $productId . '/' . Carbon::now()->timestamp . $key . '.' . $image->extension();
+                $imageName = 'uploads/products/' . $this->editId . '/' . Carbon::now()->timestamp . $key . '.' . $image->extension();
                 $image->storeAs($imageName);
                 if ($iamgesName == '')
                 {
@@ -243,7 +249,7 @@ class ProductEditComponent extends Component
         $this->product = $product;
         $this->name = $product->name;
         $this->slug = $product->slug;
-        $this->image = $product->thumb_image;
+        $this->thumb_image = $product->thumb_image;
         $this->price = $product->price;
         $this->offer_price = $product->offer_price;
         $this->short_description = $product->short_description;
