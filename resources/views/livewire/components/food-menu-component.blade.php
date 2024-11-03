@@ -1,4 +1,4 @@
-<section class="fp__menu mt_95 xs_mt_65" >
+<section class="fp__menu mt_95 xs_mt_65" x-data = "{'name' : '', 'price' : 0, 'offer_price', 'slug' : ''}">
 
     <script>
         window.addEventListener('show-modal', event => {
@@ -35,7 +35,7 @@
                             <img src="{{ asset($showModal? $prod->thumb_image:'') }}" alt="menu" class="img-fluid w-100">
                         </div>
                         <div class="fp__cart_popup_text" x-data="{sum:0}">
-                            <a href="#" class="title">{{ $showModal? $prod->name:'' }}</a>
+                            <a href="{{ $showModal? route('product-details', ['slug' => $prod->slug]) : '#' }}" class="title">{{ $showModal? $prod->name:'' }}</a>
                             <p class="rating">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>

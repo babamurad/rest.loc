@@ -19,6 +19,7 @@ class FoodMenuComponent extends Component
 
     public function render()
     {
+        //hren blyaty с этим компонентом, с отображенем модального окна и фудменю блять пиздец нахуй
         // Fetch categories and products
         $categories = Category::where('status', 1)->get();
         $products = Product::with('category')->where('show_at_home', 1)->take(12)->get();//where('status', 1)->
@@ -33,7 +34,7 @@ class FoodMenuComponent extends Component
         $product = Product::first();
     }
 
-    #[Renderless]
+    //#[Renderless]
     public function openModal($id)
     {
         $this->selectedId = $id;
