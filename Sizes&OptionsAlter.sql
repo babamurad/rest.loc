@@ -1,12 +1,12 @@
-﻿ALTER TABLE product_options ADD COLUMN sort_order INT DEFAULT 0;
+﻿-- ALTER TABLE product_options ADD COLUMN sort_order INT DEFAULT 0;
 
-SET @row_number := 0;
-UPDATE product_options
-SET sort_order = @row_number := @row_number + 1
-ORDER BY product_id, id;
+ SET @row_number := 0;
+ UPDATE product_options 
+ SET sort_order = @row_number := @row_number + 1
+ ORDER BY product_id, id;
 
-SET @row_number = 0;
-SET @current_product_id = NULL;
+ SET @row_number = 0;
+ SET @current_product_id = NULL;
 
 UPDATE product_options AS ps
 JOIN (
@@ -15,6 +15,8 @@ JOIN (
                WHEN row_num = 1 THEN 'Coca-Cola'
                WHEN row_num = 2 THEN 'Fanta'
                WHEN row_num = 3 THEN '7up'
+               WHEN row_num = 4 THEN 'Goşa çynar'
+               WHEN row_num = 5 THEN 'Sprite'
                ELSE 'other'
            END AS new_name
     FROM (

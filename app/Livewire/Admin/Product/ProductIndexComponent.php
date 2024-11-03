@@ -73,6 +73,20 @@ class ProductIndexComponent extends Component
         session(['selectedCat' => $value]);
     }
 
+    public function placeholder()
+    {
+        return <<<'HTML'
+            <section class="section">
+                <div class="section-header">
+                    <h4>{{ __('All Products') }}</h4>
+                </div>
+                <div class="card card-primary">
+                    <h4>Loading...</h4>
+                </div>
+            </section>
+        HTML;
+
+    }
 
     public function mount()
     {
@@ -112,18 +126,4 @@ class ProductIndexComponent extends Component
         return view('livewire.admin.product.product-index-component', compact('products', 'categories'));
     }
 
-    public function placeholder()
-    {
-        return <<<'HTML'
-            <section class="section">
-                <div class="section-header">
-                    <h4>{{ __('All Products') }}</h4>
-                </div>
-                <div class="card card-primary">
-                    <h4>Loading...</h4>
-                </div>
-            </section>
-        HTML;
-
-    }
 }
