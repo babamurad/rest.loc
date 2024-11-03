@@ -15,7 +15,7 @@
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-12 col-sm-12 col-md-2 offset-2">
+                        <div class="col-12 col-sm-12 col-md-2">
                             <ul class="nav nav-pills flex-column" id="myTab4" role="tablist">
                                 <li class="nav-item">
                                     <a class="nav-link active" id="home-tab4" data-toggle="tab" href="#general" role="tab" aria-controls="home" aria-selected="true">General</a>

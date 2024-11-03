@@ -73,7 +73,7 @@
                         <a :class="{ 'active-tab-btn text-white': currentTab === 4 }" class=" nav-link" href="#">Options</a>
                     </li>
                 </ul>
-                <div class="" x-show="currentTab === 1">
+                <div x-show="currentTab === 1">
                     <div class="row">
                         <div class="col-sm-9">
                             <div class="card">

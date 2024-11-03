@@ -66,6 +66,8 @@
             @this.set('seo_description', contents)
             });
         });
+
+
     </script>
 @endpush
 
@@ -74,6 +76,14 @@
     <div class="section-header d-flex justify-content-between align-items-center">
             <h4>Create Product</h4>
             <div class="card-header-action">
+                @if($errors->any())
+                @foreach ($errors->all() as $error)
+                        <div class="alert alert-danger alert-dismissible" style="margin-bottom: 2%; padding-top:0.5rem; padding-bottom:0.5rem; ">
+                            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                            <h6><i class="icon fas fa-info"></i> {{ $error }}</h6>
+                        </div>
+                @endforeach
+                @endif
                 <a class="btn btn-primary mr-1 text-white" type="button" wire:click="createProduct"><i class="fas fa-save mr-1"></i>{{__('Save')}}</a>
                 <a class="btn btn-secondary" type="reset" wire:click="cancel"><i class="fas fa-window-close mr-1"></i>{{__('Cancel')}}</a>
             </div>

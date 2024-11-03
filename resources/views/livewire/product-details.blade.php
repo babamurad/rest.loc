@@ -58,9 +58,9 @@
                         </p>
                         <h3 class="price">
                             @if($product->offer_price > 0)
-                                ${{ $product->offer_price }}<del>{{ $product->price }}</del>
+                                {{ $product->offer_price }} {{ $setting->value }}<del>{{ $product->price }} {{ $setting->value }}</del>
                             @else
-                                ${{ $product->price }}
+                                {{ $product->price }} {{ $setting->value }}
                             @endif
                         </h3>
                         <p class="short_description">{!! $product->short_description !!}</p>
@@ -71,7 +71,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="radio" name="flexRadioDefault" id="size{{$size->id}}" checked>
                                 <label class="form-check-label" for="size{{$size->id}}">
-                                    {{ Str::words($size->name, 1, '') }} <span>+ ${{ $size->price }}</span>
+                                    {{ Str::words($size->name, 1, '') }} <span>+ {{ $size->price }} {{ $setting->value }}</span>
                                 </label>
                             </div>
                             @endforeach
@@ -85,7 +85,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="option{{ $product->id }}">
                                     <h6 class="form-check-label" for="option{{ $product->id }}">
-                                        {{ Str::words($option->name, 1, '') }} <span>+ ${{ $option->price }}</span>
+                                        {{ Str::words($option->name, 1, '') }} <span>+ {{ $option->price }} {{ $setting->value }}</span>
                                     </h6>
                                 </div>
                             @endforeach
@@ -100,7 +100,7 @@
                                     <input type="text" placeholder="1">
                                     <button class="btn btn-success"><i class="fal fa-plus"></i></button>
                                 </div>
-                                <h3>$320.00</h3>
+                                <h3>320.00 {{ $setting->value }}</h3>
                             </div>
                         </div>
                         <ul class="details_button_area d-flex flex-wrap">

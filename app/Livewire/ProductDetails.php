@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Models\Product;
+use App\Models\Setting;
 use Livewire\Component;
 
 class ProductDetails extends Component
@@ -12,8 +13,9 @@ class ProductDetails extends Component
 
     public function render()
     {
+        $setting = Setting::where('key', 'currency_icon')->first();
         $relatedProducts = Product::where('category_id', $this->product->category_id)->where('id', '!=', $this->product->id)->with('category')->take(8)->latest()->get();
-        return view('livewire.product-details', compact('relatedProducts'));
+        return view('livewire.product-details', compact('relatedProducts', 'setting'));
     }
 
     public function mount($slug)

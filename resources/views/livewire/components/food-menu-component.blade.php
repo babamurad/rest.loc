@@ -1,21 +1,31 @@
-<section class="fp__menu mt_95 xs_mt_65">
+<section class="fp__menu mt_95 xs_mt_65" >
 
     <script>
-        // window.addEventListener('show-modal', event => {
-        //     $('#cartModal').modal('show');
-        // });
-        document.addEventListener('DOMContentLoaded', function () {
+        window.addEventListener('show-modal', event => {
+            $('#cartModal').modal('show');
+        });
+        window.addEventListener('close-modal', event => {
+            $('#cartModal').modal('hide');
+        });
+        /*document.addEventListener('DOMContentLoaded', function () {
             window.addEventListener('show-modal', event => {
                 const modalElement = new bootstrap.Modal(document.getElementById('cartModal'));
                 modalElement.show();
             });
-        });
+        });*/
+
+        function loadProductModal($productId) {
+            $('#cartModal').modal('show');
+        }
+        function closeModal() {
+            $('#cartModal').modal('hide');
+        }
 
     </script>
 
 {{--    @if($showModal)--}}
-    <!-- Modal -->
-    <div wire:ignore class="fp__cart_popup">
+<!-- Modal -->
+    <div wire:ignore.self class="fp__cart_popup">
         <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -33,21 +43,23 @@
                                 <i class="fas fa-star-half-alt"></i>
                                 <i class="far fa-star"></i>
                                 <span>(201)</span>
+                            <span>{{$showModal==true?$prod->id:''}}</span>
+                            <p>{{$showModal?$prod->name:''}}</p>
                             </p>
                             <h4 class="price">{{ $showModal? $prod->offer_price:'' }}<del>{{ $showModal? $prod->price:'' }} </h4>
 
                             <div class="details_size">
                                 <h5>select size</h5>
                                 @if($showModal)
-                                @foreach($prod->sizes as $size)
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="large{{$size->id}}"
-                                               checked>
-                                        <h6 class="form-check-label" for="large{{$size->id}}">
-                                            {{ Str::words($size->name, 1, '') }} <span x-model="size">+ ${{ $size->price }}</span>
-                                        </h6>
-                                    </div>
-                                @endforeach
+                                    @foreach($prod->sizes as $size)
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="large{{$size->id}}"
+                                                   checked>
+                                            <h6 class="form-check-label" for="large{{$size->id}}">
+                                                {{ Str::words($size->name, 1, '') }} <span>+ ${{ $size->price }}</span>
+                                            </h6>
+                                        </div>
+                                    @endforeach
                                 @endif
 
                             </div>
@@ -55,23 +67,22 @@
                             <div class="details_extra_item">
                                 <h5>select option <span>(optional)</span></h5>
                                 @if($showModal)
-                                @foreach($prod->options as $option)
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="coca-cola">
-                                        <h6 class="form-check-label" for="coca-cola">
-                                            {{ Str::words($option->name, 1, '') }} <span x-model="option">+ ${{ $option->price }}</span>
-                                        </h6>
-                                    </div>
-                                @endforeach
+                                    @foreach($prod->options as $option)
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="coca-cola">
+                                            <h6 class="form-check-label" for="coca-cola">
+                                                {{ Str::words($option->name, 1, '') }} <span>+ ${{ $option->price }}</span>
+                                            </h6>
+                                        </div>
+                                    @endforeach
                                 @endif
                             </div>
 
                             <div class="details_quentity">
                                 <h5>select quentity</h5>
-                                <div class="quentity_btn_area d-flex flex-wrapa align-items-center" x-data="{ count: 0 }">
+                                <div class="quentity_btn_area d-flex flex-wrapa align-items-center" x-data="{ count: 1 }">
                                     <div class="quentity_btn">
-                                        <button class="btn btn-danger" x-on:click="count--"><i class="fal fa-minus"></i></button>
-                                        {{--                                                        <input type="text" placeholder="1"  >--}}
+                                        <button class="btn btn-danger" x-on:click="if (count > 1) count--"><i class="fal fa-minus"></i></button>
                                         <span class="mx-2" x-text="count"></span>
                                         <button class="btn btn-success" x-on:click="count++" x-on:click="sum=size+option"><i class="fal fa-plus"></i></button>
                                     </div>
@@ -79,7 +90,7 @@
                                 </div>
                             </div>
                             <ul class="details_button_area d-flex flex-wrap">
-                                <li><a class="common_btn" href="#">add to cart</a></li>
+                                <li><a class="common_btn" href="#"  onclick="closeModal()">add to cart</a></li>
                             </ul>
                         </div>
                     </div>
@@ -88,7 +99,9 @@
         </div>
     </div>
     <!-- Modal -->
-{{--    @endif--}}
+    {{--    @endif--}}
+
+
 
     <div class="container">
         <div class="row wow fadeInUp" data-wow-duration="1s">
@@ -136,16 +149,15 @@
                             <a class="title" href="{{ route('product-details', ['slug' => $product->slug]) }}" wire:navigate>{{ $product->name }}</a>
                             <h5 class="price">
                                 @if($product->offer_price > 0)
-                                    ${{ $product->offer_price }}<del>{{ $product->price }}</del>
+                                    {{ $product->offer_price }} {{ $setting->value }}
+                                    <del>{{ $product->price }}{{ $setting->value }}</del>
                                 @else
                                     ${{ $product->price }}
                                 @endif
                             </h5>
-{{--                            data-bs-toggle="modal" data-bs-target="#cartModal"--}}
 {{--                            wire:click="openModal({{ $product->id }})"--}}
-{{--                            x-on:click="name = '{{$product->name}}'"--}}
                             <ul class="d-flex flex-wrap justify-content-center">
-                                <li><button wire:click="openModal({{ $product->id }})" ><i class="fas fa-shopping-basket"></i></button></li>
+                                <li><a href="javascript:;" wire:click="openModal({{ $product->id }})"><i class="fas fa-shopping-basket"></i></a></li>
                                 <li><a href="#"><i class="fal fa-heart"></i></a></li>
                                 <li><a href="#"><i class="far fa-eye"></i></a></li>
                             </ul>
