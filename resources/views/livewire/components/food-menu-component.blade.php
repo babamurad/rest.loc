@@ -23,66 +23,84 @@
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" wire:click="closeModal"><i class="fas fa-times"></i></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" wire:click="closeModal">
+                            <i class="fas fa-times"></i>
+                        </button>
+
+                        <!-- Изображение товара -->
                         <div class="fp__cart_popup_img">
-                            <img src="{{ asset($showModal? $prod->thumb_image:'') }}" alt="menu" class="img-fluid w-100">
+                            <img src="{{ asset($showModal ? $prod->thumb_image : '') }}" alt="{{ $showModal ? $prod->name : '' }}" class="img-fluid w-100">
                         </div>
-                        <div class="fp__cart_popup_text" x-data="{sum:0}">
-                            <a href="#" class="title">{{ $showModal? $prod->name:'' }}</a>
+
+                        <!-- Контент модального окна -->
+                        <div class="fp__cart_popup_text"
+                             x-data="{
+                             basePrice: @if($showModal) {{ $prod->offer_price ? $prod->offer_price : $prod->oprice }} @endif,
+                             sizePrice: 0,
+                             optionsPrice: 0,
+                             quantity: 1,
+                             calculateTotal() {
+                                 return (this.basePrice + this.sizePrice + this.optionsPrice) * this.quantity;
+                             }
+                         }">
+
+                            <a href="#" class="title">{!! $showModal ? $prod->name : '' !!}</a>
                             <p class="rating">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <i class="far fa-star"></i>
+                                <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i><i class="far fa-star"></i>
                                 <span>(201)</span>
                             </p>
-                            <h4 class="price">{{ $showModal? $prod->offer_price:'' }}<del>{{ $showModal? $prod->price:'' }} </h4>
+                            <h4 class="price" x-text="`$${calculateTotal().toFixed(2)}`"></h4>
 
+                            <!-- Выбор размера -->
                             <div class="details_size">
-                                <h5>select size</h5>
+                                <h5>Выберите размер</h5>
                                 @if($showModal)
                                     @foreach($prod->sizes as $size)
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="large{{$size->id}}"
-                                                   checked>
-                                            <h6 class="form-check-label" for="large{{$size->id}}">
-                                                {{ Str::words($size->name, 1, '') }} <span x-model="size">+ ${{ $size->price }}</span>
-                                            </h6>
+                                            <input class="form-check-input" type="radio" name="size"
+                                                   @click="sizePrice = {{ $size->price }}"
+                                                   id="size{{ $size->id }}">
+                                            <label class="form-check-label" for="size{{ $size->id }}">
+                                                {{ Str::words($size->name, 1, '') }} + ${{ $size->price }}
+                                            </label>
                                         </div>
                                     @endforeach
                                 @endif
-
                             </div>
 
+                            <!-- Выбор опций -->
                             <div class="details_extra_item">
-                                <h5>select option <span>(optional)</span></h5>
+                                <h5>Выберите опции <span>(опционально)</span></h5>
                                 @if($showModal)
                                     @foreach($prod->options as $option)
                                         <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="coca-cola">
-                                            <h6 class="form-check-label" for="coca-cola">
-                                                {{ Str::words($option->name, 1, '') }} <span x-model="option">+ ${{ $option->price }}</span>
-                                            </h6>
+                                            <input class="form-check-input" type="checkbox"
+                                                   @click="optionsPrice += $event.target.checked ? {{ $option->price }} : -{{ $option->price }}"
+                                                   id="option{{ $option->id }}">
+                                            <label class="form-check-label" for="option{{ $option->id }}">
+                                                {{ Str::words($option->name, 1, '') }} + ${{ $option->price }}
+                                            </label>
                                         </div>
                                     @endforeach
                                 @endif
                             </div>
 
+                            <!-- Выбор количества -->
                             <div class="details_quentity">
-                                <h5>select quentity</h5>
-                                <div class="quentity_btn_area d-flex flex-wrapa align-items-center" x-data="{ count: 0 }">
-                                    <div class="quentity_btn">
-                                        <button class="btn btn-danger" x-on:click="if (count > 0) count--"><i class="fal fa-minus"></i></button>
-                                        {{--                                                        <input type="text" placeholder="1"  >--}}
-                                        <span class="mx-2" x-text="count"></span>
-                                        <button class="btn btn-success" x-on:click="count++" x-on:click="sum=size+option"><i class="fal fa-plus"></i></button>
-                                    </div>
-                                    <h3 x-text="sum"></h3>
+                                <h5>Количество</h5>
+                                <div class="quentity_btn_area d-flex align-items-center">
+                                    <button class="btn btn-danger" @click="if (quantity > 1) quantity--"><i class="fal fa-minus"></i></button>
+                                    <span class="mx-2" x-text="quantity"></span>
+                                    <button class="btn btn-success" @click="quantity++"><i class="fal fa-plus"></i></button>
                                 </div>
                             </div>
+
+                            <!-- Общая сумма -->
+                            <h4>Общая сумма: <span x-text="`$${calculateTotal().toFixed(2)}`"></span></h4>
+
+                            <!-- Кнопка добавления в корзину -->
                             <ul class="details_button_area d-flex flex-wrap">
-                                <li><a class="common_btn" href="#">add to cart</a></li>
+                                <li><a class="common_btn" href="#">Добавить в корзину</a></li>
                             </ul>
                         </div>
                     </div>

@@ -1,3 +1,4 @@
+
 <section class="fp__offer_item mt_100 xs_mt_70 pt_95 xs_pt_65 pb_150 xs_pb_120">
     <div class="container">
         <div class="row wow fadeInUp" data-wow-duration="1s">
@@ -7,7 +8,7 @@
                     <h2>{{ $titles->title }}</h2>
                     <span>
                             <img src="{{ asset('assets/images/heading_shapes.png') }}" alt="shapes" class="img-fluid w-100">
-                        </span>
+                    </span>
                     <p>{{ $titles->sub_title }}</p>
                 </div>
             </div>
