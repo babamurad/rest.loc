@@ -4,6 +4,9 @@
         window.addEventListener('show-modal', event => {
             $('#cartModal').modal('show');
         });
+        window.addEventListener('close-modal', event => {
+            $('#cartModal').modal('hide');
+        });
         /*document.addEventListener('DOMContentLoaded', function () {
             window.addEventListener('show-modal', event => {
                 const modalElement = new bootstrap.Modal(document.getElementById('cartModal'));
