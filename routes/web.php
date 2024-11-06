@@ -24,6 +24,7 @@ use App\Livewire\User\LoginComponent;
 use App\Livewire\User\LogoutComponent;
 use App\Livewire\User\RegisterComponent;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\Admin\TestComponent;
 
 
 Route::get('/', HomeComponent::class)->name('home');
@@ -66,4 +67,6 @@ Route::middleware(['auth', 'admin:admin'])->prefix('admin')->group(function () {
     Route::get('product/edit/{id}', ProductEditComponent::class)->name('admin.product.edit');
 
     Route::get('setting', SettingComponent::class)->name('admin.setting');
+
+    Route::get('test', TestComponent::class)->name('admin.test');
 });
