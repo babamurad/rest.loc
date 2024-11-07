@@ -20,7 +20,7 @@ class FoodMenuComponent extends Component
     public $showModal = false;
     public $sizePrice;
     public $optionsPrice = [];
-    public $totalPrice;
+    public $totalPrice = 0;
 
     public function render()
     {
@@ -40,7 +40,6 @@ class FoodMenuComponent extends Component
         $product = Product::first();
     }
 
-    //#[Renderless]
     public function openModal($id)
     {
         $this->selectedId = $id;
@@ -56,7 +55,13 @@ class FoodMenuComponent extends Component
         $this->dispatch('show-modal');
     }
 
-    #[Renderless]
+    public function updatedSizePrice()
+    {
+        //dd($this->sizePrice);
+        $this->calcTotal();
+        $this->showModal = true;
+    }
+
     public function closeModal()
     {
         $this->showModal = false;
@@ -75,8 +80,9 @@ class FoodMenuComponent extends Component
         $this->dispatch('optionPriceUpdated', $option->price);
     }
 
+    //#[Renderless]
     public function calcTotal()
     {
-        //
+        $this->totalPrice = $this->totalPrice + $this->sizePrice;
     }
 }

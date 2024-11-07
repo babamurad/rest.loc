@@ -23,10 +23,15 @@
 
     </script>
 
-{{--    @if($showModal)--}}
+{{--    @if($showModal)  @keydown.escape.window="showModal = false"--}}
+{{--
+<div class="modal fade show" id="cartModal" tabindex="-1" role="dialog" aria-modal="true" style="display: block;">
+--}}
 <!-- Modal -->
-    <div wire:ignore.self class="fp__cart_popup" @keydown.escape.window="showModal = false">
-        <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div wire:ignore.self class="fp__cart_popup">
+        <div class="modal fade @if($showModal) show @endif"
+             @if($showModal) aria-modal="true" style="display: block;" @endif
+             id="cartModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -36,6 +41,7 @@
                         </div>
                         <div class="fp__cart_popup_text" x-data="{sum:0}">
                             <a href="{{ $showModal? route('product-details', ['slug' => $prod->slug]) : '#' }}" class="title">{{ $showModal? $prod->name:'' }}</a>
+                            <span>{{ $showModal? $totalPrice : 0 }}</span>
                             <p class="rating">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -58,7 +64,7 @@
                                     @foreach($prod->sizes as $size)
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="flexRadioDefault" id="large{{$size->id}}"
-                                                   {{ $loop->index == 0 ? 'checked': '' }}>
+                                                   wire:model.live="sizePrice" value="{{ $size->price }}" >
                                             <h6 class="form-check-label" for="large{{$size->id}}">
                                                 {{ Str::words($size->name, 1, '') }} <span>+ ${{ $size->price }}</span>
                                             </h6>
