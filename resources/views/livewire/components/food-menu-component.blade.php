@@ -25,7 +25,7 @@
 
 {{--    @if($showModal)--}}
 <!-- Modal -->
-    <div wire:ignore.self class="fp__cart_popup">
+    <div wire:ignore.self class="fp__cart_popup" @keydown.escape.window="showModal = false">
         <div class="modal fade" id="cartModal" tabindex="-1" role="dialog" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -46,7 +46,11 @@
                             <span>{{$showModal==true?$prod->id:''}}</span>
                             <p>{{$showModal?$prod->name:''}}</p>
                             </p>
-                            <h4 class="price">{{ $showModal? $prod->offer_price:'' }}<del>{{ $showModal? $prod->price:'' }} </h4>
+                            <h4 class="price">
+                                @if($showModal)
+                                {!!  $prod->offer_price ? $prod->offer_price . '<del>' . $prod->price . '</del>' : $prod->price   !!}
+                                @endif
+                            </h4>
 
                             <div class="details_size">
                                 <h5>select size</h5>
@@ -54,7 +58,7 @@
                                     @foreach($prod->sizes as $size)
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="flexRadioDefault" id="large{{$size->id}}"
-                                                   checked>
+                                                   {{ $loop->index == 0 ? 'checked': '' }}>
                                             <h6 class="form-check-label" for="large{{$size->id}}">
                                                 {{ Str::words($size->name, 1, '') }} <span>+ ${{ $size->price }}</span>
                                             </h6>
