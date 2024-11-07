@@ -4,6 +4,8 @@ namespace App\Livewire\Components;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\ProductOption;
+use App\Models\ProductSize;
 use App\Models\Setting;
 use Livewire\Component;
 use Livewire\Attributes\Renderless;
@@ -16,6 +18,9 @@ class FoodMenuComponent extends Component
     public $price;
     public $offer_price;
     public $showModal = false;
+    public $sizePrice;
+    public $optionsPrice = [];
+    public $totalPrice;
 
     public function render()
     {
@@ -59,9 +64,19 @@ class FoodMenuComponent extends Component
         $this->dispatch('close-modal');
     }
 
-    public function toggleModal()
+    public function getSizePrice($sizeId)
     {
-        //dd('mod');
-        $this->showModal = !$this->showModal;
+        //dd(ProductSize::findOrFail($sizeId)->price);
+        $this->sizePrice = ProductSize::findOrFail($sizeId)->price;
+    }
+    public function getOptionsPrice($optionId)
+    {
+        $option = ProductOption::findOrFail($optionId);
+        $this->dispatch('optionPriceUpdated', $option->price);
+    }
+
+    public function calcTotal()
+    {
+        //
     }
 }
