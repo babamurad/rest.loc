@@ -50,4 +50,9 @@ class TestComponent extends Component
         $this->product = Product::with('sizes', 'options')->findOrFail($id);
     }
 
+    public function getTotal($sum)
+    {
+        dd($sum);
+    }
+
 }

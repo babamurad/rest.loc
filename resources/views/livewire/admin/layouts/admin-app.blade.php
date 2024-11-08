@@ -90,6 +90,7 @@
     <script>
         // toastr.options.progressBar = true;
         // toastr.options.closeButton = true;
+
         toastr.options = {
             "closeButton": true, // Если нужно оставить кнопку закрытия
             "progressBar": true, // Если хотите прогресс-бар
@@ -103,7 +104,6 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut",
             "preventDuplicates": true // Предотвращает повторяющиеся уведомления
-            "title": "",
         };
 
         @if ($errors->any())
