@@ -1,4 +1,4 @@
-<section class="fp__menu mt_95 xs_mt_65" x-data = "{'name' : '', 'price' : 0, 'offer_price', 'slug' : ''}">
+<section class="fp__menu mt_95 xs_mt_65">
 
     <script>
         window.addEventListener('show-modal', event => {
@@ -14,34 +14,41 @@
             });
         });*/
 
-        function loadProductModal($productId) {
-            $('#cartModal').modal('show');
-        }
-        function closeModal() {
-            $('#cartModal').modal('hide');
-        }
 
     </script>
 
-{{--    @if($showModal)  @keydown.escape.window="showModal = false"--}}
-{{--
-<div class="modal fade show" id="cartModal" tabindex="-1" role="dialog" aria-modal="true" style="display: block;">
---}}
-<!-- Modal -->
-    <div wire:ignore.self class="fp__cart_popup">
-        <div class="modal fade @if($showModal) show @endif"
-             @if($showModal) aria-modal="true" style="display: block;" @endif
-             id="cartModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <!-- CART POPUT START -->
+{{--    {{ $product->offer_price? $product->offer_price : $product->price }}--}}
+    <div class="fp__cart_popup">
+        <div wire:ignore.self class="modal fade"
+             id="cartModal" tabindex="-1" aria-hidden="true"
+             wire:loading.class="d-none"
+             wire:target="getProduct"
+             x-data="{ totalSummary: 0,
+             selectedSizePrice: 0, checkedOptions: [], option :0,
+             summa : 0,
+             count : 1,
+             getTotalOptionPrice() {
+            // Calculate the total price of selected options
+            let totalOptionPrice = 0;
+            for (const option of this.checkedOptions) {
+              totalOptionPrice += parseFloat(option); // Ensure number conversion
+            }
+            return totalOptionPrice;
+          }
+          }"
+
+        >
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" wire:click="closeModal"><i class="fas fa-times"></i></button>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i
+                                class="fal fa-times"></i></button>
                         <div class="fp__cart_popup_img">
-                            <img src="{{ asset($showModal? $prod->thumb_image:'') }}" alt="menu" class="img-fluid w-100">
+                            <img src="{{ $product->thumb_image }}" alt="menu" class="img-fluid w-100">
                         </div>
-                        <div class="fp__cart_popup_text" x-data="{sum:0}">
-                            <a href="{{ $showModal? route('product-details', ['slug' => $prod->slug]) : '#' }}" class="title">{{ $showModal? $prod->name:'' }}</a>
-                            <span>{{ $showModal? $totalPrice : 0 }}</span>
+                        <div class="fp__cart_popup_text">
+                            <a href="#" class="title">{{ $product->name }}</a>
                             <p class="rating">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -49,58 +56,59 @@
                                 <i class="fas fa-star-half-alt"></i>
                                 <i class="far fa-star"></i>
                                 <span>(201)</span>
-                            <span>{{$showModal==true?$prod->id:''}}</span>
-                            <p>{{$showModal?$prod->name:''}}</p>
                             </p>
-                            <h4 class="price">
-                                @if($showModal)
-                                {!!  $prod->offer_price ? $prod->offer_price . '<del>' . $prod->price . '</del>' : $prod->price   !!}
-                                @endif
-                            </h4>
+                            @if($product->offer_price)
+                                <h4 class="price" x-bind="totalSummary={{ $product->offer_price }}">${{ $product->offer_price }} <del>${{ $product->price }}</del> </h4>
+                            @else
+                                <h4 class="price" x-bind="totalSummary={{ $product->price }}">${{ $product->price }}</h4>
+                            @endif
+                            <p x-text="totalSummary"></p>
 
                             <div class="details_size">
                                 <h5>select size</h5>
-                                @if($showModal)
-                                    @foreach($prod->sizes as $size)
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault" id="large{{$size->id}}"
-                                                   wire:model.live="sizePrice" value="{{ $size->price }}" >
-                                            <h6 class="form-check-label" for="large{{$size->id}}">
-                                                {{ Str::words($size->name, 1, '') }} <span>+ ${{ $size->price }}</span>
-                                            </h6>
-                                        </div>
-                                    @endforeach
-                                @endif
-
+                                @foreach($product->sizes as $size)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                               {{ $loop->index == 0 ? 'checked' : '' }}
+                                               id="size-{{$size->id}}"
+                                               value="{{ $size->price }}"
+                                               @change="selectedSizePrice={{ (float) $size->price }}">
+                                        <h6 class="form-check-label" for="size-{{$size->id}}">
+                                            {{ Str::words($size->name, 1, '') }} <span>+ ${{ $size->price }}</span>
+                                        </h6>
+                                    </div>
+                                @endforeach
                             </div>
 
                             <div class="details_extra_item">
                                 <h5>select option <span>(optional)</span></h5>
-                                @if($showModal)
-                                    @foreach($prod->options as $option)
-                                        <div class="form-check">
-                                            <input class="form-check-input" type="checkbox" value="" id="coca-cola">
-                                            <h6 class="form-check-label" for="coca-cola">
-                                                {{ Str::words($option->name, 1, '') }} <span>+ ${{ $option->price }}</span>
-                                            </h6>
-                                        </div>
-                                    @endforeach
-                                @endif
+                                @foreach($product->options as $option)
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox"
+                                               value="{{ $option->price }}"
+                                               id="option-{{ $option->id }}"
+                                               x-model="checkedOptions"
+                                               >
+                                        <h6 class="form-check-label" for="option-{{ $option->id }}">
+                                            {{ Str::words($option->name, 1, '') }} <span x-model="option">+ ${{ $option->price }}</span>
+                                        </h6>
+                                    </div>
+                                @endforeach
                             </div>
 
                             <div class="details_quentity">
                                 <h5>select quentity</h5>
-                                <div class="quentity_btn_area d-flex flex-wrapa align-items-center" x-data="{ count: 1 }">
+                                <div class="quentity_btn_area d-flex flex-wrapa align-items-center">
                                     <div class="quentity_btn">
-                                        <button class="btn btn-danger" x-on:click="if (count > 1) count--"><i class="fal fa-minus"></i></button>
-                                        <span class="mx-2" x-text="count"></span>
-                                        <button class="btn btn-success" x-on:click="count++" x-on:click="sum=size+option"><i class="fal fa-plus"></i></button>
+                                        <button class="btn btn-danger" @click="if (count > 1) count--"><i class="fal fa-minus"></i></button>
+                                        <input type="text"  x-model="count">
+                                        <button class="btn btn-success" @click="count++"><i class="fal fa-plus"></i></button>
                                     </div>
-                                    <h3 x-text="sum"></h3>
+                                    <h3><span x-text="summa=((totalSummary + selectedSizePrice) * count + getTotalOptionPrice()).toFixed(2)"></span></h3>
                                 </div>
                             </div>
                             <ul class="details_button_area d-flex flex-wrap">
-                                <li><a class="common_btn" href="#"  onclick="closeModal()">add to cart</a></li>
+                                <li><a class="common_btn" href="#">add to cart</a></li>
                             </ul>
                         </div>
                     </div>
@@ -108,10 +116,7 @@
             </div>
         </div>
     </div>
-    <!-- Modal -->
-    {{--    @endif--}}
-
-
+    <!-- CART POPUT END -->
 
     <div class="container">
         <div class="row wow fadeInUp" data-wow-duration="1s">
@@ -167,7 +172,9 @@
                             </h5>
 {{--                            wire:click="openModal({{ $product->id }})"--}}
                             <ul class="d-flex flex-wrap justify-content-center">
-                                <li><a href="javascript:;" wire:click="openModal({{ $product->id }})"><i class="fas fa-shopping-basket"></i></a></li>
+                                <li><a href="javascript:;"  data-bs-toggle="modal" data-bs-target="#cartModal" wire:click="getProduct({{ $product->id }})">
+                                        <i class="fas fa-shopping-basket"></i></a>
+                                </li>
                                 <li><a href="#"><i class="fal fa-heart"></i></a></li>
                                 <li><a href="#"><i class="far fa-eye"></i></a></li>
                             </ul>

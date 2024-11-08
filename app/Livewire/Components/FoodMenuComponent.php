@@ -12,15 +12,8 @@ use Livewire\Attributes\Renderless;
 
 class FoodMenuComponent extends Component
 {
-    public $prod = null;
-    public $selectedId;
-    public $name;
-    public $price;
-    public $offer_price;
-    public $showModal = false;
-    public $sizePrice;
-    public $optionsPrice = [];
-    public $totalPrice = 0;
+    public $product;
+    public $isLoading = false;
 
     public function render()
     {
@@ -37,52 +30,21 @@ class FoodMenuComponent extends Component
 
     public function mount()
     {
-        $product = Product::first();
+        $this->product = Product::with('sizes', 'options')->first();
     }
 
-    public function openModal($id)
+    public function getProduct($id)
     {
-        $this->selectedId = $id;
-        $this->prod = Product::with('sizes', 'options')->findOrFail($this->selectedId);
-//        $this->product = Product::find($id)->with('sizes', 'options');
-//        dd($this->prod);
-//        dd($this->prod->name);
-        $this->name = $this->prod->name;
-        $this->price = $this->prod->price;
-        $this->offer_price = $this->prod->offer_price;
-        $this->showModal = true;
-//        dd($this->showModal);
+        $this->dispatch('loading-product');
+        $this->isLoading = true;
+        $this->product = Product::with('sizes', 'options')->findOrFail($id);
+        $this->isLoading = false;
+        $this->dispatch('product-loaded');
         $this->dispatch('show-modal');
     }
 
-    public function updatedSizePrice()
+    public function getTotal()
     {
-        //dd($this->sizePrice);
-        $this->calcTotal();
-        $this->showModal = true;
-    }
-
-    public function closeModal()
-    {
-        $this->showModal = false;
-        $this->selectedId = null;
         $this->dispatch('close-modal');
-    }
-
-    public function getSizePrice($sizeId)
-    {
-        //dd(ProductSize::findOrFail($sizeId)->price);
-        $this->sizePrice = ProductSize::findOrFail($sizeId)->price;
-    }
-    public function getOptionsPrice($optionId)
-    {
-        $option = ProductOption::findOrFail($optionId);
-        $this->dispatch('optionPriceUpdated', $option->price);
-    }
-
-    //#[Renderless]
-    public function calcTotal()
-    {
-        $this->totalPrice = $this->totalPrice + $this->sizePrice;
     }
 }

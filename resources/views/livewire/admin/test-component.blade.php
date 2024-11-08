@@ -1,9 +1,15 @@
 <div class="mt-5 pt-5">
-
+    <script>
+        window.addEventListener('close-modal', event => {
+            $('#cartModal').modal('hide');
+        });
+    </script>
 
     <!-- Modal -->
-    <div wire:ignore.self class="modal fade" id="exampleModal" tabindex="-1"
+    <div wire:ignore.self class="modal fade" id="cartModal" tabindex="-1"
          role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"
+         wire:loading.class="d-none"
+         wire:target="getProduct"
          x-data="{ totalSummary: 0, selectedSizePrice: 0, checkedOptions: [], option :0,
             summa : 0,
              getTotalOptionPrice() {
@@ -15,13 +21,8 @@
             return totalOptionPrice;
           }
           }"
-
     >
-{{--        <script>
-            function getTotalOptionPrice() {
-                return this.checkedOptions.reduce((total, price) => total + parseFloat(price), 0);
-            }
-        </script>--}}
+
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -35,6 +36,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
+                    <img src="{{ asset($product->thumb_image) }}" alt="menu" class="img-fluid w-100">
                     <h5>select size</h5>
                     <p x-text="selectedSizePrice"></p>
                     @foreach($product->sizes as $size)
@@ -62,11 +64,9 @@
                             </h6>
                         </div>
                     @endforeach
-                    <span wire:modal="price">{{ $product->price }}</span>
-                    <span wire:modal="sumTotal">{{ $sumTotal }}</span>
                 </div>
                 <div class="modal-footer">
-                    <p>TotalSummary: <span x-text="summa=(totalSummary + selectedSizePrice + getTotalOptionPrice()).toFixed(2)"></span></p>
+                    <p>TotalSummary: <span x-text="summa=((totalSummary + selectedSizePrice + getTotalOptionPrice())*count).toFixed(2)"></span></p>
 
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" wire:click="getTotal(summa)">Save</button>
@@ -78,49 +78,15 @@
     <ul>
         @foreach($products as $product)
             <li class="mt-1">
+                <span>{{ $product->id }}</span>
                 <span class="mx-2">{{ $product->name }}</span>
                 <span class="mx-2">{{ $product->price }}</span>
                 <!-- Button trigger modal -->
-                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#exampleModal" wire:click="getProduct({{ $product->id }})">
+                <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#cartModal" wire:click="getProduct({{ $product->id }})">
                     <i class="far fa-eye"></i>
                 </button>
             </li>
         @endforeach
     </ul>
-
-
-    <div class="container" x-data="{ hidden: false }">
-        <nav class="navbar navbar-expand-lg bg-body-tertiary mt-5 bg-dark">
-            <div class="container-fluid">
-                <a class="navbar-brand text-white" href="#">Navbar</a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNavDropdown">
-                    <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a class="nav-link active text-white" aria-current="page" href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Features</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="#">Pricing</a>
-                        </li>
-                        <li class="nav-item dropdown">
-                            <a @click.outside="hidden = false" class="nav-link dropdown-toggle text-white" href="#" @click.stop.prevent="hidden = !hidden">
-                                Dropdown link
-                            </a>
-                            <ul  x-bind:class="{ 'show': hidden }" class="dropdown-menu">
-                                <li><a @click="hidden = false" class="dropdown-item" href="#">Action</a></li>
-                                <li><a @click="hidden = false" class="dropdown-item" href="#">Another action</a></li>
-                                <li><a @click="hidden = false" class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </div>
 
 </div>
