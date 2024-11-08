@@ -19,15 +19,19 @@
 
     <!-- CART POPUT START -->
 {{--    {{ $product->offer_price? $product->offer_price : $product->price }}--}}
+{{--    @change="checkedOptionsId.push($option->id)"--}}
     <div class="fp__cart_popup">
         <div wire:ignore.self class="modal fade"
              id="cartModal" tabindex="-1" aria-hidden="true"
              wire:loading.class="d-none"
              wire:target="getProduct"
              x-data="{ totalSummary: 0,
-             selectedSizePrice: 0, checkedOptions: [], option :0,
+             selectedSize: { id: null, name: '', price: 0 },
+             checkedOptions: [], option: 0,
+             checkedOptionsId: [],
              summa : 0,
              count : 1,
+             sizeId: 0,
              getTotalOptionPrice() {
             // Calculate the total price of selected options
             let totalOptionPrice = 0;
@@ -68,7 +72,7 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="radio" name="flexRadioDefault"
                                            id="standart_option" checked value="0"
-                                           @change="selectedSizePrice = 0">
+                                           @change="selectedSize = { id: null, price: 0 }">
                                     <h6 class="form-check-label" for="standart_option">
                                         Standart <span>+ $0</span>
                                     </h6>
@@ -79,9 +83,10 @@
                                         <input class="form-check-input" type="radio" name="flexRadioDefault"
                                                id="size-{{$size->id}}"
                                                value="{{ $size->price }}"
-                                               @change="selectedSizePrice={{ (float) $size->price }}">
+                                               @change="selectedSize={ id: {{$size->id}}, name: '{{$size->name}}', price: {{ (float) $size->price }} }"
+                                               >
                                         <h6 class="form-check-label" for="size-{{$size->id}}">
-                                            {{ Str::words($size->name, 1, '') }} <span>+ ${{ $size->price }}</span>
+                                            {{$size->id}} - {{ Str::words($size->name, 1, '') }} <span>+ ${{ $size->price }}</span>
                                         </h6>
                                     </div>
                                 @endforeach
@@ -97,9 +102,10 @@
                                                value="{{ $option->price }}"
                                                id="option-{{ $option->id }}"
                                                x-model="checkedOptions"
+                                               @change="checkedOptionsId.push({{$option->id}})"
                                                >
                                         <h6 class="form-check-label" for="option-{{ $option->id }}">
-                                            {{ Str::words($option->name, 1, '') }} <span x-model="option">+ ${{ $option->price }}</span>
+                                            {{ $option->name }} <span x-model="option">+ ${{ $option->price }}</span>
                                         </h6>
                                     </div>
                                 @endforeach
@@ -114,11 +120,11 @@
                                         <input type="text"  x-model="count">
                                         <button class="btn btn-success" @click="count++"><i class="fal fa-plus"></i></button>
                                     </div>
-                                    <h3><span x-text="summa=((totalSummary + selectedSizePrice) * count + getTotalOptionPrice()).toFixed(2)"></span></h3>
+                                    <h3><span x-text="summa=((totalSummary + selectedSize.price) * count + getTotalOptionPrice()).toFixed(2)"></span></h3>
                                 </div>
                             </div>
                             <ul class="details_button_area d-flex flex-wrap">
-                                <li><a class="common_btn" href="#">add to cart</a></li>
+                                <li><button class="common_btn" wire:click="addToCart('{{ $product->id }}', count, summa, selectedSize.id, selectedSize.name, selectedSize.price, checkedOptionsId)">add to cart</button></li>
                             </ul>
                         </div>
                     </div>
