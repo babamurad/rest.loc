@@ -74,8 +74,8 @@
             </div>
         </div>
     </div>
-    <ul>
 
+    <ul>
         @foreach($products as $product)
             <li class="mt-1">
                 <span class="mx-2">{{ $product->name }}</span>
