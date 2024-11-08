@@ -45,10 +45,10 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i
                                 class="fal fa-times"></i></button>
                         <div class="fp__cart_popup_img">
-                            <img src="{{ $product->thumb_image }}" alt="menu" class="img-fluid w-100">
+                            <img src="{{ $product->thumb_image }}" alt="{{ $product->name }}" class="img-fluid w-100">
                         </div>
                         <div class="fp__cart_popup_text">
-                            <a href="#" class="title">{{ $product->name }}</a>
+                            <a href="{{ route('product-details', ['slug' => $product->slug]) }}" class="title">{{ $product->name }}</a>
                             <p class="rating">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -62,14 +62,21 @@
                             @else
                                 <h4 class="price" x-bind="totalSummary={{ $product->price }}">${{ $product->price }}</h4>
                             @endif
-                            <p x-text="totalSummary"></p>
 
                             <div class="details_size">
                                 <h5>select size</h5>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                           id="standart_option" checked value="0"
+                                           @change="selectedSizePrice = 0">
+                                    <h6 class="form-check-label" for="standart_option">
+                                        Standart <span>+ $0</span>
+                                    </h6>
+                                </div>
+                                @if($product->sizes->count() > 0)
                                 @foreach($product->sizes as $size)
                                     <div class="form-check">
                                         <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                               {{ $loop->index == 0 ? 'checked' : '' }}
                                                id="size-{{$size->id}}"
                                                value="{{ $size->price }}"
                                                @change="selectedSizePrice={{ (float) $size->price }}">
@@ -78,10 +85,12 @@
                                         </h6>
                                     </div>
                                 @endforeach
+                                @endif
                             </div>
 
                             <div class="details_extra_item">
                                 <h5>select option <span>(optional)</span></h5>
+                                @if($product->options->count() > 0)
                                 @foreach($product->options as $option)
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox"
@@ -94,6 +103,7 @@
                                         </h6>
                                     </div>
                                 @endforeach
+                                @endif
                             </div>
 
                             <div class="details_quentity">
