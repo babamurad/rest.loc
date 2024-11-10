@@ -19,11 +19,44 @@
         BREADCRUMB END
     ==============================-->
 
+    <script>
+            window.addEventListener('carouselUpdated', event => {
+                $("#exzoom").exzoom();
 
+            });
+
+    </script>
     <!--=============================
         MENU DETAILS START
     ==============================-->
-    <section class="fp__menu_details mt_115 xs_mt_85 mb_95 xs_mb_65">
+    <section class="fp__menu_details mt_115 xs_mt_85 mb_95 xs_mb_65"
+             wire:ognore
+             x-data="{
+             totalSummary: 0,
+             selectedSize: { id: null, name: '', price: 0 },
+             checkedOptions: [],
+             checkedOptionsId: [],
+             summa : 0,
+             count : 1,
+             sizeId: 0,
+             getTotalOptionPrice() {
+            // Calculate the total price of selected options
+            let totalOptionPrice = 0;
+            for (const option of this.checkedOptions) {
+              totalOptionPrice += parseFloat(option); // Ensure number conversion
+            }
+            return totalOptionPrice;
+            },
+            resetVariables() {
+                 this.totalSummary = 0;
+                 this.selectedSize = { id: null, name: '', price: 0 };
+                 this.checkedOptions = [];
+                 this.checkedOptionsId = [];
+                 this.summa = 0;
+                 this.count = 1;
+             }
+         }"
+    >
         <div class="container">
             <div class="row">
                 <div class="col-lg-5 col-md-9 wow fadeInUp" data-wow-duration="1s">
@@ -47,7 +80,7 @@
                 </div>
                 <div class="col-lg-7 wow fadeInUp" data-wow-duration="1s">
                     <div class="fp__menu_details_text">
-                        <h2>{{ $product->name }}</h2>
+                        <h2>{{ ucfirst($product->name) }}</h2>
                         <p class="rating">
                             <i class="fas fa-star"></i>
                             <i class="fas fa-star"></i>
@@ -57,19 +90,29 @@
                             <span>(201)</span>
                         </p>
                         <h3 class="price">
-                            @if($product->offer_price > 0)
-                                {{ $product->offer_price }} {{ $setting->value }}<del>{{ $product->price }} {{ $setting->value }}</del>
+                            @if($product->offer_price)
+                                <h4 class="price" x-bind="totalSummary={{ $product->offer_price }}">${{ $product->offer_price }} <del>${{ $product->price }}</del> </h4>
                             @else
-                                {{ $product->price }} {{ $setting->value }}
+                                <h4 class="price" x-bind="totalSummary={{ $product->price }}">${{ $product->price }}</h4>
                             @endif
                         </h3>
                         <p class="short_description">{!! $product->short_description !!}</p>
                         @if($product->sizes()->exists())
                         <div class="details_size">
                             <h5>select size</h5>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault"
+                                       id="standart_option" checked value="0"
+                                       @change="selectedSize = { id: null, price: 0 }">
+                                <h6 class="form-check-label" for="standart_option">
+                                    Standart <span>+ $0</span>
+                                </h6>
+                            </div>
                             @foreach($product->sizes as $size)
                             <div class="form-check">
-                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="size{{$size->id}}" checked>
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="size{{$size->id}}"
+                                       value="{{ $size->price }}"
+                                       @change="selectedSize={ id: {{$size->id}}, name: '{{$size->name}}', price: {{ (float) $size->price }} }">
                                 <label class="form-check-label" for="size{{$size->id}}">
                                     {{ Str::words($size->name, 1, '') }} <span>+ {{ $size->price }} {{ $setting->value }}</span>
                                 </label>
@@ -83,12 +126,23 @@
                             <h5>select option <span>(optional)</span></h5>
                             @foreach($product->options as $option)
                                 <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="option{{ $product->id }}">
-                                    <h6 class="form-check-label" for="option{{ $product->id }}">
+                                    <input class="form-check-input" type="checkbox"
+                                           value="{{ $option->price }}"
+                                           id="option-{{ $option->id }}"
+                                           @change="if ($event.target.checked) {
+                                            checkedOptions.push(parseFloat($event.target.value));
+                                            checkedOptionsId.push({{ $option->id }});
+                                        } else {
+                                            checkedOptions = checkedOptions.filter(price => price !== parseFloat($event.target.value));
+                                            checkedOptionsId = checkedOptionsId.filter(id => id !== {{ $option->id }});
+                                        }"
+                                    >
+                                    <h6 class="form-check-label" for="option-{{ $option->id }}">
                                         {{ Str::words($option->name, 1, '') }} <span>+ {{ $option->price }} {{ $setting->value }}</span>
                                     </h6>
                                 </div>
                             @endforeach
+
                         </div>
                         @endif
 
@@ -96,15 +150,19 @@
                             <h5>select quentity</h5>
                             <div class="quentity_btn_area d-flex flex-wrapa align-items-center">
                                 <div class="quentity_btn">
-                                    <button class="btn btn-danger"><i class="fal fa-minus"></i></button>
-                                    <input type="text" placeholder="1">
-                                    <button class="btn btn-success"><i class="fal fa-plus"></i></button>
+                                    <button class="btn btn-danger" @click="if (count > 1) count--"><i class="fal fa-minus"></i></button>
+                                    <input type="text" placeholder="1" x-model="count">
+                                    <button class="btn btn-success" @click="count++"><i class="fal fa-plus"></i></button>
                                 </div>
-                                <h3>320.00 {{ $setting->value }}</h3>
+                                <h3 x-text="((totalSummary + selectedSize.price) * count + getTotalOptionPrice()).toFixed(2)"></h3>
                             </div>
                         </div>
                         <ul class="details_button_area d-flex flex-wrap">
-                            <li><a class="common_btn" href="#">add to cart</a></li>
+                            <li><button class="common_btn me-3"
+                                wire:click="addToCart('{{ $product->id }}', count, summa, selectedSize.id, selectedSize.name, selectedSize.price, checkedOptionsId)"
+                                >add to cart
+                                </button>
+                            </li>
                             <li><a class="wishlist" href="#"><i class="far fa-heart"></i></a></li>
                         </ul>
                     </div>

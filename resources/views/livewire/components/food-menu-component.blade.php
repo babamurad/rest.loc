@@ -48,9 +48,6 @@
                         </div>
                         <div class="fp__cart_popup_text">
                             <a href="{{ route('product-details', ['slug' => $product->slug]) }}" class="title">{{ $product->name }}</a>
-                            <p x-text="summa"></p>
-                            <p x-text="totalSummary"></p>
-                            <p x-text="getTotalOptionPrice()"></p>
                             <p class="rating">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>

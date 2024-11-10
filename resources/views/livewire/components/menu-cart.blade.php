@@ -14,14 +14,14 @@
                     <a class="title" href="{{ route('product-details', ['slug' => $cartProduct->options->product_info['slug']]) }}">{!! $cartProduct->name !!}</a>
                     <p class="size">Qty: {{ $cartProduct->qty }}</p>
 {{--                    @if (isset($cartProduct->options->product_size) && isset($cartProduct->options->product_size['name'])) {--}}
-                    <p class="size">{{ $cartProduct->options['product_size']['name'] }}</p>
+                    <p class="size">{{ $cartProduct->options['product_size']['name'] }} <small>({{ $cartProduct->options['product_size']['price'] }} m.)</small></p>
 {{--                    @endif--}}
 {{--                    ['product_size']['name']--}}
 
                     @foreach($cartProduct->options['product_options'] as $option)
-                    <span class="extra">{{ $option['name'] }}</span>
+                    <span class="extra">{{ $option['name'] }} <small>({{ $option['price'] }} m.)</small></span>
                     @endforeach
-                    <p class="price">${{ $cartProduct->options->product_info['offer_price'] }} <del>${{ $cartProduct->options->product_info['price'] }}</del></p>
+                    <p class="price">{{ $cartProduct->options->product_info['offer_price'] }} tmt<del>{{ $cartProduct->options->product_info['price'] }} tmt</del></p>
                 </div>
                 <span class="del_icon" wire:click="deleteCartItem('{{ $cartProduct->rowId }}')"><i class="fal fa-times"></i></span>
             </li>
@@ -40,7 +40,7 @@
                 <span class="del_icon"><i class="fal fa-times"></i></span>
             </li>--}}
         </ul>
-        <p class="subtotal">sub total <span>$1220.00</span></p>
+        <p class="subtotal">sub total <span>{{ number_format($cartTotalSum, 2)}} TMT</span></p>
         <a class="cart_view" href="cart_view.html"> view cart</a>
         <a class="checkout" href="check_out.html">checkout</a>
     </div>
