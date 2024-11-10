@@ -58,9 +58,7 @@
                         </form>
                     </div>
                 </li>
-                <li>
-                    <a class="cart_icon"><i class="fas fa-shopping-basket"></i> <span>5</span></a>
-                </li>
+                <livewire:partials.basket-icon />
                 <li>
                     @auth
                         <a href="{{ route('dashboard') }}" wire:navigate><i class="fas fa-user"></i></a>

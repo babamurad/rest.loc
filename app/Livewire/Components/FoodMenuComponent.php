@@ -81,13 +81,11 @@ class FoodMenuComponent extends Component
                 ]
             ];
 // Size option can be empty
-            if($sizeId !== null && $sizeName !== null && $sizePrice !== 0) {
-                $options['product_size'][]  = [
-                    'id' => $sizeId,
-                    'name' => $sizeName,
-                    'price' => $sizePrice,
-                ];
-            }
+            $options['product_size'] = [
+                'id' => $sizeId ?? null,
+                'name' => $sizeName ?? null,
+                'price' => $sizePrice ?? 0,
+            ];
 // Product options can be empty
             if ($productOptions->count() > 0) {
                 foreach ($productOptions as $option) {
@@ -113,7 +111,7 @@ class FoodMenuComponent extends Component
             //session()->flash('success', __('Product has been added to cart!'));
             $this->dispatch('close-modal');
             //$this->dispatch('clear-options');
-
+            $this->dispatch('Product_added_to_cart');
             toastr()->success(__('Product has been added to cart!'));
         } catch (\Exception $e) {
             //toastr()->error(__('Something went worng!'));
