@@ -51,7 +51,6 @@ class EditSliderComponent extends Component
             $this->newimage->storeAs($imageName);
             $slider->image = $imageName;
         }
-        $slider->thumb_image = $this->image;
         $slider->update();
         toastr()->success('Slider updated successfully');
         $this->redirect(route('admin.slider'), navigate:true);

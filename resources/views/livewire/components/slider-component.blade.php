@@ -9,8 +9,8 @@
                                 <div class="col-xl-5 col-md-5 col-lg-5">
                                     <div class="fp__banner_img wow fadeInLeft" data-wow-duration="1s">
                                         <div class="img">
-                                            <img src="{{ asset($slider->image) }}" alt="food item" class="img-fluid w-100">
-                                            <span> {{ $slider->offer }} off </span>
+                                            <img src="{{ asset($slider->image) }}" alt="{{ $slider->title }}" class="img-fluid w-100">
+                                            <span> {{ $slider->offer }}% off </span>
                                         </div>
                                     </div>
                                 </div>

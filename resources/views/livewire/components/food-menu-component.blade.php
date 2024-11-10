@@ -1,33 +1,8 @@
-<section class="fp__menu mt_95 xs_mt_65">
-
-    <script>
-        window.addEventListener('show-modal', event => {
-            $('#cartModal').modal('show');
-        });
-        window.addEventListener('close-modal', event => {
-            $('#cartModal').modal('hide');
-        });
-        /*document.addEventListener('DOMContentLoaded', function () {
-            window.addEventListener('show-modal', event => {
-                const modalElement = new bootstrap.Modal(document.getElementById('cartModal'));
-                modalElement.show();
-            });
-        });*/
-
-
-    </script>
-
-    <!-- CART POPUT START -->
-{{--    {{ $product->offer_price? $product->offer_price : $product->price }}--}}
-{{--    @change="checkedOptionsId.push($option->id)"--}}
-    <div class="fp__cart_popup">
-        <div wire:ignore.self class="modal fade"
-             id="cartModal" tabindex="-1" aria-hidden="true"
-             wire:loading.class="d-none"
-             wire:target="getProduct"
-             x-data="{ totalSummary: 0,
+<section class="fp__menu mt_95 xs_mt_65"
+         x-data="{
+             totalSummary: 0,
              selectedSize: { id: null, name: '', price: 0 },
-             checkedOptions: [], option: 0,
+             checkedOptions: [],
              checkedOptionsId: [],
              summa : 0,
              count : 1,
@@ -39,10 +14,30 @@
               totalOptionPrice += parseFloat(option); // Ensure number conversion
             }
             return totalOptionPrice;
-          }
-          }"
+            },
+            resetOptions() {
+            this.checkedOptions = [];
+            },
+            resetVariables() {
+                 this.totalSummary = 0;
+                 this.selectedSize = { id: null, name: '', price: 0 };
+                 this.checkedOptions = [];
+                 this.checkedOptionsId = [];
+                 this.summa = 0;
+                 this.count = 1;
+             }
+         }"
+         @shown.bs.modal="resetVariables()"
+>
 
-        >
+    <!-- CART POPUT START -->
+{{--    {{ $product->offer_price? $product->offer_price : $product->price }}--}}
+{{--    @change="checkedOptionsId.push($option->id)"--}}
+    <div class="fp__cart_popup">
+        <div wire:ignore.self class="modal fade"
+             id="cartModal" tabindex="-1" aria-hidden="true"
+             wire:loading.class="d-none"
+             wire:target="getProduct">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -53,6 +48,9 @@
                         </div>
                         <div class="fp__cart_popup_text">
                             <a href="{{ route('product-details', ['slug' => $product->slug]) }}" class="title">{{ $product->name }}</a>
+                            <p x-text="summa"></p>
+                            <p x-text="totalSummary"></p>
+                            <p x-text="getTotalOptionPrice()"></p>
                             <p class="rating">
                                 <i class="fas fa-star"></i>
                                 <i class="fas fa-star"></i>
@@ -105,7 +103,7 @@
                                                @change="checkedOptionsId.push({{$option->id}})"
                                                >
                                         <h6 class="form-check-label" for="option-{{ $option->id }}">
-                                            {{ $option->name }} <span x-model="option">+ ${{ $option->price }}</span>
+                                            {{ $option->name }} <span>+ ${{ $option->price }}</span>
                                         </h6>
                                     </div>
                                 @endforeach
@@ -124,7 +122,21 @@
                                 </div>
                             </div>
                             <ul class="details_button_area d-flex flex-wrap">
-                                <li><button class="common_btn" wire:click="addToCart('{{ $product->id }}', count, summa, selectedSize.id, selectedSize.name, selectedSize.price, checkedOptionsId)">add to cart</button></li>
+                                <li>
+                                    <button class="common_btn"
+                                            @if($closeModal)
+                                            data-bs-dismiss="modal"
+                                            aria-label="Close"
+                                            @endif
+                                            wire:click="addToCart('{{ $product->id }}', count, summa, selectedSize.id, selectedSize.name, selectedSize.price, checkedOptionsId)"
+                                            wire:loading.attr="disabled"
+                                    >
+                                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" wire:loading></span>
+                                        <span class="text-white" wire:loading.remove>add to cart</span>
+                                        <span class="text-white" wire:loading>Loading...</span>
+                                    </button>
+
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -188,7 +200,12 @@
                             </h5>
 {{--                            wire:click="openModal({{ $product->id }})"--}}
                             <ul class="d-flex flex-wrap justify-content-center">
-                                <li><a href="javascript:;"  data-bs-toggle="modal" data-bs-target="#cartModal" wire:click="getProduct({{ $product->id }})">
+                                <li><a
+                                        href="javascript:;"
+                                        @click="resetVariables()"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#cartModal"
+                                        wire:click="getProduct({{ $product->id }})">
                                         <i class="fas fa-shopping-basket"></i></a>
                                 </li>
                                 <li><a href="#"><i class="fal fa-heart"></i></a></li>
@@ -201,4 +218,41 @@
         </div>
     </div>
 
+
+    @push('modal')
+        <script>
+            window.addEventListener('show-modal', event => {
+                $('#cartModal').modal('show');
+            });
+            window.addEventListener('close-modal', event => {
+                $('#cartModal').modal('hide');
+                this.selectedSize = { id: null, name: '', price: 0 };
+                this.checkedOptions = [];
+                this.checkedOptionsId = [];
+                this.totalOptionPrice = 0;
+                this.summa = 0;
+                this.count = 1;
+                this.totalSummary = 0;
+            });
+
+/*            window.addEventListener('error_message', event => {
+                toastr.error('Something went wrong!');
+            });*/
+            /*document.addEventListener('DOMContentLoaded', function () {
+                window.addEventListener('show-modal', event => {
+                    const modalElement = new bootstrap.Modal(document.getElementById('cartModal'));
+                    modalElement.show();
+                });
+            });*/
+        </script>
+    @endpush
+    <style>
+        .modal {
+            z-index: 2050;
+        }
+
+        .toast {
+            z-index: 849;
+        }
+    </style>
 </section>

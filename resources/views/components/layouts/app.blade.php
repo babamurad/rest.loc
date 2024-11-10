@@ -323,13 +323,15 @@
 <script>
     // toastr.options.progressBar = true;
 
-    @if ($errors->any())
+{{--    @if ($errors->any())
     @foreach ($errors->all() as $error)
     toastr.error('{{ $error }}');
     @endforeach
-    @endif
+    @endif--}}
 
 </script>
+
+@stack('modal')
 
 </body>
 
