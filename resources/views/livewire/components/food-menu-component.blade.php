@@ -31,8 +31,6 @@
 >
 
     <!-- CART POPUT START -->
-{{--    {{ $product->offer_price? $product->offer_price : $product->price }}--}}
-{{--    @change="checkedOptionsId.push($option->id)"--}}
     <div class="fp__cart_popup">
         <div wire:ignore.self class="modal fade"
              id="cartModal" tabindex="-1" aria-hidden="true"

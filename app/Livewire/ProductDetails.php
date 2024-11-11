@@ -11,6 +11,8 @@ class ProductDetails extends Component
 {
     public $product;
     public $imagePaths;
+    public $reProduct;
+    public $closeModal = false;
 
     protected $listeners = [
         'some-event' => '$refresh'
@@ -25,6 +27,7 @@ class ProductDetails extends Component
 
     public function mount($slug)
     {
+        $this->reProduct = Product::with('sizes', 'options')->first();
         $this->product = Product::with('sizes', 'options')->where('slug', $slug)->firstOrFail();
         $imagesString = $this->product->images; // Или другой способ получить значение
         $this->imagePaths = explode(',', $imagesString);
@@ -109,6 +112,14 @@ class ProductDetails extends Component
 //        $this->redirect('product-details', ['slug' => $product->slug], [navigate:true]);
 
         return redirect()->route('product-details', ['slug' => $product->slug]);
+    }
+
+    public function getProduct($id)
+    {
+        $this->reProduct = Product::with('sizes', 'options')->findOrFail($id);
+        $this->closeModal = false;
+        $this->dispatch('product-loaded');
+        $this->dispatch('show-modal');
     }
 
 }
