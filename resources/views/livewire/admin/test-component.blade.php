@@ -75,18 +75,37 @@
         </div>
     </div>
 
-    <ul>
-        @foreach($products as $product)
-            <li class="mt-1">
-                <span>{{ $product->id }}</span>
+    <ul x-data="{
+    cartTotal: 0;
+    calcCartTotal(rowSum) { this.cartTotal += rowSum }
+    }">
+        @foreach($cartProducts as $product)
+            <li class="mt-1" x-data="{
+            quantity: {{ $product->qty }},
+            calculateTotal() {
+                this.total = {{$product->price}} * this.quantity;
+            },
+            total: {{$product->price * $product->qty}}
+                }">
+                <span>{{ $product->rowId }}</span>
                 <span class="mx-2">{{ $product->name }}</span>
                 <span class="mx-2">{{ $product->price }}</span>
-                <!-- Button trigger modal -->
+                <span class="mx-2">
+                    <button class="btn btn-danger"
+                            @click="if (quantity > 1) { quantity--; calculateTotal();}"
+                            wire:click="qtyInc('{{ $product->rowId }}')"
+                    >
+                        <i class="fal fa-minus"></i></button>
+                    <input type="text" x-model="quantity" @input="calculateTotal()" wire:model="qty">
+                    <button class="btn btn-success" @click="quantity++; calculateTotal();"><i class="fal fa-plus"></i></button>
+    </span>
+                <span x-text="total"></span>
                 <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#cartModal" wire:click="getProduct({{ $product->id }})">
                     <i class="far fa-eye"></i>
                 </button>
             </li>
         @endforeach
+        <p>Total cart: <span x-text="cartTotal"></span></p>
     </ul>
 
 </div>

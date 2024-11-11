@@ -53,7 +53,8 @@
     @foreach($products as $product)
         <li>
             <span class="mx-2">{{ $product->name }}</span>
-            <span class="mx-2">{{ $product->price }}</span>
+            <span class="mx-2">Price: {{ $product->price }}</span>
+            <span class="mx-2">qty:{{ $product->qty }}</span>
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" wire:click="getProduct({{ $product->id }})">
                 <i class="far fa-eye"></i>
@@ -61,5 +62,7 @@
         </li>
     @endforeach
     </ul>
+
+
 
 </div>

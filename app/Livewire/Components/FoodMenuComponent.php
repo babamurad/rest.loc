@@ -106,7 +106,7 @@ class FoodMenuComponent extends Component
                 'weight' => 0,
                 'options' => $options,
             ]);
-            $this->closeModal = true;
+            //$this->closeModal = true;
             //$this->dispatch('cart-updated');
             //session()->flash('success', __('Product has been added to cart!'));
             $this->dispatch('close-modal');
