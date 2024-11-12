@@ -21,7 +21,7 @@ class ProductCreateComponent extends Component
     use WithFileUploads;
 
     public $name, $slug, $thumb_image, $category_id;
-    public $price, $offer_price, $short_description, $long_description;
+    public $price, $offer_price, $quantity, $short_description, $long_description;
     public $sku, $status, $is_featured, $show_at_home, $seo_title, $seo_description;
     public $images;
     public $productId;
@@ -93,7 +93,17 @@ class ProductCreateComponent extends Component
         $this->validate([
             'name' => ['required', 'string', 'max:255'],
             'slug' => ['required', 'string', 'max:255'], //, 'unique:products,slug'
-            'thumb_image' => ['required', 'image', 'max:2048']
+            /*'thumb_image' => ['required', 'image', 'max:2048'],
+            'price' => ['required', 'numeric','min:0'],
+            'offer_price' => ['nullable', 'numeric','min:0'],
+            'quantity' => ['required', 'numeric','min:0'],
+            'short_description' => ['required','max:500'],
+            'long_description' => ['required'],
+            'category_id' => ['required', 'integer'],
+            'seo_title' => ['nullable', 'max:255'],
+            'sku' => ['nullable', 'max:255'],
+            'show_at_home' => ['boolean'],
+            'status' => ['requires', 'boolean']*/
         ]);
 
         //dd('validate');
@@ -104,6 +114,7 @@ class ProductCreateComponent extends Component
 
         $product->price = $this->price;
         $product->offer_price = $this->offer_price;
+        $product->quantity = $this->quantity;
         $product->short_description = $this->short_description;
         $product->long_description = $this->long_description;
         $product->category_id = $this->category_id; // используйте id категории

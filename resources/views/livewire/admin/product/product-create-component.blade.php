@@ -202,6 +202,14 @@
                                             @error('offer_price') <div class="invalid-feedback">{{$message}}</div> @enderror
                                         </div>
                                     </div>
+                                    <div class="col-sm-12">
+
+                                        <div class="form-group">
+                                            <label>{{ __('Quantity') }} {{ $quantity }}</label>
+                                            <input type="number" class="form-control @error('quantity') is-invalid @enderror" wire:model="quantity" min="0" step="1">
+                                            @error('quantity') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                        </div>
+                                    </div>
                                     <div class="col-sm-12 col-md-12">
                                         <div class="form-group">
                                             <label>Category</label>

@@ -27,7 +27,6 @@
             <div class="row">
                 <div class="col-lg-8 wow fadeInUp"
                      data-wow-duration="1s">
-                    <h4>{{ $qrty }}</h4>
                     @if($cartProducts->count() > 0)
                         <div class="fp__cart_list">
                             <div class="table-responsive">
@@ -60,21 +59,20 @@
                                     </tr>
                                     @foreach($cartProducts as $product)
                                         <tr x-data="{
-                                productTotal: 0,
-                                productPrice: {{$product->options['product_info']['offer_price'] ?? $product->options['product_info']['price']}},
-                                count: {{ $product->qty }},
-                                sizePrice: {{ $product->options['product_size']['price']?? 0 }},
-                                optionsPrice: 0,
-                                calculateTotal() {
-                                    this.productTotal = (this.productPrice + this.sizePrice) * this.count + this.optionsPrice;
-                                    this.calcGrandTotal(this.productTotal);
-                                }
-                                }"
+                                        productTotal: 0,
+                                        productPrice: {{$product->price}},
+                                        count: {{ $product->qty }},
+                                        sizePrice: {{ $product->options['product_size']['price']?? 0 }},
+                                        optionsPrice: 0,
+                                        calculateTotal() {
+                                            this.productTotal = (this.productPrice + this.sizePrice) * this.count + this.optionsPrice;
+                                        }
+                                        }"
                                             x-init="calculateTotal()"
                                             @change="calculateTotal()"
                                         >
                                             <td class="fp__pro_img">
-                                                <img src="{{ asset($product->options['product_info']['image']) }}" alt="{{ $product->name }}" class="img-fluid w-100">
+                                                <img src="{{ asset($product->options->product_info['image']) }}" alt="{{ $product->name }}" class="img-fluid w-100">
                                             </td>
 
                                             <td class="fp__pro_name">
@@ -99,17 +97,14 @@
 
                                             <td class="fp__pro_select">
                                                 <div class="quentity_btn">
-                                                    <button class="btn btn-danger" @click="if (count > 1) { count--; calculateTotal(); }"
-                                                            wire:click="cartTotal(count - 1, 'dec', '{{$product->rowId}}')"><i class="fal fa-minus"></i></button>
-                                                    <input type="text" x-model="count" @input="calculateTotal()">
-                                                    <button class="btn btn-success" @click="count++; calculateTotal();"
-                                                            wire:click="cartTotal(count + 1, 'inc', '{{$product->rowId}}')"><i class="fal fa-plus"></i></button>
+                                                    <button class="btn btn-danger" wire:click="decreaseQty('{{ $product->rowId }}')"><i class="fal fa-minus"></i></button>
+                                                    <input type="text"  min="1" value="{{ $product->qty }}">
+                                                    <button class="btn btn-success" wire:click="increaseQty('{{ $product->rowId }}')"><i class="fal fa-plus"></i></button>
                                                 </div>
                                             </td>
 
-                                            <td class="fp__pro_tk"  x-modelable="summRow">
-                                                <h6 x-text="productTotal.toFixed(2)"></h6>
-                                                {{--                                        <h5 x-init="calcGrandTotal(productTotal)"></h5>--}}
+                                            <td class="fp__pro_tk">
+                                                <h6>{{ number_format($product->weight, 2) }}</h6>
 
                                             </td>
                                             <td class="fp__pro_icon">
@@ -127,17 +122,16 @@
                 </div>
                 <div class="col-lg-4 wow fadeInUp" data-wow-duration="1s">
                     <div class="fp__cart_list_footer_button">
-                        <h6>total cart</h6>
-                        <p>subtotal: <span>{{ $cartTotalSum }}</span></p>
-                        <p>Price Total: <span>{{ Cart::priceTotal() }}</span></p>
-                        <p>delivery: <span>$00.00</span></p>
-                        <p>discount: <span>$00.00</span></p>
-                        <p class="total"><span>total:</span> <span>$134.00</span></p>
+                        <h6>{{__('total cart')}}</h6>
+                        <p>{{__('subtotal')}}: <span>{{ number_format($cartTotalSum, 2) }} man.</span></p>
+                        <p>{{__('delivery')}}: <span>{{ number_format($delivery, 2) }} man.</span></p>
+                        <p>{{__('discount')}}: <span>{{ number_format($discount, 2) }} man.</span></p>
+                        <p class="total"><span>{{__('total')}}:</span> <span>{{ number_format($cartTotalSum, 2) }} man.</span></p>
                         <form>
                             <input type="text" placeholder="Coupon Code">
-                            <button type="submit">apply</button>
+                            <button type="submit">{{__('apply')}}</button>
                         </form>
-                        <a class="common_btn" href="#">checkout</a>
+                        <a class="common_btn" href="#">{{__('checkout')}}</a>
                     </div>
                 </div>
             </div>

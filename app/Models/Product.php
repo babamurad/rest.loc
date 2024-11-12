@@ -18,6 +18,7 @@ class Product extends Model
         'images',
         'price',
         'offer_price',
+        'quantity',
         'short_description',
         'long_description',
         'sku',

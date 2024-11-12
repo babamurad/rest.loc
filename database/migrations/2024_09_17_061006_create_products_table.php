@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('thumb_image');
             $table->decimal('price', 8, 2);
             $table->decimal('offer_price', 8, 2)->default(0);
+            $table->decimal('quantity', 8, 2)->default(0);
             $table->text('short_description');
             $table->text('long_description');
             $table->string('sku')->nullable();

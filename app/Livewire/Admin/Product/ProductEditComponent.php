@@ -21,7 +21,7 @@ class ProductEditComponent extends Component
     public $product;
     public $editId;
     public $name, $slug, $thumb_image, $newimage, $category_id;
-    public $price, $offer_price, $short_description, $long_description;
+    public $price, $offer_price, $quantity, $short_description, $long_description;
     public $sku, $status, $is_featured, $show_at_home, $seo_title, $seo_description;
     public $images, $newimages;
 
@@ -37,6 +37,17 @@ class ProductEditComponent extends Component
     protected $rules = [
         'name' => ['required','string','max:255'],
         'slug' => ['required','string','max:255','unique:categories,slug'],
+        /*'thumb_image' => ['required', 'image', 'max:2048'],
+        'price' => ['required', 'numeric','min:0'],
+        'offer_price' => ['nullable', 'numeric','min:0'],
+        'quantity' => ['required', 'numeric','min:0'],
+        'short_description' => ['required','max:500'],
+        'long_description' => ['required'],
+        'category_id' => ['required', 'integer'],
+        'seo_title' => ['nullable', 'max:255'],
+        'sku' => ['nullable', 'max:255'],
+        'show_at_home' => ['boolean'],
+        'status' => ['requires', 'boolean']*/
     ];
 
     public function cancel()
@@ -96,6 +107,7 @@ class ProductEditComponent extends Component
 
         $product->price = $this->price;
         $product->offer_price = $this->offer_price;
+        $product->quantity = $this->quantity;
         $product->short_description = $this->short_description;
         $product->long_description = $this->long_description;
         $product->category_id = $this->category_id; // используйте id категории
@@ -252,6 +264,7 @@ class ProductEditComponent extends Component
         $this->thumb_image = $product->thumb_image;
         $this->price = $product->price;
         $this->offer_price = $product->offer_price;
+        $this->quantity = $product->quantity;
         $this->short_description = $product->short_description;
         $this->long_description = $product->long_description;
         $this->category_id = $product->category_id; // используйте id категории

@@ -23,7 +23,7 @@ class FoodMenuComponent extends Component
         //hren blyaty с этим компонентом, с отображенем модального окна и фудменю блять пиздец нахуй
         // Fetch categories and products
         $categories = Category::where('status', 1)->get();
-        $products = Product::with('category')->where('show_at_home', 1)->take(12)->get();//where('status', 1)->
+        $products = Product::with('category')->where('show_at_home', 1)->orderBy('id', 'desc')->take(12);//where('status', 1)->
 //        ->where('status', 1)
         $setting = Setting::where('key', 'currency_icon')->first();
 
@@ -55,6 +55,9 @@ class FoodMenuComponent extends Component
             $productOptions = $product->options->whereIn('id', $checkedOptions);
 
             $options = [
+                'row_info' => [
+                    'rowTotal' => $summa
+                ],
                 'product_size' => [],
                 'product_options' => [],
                 'product_info' => [
@@ -98,12 +101,13 @@ class FoodMenuComponent extends Component
             }
 
             //instance('cart')->
+            //weight using as rowTotal
             Cart::add([
                 'id' => $product->id,
                 'name' => $product->name,
                 'qty' => $count,
                 'price' => $product->offer_price > 0 ? $product->offer_price : $product->price,
-                'weight' => 0,
+                'weight' => $summa,
                 'options' => $options,
             ]);
             //$this->closeModal = true;
