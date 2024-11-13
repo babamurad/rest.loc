@@ -99,7 +99,7 @@
                                                 <div class="quentity_btn">
                                                     <button class="btn btn-danger" wire:click="decreaseQty('{{ $product->rowId }}')"><i class="fal fa-minus"></i></button>
                                                     <input type="text"  min="1" value="{{ $product->qty }}">
-                                                    <button class="btn btn-success" wire:click="increaseQty('{{ $product->rowId }}')"><i class="fal fa-plus"></i></button>
+                                                    <button class="btn btn-success" wire:click="increaseQty({{ $product->id }}, '{{ $product->rowId }}')"><i class="fal fa-plus"></i></button>
                                                 </div>
                                             </td>
 
