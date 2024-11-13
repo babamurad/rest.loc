@@ -105,19 +105,23 @@
                                 @endif
                             </div>
 
-                            <div class="details_quentity">
+                            <div class="details_quentity" x-data="{showQty:false}">
                                 <h5>select quentity</h5>
                                 <div class="quentity_btn_area d-flex flex-wrapa align-items-center">
                                     <div class="quentity_btn">
                                         <button class="btn btn-danger" @click="if (count > 1) count--"><i class="fal fa-minus"></i></button>
                                         <input type="text"  x-model="count">
-                                        <button class="btn btn-success" @click="count++"><i class="fal fa-plus"></i></button>
+                                        <button class="btn btn-success" @click="if (count < {{ $product->quantity }}) { count++; showQty = false; } else { showQty = true; }"><i class="fal fa-plus"></i></button>
                                     </div>
                                     <h3><span x-text="summa=((totalSummary + selectedSize.price) * count + getTotalOptionPrice()).toFixed(2)"></span></h3>
                                 </div>
+                                <template x-if="showQty">
+                                    <p class="text-danger">{{ __('Stock out') }}</p>
+                                </template>
                             </div>
                             <ul class="details_button_area d-flex flex-wrap">
                                 <li>
+                                    @if($product->quantity > 0)
                                     <button class="common_btn"
                                             @if($closeModal)
                                             data-bs-dismiss="modal"
@@ -130,6 +134,13 @@
                                         <span class="text-white" wire:loading.remove>add to cart</span>
                                         <span class="text-white" wire:loading>Loading...</span>
                                     </button>
+                                    @else
+                                        <button class="common_btn bg-secondary" >
+                                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" wire:loading></span>
+                                            <span class="text-white" wire:loading.remove>{{ __('Stock out') }}</span>
+                                            <span class="text-white" wire:loading>Loading...</span>
+                                        </button>
+                                    @endif
 
                                 </li>
                             </ul>

@@ -19,6 +19,7 @@ use App\Livewire\Dashboard\Profile;
 use App\Livewire\HomeComponent;
 use App\Livewire\Pages\About;
 use App\Livewire\Pages\CartComponent;
+use App\Livewire\Pages\CheckOutComponent;
 use App\Livewire\ProductDetails;
 use App\Livewire\User\ForgotPasswordComponent;
 use App\Livewire\User\LoginComponent;
@@ -33,6 +34,7 @@ Route::get('about', About::class)->name('about');
 Route::get('product-details/{slug}', ProductDetails::class)->name('product-details');
 Route::get('cart', CartComponent::class)->name('cart');
 
+
 Route::middleware('guest')->group(function () {
     Route::get('register', RegisterComponent::class)->name('register');
     Route::get('login', LoginComponent::class)->name('login');
@@ -45,6 +47,8 @@ Route::middleware('auth')->group(function () {
     Route::get('dashboard', Dashboard::class)->name('dashboard');
     Route::get('profile', Profile::class)->name('profile');
     Route::get('change-password', ChangePassword::class)->name('change-password');
+
+    Route::get('checkout', CheckOutComponent::class)->name('checkout');
 });
 
 

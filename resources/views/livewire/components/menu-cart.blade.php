@@ -42,6 +42,6 @@
         </ul>
         <p class="subtotal">sub total <span>{{ number_format($cartTotalSum, 2)}} TMT</span></p>
         <a class="cart_view" href="{{ route('cart') }}"> view cart</a>
-        <a class="checkout" href="check_out.html">checkout</a>
+        <a class="checkout" href="{{ route('checkout') }}">checkout</a>
     </div>
 </div>
