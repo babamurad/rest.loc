@@ -1,7 +1,7 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="/" target="_blank">Stisla</a>
+            <a href="/" target="_blank">Datly</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="/" target="_blank">St</a>
@@ -24,6 +24,7 @@
                  <ul class="dropdown-menu">
                      <li><a class="nav-link" href="{{ route('admin.category.index') }}">Product Categories</a></li>
                      <li><a class="nav-link" href="{{ route('admin.product.index') }}">Products</a></li>
+                     <li><a class="nav-link" href="{{ route('admin.coupon') }}">Coupon</a></li>
                      <li><a class="nav-link" href="layout-top-navigation.html">Top Navigation</a></li>
                  </ul>
              </li>

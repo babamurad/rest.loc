@@ -5,6 +5,7 @@ use App\Livewire\Admin\AdminProfileComponent;
 use App\Livewire\Admin\Category\CategoryCreateComponent;
 use App\Livewire\Admin\Category\CategoryEditComponent;
 use App\Livewire\Admin\Category\CategoryIndexComponent;
+use App\Livewire\Admin\CouponComponent;
 use App\Livewire\Admin\Product\ProductCreateComponent;
 use App\Livewire\Admin\Product\ProductEditComponent;
 use App\Livewire\Admin\Product\ProductIndexComponent;
@@ -73,6 +74,7 @@ Route::middleware(['auth', 'admin:admin'])->prefix('admin')->group(function () {
     Route::get('product/edit/{id}', ProductEditComponent::class)->name('admin.product.edit');
 
     Route::get('setting', SettingComponent::class)->name('admin.setting');
+    Route::get('coupon', CouponComponent::class)->name('admin.coupon');
 
     Route::get('test', TestComponent::class)->name('admin.test');
 });
