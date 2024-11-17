@@ -125,11 +125,20 @@
                         <h6>{{__('total cart')}}</h6>
                         <p>{{__('subtotal')}}: <span>{{ number_format($cartTotalSum, 2) }} man.</span></p>
                         <p>{{__('delivery')}}: <span>{{ number_format($delivery, 2) }} man.</span></p>
-                        <p>{{__('discount')}}: <span>{{ number_format($discount, 2) }} man.</span></p>
+                        @if($coupon_active)
+                            @if($discount_type == 'percent')
+                                <p><span>{{__('discount')}} <strong class="text-danger">{{ $discount }}%</strong></span>: <span> {{ number_format($discount * $cartTotalSum / 100, 2) }} man.</span></p>
+                            @else
+                                <p><span>{{__('discount')}}</span> : <span>{{ number_format($discount, 2) }} man.</span></p>
+                            @endif
+                        @else
+                            <p>{{__('discount')}}: <span>0 man.</span></p>
+                        @endif
+
                         <p class="total"><span>{{__('total')}}:</span> <span>{{ number_format($cartTotalSum + $delivery - $discount, 2) }} man.</span></p>
                         <form>
-                            <input type="text" placeholder="Coupon Code">
-                            <button type="submit">{{__('apply')}}</button>
+                            <input type="text" placeholder="Coupon Code" wire:model="coupon_code">
+                            <button type="submit" wire:click.prevent="applyCoupon" @if($coupon_active) disabled @endif>{{__('apply')}}</button>
                         </form>
                         <a class="common_btn" href="{{ route('checkout') }}">{{__('checkout')}}</a>
                     </div>
