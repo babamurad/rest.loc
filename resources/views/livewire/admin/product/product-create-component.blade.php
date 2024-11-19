@@ -364,7 +364,7 @@
                                     <div class="row">
                                         <div class="col-sm-6">
                                             <div class="form-group">
-                                                <label>{{__('Size')}}</label>
+                                                <label>{{__('Name')}}</label>
                                                 <input type="text" class="form-control form-control-sm" wire:model="optionName">
                                                 @error('optionName') <div class="invalid-feedback">{{$message}}</div> @enderror
                                             </div>

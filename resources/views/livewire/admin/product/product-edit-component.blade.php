@@ -350,7 +350,7 @@
                                 <div class="card-body">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label>{{__('Size')}}</label>
+                                            <label>{{__('Name')}}</label>
                                             <input type="text" class="form-control form-control-sm @error('optionName') is-invalid @enderror" wire:model="optionName">
                                             @error('optionName') <div class="invalid-feedback">{{$message}}</div> @enderror
                                         </div>
