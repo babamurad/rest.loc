@@ -49,7 +49,13 @@
             </ul>
             <ul class="menu_icon d-flex flex-wrap">
                 <li>
-                    <a href="#" class="menu_search"><i class="far fa-search"></i></a>
+                    <a href="#" class="menu_search">
+                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="20" height="20" viewBox="0 0 50 50" fill="#000000">
+                            <path
+                                d="M21 3C11.601563 3 4 10.601563 4 20C4 29.398438 11.601563 37 21 37C24.355469 37 27.460938 36.015625 30.09375 34.34375L42.375 46.625L46.625 42.375L34.5 30.28125C36.679688 27.421875 38 23.878906 38 20C38 10.601563 30.398438 3 21 3 Z M 21 7C28.199219 7 34 12.800781 34 20C34 27.199219 28.199219 33 21 33C13.800781 33 8 27.199219 8 20C8 12.800781 13.800781 7 21 7Z"/>
+                        </svg>
+
+                    </a>
                     <div class="fp__search_form">
                         <form>
                             <span class="close_search"><i class="far fa-times"></i></span>

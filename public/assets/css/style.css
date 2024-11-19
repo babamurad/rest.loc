@@ -6706,3 +6706,11 @@ nav {
 .is-invalid{
     border-color: #dc354542;
 }
+
+a svg path {
+    fill: #000; /* Цвет по умолчанию */
+}
+
+a:hover svg path {
+    fill: #F86F03; /* Цвет при наведении */
+}
