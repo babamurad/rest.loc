@@ -106,7 +106,7 @@ class CartComponent extends Component
 
     public function noCoupon($message)
     {
-        toastr()->error(__($message));
+        toastr()->info(__($message));
         $this->discount_type = null;
         $this->discount = 0;
         $this->coupon_active = false;
@@ -117,13 +117,13 @@ class CartComponent extends Component
         $coupon = Coupon::where('code', $this->coupon_code)->first();
         //dd(now() . ' -- ' . $coupon->expire_date);
         if (!$coupon) {
-            $this->noCoupon(__('Coupon not found!'));
+            $this->noCoupon('Coupon not found!');
             return;
         } elseif ($coupon->quantity <= 0) {
-            $this->noCoupon(__('Coupon has been fully redeemed'));
+            $this->noCoupon('Coupon has been fully redeemed');
             return;
         } elseif ($coupon->expire_date < now()) {
-            $this->noCoupon(__('Coupon has been expired.'));
+            $this->noCoupon('Coupon has been expired.');
             return;
         } else {
             $coupon->quantity = $coupon->quantity - 1;
