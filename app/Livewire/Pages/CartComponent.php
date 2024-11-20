@@ -10,9 +10,10 @@ use Livewire\Attributes\On;
 
 class CartComponent extends Component
 {
+    //public $rowCount = 0;
     public $productTotal;
     public $cartTotalSum;
-    public $delivery = 10;
+    public $delivery;
     public $discount = 0;
     public $discount_type;
     public $coupon_code;
@@ -23,11 +24,31 @@ class CartComponent extends Component
     #[On('Product_deleted_from_cart')]
     public function render()
     {
+        if (Cart::count() > 0) {
+            if( session()->has('coupon')) {
+                $this->coupon_code = session('coupon')['code'];
+            } else {
+                $this->discount = 0;
+            }
+            $this->delivery = 10;
+        } else {
+            session()->forget('coupon');
+            $this->delivery = 0;
+        }
+
         //Cart::destroy();
         $cartProducts = Cart::content();
 //        dd($cartProducts);
         $this->cartTotalSum = $this->cartTotal();
         return view('livewire.pages.cart-component', compact('cartProducts'));
+    }
+
+    public function deleteCoupon()
+    {
+        session()->forget('coupon');
+        $this->coupon_active = false;
+        $this->delivery = 0;
+        $this->coupon_code = '';
     }
 
     public function decreaseQty($id, $rowId)
@@ -44,7 +65,6 @@ class CartComponent extends Component
 
             toastr()->error('Минимальное количество заказа 1 единица.');
         }
-
     }
 
     public function increaseQty($id, $rowId)
@@ -95,6 +115,7 @@ class CartComponent extends Component
     public function clearAll()
     {
         Cart::destroy();
+        session()->forget('coupon');
     }
 
     public function deleteCartItem($rowId)
@@ -115,7 +136,7 @@ class CartComponent extends Component
     public function applyCoupon()
     {
         $coupon = Coupon::where('code', $this->coupon_code)->first();
-        //dd(now() . ' -- ' . $coupon->expire_date);
+
         if (!$coupon) {
             $this->noCoupon('Coupon not found!');
             return;
@@ -131,6 +152,7 @@ class CartComponent extends Component
             $this->discount_type = $coupon->discount_type;
             $this->discount = $coupon->discount;
             $coupon->update();
+            session()->put('coupon', ['code' => $this->coupon_code, 'discount_type' => $this->discount_type, 'discount' => $this->discount]);
             $this->dispatch('applyCoupon');
             toastr()->success(__('Coupon applied successfully!'));
         }
