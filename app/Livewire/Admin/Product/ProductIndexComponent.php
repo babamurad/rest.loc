@@ -102,26 +102,26 @@ class ProductIndexComponent extends Component
         $categories = Category::all();
         $products_query = Product::query();
 
-// Применяем поиск по названию продукта, если введено не менее 3 символов
+// Применяем поиск по названию продукта
         if (!empty($this->search) && strlen($this->search) >= 3) {
             $products_query->where('name', 'LIKE', '%' . $this->search . '%');
         }
 
-// Применяем фильтр по категории, если выбрана категория
+// Применяем фильтр по категории
         if (!empty($this->selectedCat)) {
             $products_query->where('category_id', $this->selectedCat);
         }
 
-// Присоединяем таблицу категорий, чтобы сортировать по имени категории
-        $products_query->join('categories', 'products.category_id', '=', 'categories.id')
-            ->select('products.*') // Выбираем поля из таблицы products
-            ->with('category'); // Загружаем связанные категории
+// Присоединяем таблицу категорий и выбираем поля
+        $products_query //->leftJoin('categories', 'products.category_id', '=', 'categories.id')
+             //->select('products.*', 'categories.name as category_name')
+            ->with('category');
+            //->groupBy('products.id'); // Предотвращаем дублирование записей при пагинации
 
 // Выполняем запрос с сортировкой и пагинацией
         $products = $products_query
-//            ->orderBy('categories.name', 'asc') // Сортировка по имени категории
-            ->orderBy($this->sortBy, $this->sortDirection) // Ваша дополнительная сортировка
-            ->paginate($this->perPage); // Пагинация
+            ->orderBy($this->sortBy, $this->sortDirection)
+            ->paginate($this->perPage);
 
         return view('livewire.admin.product.product-index-component', compact('products', 'categories'));
     }

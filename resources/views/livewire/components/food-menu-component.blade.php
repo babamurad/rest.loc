@@ -79,7 +79,7 @@
                                                @change="selectedSize={ id: {{$size->id}}, name: '{{$size->name}}', price: {{ (float) $size->price }} }"
                                                >
                                         <h6 class="form-check-label" for="size-{{$size->id}}">
-                                            {{$size->id}} - {{ Str::words($size->name, 1, '') }} <span>+ ${{ $size->price }}</span>
+                                            {{ Str::words($size->name, 1, '') }} <span>+ {{ $size->price }} man.</span>
                                         </h6>
                                     </div>
                                 @endforeach
@@ -98,7 +98,7 @@
                                                @change="checkedOptionsId.push({{$option->id}})"
                                                >
                                         <h6 class="form-check-label" for="option-{{ $option->id }}">
-                                            {{ $option->name }} <span>+ ${{ $option->price }}</span>
+                                            {{ $option->name }} <span>+ {{ $option->price }} man.</span>
                                         </h6>
                                     </div>
                                 @endforeach
