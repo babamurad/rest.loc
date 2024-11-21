@@ -8,6 +8,9 @@ use App\Livewire\Admin\Category\CategoryIndexComponent;
 use App\Livewire\Admin\Coupon\CouponCreateComponent;
 use App\Livewire\Admin\Coupon\CouponEditComponent;
 use App\Livewire\Admin\Coupon\CouponIndexComponent;
+use App\Livewire\Admin\Delivery\DeliveryAreaComponent;
+use App\Livewire\Admin\Delivery\DeliveryAreaCreate;
+use App\Livewire\Admin\Delivery\DeliveryAreaEdit;
 use App\Livewire\Admin\Product\ProductCreateComponent;
 use App\Livewire\Admin\Product\ProductEditComponent;
 use App\Livewire\Admin\Product\ProductIndexComponent;
@@ -80,6 +83,10 @@ Route::middleware(['auth', 'admin:admin'])->prefix('admin')->group(function () {
     Route::get('coupon', CouponIndexComponent::class)->name('admin.coupon');
     Route::get('coupon/create', CouponCreateComponent::class)->name('admin.coupon.create');
     Route::get('coupon/edit/{id}', CouponEditComponent::class)->name('admin.coupon.edit');
+
+    Route::get('delivery-area', DeliveryAreaComponent::class)->name('admin.delivery-area');
+    Route::get('delivery-area/create', DeliveryAreaCreate::class)->name('admin.delivery-area.create');
+    Route::get('delivery-area/edit/{id}', DeliveryAreaEdit::class)->name('admin.delivery-area.edit');
 
     Route::get('test', TestComponent::class)->name('admin.test');
 });

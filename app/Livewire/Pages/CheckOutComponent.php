@@ -13,8 +13,9 @@ class CheckOutComponent extends Component
 
     public function render()
     {
-//        $adresses = Address::with('user')->get();
-        $addresses = auth()->user()->addresses();
+        $addresses = Address::where('user_id', auth()->user()->id)->get();
+//        $addresses = auth()->user()->addresses();
+//        dd($addresses);
         return view('livewire.pages.check-out-component', compact('addresses'));
     }
 
