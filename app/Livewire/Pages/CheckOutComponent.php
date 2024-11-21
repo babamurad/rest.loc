@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Pages;
 
+use App\Models\Address;
 use Livewire\Component;
 use Cart;
 
@@ -12,7 +13,9 @@ class CheckOutComponent extends Component
 
     public function render()
     {
-        return view('livewire.pages.check-out-component');
+//        $adresses = Address::with('user')->get();
+        $addresses = auth()->user()->addresses();
+        return view('livewire.pages.check-out-component', compact('addresses'));
     }
 
     public function cartTotal()

@@ -8,7 +8,7 @@
                     <h1>cart view</h1>
                     <ul>
                         <li><a href="index.html">home</a></li>
-                        <li><a href="#">cart view</a></li>
+                        <li><a href="javascript:;">cart view</a></li>
                     </ul>
                 </div>
             </div>
