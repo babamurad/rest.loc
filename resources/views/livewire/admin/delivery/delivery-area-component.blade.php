@@ -49,7 +49,7 @@
                                         @endif
                                     </td>
                                     <td class="text-center" style="width: 10%;">
-                                        <a href="{{ route('admin.category.edit', ['id' => $area->id]) }}" class="btn btn-icon btn-primary">
+                                        <a href="{{ route('admin.delivery-area.edit', ['id' => $area->id]) }}" class="btn btn-icon btn-primary">
                                             <i class="far fa-edit"></i>
                                         </a>
                                         <button class="btn btn-danger" data-toggle="modal" data-target="#ConfirmDelete" wire:click="deleteId({{ $area->id }})">

@@ -34,7 +34,7 @@
                                     @if($newimage)
                                         <img class="img-fluid w-100" src="{{ $newimage->temporaryUrl() }}" alt="{{auth()->user()->name}}">
                                     @else
-                                        <img class="img-fluid w-100" src="{{  asset('images/' . $image) }}" alt="{{auth()->user()->name}}">
+                                        <img class="img-fluid w-100" src="{{  asset($image) }}" alt="{{auth()->user()->name}}">
                                     @endif
                                     @error('newimage')
                                     <p class="text-danger">{{$message}}</p>

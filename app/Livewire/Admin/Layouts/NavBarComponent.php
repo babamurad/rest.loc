@@ -8,7 +8,7 @@ use Livewire\Component;
 
 class NavBarComponent extends Component
 {
-    public function logout()
+    public function logout(): null
     {
         Auth::logout();
         session()->invalidate();

@@ -44,7 +44,7 @@ Route::get('cart', CartComponent::class)->name('cart');
 Route::middleware('guest')->group(function () {
     Route::get('register', RegisterComponent::class)->name('register');
     Route::get('login', LoginComponent::class)->name('login');
-    Route::get('logout', LogoutComponent::class)->name('logout');
+
     Route::get('forgot-password', ForgotPasswordComponent::class)->name('forgot-password');
 });
 
@@ -53,7 +53,7 @@ Route::middleware('auth')->group(function () {
     Route::get('dashboard', Dashboard::class)->name('dashboard');
     Route::get('profile', Profile::class)->name('profile');
     Route::get('change-password', ChangePassword::class)->name('change-password');
-
+    Route::get('logout', LogoutComponent::class)->name('logout');
     Route::get('checkout', CheckOutComponent::class)->name('checkout');
 });
 

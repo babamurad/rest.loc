@@ -29,7 +29,7 @@
                     <div class="fp__checkout_form">
                         <div class="fp__check_form">
                             <h5>select address <a href="#" data-bs-toggle="modal" data-bs-target="#address_modal"><i
-                                        class="far fa-plus"></i> add address</a></h5>
+                                        class="fas fa-plus"></i> add address</a></h5>
 
                             <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="none" stroke="#f86f03" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008zm0 3h.008v.008h-.008zm0 3h.008v.008h-.008z"/></svg>
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path fill="#f86f03" d="M261.56 101.28a8 8 0 0 0-11.06 0L66.4 277.15a8 8 0 0 0-2.47 5.79L63.9 448a32 32 0 0 0 32 32H192a16 16 0 0 0 16-16V328a8 8 0 0 1 8-8h80a8 8 0 0 1 8 8v136a16 16 0 0 0 16 16h96.06a32 32 0 0 0 32-32V282.94a8 8 0 0 0-2.47-5.79Z"/><path fill="#f86f03" d="m490.91 244.15l-74.8-71.56V64a16 16 0 0 0-16-16h-48a16 16 0 0 0-16 16v32l-57.92-55.38C272.77 35.14 264.71 32 256 32c-8.68 0-16.72 3.14-22.14 8.63l-212.7 203.5c-6.22 6-7 15.87-1.34 22.37A16 16 0 0 0 43 267.56L250.5 69.28a8 8 0 0 1 11.06 0l207.52 198.28a16 16 0 0 0 22.59-.44c6.14-6.36 5.63-16.86-.76-22.97"/></svg>
@@ -155,83 +155,6 @@
                                 </div>
                                 @endforeach
                             </div>
-
-                            <form>
-                                <div class="row">
-                                    <div class="col-12">
-                                        <h5>billing address</h5>
-                                    </div>
-                                    <div class="col-md-6 col-lg-12 col-xl-6">
-                                        <div class="fp__check_single_form">
-                                            <input type="text" placeholder="First Name">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-12 col-xl-6">
-                                        <div class="fp__check_single_form">
-                                            <input type="text" placeholder="Last Name">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                        <div class="fp__check_single_form">
-                                            <input type="text" placeholder="Company Name (Optional)">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-12 col-xl-6">
-                                        <div class="fp__check_single_form">
-                                            <select id="select_js3">
-                                                <option value="">select country</option>
-                                                <option value="">bangladesh</option>
-                                                <option value="">nepal</option>
-                                                <option value="">japan</option>
-                                                <option value="">korea</option>
-                                                <option value="">thailand</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-12 col-xl-6">
-                                        <div class="fp__check_single_form">
-                                            <input type="text" placeholder="Street Address *">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-12 col-xl-6">
-                                        <div class="fp__check_single_form">
-                                            <input type="text" placeholder="Apartment, suite, unit, etc. (optional)">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-12 col-xl-6">
-                                        <div class="fp__check_single_form">
-                                            <input type="text" placeholder="Town / City *">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-12 col-xl-6">
-                                        <div class="fp__check_single_form">
-                                            <input type="text" placeholder="State *">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-12 col-xl-6">
-                                        <div class="fp__check_single_form">
-                                            <input type="text" placeholder="Zip *">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-12 col-xl-6">
-                                        <div class="fp__check_single_form">
-                                            <input type="text" placeholder="Phone *">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6 col-lg-12 col-xl-6">
-                                        <div class="fp__check_single_form">
-                                            <input type="email" placeholder="Email *">
-                                        </div>
-                                    </div>
-                                    <div class="col-md-12 col-lg-12 col-xl-12">
-                                        <div class="fp__check_single_form">
-                                            <h5>Additional Information</h5>
-                                            <textarea cols="3" rows="4"
-                                                      placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
 
                         </div>
                     </div>
