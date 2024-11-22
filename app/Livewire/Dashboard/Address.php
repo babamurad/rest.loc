@@ -15,7 +15,20 @@ class Address extends Component
     public $last_name;
     public $email;
     public $phone;
-    public $type;
+    public $type = 'home';
+
+    protected $rules = [
+        'first_name' => ['required', 'max:255'],
+        'last_name' => ['nullable','string','max:255'],
+//        'user_id' => ['required','integer'],
+//        'icon' => ['required','image'],
+//        'delivery_area_id' => ['required','integer'],
+
+////            'email' => ['required','email','max:255','unique:addresses,email,'. $this->id],
+//        'email' => ['required','email'],
+//        'phone' => ['required','string','max:255'],
+//        'type' => ['required','integer'],
+    ];
 
     public function render()
     {
@@ -25,7 +38,9 @@ class Address extends Component
 
     public function save()
     {
+//        dd('Save address');
         $this->validate();
+        dd('validate');
         $address = new \App\Models\Address();
         $address->user_id = $this->user_id;
         $address->icon = $this->icon;
@@ -36,7 +51,12 @@ class Address extends Component
         $address->phone = $this->phone;
         $address->type = $this->type;
         $address->save();
+        toastr()->success(__('Address has been added.'));
+    }
 
+    public function cancel()
+    {
+        $this->reset();
     }
 
 }
