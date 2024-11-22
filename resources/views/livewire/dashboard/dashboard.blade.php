@@ -23,7 +23,7 @@
     <!--=========================
         DASHBOARD START
     ==========================-->
-    <section class="fp__dashboard mt_120 xs_mt_90 mb_100 xs_mb_70">
+    <section class="fp__dashboard mt_120 xs_mt_90 mb_100 xs_mb_70" x-data="{activeTab: 'v-pills-home'}">
         <div class="container">
             <div class="fp__dashboard_area">
                 <div class="row">
@@ -47,19 +47,19 @@
                             </div>
                             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                                  aria-orientation="vertical">
-                                <button class="nav-link active" id="v-pills-home-tab" data-bs-toggle="pill"
-                                        data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"
-                                        aria-selected="true"><span><i class="fas fa-user"></i></span> Parsonal Info</button>
+                                <button class="nav-link"
+                                        :class="activeTab === 'v-pills-home' ? 'nav-link active' : 'nav-link'"
+                                        @click="activeTab = 'v-pills-home'"><span><i class="fas fa-user"></i></span> Parsonal Info</button>
 
-                                <button class="nav-link" id="v-pills-address-tab" data-bs-toggle="pill"
-                                        data-bs-target="#v-pills-address" type="button" role="tab"
-                                        aria-controls="v-pills-address" aria-selected="true"><span><i
-                                            class="fas fa-user"></i></span>address</button>
+                                <button class="nav-link"
+                                        :class="activeTab === 'v-pills-address' ? 'nav-link active' : 'nav-link'"
+                                        @click="activeTab = 'v-pills-address'">
+                                    <span><i class="fas fa-user"></i></span>address</button>
 
-                                <button class="nav-link" id="v-pills-profile-tab" data-bs-toggle="pill"
-                                        data-bs-target="#v-pills-profile" type="button" role="tab"
-                                        aria-controls="v-pills-profile" aria-selected="false"><span><i
-                                            class="fas fa-bags-shopping"></i></span> Order</button>
+                                <button class="nav-link"
+                                        :class="activeTab === 'v-pills-profile' ? 'nav-link active' : 'nav-link'"
+                                        @click="activeTab = 'v-pills-profile'">
+                                    <span><i class="fas fa-bags-shopping"></i></span> Order</button>
 
                                 <button class="nav-link" id="v-pills-messages-tab2" data-bs-toggle="pill"
                                         data-bs-target="#v-pills-messages2" type="button" role="tab"
@@ -88,9 +88,10 @@
                                 <livewire:dashboard.profile />
 
                                 <livewire:dashboard.address />
-
-                                <div class="tab-pane fade" id="v-pills-profile" role="tabpanel"
-                                     aria-labelledby="v-pills-profile-tab">
+{{--                                @include('livewire.dashboard.address')--}}
+                                <div class="tab-pane fade"  x-show="activeTab === 'v-pills-profile'"
+                                     :class="activeTab === 'v-pills-profile' ? 'tab-pane fade active show' : 'tab-pane fade'"
+                                >
                                     <div class="fp_dashboard_body">
                                         <h3>order list</h3>
                                         <div class="fp_dashboard_order">

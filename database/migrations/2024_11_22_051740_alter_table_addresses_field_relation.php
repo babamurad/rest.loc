@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('addresses', function (Blueprint $table) {
-            $table->dropColumn('name');
-            $table->dropColumn('region');
+//            $table->dropColumn('name');
+//            $table->dropColumn('region');
             $table->foreignId('delivery_area_id')->constrained('delivery_areas')->after('user_id');
             $table->string('first_name')->after('delivery_area_id');
             $table->string('last_name')->nullable()->after('first_name');;
@@ -29,8 +29,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('addresses', function (Blueprint $table) {
-            $table->string('name');
-            $table->string('region');
+//            $table->string('name');
+//            $table->string('region');
         });
     }
 };

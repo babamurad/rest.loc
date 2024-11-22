@@ -55,7 +55,7 @@ class DeliveryAreaEdit extends Component
 
         toastr()->success('Delivery Area has been updated successfully.');
         $this->reset();
-        redirect()->route('admin.delivery-area');
+        return redirect()->route('admin.delivery-area');
     }
 
     public function cancel()

@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Dashboard;
 
+use App\Models\DeliveryArea;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -14,6 +15,16 @@ class Dashboard extends Component
     public $image;
     public $newimage;
 
+    public $address;
+    public $user_id;
+    public $icon;
+    public $delivery_area_id;
+    public $first_name;
+    public $last_name;
+    public $email;
+    public $phone;
+    public $type = 'home';
+
     public function mount()
     {
         $this->image = auth()->user()->avatar;
@@ -22,12 +33,8 @@ class Dashboard extends Component
     public function updatedNewimage()
     {
 
-//        $this->validate([
-//            'newimage' => 'image'
-//        ]);
-
         $user = User::FindOrFail(auth()->user()->id);
-//        dd($user);
+
         if ($this->newimage){
             if (file_exists('images/' . $user->avatar)) {
                 try {
@@ -40,7 +47,7 @@ class Dashboard extends Component
 
             $this->newimage->storeAs($imageName);
             $user->avatar = $imageName;
-//            dd( $user->avatar);
+
             $user->update();
             flash()->success('User data has been updated successfully!');
         }
@@ -56,8 +63,14 @@ class Dashboard extends Component
         return $this->redirect('/login', navigate:true);
     }
 
+    public function cancel()
+    {
+        $this->reset();
+    }
+
     public function render()
     {
-        return view('livewire.dashboard.dashboard');
+        $areas = DeliveryArea::where('status', 1)->orderBy('area_name', 'asc')->get();
+        return view('livewire.dashboard.dashboard', compact('areas'));
     }
 }

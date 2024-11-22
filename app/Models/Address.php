@@ -25,4 +25,11 @@ class Address extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function deliveryArea()
+    {
+        return $this->belongsTo(DeliveryArea::class);
+    }
+
+
 }

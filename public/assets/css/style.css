@@ -6714,3 +6714,20 @@ a svg path {
 a:hover svg path {
     fill: #F86F03; /* Цвет при наведении */
 }
+
+.add_new_address{
+    border-radius: 30px;
+    padding: 8px 15px;
+    background: var(--gradiantBg);
+    color: var(--colorWhite) !important;
+    cursor: pointer;
+    font-size: 14px;
+    text-transform: capitalize;
+    transition: all linear .3s;
+    -webkit-transition: all linear .3s;
+}
+
+.area-dropdown{
+    border: var(--bs-dropdown-border-width) solid var(--bs-dropdown-border-color);
+    border-radius: var(--bs-dropdown-border-radius);
+}

@@ -41,8 +41,8 @@ class DeliveryAreaCreate extends Component
             'status' => $this->status,
         ]);
 
-        toastr()->success(__('Delivery area has been added.'));
-        $this->reset();
+        flash()->success(__('Delivery area has been added.'));
+        $this->reset('area_name', 'min_delivery_time', 'max_delivery_time','delivery_fee', 'status');
         return redirect()->route('admin.delivery-area');
     }
 
