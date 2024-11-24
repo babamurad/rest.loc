@@ -20,6 +20,7 @@ class Address extends Component
     public $phone;
     public $type = 'home';
 
+    public $editId;
     public $delId; //change with Alpine.js
 
     public $showForm = 'Address';
@@ -27,7 +28,7 @@ class Address extends Component
     protected $rules = [
         'first_name' => ['required', 'max:255'],
         'last_name' => ['nullable','string','max:255'],
-        'user_id' => ['required','integer'],
+        //'user_id' => ['required','integer'],
         'delivery_area_id' => ['required','integer'],
         'email' => ['required','email'],
         'phone' => ['required','string','max:255'],
@@ -82,12 +83,15 @@ class Address extends Component
         $this->delivery_area_id = $address->delivery_area_id;
         $this->icon = $address->icon;
         $this->editId = $id;
+        $this->showForm='editAddress';
     }
 
     public function update()
     {
         $this->validate();
+
         $address = \App\Models\Address::findorFail($this->editId);
+        $address->user_id = auth()->user()->id;
         $address->icon = $this->icon;
         $address->delivery_area_id = $this->delivery_area_id;
         $address->first_name = $this->first_name;
@@ -98,6 +102,7 @@ class Address extends Component
         $address->address = $this->address;
         $address->save();
         flash()->success(__('Address has been updated.'));
+        $this->showForm = 'Address';
     }
 
     public function cancel()

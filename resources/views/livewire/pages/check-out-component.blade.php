@@ -8,7 +8,7 @@
                 <div class="fp__breadcrumb_text">
                     <h1>checkout</h1>
                     <ul>
-                        <li><a href="index.html">home</a></li>
+                        <li><a href="{{ route('home') }}" wire:navigate>home</a></li>
                         <li><a href="javascript:;">checkout</a></li>
                     </ul>
                 </div>
@@ -28,15 +28,13 @@
                 <div class="col-lg-8 col-lg-7 wow fadeInUp" data-wow-duration="1s">
                     <div class="fp__checkout_form">
                         <div class="fp__check_form">
-                            <h5>select address <a href="#" data-bs-toggle="modal" data-bs-target="#address_modal"><i
-                                        class="fas fa-plus"></i> add address</a></h5>
+                            <h5>select address <a href="#" data-bs-toggle="modal" data-bs-target="#address_modal"><i class="fas fa-plus"></i> add address</a></h5>
 
                             <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="none" stroke="#f86f03" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008zm0 3h.008v.008h-.008zm0 3h.008v.008h-.008z"/></svg>
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path fill="#f86f03" d="M261.56 101.28a8 8 0 0 0-11.06 0L66.4 277.15a8 8 0 0 0-2.47 5.79L63.9 448a32 32 0 0 0 32 32H192a16 16 0 0 0 16-16V328a8 8 0 0 1 8-8h80a8 8 0 0 1 8 8v136a16 16 0 0 0 16 16h96.06a32 32 0 0 0 32-32V282.94a8 8 0 0 0-2.47-5.79Z"/><path fill="#f86f03" d="m490.91 244.15l-74.8-71.56V64a16 16 0 0 0-16-16h-48a16 16 0 0 0-16 16v32l-57.92-55.38C272.77 35.14 264.71 32 256 32c-8.68 0-16.72 3.14-22.14 8.63l-212.7 203.5c-6.22 6-7 15.87-1.34 22.37A16 16 0 0 0 43 267.56L250.5 69.28a8 8 0 0 1 11.06 0l207.52 198.28a16 16 0 0 0 22.59-.44c6.14-6.36 5.63-16.86-.76-22.97"/></svg>
                             <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.4em" viewBox="0 0 16 16"><path fill="#f86f03" d="M3.252 1c-.69 0-1.25.56-1.25 1.25L2 10.75c0 .69.56 1.25 1.25 1.25H5v-1.565a2.5 2.5 0 0 1 .799-1.832l.652-.605A.5.5 0 1 1 7 7.488l1.64-1.522a2 2 0 0 1 2.359-.267A1.25 1.25 0 0 0 9.75 4.5h-.497a.25.25 0 0 1-.25-.25l.002-1.999c0-.69-.56-1.251-1.25-1.251zM4.5 4a.5.5 0 1 1 0-1a.5.5 0 0 1 0 1M5 5.5a.5.5 0 1 1-1 0a.5.5 0 0 1 1 0M4.5 8a.5.5 0 1 1 0-1a.5.5 0 0 1 0 1M7 3.5a.5.5 0 1 1-1 0a.5.5 0 0 1 1 0M6.5 6a.5.5 0 1 1 0-1a.5.5 0 0 1 0 1m4.18.7a1 1 0 0 0-1.36 0L6.48 9.337a1.5 1.5 0 0 0-.48 1.1V14a1 1 0 0 0 1 1h1.5a1 1 0 0 0 1-1v-1h1v1a1 1 0 0 0 1 1H13a1 1 0 0 0 1-1v-3.564a1.5 1.5 0 0 0-.48-1.1zm-3.52 3.37L10 7.432l2.84 2.638a.5.5 0 0 1 .16.366V14h-1.5v-1a1 1 0 0 0-1-1h-1a1 1 0 0 0-1 1v1H7v-3.564a.5.5 0 0 1 .16-.366"/></svg>
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="#f86f03" d="M15 9h2v2h-2zm2-4h-2v2h2zm-6 10h2v-2h-2zm2-10h-2v2h2zm-2 6h2V9h-2zM9 5H7v2h2zm0 4H7v2h2zm5.55 12H13v-3.5h-2V21H5V3h14v8.03c.71.06 1.39.28 2 .6V1H3v22h12.91c-.41-.56-.91-1.24-1.36-2M7 19h2v-2H7zm2-6H7v2h2zm13 3.5c0 2.6-3.5 6.5-3.5 6.5S15 19.1 15 16.5c0-1.9 1.6-3.5 3.5-3.5s3.5 1.6 3.5 3.5m-2.3.1c0-.6-.6-1.2-1.2-1.2s-1.2.5-1.2 1.2c0 .6.5 1.2 1.2 1.2s1.3-.6 1.2-1.2"/></svg>
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24"><path fill="#f86f03" d="M12 14c2.206 0 4-1.794 4-4s-1.794-4-4-4s-4 1.794-4 4s1.794 4 4 4m0-6c1.103 0 2 .897 2 2s-.897 2-2 2s-2-.897-2-2s.897-2 2-2"/><path fill="#f86f03" d="M11.42 21.814a1 1 0 0 0 1.16 0C12.884 21.599 20.029 16.44 20 10c0-4.411-3.589-8-8-8S4 5.589 4 9.995c-.029 6.445 7.116 11.604 7.42 11.819M12 4c3.309 0 6 2.691 6 6.005c.021 4.438-4.388 8.423-6 9.73c-1.611-1.308-6.021-5.294-6-9.735c0-3.309 2.691-6 6-6"/></svg>
-
 
                             <div class="fp__address_modal">
                                 <div class="modal fade" id="address_modal" data-bs-backdrop="static"
@@ -45,93 +43,89 @@
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
                                             <div class="modal-header">
-                                                <h1 class="modal-title fs-5" id="address_modalLabel">add new address
-                                                </h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Close"></button>
+                                                <h1 class="modal-title fs-5" id="address_modalLabel">add new address</h1>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <form>
+                                                <div class="fp_dashboard_new_address d-block">
+                                                    <div class="col-md-6 col-lg-12 col-xl-12">
+                                                        <div class="fp__check_single_form mb-3 mx-2">
+                                                            <select class="form-select @error('delivery_area_id') is-invalid @enderror" wire:model="delivery_area_id">
+                                                                <option value="">{{__('select area')}}</option>
+                                                                @foreach($areas as $area)
+                                                                    <option value="{{ $area->id }}">{{ $area->area_name }}</option>
+                                                                @endforeach
+                                                            </select>
+                                                            @error('delivery_area_id') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                                        </div>
+                                                    </div>
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-12 col-xl-6">
                                                             <div class="fp__check_single_form">
-                                                                <input type="text" placeholder="First Name">
+                                                                <input type="text" placeholder="First Name" class="@error('first_name') is-invalid @enderror" wire:model="first_name">
+                                                                @error('first_name') <div class="invalid-feedback">{{$message}}</div> @enderror
                                                             </div>
                                                         </div>
                                                         <div class="col-md-6 col-lg-12 col-xl-6">
                                                             <div class="fp__check_single_form">
-                                                                <input type="text" placeholder="Last Name">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12 col-lg-12 col-xl-12">
-                                                            <div class="fp__check_single_form">
-                                                                <input type="text"
-                                                                       placeholder="Company Name (Optional)">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-lg-12 col-xl-6">
-                                                            <div class="fp__check_single_form">
-                                                                <select id="select_js4">
-                                                                    <option value="">select country</option>
-                                                                    <option value="">bangladesh</option>
-                                                                    <option value="">nepal</option>
-                                                                    <option value="">japan</option>
-                                                                    <option value="">korea</option>
-                                                                    <option value="">thailand</option>
-                                                                </select>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-lg-12 col-xl-6">
-                                                            <div class="fp__check_single_form">
-                                                                <input type="text" placeholder="Street Address *">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-lg-12 col-xl-6">
-                                                            <div class="fp__check_single_form">
-                                                                <input type="text"
-                                                                       placeholder="Apartment, suite, unit, etc. (optional)">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-lg-12 col-xl-6">
-                                                            <div class="fp__check_single_form">
-                                                                <input type="text" placeholder="Town / City *">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-lg-12 col-xl-6">
-                                                            <div class="fp__check_single_form">
-                                                                <input type="text" placeholder="State *">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-lg-12 col-xl-6">
-                                                            <div class="fp__check_single_form">
-                                                                <input type="text" placeholder="Zip *">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-lg-12 col-xl-6">
-                                                            <div class="fp__check_single_form">
-                                                                <input type="text" placeholder="Phone *">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-6 col-lg-12 col-xl-6">
-                                                            <div class="fp__check_single_form">
-                                                                <input type="email" placeholder="Email *">
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-12 col-lg-12 col-xl-12">
-                                                            <div class="fp__check_single_form">
-                                                                <h5>Additional Information</h5>
-                                                                <textarea cols="3" rows="4"
-                                                                          placeholder="Notes about your order, e.g. special notes for delivery"></textarea>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-12">
-                                                            <div class="fp__check_single_form m-0">
-                                                                <button type="submit" class="common_btn">add
-                                                                    address</button>
+                                                                <input type="text" placeholder="Last Name" class="@error('last_name') is-invalid @enderror" wire:model="last_name">
+                                                                @error('last_name') <div class="invalid-feedback">{{$message}}</div> @enderror
                                                             </div>
                                                         </div>
                                                     </div>
-                                                </form>
+                                                    <div class="row">
+                                                        <div class="col-md-6 col-lg-12 col-xl-6">
+                                                            <div class="fp__check_single_form">
+                                                                <input type="email" placeholder="Email *" class="@error('email') is-invalid @enderror" wire:model="email">
+                                                                @error('email') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-6 col-lg-12 col-xl-6">
+                                                            <div class="fp__check_single_form">
+                                                                <input type="text" placeholder="Phone" class="@error('phone') is-invalid @enderror" wire:model="phone">
+                                                                @error('phone') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-12 col-lg-12 col-xl-12">
+                                                        <div class="fp__check_single_form">
+                                                            <textarea cols="3" rows="4" placeholder="Address" class="@error('address') is-invalid @enderror" wire:model="address"></textarea>
+                                                            @error('address') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12 col-sm-12 col-xl-12">
+                                                        <div class="fp__check_single_form check_area justify-content-center" wire:model="type">
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" checked="" value="home">
+                                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path fill="#f86f03" d="M261.56 101.28a8 8 0 0 0-11.06 0L66.4 277.15a8 8 0 0 0-2.47 5.79L63.9 448a32 32 0 0 0 32 32H192a16 16 0 0 0 16-16V328a8 8 0 0 1 8-8h80a8 8 0 0 1 8 8v136a16 16 0 0 0 16 16h96.06a32 32 0 0 0 32-32V282.94a8 8 0 0 0-2.47-5.79Z"></path><path fill="#f86f03" d="m490.91 244.15l-74.8-71.56V64a16 16 0 0 0-16-16h-48a16 16 0 0 0-16 16v32l-57.92-55.38C272.77 35.14 264.71 32 256 32c-8.68 0-16.72 3.14-22.14 8.63l-212.7 203.5c-6.22 6-7 15.87-1.34 22.37A16 16 0 0 0 43 267.56L250.5 69.28a8 8 0 0 1 11.06 0l207.52 198.28a16 16 0 0 0 22.59-.44c6.14-6.36 5.63-16.86-.76-22.97"></path></svg>
+                                                                    home
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="office">
+                                                                <label class="form-check-label" for="flexRadioDefault2">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="none" stroke="#f86f03" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008zm0 3h.008v.008h-.008zm0 3h.008v.008h-.008z"></path></svg>
+                                                                    office
+                                                                </label>
+                                                            </div>
+                                                            <div class="form-check">
+                                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault3" value="other">
+                                                                <label class="form-check-label" for="flexRadioDefault3">
+                                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.4em" viewBox="0 0 16 16"><path fill="#f86f03" d="M3.252 1c-.69 0-1.25.56-1.25 1.25L2 10.75c0 .69.56 1.25 1.25 1.25H5v-1.565a2.5 2.5 0 0 1 .799-1.832l.652-.605A.5.5 0 1 1 7 7.488l1.64-1.522a2 2 0 0 1 2.359-.267A1.25 1.25 0 0 0 9.75 4.5h-.497a.25.25 0 0 1-.25-.25l.002-1.999c0-.69-.56-1.251-1.25-1.251zM4.5 4a.5.5 0 1 1 0-1a.5.5 0 0 1 0 1M5 5.5a.5.5 0 1 1-1 0a.5.5 0 0 1 1 0M4.5 8a.5.5 0 1 1 0-1a.5.5 0 0 1 0 1M7 3.5a.5.5 0 1 1-1 0a.5.5 0 0 1 1 0M6.5 6a.5.5 0 1 1 0-1a.5.5 0 0 1 0 1m4.18.7a1 1 0 0 0-1.36 0L6.48 9.337a1.5 1.5 0 0 0-.48 1.1V14a1 1 0 0 0 1 1h1.5a1 1 0 0 0 1-1v-1h1v1a1 1 0 0 0 1 1H13a1 1 0 0 0 1-1v-3.564a1.5 1.5 0 0 0-.48-1.1zm-3.52 3.37L10 7.432l2.84 2.638a.5.5 0 0 1 .16.366V14h-1.5v-1a1 1 0 0 0-1-1h-1a1 1 0 0 0-1 1v1H7v-3.564a.5.5 0 0 1 .16-.366"></path></svg>
+                                                                    other
+                                                                </label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                            <div class="d-flex justify-content-center mb-3">
+                                                <button type="button" class="common_btn cancel_new_address mx-4 w-25" wire:click.prevent="cancel">cancel</button>
+                                                <button type="submit" class="common_btn mx-4 w-25" wire:click="save">save address</button>
                                             </div>
                                         </div>
                                     </div>
@@ -139,21 +133,50 @@
                             </div>
 
                             <div class="row">
-                                @foreach($addresses as $adress)
-                                <div class="col-md-6">
+                                @if($addresses->count() > 0)
+                                @foreach($addresses as $address)
+                                <div class="col-md-6" wire:key="{{ $address->id }}">
                                     <div class="fp__checkout_single_address">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="flexRadioDefault"
-                                                   id="home">
-                                            <label class="form-check-label" for="home">
-                                                <span class="icon"><i class="fas fa-home"></i> home</span>
-                                                <span class="address">{{ $adress->address }}</span>
+                                            @if($address->type == 'home')
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="home{{ $address->id }}">
+                                                <label class="form-check-label" for="home{{ $address->id }}">
+                                                    <span class="icon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path fill="#f86f03" d="M261.56 101.28a8 8 0 0 0-11.06 0L66.4 277.15a8 8 0 0 0-2.47 5.79L63.9 448a32 32 0 0 0 32 32H192a16 16 0 0 0 16-16V328a8 8 0 0 1 8-8h80a8 8 0 0 1 8 8v136a16 16 0 0 0 16 16h96.06a32 32 0 0 0 32-32V282.94a8 8 0 0 0-2.47-5.79Z"/><path fill="#f86f03" d="m490.91 244.15l-74.8-71.56V64a16 16 0 0 0-16-16h-48a16 16 0 0 0-16 16v32l-57.92-55.38C272.77 35.14 264.71 32 256 32c-8.68 0-16.72 3.14-22.14 8.63l-212.7 203.5c-6.22 6-7 15.87-1.34 22.37A16 16 0 0 0 43 267.56L250.5 69.28a8 8 0 0 1 11.06 0l207.52 198.28a16 16 0 0 0 22.59-.44c6.14-6.36 5.63-16.86-.76-22.97"/></svg>
+                                                    Home
+                                                    </span>
+                                                </label>
+                                            @elseif($address->type == 'office')
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="office{{ $address->id }}">
+                                                <label class="form-check-label" for="office{{ $address->id }}">
+                                                <span class="icon">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em"
+                                                     viewBox="0 0 24 24"><path fill="none" stroke="#f86f03"
+                                                                               stroke-linecap="round"
+                                                                               stroke-linejoin="round" stroke-width="1.5"
+                                                                               d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008zm0 3h.008v.008h-.008zm0 3h.008v.008h-.008z"/></svg>
+                                                Office
+                                                </span>
+                                                </label>
+
+                                            @else
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="other{{ $address->id }}">
+                                                <label class="form-check-label" for="other{{ $address->id }}">
+                                                   <span class="icon">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.4em" viewBox="0 0 16 16"><path fill="#f86f03" d="M3.252 1c-.69 0-1.25.56-1.25 1.25L2 10.75c0 .69.56 1.25 1.25 1.25H5v-1.565a2.5 2.5 0 0 1 .799-1.832l.652-.605A.5.5 0 1 1 7 7.488l1.64-1.522a2 2 0 0 1 2.359-.267A1.25 1.25 0 0 0 9.75 4.5h-.497a.25.25 0 0 1-.25-.25l.002-1.999c0-.69-.56-1.251-1.25-1.251zM4.5 4a.5.5 0 1 1 0-1a.5.5 0 0 1 0 1M5 5.5a.5.5 0 1 1-1 0a.5.5 0 0 1 1 0M4.5 8a.5.5 0 1 1 0-1a.5.5 0 0 1 0 1M7 3.5a.5.5 0 1 1-1 0a.5.5 0 0 1 1 0M6.5 6a.5.5 0 1 1 0-1a.5.5 0 0 1 0 1m4.18.7a1 1 0 0 0-1.36 0L6.48 9.337a1.5 1.5 0 0 0-.48 1.1V14a1 1 0 0 0 1 1h1.5a1 1 0 0 0 1-1v-1h1v1a1 1 0 0 0 1 1H13a1 1 0 0 0 1-1v-3.564a1.5 1.5 0 0 0-.48-1.1zm-3.52 3.37L10 7.432l2.84 2.638a.5.5 0 0 1 .16.366V14h-1.5v-1a1 1 0 0 0-1-1h-1a1 1 0 0 0-1 1v1H7v-3.564a.5.5 0 0 1 .16-.366"/></svg>
+                                                    Other
+                                                    </span>
+                                                </label>
+                                            @endif
+                                            <label class="form-check-label">
+                                                <span class="address"> {{ $address->address }}</span>
+                                                <span class="address"> <b>{{ $address->deliveryArea?->area_name }}</b> </span>
                                             </label>
                                         </div>
-                                        <label class="address" style="padding-left: 1.5em;"><span>Region: Bahar</span></label>
                                     </div>
                                 </div>
                                 @endforeach
+                                @endif
                             </div>
 
                         </div>
@@ -162,11 +185,29 @@
 
                 <div class="col-lg-4 wow fadeInUp" data-wow-duration="1s">
                     <div id="sticky_sidebar" class="fp__cart_list_footer_button">
-                        <h6>total cart</h6>
-                        <p>subtotal: <span>{{ $this->cartTotal() }}</span></p>
-                        <p>delivery: <span>{{ $delivery }}</span></p>
-                        <p>discount: <span>{{ $discount }}</span></p>
-                        <p class="total"><span>total:</span> <span>{{ number_format($this->cartTotal() + $delivery - $discount, 2) }}</span></p>
+                        <h6>{{__('total cart')}}</h6>
+                        <p>{{__('subtotal')}}: <span>{{ number_format($cartTotalSum, 2) }} man.</span></p>
+                        <p>{{__('delivery')}}: <span>{{ number_format($delivery, 2) }} man.</span></p>
+                        @if(session()->has('coupon'))
+                            @if(session()->get('coupon')['discount_type'] == 'percent')
+                                <p><span>{{__('discount')}}: {{ session()->get('coupon')['discount'] }} %</span><span> {{ number_format(session()->get('coupon')['discount'] * $cartTotalSum / 100, 2) }} man.</span></p>
+                                <?php $grandSum = number_format($cartTotalSum + $delivery - number_format(session()->get('coupon')['discount'] * $cartTotalSum / 100, 2), 2);  ?>
+                            @else
+                                <p><span>{{__('discount')}}:</span><span>{{ number_format(session()->get('coupon')['discount'], 2) }} man.</span></p>
+                                <?php $grandSum = number_format($cartTotalSum + $delivery - session()->get('coupon')['discount'], 2);  ?>
+                            @endif
+                        @else
+                            <p>{{__('discount')}}: <span>0 man.</span></p>
+                        @endif
+
+                        <p class="total"><span>{{__('total')}}:</span>
+                            @if(session()->has('coupon'))
+                                <del class="text-danger">{{ number_format($cartTotalSum + $delivery, 2) }} man.</del>
+                                <span>{{ $grandSum }} man.</span>
+                            @else
+                                <span>{{ number_format($cartTotalSum + $delivery, 2) }} man.</span>
+                            @endif
+                        </p>
                         <form>
                             <input type="text" placeholder="Coupon Code">
                             <button type="submit">apply</button>
@@ -180,5 +221,9 @@
     <!--============================
         CHECK OUT PAGE END
     ==============================-->
-
+    <script>
+        window.addEventListener('close-modal', event=> {
+            $('#address_modal').modal('hide');
+        })
+    </script>
 </div>

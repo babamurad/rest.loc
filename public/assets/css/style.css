@@ -6735,3 +6735,13 @@ a:hover svg path {
     font-size: 1rem;
     width: 30%;
 }
+.icon {
+    border: 1px solid var(--colorPrimary);
+    text-transform: capitalize;
+    padding: 2px 15px;
+    border-radius: 2px;
+    display: inline-block;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--colorPrimary);
+}

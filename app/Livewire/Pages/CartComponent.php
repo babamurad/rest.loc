@@ -40,6 +40,8 @@ class CartComponent extends Component
         $cartProducts = Cart::content();
 //        dd($cartProducts);
         $this->cartTotalSum = $this->cartTotal();
+
+        session()->put(['cartTotalSum' => $this->cartTotalSum]);
         return view('livewire.pages.cart-component', compact('cartProducts'));
     }
 
