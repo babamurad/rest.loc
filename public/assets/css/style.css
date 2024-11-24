@@ -6731,3 +6731,7 @@ a:hover svg path {
     border: var(--bs-dropdown-border-width) solid var(--bs-dropdown-border-color);
     border-radius: var(--bs-dropdown-border-radius);
 }
+.fp__dashboard .modal-footer button{
+    font-size: 1rem;
+    width: 30%;
+}

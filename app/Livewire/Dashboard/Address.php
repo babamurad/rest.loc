@@ -9,6 +9,7 @@ use Livewire\Component;
 
 class Address extends Component
 {
+    public $addresses;
     public $address;
     public $user_id;
     public $icon;
@@ -18,21 +19,20 @@ class Address extends Component
     public $email;
     public $phone;
     public $type = 'home';
-    public $editId;
+
+    public $delId; //change with Alpine.js
 
     public $showForm = 'Address';
 
     protected $rules = [
         'first_name' => ['required', 'max:255'],
         'last_name' => ['nullable','string','max:255'],
-//        'user_id' => ['required','integer'],
-//        'icon' => ['required','image'],
-//        'delivery_area_id' => ['required','integer'],
-
-////            'email' => ['required','email','max:255','unique:addresses,email,'. $this->id],
-//        'email' => ['required','email'],
-//        'phone' => ['required','string','max:255'],
-//        'type' => ['required','integer'],
+        'user_id' => ['required','integer'],
+        'delivery_area_id' => ['required','integer'],
+        'email' => ['required','email'],
+        'phone' => ['required','string','max:255'],
+        'address' => ['required'],
+        'type' => ['required'],
     ];
 
     public function render()
@@ -43,6 +43,12 @@ class Address extends Component
         return view('livewire.dashboard.address', compact('areas', 'adresses'));
     }
 
+/*
+    public function mount($adresses)
+    {
+        $this->addresses = $adresses;
+    }*/
+
     public function save()
     {
         $this->validate();
@@ -50,7 +56,7 @@ class Address extends Component
         //dd('validate');
         $address = new \App\Models\Address();
         $address->user_id = auth()->user()->id;
-        $address->icon = '<svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path fill="#f86f03" d="M261.56 101.28a8 8 0 0 0-11.06 0L66.4 277.15a8 8 0 0 0-2.47 5.79L63.9 448a32 32 0 0 0 32 32H192a16 16 0 0 0 16-16V328a8 8 0 0 1 8-8h80a8 8 0 0 1 8 8v136a16 16 0 0 0 16 16h96.06a32 32 0 0 0 32-32V282.94a8 8 0 0 0-2.47-5.79Z"/><path fill="#f86f03" d="m490.91 244.15l-74.8-71.56V64a16 16 0 0 0-16-16h-48a16 16 0 0 0-16 16v32l-57.92-55.38C272.77 35.14 264.71 32 256 32c-8.68 0-16.72 3.14-22.14 8.63l-212.7 203.5c-6.22 6-7 15.87-1.34 22.37A16 16 0 0 0 43 267.56L250.5 69.28a8 8 0 0 1 11.06 0l207.52 198.28a16 16 0 0 0 22.59-.44c6.14-6.36 5.63-16.86-.76-22.97"/></svg>';
+        $address->icon = '<i class="fas fa-home"></i>';
         $address->delivery_area_id = $this->delivery_area_id;
         $address->first_name = $this->first_name;
         $address->last_name = $this->last_name;
@@ -81,7 +87,7 @@ class Address extends Component
     public function update()
     {
         $this->validate();
-        $address = \App\Models\Address::find($this->editId);
+        $address = \App\Models\Address::findorFail($this->editId);
         $address->icon = $this->icon;
         $address->delivery_area_id = $this->delivery_area_id;
         $address->first_name = $this->first_name;
@@ -97,6 +103,22 @@ class Address extends Component
     public function cancel()
     {
         $this->reset();
+    }
+
+    public function destroy()
+    {
+        try {
+            \App\Models\Address::findorFail($this->delId)->delete();
+            $this->dispatch('close-modal');
+            $this->delId = null;
+            flash()->error(__('The address entry was successfully deleted.'));
+        } catch (\Exception $e) {
+            $this->dispatch('close-modal');
+            $this->delId = null;
+            Log::error('Error deleting coupon: '. $e->getMessage());
+            toastr()->error('Error deleting coupon. Please try again later.');
+        }
+
     }
 
 }

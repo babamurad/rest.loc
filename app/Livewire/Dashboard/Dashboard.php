@@ -27,6 +27,8 @@ class Dashboard extends Component
     public $email;
     public $phone;
     public $type = 'home';
+    public $editId;
+
 
     public function mount()
     {
@@ -74,6 +76,19 @@ class Dashboard extends Component
     public function render()
     {
         $areas = DeliveryArea::where('status', 1)->orderBy('area_name', 'asc')->get();
+        //$adresses = \App\Models\Address::where('user_id', auth()->user()->id)->with('deliveryArea')->get();
         return view('livewire.dashboard.dashboard', compact('areas'));
+    }
+
+    public function deleteId($id)
+    {
+        $this->delId = $id;
+    }
+
+    public function destroy()
+    {
+        \App\Models\Address::findorFail($this->delId)->delete();
+        $this->dispatch('close-modal');
+        flash()->error(__('The address entry was successfully deleted.'));
     }
 }

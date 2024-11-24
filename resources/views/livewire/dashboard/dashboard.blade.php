@@ -1,4 +1,5 @@
 <div>
+
     <!--=============================
         BREADCRUMB START
     ==============================-->
@@ -23,7 +24,7 @@
     <!--=========================
         DASHBOARD START
     ==========================-->
-    <section class="fp__dashboard mt_120 xs_mt_90 mb_100 xs_mb_70" x-data="{activeTab: 'v-pills-home'}">
+    <section class="fp__dashboard mt_120 xs_mt_90 mb_100 xs_mb_70" x-data="{activeTab: 'v-pills-home', showDeleteConfirmed: false}">
         <div class="container">
             <div class="fp__dashboard_area">
                 <div class="row">
@@ -40,7 +41,7 @@
                                     <p class="text-danger">{{$message}}</p>
                                     @enderror
 
-                                    <label for="upload"><i class="far fa-camera"></i></label>
+                                    <label for="upload"><i class="fas fa-camera"></i></label>
                                     <input type="file" id="upload" hidden wire:model="newimage">
                                 </div>
                                 <h2>{{auth()->user()->name}}</h2>
@@ -88,6 +89,7 @@
                                 <livewire:dashboard.profile />
 
                                 <livewire:dashboard.address />
+
 {{--                                @include('livewire.dashboard.address')--}}
                                 <div class="tab-pane fade"  x-show="activeTab === 'v-pills-profile'"
                                      :class="activeTab === 'v-pills-profile' ? 'tab-pane fade active show' : 'tab-pane fade'"
