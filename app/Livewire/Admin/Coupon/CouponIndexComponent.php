@@ -10,7 +10,6 @@ use Livewire\WithPagination;
 use Livewire\Attributes\On;
 
 #[Title('Coupon')]
-
 class CouponIndexComponent extends Component
 {
     use WithPagination;

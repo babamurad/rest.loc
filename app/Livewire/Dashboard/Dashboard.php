@@ -8,7 +8,10 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Livewire\Attributes\Title;
 
+
+#[Title('User Dashboard')]
 class Dashboard extends Component
 {
     use WithFileUploads;

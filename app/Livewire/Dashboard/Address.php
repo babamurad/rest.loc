@@ -5,6 +5,8 @@ namespace App\Livewire\Dashboard;
 use App\Models\DeliveryArea;
 use Livewire\Component;
 
+
+
 class Address extends Component
 {
     public $address;
@@ -44,7 +46,7 @@ class Address extends Component
     public function save()
     {
         $this->validate();
-        dump($this->type);
+        //dump($this->type);
         //dd('validate');
         $address = new \App\Models\Address();
         $address->user_id = auth()->user()->id;
