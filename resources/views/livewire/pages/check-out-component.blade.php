@@ -202,15 +202,8 @@
                                 <span>{{ number_format($cartTotalSum + $deliveryPrice, 2) }} man.</span>
                             @endif
                         </p>
-                        <form>
-                            <input type="text" placeholder="Coupon Code" wire:model="coupon_code">
-                            @if(!session()->has('coupon'))
-                                <button type="submit" wire:click.prevent="applyCoupon" @if($coupon_active) disabled @endif>{{__('apply')}}</button>
-                            @else
-                                <button type="submit" wire:click.prevent="deleteCoupon" disable="false">x</button>
-                            @endif
-                        </form>
-                        <a class="common_btn" href="#" wire:click.prevent="payout">checkout</a>
+
+                        <a class="common_btn" href="#" wire:click.prevent="payout">{{ __('Proceed to payment') }}</a>
                     </div>
                 </div>
             </div>

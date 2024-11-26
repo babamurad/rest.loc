@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Livewire\Admin;
+namespace App\Livewire;
 
 use Livewire\Component;
 
@@ -8,6 +8,6 @@ class PaymentComponent extends Component
 {
     public function render()
     {
-        return view('livewire.admin.payment-component');
+        return view('livewire.payment-component');
     }
 }

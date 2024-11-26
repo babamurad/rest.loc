@@ -138,5 +138,7 @@ class CheckOutComponent extends Component
     {
         if ($this->deliveryPrice === 0)
             toastr()->error(__('Please select Address.'));
+        else
+            $this->redirect('payment', navigate:true);
     }
 }

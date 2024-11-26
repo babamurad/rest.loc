@@ -26,6 +26,7 @@ use App\Livewire\HomeComponent;
 use App\Livewire\Pages\About;
 use App\Livewire\Pages\CartComponent;
 use App\Livewire\Pages\CheckOutComponent;
+use App\Livewire\PaymentComponent;
 use App\Livewire\ProductDetails;
 use App\Livewire\User\ForgotPasswordComponent;
 use App\Livewire\User\LoginComponent;
@@ -55,6 +56,7 @@ Route::middleware('auth')->group(function () {
     Route::get('change-password', ChangePassword::class)->name('change-password');
     Route::get('logout', LogoutComponent::class)->name('logout');
     Route::get('checkout', CheckOutComponent::class)->name('checkout');
+    Route::get('payment', PaymentComponent::class)->name('payment');
 });
 
 
