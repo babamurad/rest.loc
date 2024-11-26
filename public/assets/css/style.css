@@ -6745,3 +6745,35 @@ a:hover svg path {
     font-weight: 600;
     color: var(--colorPrimary);
 }
+.loader{
+    margin: 0 0 2em;
+    height: 100px;
+    width: 20%;
+    text-align: center;
+    padding: 1em;
+    margin: 0 auto 1em;
+    display: inline-block;
+    vertical-align: top;
+}
+
+svg path,
+svg rect{
+    fill: var(--colorPrimary);
+}
+.preloader {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    padding: 20px 40px;
+    border-radius: 10px;
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.loading{
+    background-color: rgba(0, 0, 0, 0.6);
+}
+

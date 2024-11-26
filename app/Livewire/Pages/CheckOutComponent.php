@@ -3,6 +3,7 @@
 namespace App\Livewire\Pages;
 
 use App\Models\Address;
+use App\Models\Coupon;
 use App\Models\DeliveryArea;
 use Livewire\Component;
 use Cart;
@@ -22,6 +23,10 @@ class CheckOutComponent extends Component
     public $phone;
     public $type = 'home';
 
+    public $cartTotalSum;
+    public $deliveryPrice = 0;
+    public $coupon_code;
+
     protected $rules = [
         'first_name' => ['required', 'max:255'],
         'last_name' => ['nullable','string','max:255'],
@@ -35,15 +40,32 @@ class CheckOutComponent extends Component
 
     public function render()
     {
+        if (Cart::count() > 0) {
+            if( session()->has('coupon')) {
+                $this->coupon_code = session('coupon')['code'];
+            } else {
+                $this->discount = 0;
+            }
+            $this->delivery = 10;
+        } else {
+            session()->forget('coupon');
+            $this->delivery = 0;
+        }
+
+        $this->cartTotalSum = $this->cartTotal();
         $addresses = Address::where('user_id', auth()->user()->id)->with('deliveryArea')->get();
         //dd($addresses->count());
         $areas = DeliveryArea::where('status', 1)->orderBy('area_name', 'asc')->get();
         return view('livewire.pages.check-out-component', compact('addresses', 'areas'));
     }
 
+    public function setDeliveryPrice($price)
+    {
+        $this->deliveryPrice = $price;
+    }
+
     public function save()
     {
-        $this->validate();
         //dump($this->type);
         //dd('validate');
         $address = new Address();
@@ -77,5 +99,44 @@ class CheckOutComponent extends Component
         }
         $this->cartTotalSum = $total;
         return $total;
+    }
+
+    public function deleteCoupon()
+    {
+        session()->forget('coupon');
+        $this->coupon_active = false;
+        $this->delivery = 0;
+        $this->coupon_code = '';
+    }
+
+    public function applyCoupon()
+    {
+        $coupon = Coupon::where('code', $this->coupon_code)->first();
+
+        if (!$coupon) {
+            $this->noCoupon('Coupon not found!');
+            return;
+        } elseif ($coupon->quantity <= 0) {
+            $this->noCoupon('Coupon has been fully redeemed');
+            return;
+        } elseif ($coupon->expire_date < now()) {
+            $this->noCoupon('Coupon has been expired.');
+            return;
+        } else {
+            $coupon->quantity = $coupon->quantity - 1;
+            $this->coupon_active = true;
+            $this->discount_type = $coupon->discount_type;
+            $this->discount = $coupon->discount;
+            $coupon->update();
+            session()->put('coupon', ['code' => $this->coupon_code, 'discount_type' => $this->discount_type, 'discount' => $this->discount]);
+            $this->dispatch('applyCoupon');
+            toastr()->success(__('Coupon applied successfully!'));
+        }
+    }
+
+    public function payout()
+    {
+        if ($this->deliveryPrice === 0)
+            toastr()->error(__('Please select Address.'));
     }
 }
