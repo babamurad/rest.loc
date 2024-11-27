@@ -1,4 +1,5 @@
 <div>
+@include('components.layouts.preloader')
     <!--   BREADCRUMB START
     ==============================-->
     <section class="fp__breadcrumb" style="background: url({{ asset('assets/images/counter_bg.jpg') }});">

@@ -26,13 +26,14 @@
     <section class="fp__payment_page mt_100 xs_mt_70 mb_100 xs_mb_70">
         <div class="container">
             <div class="row">
+                @include('components.layouts.preloader')
                 <h2 class="h2">{{ __('Choose Your Payment Gateaway') }}</h2>
                 <div class="col-lg-8">
                     <div class="fp__payment_area">
                         <div class="row">
                             <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp" data-wow-duration="1s">
-                                <a class="fp__single_payment" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                   href="#">
+                                <a class="fp__single_payment"
+                                   href="#" wire:click.prevent="invoice">
                                     <img src="{{ asset('assets/images/pay_1.jpg') }}" alt="payment method" class="img-fluid w-100">
                                 </a>
                             </div>
@@ -109,10 +110,11 @@
                 <div class="col-lg-4 mt_25 wow fadeInUp" data-wow-duration="1s">
                     <div class="fp__cart_list_footer_button">
                         <h6>total cart</h6>
-                        <p>subtotal: <span>$124.00</span></p>
-                        <p>delivery: <span>$00.00</span></p>
-                        <p>discount: <span>$10.00</span></p>
-                        <p class="total"><span>total:</span> <span>$134.00</span></p>
+                        <p>subtotal: <span>{{ $total }}</span></p>
+                        <p>delivery: <span>{{ $deliveryPrice }} </span>
+                        </p>
+                        <p>discount: <span>{{ $discount }}</span></p>
+                        <p class="total"><span>total:</span> <span>{{ $total + $deliveryPrice - $discount }}</span></p>
 
                         <a class=" common_btn" href=" #">checkout</a>
                     </div>

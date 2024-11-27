@@ -139,7 +139,7 @@
                                     <div class="fp__checkout_single_address">
                                         <div class="form-check">
                                             @if($address->type == 'home')
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="home-{{ $address->id }}" value="{{ $address->deliveryArea?->delivery_fee }}" wire:model.live="deliveryPrice">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="home-{{ $address->id }}" wire:click="getAddress({{ $address->id }})" value="{{ $address->deliveryArea?->delivery_fee }}" wire:model.live="deliveryPrice">
                                                 <label class="form-check-label" for="home-{{ $address->id }}">
                                                     <span class="icon">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512"><path fill="#f86f03" d="M261.56 101.28a8 8 0 0 0-11.06 0L66.4 277.15a8 8 0 0 0-2.47 5.79L63.9 448a32 32 0 0 0 32 32H192a16 16 0 0 0 16-16V328a8 8 0 0 1 8-8h80a8 8 0 0 1 8 8v136a16 16 0 0 0 16 16h96.06a32 32 0 0 0 32-32V282.94a8 8 0 0 0-2.47-5.79Z"/><path fill="#f86f03" d="m490.91 244.15l-74.8-71.56V64a16 16 0 0 0-16-16h-48a16 16 0 0 0-16 16v32l-57.92-55.38C272.77 35.14 264.71 32 256 32c-8.68 0-16.72 3.14-22.14 8.63l-212.7 203.5c-6.22 6-7 15.87-1.34 22.37A16 16 0 0 0 43 267.56L250.5 69.28a8 8 0 0 1 11.06 0l207.52 198.28a16 16 0 0 0 22.59-.44c6.14-6.36 5.63-16.86-.76-22.97"/></svg>
@@ -147,7 +147,7 @@
                                                     </span>
                                                 </label>
                                             @elseif($address->type == 'office')
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="office-{{ $address->id }}" value="{{ $address->deliveryArea?->delivery_fee }}" wire:model.live="deliveryPrice">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="office-{{ $address->id }}" wire:click="getAddress({{ $address->id }})" value="{{ $address->deliveryArea?->delivery_fee }}" wire:model.live="deliveryPrice">
                                                 <label class="form-check-label" for="office-{{ $address->id }}">
                                                 <span class="icon">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.2em" viewBox="0 0 24 24"><path fill="none" stroke="#f86f03" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M2.25 21h19.5m-18-18v18m10.5-18v18m6-13.5V21M6.75 6.75h.75m-.75 3h.75m-.75 3h.75m3-6h.75m-.75 3h.75m-.75 3h.75M6.75 21v-3.375c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21M3 3h12m-.75 4.5H21m-3.75 3.75h.008v.008h-.008zm0 3h.008v.008h-.008zm0 3h.008v.008h-.008z"/></svg>
@@ -155,7 +155,7 @@
                                                 </span>
                                                 </label>
                                             @else
-                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="other-{{ $address->id }}" value="{{ $address->deliveryArea?->delivery_fee }}" wire:model.live="deliveryPrice">
+                                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="other-{{ $address->id }}" wire:click="getAddress({{ $address->id }})" value="{{ $address->deliveryArea?->delivery_fee }}" wire:model.live="deliveryPrice">
                                                 <label class="form-check-label" for="other-{{ $address->id }}">
                                                    <span class="icon">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="1.2em" height="1.4em" viewBox="0 0 16 16"><path fill="#f86f03" d="M3.252 1c-.69 0-1.25.56-1.25 1.25L2 10.75c0 .69.56 1.25 1.25 1.25H5v-1.565a2.5 2.5 0 0 1 .799-1.832l.652-.605A.5.5 0 1 1 7 7.488l1.64-1.522a2 2 0 0 1 2.359-.267A1.25 1.25 0 0 0 9.75 4.5h-.497a.25.25 0 0 1-.25-.25l.002-1.999c0-.69-.56-1.251-1.25-1.251zM4.5 4a.5.5 0 1 1 0-1a.5.5 0 0 1 0 1M5 5.5a.5.5 0 1 1-1 0a.5.5 0 0 1 1 0M4.5 8a.5.5 0 1 1 0-1a.5.5 0 0 1 0 1M7 3.5a.5.5 0 1 1-1 0a.5.5 0 0 1 1 0M6.5 6a.5.5 0 1 1 0-1a.5.5 0 0 1 0 1m4.18.7a1 1 0 0 0-1.36 0L6.48 9.337a1.5 1.5 0 0 0-.48 1.1V14a1 1 0 0 0 1 1h1.5a1 1 0 0 0 1-1v-1h1v1a1 1 0 0 0 1 1H13a1 1 0 0 0 1-1v-3.564a1.5 1.5 0 0 0-.48-1.1zm-3.52 3.37L10 7.432l2.84 2.638a.5.5 0 0 1 .16.366V14h-1.5v-1a1 1 0 0 0-1-1h-1a1 1 0 0 0-1 1v1H7v-3.564a.5.5 0 0 1 .16-.366"/></svg>

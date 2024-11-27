@@ -11,7 +11,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        //
+        $this->app->bind('App\Helpers\CalcCart', function ($app) {
+            return new \App\Helpers\CalcCart;
+        });
     }
 
     /**

@@ -30,7 +30,6 @@ class CartComponent extends Component
             } else {
                 $this->discount = 0;
             }
-            $this->delivery = 10;
         } else {
             session()->forget('coupon');
             $this->delivery = 0;
