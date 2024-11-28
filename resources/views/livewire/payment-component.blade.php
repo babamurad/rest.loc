@@ -32,75 +32,14 @@
                     <div class="fp__payment_area">
                         <div class="row">
                             <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp" data-wow-duration="1s">
-                                <a class="fp__single_payment"
-                                   href="#" wire:click.prevent="invoice">
-                                    <img src="{{ asset('assets/images/pay_1.jpg') }}" alt="payment method" class="img-fluid w-100">
+                                <a class="fp__single_payment" href="#" wire:click.prevent="invoice">
+                                    <img src="{{ asset('images/paypal.webp') }}" alt="payment method" class="img-fluid w-100">
                                 </a>
                             </div>
                             <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp" data-wow-duration="1s">
                                 <a class="fp__single_payment" data-bs-toggle="modal" data-bs-target="#exampleModal"
                                    href="#">
-                                    <img src="{{ asset('assets/images/pay_2.jpg') }}" alt="payment method" class="img-fluid w-100">
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp" data-wow-duration="1s">
-                                <a class="fp__single_payment" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                   href="#">
-                                    <img src="{{ asset('assets/images/pay_3.jpg') }}" alt="payment method" class="img-fluid w-100">
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp" data-wow-duration="1s">
-                                <a class="fp__single_payment" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                   href="#">
-                                    <img src="{{ asset('assets/images/pay_4.jpg') }}" alt="payment method" class="img-fluid w-100">
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp" data-wow-duration="1s">
-                                <a class="fp__single_payment" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                   href="#">
-                                    <img src="{{ asset('assets/images/pay_5.jpg') }}" alt="payment method" class="img-fluid w-100">
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp" data-wow-duration="1s">
-                                <a class="fp__single_payment" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                   href="#">
-                                    <img src="{{ asset('assets/images/pay_6.jpg') }}" alt="payment method" class="img-fluid w-100">
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp" data-wow-duration="1s">
-                                <a class="fp__single_payment" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                   href="#">
-                                    <img src="{{ asset('assets/images/pay_1.jpg') }}" alt="payment method" class="img-fluid w-100">
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp" data-wow-duration="1s">
-                                <a class="fp__single_payment" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                   href="#">
-                                    <img src="{{ asset('assets/images/pay_2.jpg') }}" alt="payment method" class="img-fluid w-100">
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp" data-wow-duration="1s">
-                                <a class="fp__single_payment" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                   href="#">
-                                    <img src="{{ asset('assets/images/pay_1.jpg') }}" alt="payment method" class="img-fluid w-100">
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp" data-wow-duration="1s">
-                                <a class="fp__single_payment" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                   href="#">
-                                    <img src="{{ asset('assets/images/pay_2.jpg') }}" alt="payment method" class="img-fluid w-100">
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp" data-wow-duration="1s">
-                                <a class="fp__single_payment" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                   href="#">
-                                    <img src="{{ asset('assets/images/pay_3.jpg') }}" alt="payment method" class="img-fluid w-100">
-                                </a>
-                            </div>
-                            <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp" data-wow-duration="1s">
-                                <a class="fp__single_payment" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                                   href="#">
-                                    <img src="{{ asset('assets/images/pay_4.jpg') }}" alt="payment method" class="img-fluid w-100">
+                                    <img src="{{ asset('images/mastercard.jpg') }}" alt="payment method" class="img-fluid w-100">
                                 </a>
                             </div>
                         </div>
