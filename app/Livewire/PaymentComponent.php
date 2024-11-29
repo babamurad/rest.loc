@@ -48,9 +48,6 @@ class PaymentComponent extends Component
             } else {
                 toastr()->error(__('Failed to create order. Please try again later'));
             }
-
-
-
     }
 
     public function createOrder()

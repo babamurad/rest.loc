@@ -1,12 +1,12 @@
 <section class="section">
     <div class="section-header">
-        <h1>Settings</h1>
+        <h1>{{__('Payment Gateway')}}</h1>
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>All settings</h4>
+                    <h4>{{__('All gateways')}}</h4>
                     <div class="card-header-action">
                         <a href="#" class="btn btn-primary" wire:navigate>
                             Create New
@@ -18,7 +18,7 @@
                         <div class="col-12 col-sm-12 col-md-2">
                             <ul class="nav nav-pills flex-column" id="myTab4" role="tablist">
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab4" data-toggle="tab" href="#general" role="tab" aria-controls="home" aria-selected="true">General</a>
+                                    <a class="nav-link active" id="home-tab4" data-toggle="tab" href="#paypal-setting" role="tab" aria-controls="home" aria-selected="true">Paypal</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="profile-tab4" data-toggle="tab" href="#profile4" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
@@ -28,32 +28,89 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="col-12 col-sm-12 col-md-6">
+                        <div class="col-12 col-sm-12 col-md-10">
                             <div class="tab-content no-padding" id="myTab2Content">
-                                <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="home-tab4">
-                                    <div class="card border">
+                                <div class="tab-pane fade show active" id="paypal-setting" role="tabpanel" aria-labelledby="home-tab4">
+                                    <div class="card ">
                                         <div class="card-body">
-                                            <div class="form-group">
-                                                <label for="site-name">{{__('Site Name')}}</label>
-                                                <input name="site-name" type="text" class="form-control" wire:model="site_name">
-                                            </div>
                                             <div class="row">
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label for="currency">{{__('Currency Icon')}}</label>
-                                                        <input name="currency" type="text" class="form-control" wire:model="currency_icon">
+                                                        <label for="paypal_status">Paypal {{__('Status')}}</label>
+                                                        <select name="paypal_status" class="form-control" wire:model="status">
+                                                            <option value="1">{{__('Active')}}</option>
+                                                            <option value="0">{{__('Inactive')}}</option>
+                                                        </select>
                                                     </div>
                                                 </div>
+
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
-                                                        <label>{{__('Icon Position')}}</label>
-                                                        <select class="form-control" wire:model="currency_icon_position">
-                                                            <option value="right">{{__('Right')}}</option>
-                                                            <option value="left">{{__('Left')}}</option>
+                                                        <label for="paypal_account_mode">{{__('Paypal Account Mode')}}</label>
+                                                        <select name="paypal_account_mode" class="form-control" wire:model="paypal_account_mode">
+                                                            <option value="sandbox">{{__('Sandbox')}}</option>
+                                                            <option value="live">{{__('Live')}}</option>
                                                         </select>
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="paypal_country">{{__('Paypal Country Name')}}</label>
+                                                        <select name="paypal_country" class="form-control" wire:model="paypal_country">
+                                                            <option value="">{{__('Select')}}</option>
+                                                            @foreach(config('countries') as $key => $country)
+                                                                <option value="{{$key}}">{{ $country }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="paypal_currency">{{__('Paypal Currency')}}</label>
+                                                        <select name="paypal_currency" class="form-control" wire:model="paypal_currency">
+                                                            <option value="sandbox">{{__('Select')}}</option>
+                                                            @foreach(config('currencys.currency_list') as $key => $currency)
+                                                            <option value="{{$currency}}">{{ $key }} {{$currency}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="client_id">{{__('Paypal client ID')}}</label>
+                                                        <input name="client_id" type="text" class="form-control" wire:model="client_id">
+                                                    </div></div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="secret_key">{{__('Paypal Secret Key')}}</label>
+                                                        <input name="secret_key" type="text" class="form-control" wire:model="secret_key">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="image-preview @error('paypal_logo') border-danger @enderror" style="
+                                                    background-image: url({{ asset('uploads/sliders/placeholder.jpg') }});
+                                                @error('paypal_logo') border: 2px dashed #dc3545; @enderror
+                                                    background-position: center center;">
+                                                    <label for="paypal_logo" id="image-label">Choose File</label>
+                                                    <input type="file" name="paypal_logo" id="paypal_logo" wire:model="paypal_logo">
+                                                </div>
+                                                @error('paypal_logo') <div class="invalid-feedback" style="display: block;">{{$message}}</div> @enderror
+
+                                            <!-- Загрузка в процессе -->
+                                                <div wire:loading wire:target="paypal_logo">
+                                                    <p>Идет загрузка...</p> <!-- Сообщение, пока идет загрузка -->
+                                                </div>
+                                            </div>
+
+
                                             <button class="btn btn-primary" wire:click="saveGeneral">{{__('Save')}}</button>
                                         </div>
                                     </div>
