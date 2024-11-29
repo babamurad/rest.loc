@@ -219,8 +219,7 @@
                                                 @endforeach
 
                                             </select>
-                                            @error('cateory_id')
-                                            <div class="invalid-feedback">{{$message}}</div> @enderror
+                                            @error('cateory_id') <div class="invalid-feedback">{{$message}}</div> @enderror
                                         </div>
                                     </div>
                                     <div class="col-sm-12 col-md-12">

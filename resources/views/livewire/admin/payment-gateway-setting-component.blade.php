@@ -37,20 +37,22 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label for="paypal_status">Paypal {{__('Status')}}</label>
-                                                        <select name="paypal_status" class="form-control" wire:model="status">
+                                                        <select name="paypal_status" class="form-control @error('status') is-invalid @enderror" wire:model="status">
                                                             <option value="1">{{__('Active')}}</option>
                                                             <option value="0">{{__('Inactive')}}</option>
                                                         </select>
+                                                        @error('status') <div class="invalid-feedback">{{$message}}</div> @enderror
                                                     </div>
                                                 </div>
 
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label for="paypal_account_mode">{{__('Paypal Account Mode')}}</label>
-                                                        <select name="paypal_account_mode" class="form-control" wire:model="paypal_account_mode">
+                                                        <select name="paypal_account_mode" class="form-control @error('paypal_account_mode') is-invalid @enderror" wire:model="paypal_account_mode">
                                                             <option value="sandbox">{{__('Sandbox')}}</option>
                                                             <option value="live">{{__('Live')}}</option>
                                                         </select>
+                                                        @error('paypal_account_mode') <div class="invalid-feedback">{{$message}}</div> @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -59,23 +61,25 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label for="paypal_country">{{__('Paypal Country Name')}}</label>
-                                                        <select name="paypal_country" class="form-control" wire:model="paypal_country">
+                                                        <select name="paypal_country" class="form-control @error('paypal_country') is-invalid @enderror" wire:model="paypal_country">
                                                             <option value="">{{__('Select')}}</option>
                                                             @foreach(config('countries') as $key => $country)
                                                                 <option value="{{$key}}">{{ $country }}</option>
                                                             @endforeach
                                                         </select>
+                                                        @error('paypal_country') <div class="invalid-feedback">{{$message}}</div> @enderror
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label for="paypal_currency">{{__('Paypal Currency')}}</label>
-                                                        <select name="paypal_currency" class="form-control" wire:model="paypal_currency">
+                                                        <select name="paypal_currency" class="form-control @error('paypal_currency') is-invalid @enderror" wire:model="paypal_currency">
                                                             <option value="sandbox">{{__('Select')}}</option>
                                                             @foreach(config('currencys.currency_list') as $key => $currency)
                                                             <option value="{{$currency}}">{{ $key }} {{$currency}}</option>
                                                             @endforeach
                                                         </select>
+                                                        @error('paypal_currency') <div class="invalid-feedback">{{$message}}</div> @enderror
                                                     </div>
                                                 </div>
                                             </div>
@@ -84,20 +88,28 @@
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label for="client_id">{{__('Paypal client ID')}}</label>
-                                                        <input name="client_id" type="text" class="form-control" wire:model="client_id">
+                                                        <input name="client_id" type="text" class="form-control @error('client_id') is-invalid @enderror" wire:model="client_id">
+                                                        @error('client_id') <div class="invalid-feedback">{{$message}}</div> @enderror
                                                     </div></div>
                                                 <div class="col-sm-6">
                                                     <div class="form-group">
                                                         <label for="secret_key">{{__('Paypal Secret Key')}}</label>
-                                                        <input name="secret_key" type="text" class="form-control" wire:model="secret_key">
+                                                        <input name="secret_key" type="text" class="form-control @error('secret_key') is-invalid @enderror" wire:model="secret_key">
+                                                        @error('secret_key') <div class="invalid-feedback">{{$message}}</div> @enderror
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
-                                                <div class="image-preview @error('paypal_logo') border-danger @enderror" style="
-                                                    background-image: url({{ asset('uploads/sliders/placeholder.jpg') }});
-                                                @error('paypal_logo') border: 2px dashed #dc3545; @enderror
+                                                <div class="image-preview @error('paypal_logo') border-danger @enderror"  style="
+                                                 @if(strlen($paypal_logo) != 0 || $paypal_logo != '')
+                                                     background-image: url({{ asset($paypal_logo) }});
+                                                 @else
+                                                     {{--background-image: url({{ $paypal_logo->temporaryUrl() }});--}}
+                                                     background-image: url({{ asset('uploads/sliders/placeholder.jpg') }});
+                                                 @endif
+                                                     background-size: cover;
+                                                 @error('paypal_logo') border: 2px dashed #dc3545; @enderror
                                                     background-position: center center;">
                                                     <label for="paypal_logo" id="image-label">Choose File</label>
                                                     <input type="file" name="paypal_logo" id="paypal_logo" wire:model="paypal_logo">
@@ -111,7 +123,7 @@
                                             </div>
 
 
-                                            <button class="btn btn-primary" wire:click="saveGeneral">{{__('Save')}}</button>
+                                            <button class="btn btn-primary" wire:click="paypalSettingUpdate">{{__('Save')}}</button>
                                         </div>
                                     </div>
                                 </div>
