@@ -103,9 +103,20 @@
                                     <th scope="row">{{ ++$i }}</th>
                                     <td><strong>{{ ucfirst($product->category->name) }}</strong></td>
                                     <td style="width: 25%;">
-                                        <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}">
-                                            <img class="w-25 p-1 rounded-5" src="{{ asset($product->thumb_image) }}" alt="">
-                                        </a>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}">
+                                                    <img class="w-100 p-1 rounded-5" src="{{ asset($product->thumb_image) }}" alt="">
+                                                    <span class="rounded-5 badge-danger-light px-1 position-absolute bottom-0 start-0">{{ count(explode(',', $product->images)) }}</span>
+                                                </a>
+                                            </div>
+                                            <div class="col-6 mt-1">
+                                                <span class="px-1 rounded badge-danger-light"><small>Price:{{ $product->price }}m.</small></span>
+                                                <span class="px-1 rounded badge-success-light"><small>Qty:{{ $product->quantity }}</small></span><br>
+                                                <span class="px-1 rounded badge-secondary-light"><small>ID - {{ $product->id }}</small></span>
+                                            </div>
+                                        </div>
+
                                     </td>
                                     <td style="width: 20%;">
                                         <a href="{{ route('admin.product.edit', ['id' => $product->id]) }}">

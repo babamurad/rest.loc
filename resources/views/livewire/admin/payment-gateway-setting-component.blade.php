@@ -7,21 +7,18 @@
             <div class="card card-primary">
                 <div class="card-header">
                     <h4>{{__('All gateways')}}</h4>
-                    <div class="card-header-action">
-                        <a href="#" class="btn btn-primary" wire:navigate>
-                            Create New
-                        </a>
-                    </div>
+{{--                    +16468796749--}}
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-2">
                             <ul class="nav nav-pills flex-column" id="myTab4" role="tablist">
+
                                 <li class="nav-item">
-                                    <a class="nav-link active" id="home-tab4" data-toggle="tab" href="#paypal-setting" role="tab" aria-controls="home" aria-selected="true">Paypal</a>
+                                    <a class="nav-link active" id="profile-tab4" data-toggle="tab" href="#altyn_asyr" role="tab" aria-controls="profile" aria-selected="false">Altyn Asyr</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab4" data-toggle="tab" href="#profile4" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                                    <a class="nav-link " id="home-tab4" data-toggle="tab" href="#paypal-setting" role="tab" aria-controls="home" aria-selected="true">Paypal</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="contact-tab4" data-toggle="tab" href="#contact4" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
@@ -30,7 +27,11 @@
                         </div>
                         <div class="col-12 col-sm-12 col-md-10">
                             <div class="tab-content no-padding" id="myTab2Content">
-                                <div class="tab-pane fade show active" id="paypal-setting" role="tabpanel" aria-labelledby="home-tab4">
+
+                                <div class="tab-pane fade show active" id="altyn_asyr" role="tabpanel" aria-labelledby="profile-tab4">
+                                    Sed sed metus vel lacus hendrerit tempus. Sed efficitur velit tortor, ac efficitur est lobortis quis. Nullam lacinia metus erat, sed fermentum justo rutrum ultrices. Proin quis iaculis tellus. Etiam ac vehicula eros, pharetra consectetur dui. Aliquam convallis neque eget tellus efficitur, eget maximus massa imperdiet. Morbi a mattis velit. Donec hendrerit venenatis justo, eget scelerisque tellus pharetra a.
+                                </div>
+                                <div class="tab-pane fade" id="paypal-setting" role="tabpanel" aria-labelledby="home-tab4">
                                     <div class="card ">
                                         <div class="card-body">
                                             <div class="row">
@@ -76,7 +77,7 @@
                                                         <select name="paypal_currency" class="form-control @error('paypal_currency') is-invalid @enderror" wire:model="paypal_currency">
                                                             <option value="sandbox">{{__('Select')}}</option>
                                                             @foreach(config('currencys.currency_list') as $key => $currency)
-                                                            <option value="{{$currency}}">{{ $key }} {{$currency}}</option>
+                                                                <option value="{{$currency}}">{{ $key }} {{$currency}}</option>
                                                             @endforeach
                                                         </select>
                                                         @error('paypal_currency') <div class="invalid-feedback">{{$message}}</div> @enderror
@@ -101,22 +102,22 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <div class="image-preview @error('paypal_logo') border-danger @enderror"  style="
+                                                <div class="image-preview @error('new_logo') border-danger @enderror"  style="
                                                  @if(strlen($paypal_logo) != 0 || $paypal_logo != '')
                                                      background-image: url({{ asset($paypal_logo) }});
-                                                 @else
-                                                     {{--background-image: url({{ $paypal_logo->temporaryUrl() }});--}}
+                                                 @elseif($new_logo)
+                                                     background-image: url({{ $paypal_logo->temporaryUrl() }});
                                                      background-image: url({{ asset('uploads/sliders/placeholder.jpg') }});
                                                  @endif
                                                      background-size: cover;
                                                  @error('paypal_logo') border: 2px dashed #dc3545; @enderror
-                                                    background-position: center center;">
+                                                    background-position: center center; width: 100%;">
                                                     <label for="paypal_logo" id="image-label">Choose File</label>
-                                                    <input type="file" name="paypal_logo" id="paypal_logo" wire:model="paypal_logo">
+                                                    <input type="file" name="paypal_logo" id="paypal_logo" wire:model="new_logo">
                                                 </div>
-                                                @error('paypal_logo') <div class="invalid-feedback" style="display: block;">{{$message}}</div> @enderror
+                                                @error('new_logo') <div class="invalid-feedback" style="display: block;">{{$message}}</div> @enderror
 
-                                            <!-- Загрузка в процессе -->
+                                                <!-- Загрузка в процессе -->
                                                 <div wire:loading wire:target="paypal_logo">
                                                     <p>Идет загрузка...</p> <!-- Сообщение, пока идет загрузка -->
                                                 </div>
@@ -126,9 +127,6 @@
                                             <button class="btn btn-primary" wire:click="paypalSettingUpdate">{{__('Save')}}</button>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="tab-pane fade" id="profile4" role="tabpanel" aria-labelledby="profile-tab4">
-                                    Sed sed metus vel lacus hendrerit tempus. Sed efficitur velit tortor, ac efficitur est lobortis quis. Nullam lacinia metus erat, sed fermentum justo rutrum ultrices. Proin quis iaculis tellus. Etiam ac vehicula eros, pharetra consectetur dui. Aliquam convallis neque eget tellus efficitur, eget maximus massa imperdiet. Morbi a mattis velit. Donec hendrerit venenatis justo, eget scelerisque tellus pharetra a.
                                 </div>
                                 <div class="tab-pane fade" id="contact4" role="tabpanel" aria-labelledby="contact-tab4">
                                     Vestibulum imperdiet odio sed neque ultricies, ut dapibus mi maximus. Proin ligula massa, gravida in lacinia efficitur, hendrerit eget mauris. Pellentesque fermentum, sem interdum molestie finibus, nulla diam varius leo, nec varius lectus elit id dolor. Nam malesuada orci non ornare vulputate. Ut ut sollicitudin magna. Vestibulum eget ligula ut ipsum venenatis ultrices. Proin bibendum bibendum augue ut luctus.

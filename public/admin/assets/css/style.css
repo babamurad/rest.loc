@@ -2858,3 +2858,27 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
 .hidden{
     display: none;
 }
+.badge-danger-light {
+    color: #FFFFFF;
+    background-color: rgba(220, 53, 69, 0.62);
+}
+.badge-success-light{
+    color: #FFFFFF;
+    background-color: rgba(40, 167, 69, 0.62);
+}
+.badge-secondary-light{
+    color: #FFFFFF;
+    background-color: rgba(108, 117, 125, 0.60);
+}
+.col-6 a {
+    position: relative; /* Для позиционирования span */
+}
+
+.col-6 a span {
+    position: absolute;
+    /*bottom: 5px; !* Отступ от нижней границы *!*/
+    left: 5px; /* Отступ от левой границы */
+    background-color: rgba(255, 0, 0, 0.8); /* Полупрозрачный фон */
+    color: #fff;
+    padding: 5px 10px;
+}

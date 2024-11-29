@@ -13,7 +13,7 @@ use Livewire\WithFileUploads;
 class PaymentGatewaySettingComponent extends Component
 {
     use WithFileUploads;
-    public $paypal_country, $paypal_currency, $client_id, $secret_key, $paypal_logo;
+    public $paypal_country, $paypal_currency, $client_id, $secret_key, $paypal_logo, $new_logo;
     public $status = 0;
     public $paypal_account_mode = 'sandbox';
 
@@ -44,12 +44,12 @@ class PaymentGatewaySettingComponent extends Component
             'paypal_currency' => ['required','string'],
             'client_id' => ['required','string'],
             'secret_key' => ['required','string'],
-            'paypal_logo' => ['image', 'max:5000', 'nullable'],
+            //'paypal_logo' => ['image', 'max:5000', 'nullable'],
         ]);
 
-        if ($this->paypal_logo) {
-            $imageName = 'uploads/images/' . Carbon::now()->timestamp.'-'.$this->paypal_logo->getClientOriginalName();
-            $this->paypal_logo->storeAs($imageName);
+        if ($this->new_logo) {
+            $imageName = 'uploads/images/' . Carbon::now()->timestamp.'-'.$this->new_logo->getClientOriginalName();
+            $this->new_logo->storeAs($imageName);
             $validatedData['paypal_logo'] = $imageName;
         }
 
