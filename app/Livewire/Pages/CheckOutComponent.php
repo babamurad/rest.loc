@@ -92,7 +92,6 @@ class CheckOutComponent extends Component
                 $optionsPrice += $option['price'];
             }
             $total += ($productPrice + $sizePrice) * $item->qty + $optionsPrice;
-            //dd($item->qty);
         }
         $this->cartTotalSum = $total;
         return $total;
@@ -101,7 +100,6 @@ class CheckOutComponent extends Component
     public function getAddress($id)
     {
         $this->address_id = $id;
-        //dd($this->address_id);
     }
 
     public function payout()

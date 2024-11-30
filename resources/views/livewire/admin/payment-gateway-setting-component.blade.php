@@ -6,32 +6,32 @@
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>{{__('All gateways')}}</h4>
+                    <h4>{{__('All gateways')}} {{ $activeTab }}</h4>
 {{--                    +16468796749--}}
                 </div>
-                <div class="card-body">
+                <div class="card-body" x-data="{ currentTab: $wire.entangle('activeTab') }">
                     <div class="row">
                         <div class="col-12 col-sm-12 col-md-2">
                             <ul class="nav nav-pills flex-column" id="myTab4" role="tablist">
-
-                                <li class="nav-item">
-                                    <a class="nav-link active" id="profile-tab4" data-toggle="tab" href="#altyn_asyr" role="tab" aria-controls="profile" aria-selected="false">Altyn Asyr</a>
+                                <li class="nav-item my-1" @click="currentTab = 'altyn_asyr'" wire:click="changeTab('altyn_asyr')">
+                                    <a class="nav-link" :class="{ 'active text-white': currentTab === 'altyn_asyr' }" style="cursor: pointer;">Altyn Asyr</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link " id="home-tab4" data-toggle="tab" href="#paypal-setting" role="tab" aria-controls="home" aria-selected="true">Paypal</a>
+                                <li class="nav-item my-1" @click="currentTab = 'paypal'" wire:click="changeTab('paypal')">
+                                    <a class="nav-link" :class="{ 'active text-white': currentTab === 'paypal' }" style="cursor: pointer;">Paypal</a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" id="contact-tab4" data-toggle="tab" href="#contact4" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
+                                <li class="nav-item my-1" @click="currentTab = 'stripe'" wire:click="changeTab('stripe')">
+                                    <a class="nav-link" :class="{ 'active text-white': currentTab === 'stripe' }" style="cursor: pointer;">Stripe</a>
                                 </li>
                             </ul>
                         </div>
                         <div class="col-12 col-sm-12 col-md-10">
                             <div class="tab-content no-padding" id="myTab2Content">
 
-                                <div class="tab-pane fade show active" id="altyn_asyr" role="tabpanel" aria-labelledby="profile-tab4">
+                                <div class="tab-pane fade" x-show="currentTab === 'altyn_asyr'"  :class="{ ' show active': currentTab === 'altyn_asyr' }">
                                     Sed sed metus vel lacus hendrerit tempus. Sed efficitur velit tortor, ac efficitur est lobortis quis. Nullam lacinia metus erat, sed fermentum justo rutrum ultrices. Proin quis iaculis tellus. Etiam ac vehicula eros, pharetra consectetur dui. Aliquam convallis neque eget tellus efficitur, eget maximus massa imperdiet. Morbi a mattis velit. Donec hendrerit venenatis justo, eget scelerisque tellus pharetra a.
+                                    <button class="btn btn-primary" wire:click="paypalSettingUpdate" >Check</button>
                                 </div>
-                                <div class="tab-pane fade" id="paypal-setting" role="tabpanel" aria-labelledby="home-tab4">
+                                <div class="tab-pane fade" x-show="currentTab === 'paypal'"  :class="{ ' show active': currentTab === 'paypal' }">
                                     <div class="card ">
                                         <div class="card-body">
                                             <div class="row">
@@ -103,20 +103,20 @@
 
                                             <div class="form-group">
                                                 <div class="image-preview @error('new_logo') border-danger @enderror"  style="
-                                                 @if(strlen($paypal_logo) != 0 || $paypal_logo != '')
+                                                 @if(strlen($paypal_logo) > 0)
                                                      background-image: url({{ asset($paypal_logo) }});
                                                  @elseif($new_logo)
-                                                     background-image: url({{ $paypal_logo->temporaryUrl() }});
+                                                     background-image: url({{ $new_logo->temporaryUrl() }});
+                                                @else
                                                      background-image: url({{ asset('uploads/sliders/placeholder.jpg') }});
                                                  @endif
                                                      background-size: cover;
                                                  @error('paypal_logo') border: 2px dashed #dc3545; @enderror
                                                     background-position: center center; width: 100%;">
                                                     <label for="paypal_logo" id="image-label">Choose File</label>
-                                                    <input type="file" name="paypal_logo" id="paypal_logo" wire:model="new_logo">
+                                                    <input type="file" name="new_logo" id="paypal_logo" wire:model="new_logo">
                                                 </div>
                                                 @error('new_logo') <div class="invalid-feedback" style="display: block;">{{$message}}</div> @enderror
-
                                                 <!-- Загрузка в процессе -->
                                                 <div wire:loading wire:target="paypal_logo">
                                                     <p>Идет загрузка...</p> <!-- Сообщение, пока идет загрузка -->
@@ -128,7 +128,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="contact4" role="tabpanel" aria-labelledby="contact-tab4">
+                                <div class="tab-pane fade" x-show="currentTab === 'stripe'"  :class="{ ' show active': currentTab === 'stripe' }">
                                     Vestibulum imperdiet odio sed neque ultricies, ut dapibus mi maximus. Proin ligula massa, gravida in lacinia efficitur, hendrerit eget mauris. Pellentesque fermentum, sem interdum molestie finibus, nulla diam varius leo, nec varius lectus elit id dolor. Nam malesuada orci non ornare vulputate. Ut ut sollicitudin magna. Vestibulum eget ligula ut ipsum venenatis ultrices. Proin bibendum bibendum augue ut luctus.
                                 </div>
                             </div>

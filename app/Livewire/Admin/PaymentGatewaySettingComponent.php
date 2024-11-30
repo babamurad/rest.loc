@@ -16,6 +16,7 @@ class PaymentGatewaySettingComponent extends Component
     public $paypal_country, $paypal_currency, $client_id, $secret_key, $paypal_logo, $new_logo;
     public $status = 0;
     public $paypal_account_mode = 'sandbox';
+    public $activeTab;
 
 
     #[Layout('livewire.admin.layouts.admin-app')]
@@ -26,6 +27,7 @@ class PaymentGatewaySettingComponent extends Component
 
     public function mount()
     {
+        $this->activeTab = $this->activeTab ?? 'altyn_asyr';
         $settings = PaymentGatewaySetting::all();
 
         foreach ($settings as $setting) {
@@ -33,6 +35,11 @@ class PaymentGatewaySettingComponent extends Component
                 $this->{$setting->key} = $setting->value;
             }
         }
+    }
+
+    public function changeTab($active)
+    {
+        $this->activeTab = $active;
     }
 
     public function paypalSettingUpdate()
