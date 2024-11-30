@@ -40,10 +40,10 @@ class PaymentComponent extends Component
 //            CalcCart::createOrder();
             if ($this->createOrder()) {
                 //redirect user to payment host
-                session()->forget('address');
-                session()->forget('deliveryPrice');
-                session()->forget('discount');
-                Cart::destroy();
+//                session()->forget('address');
+//                session()->forget('deliveryPrice');
+//                session()->forget('discount');
+//                Cart::destroy();
                 toastr()->success(__('Your order has been accepted'));
             } else {
                 toastr()->error(__('Failed to create order. Please try again later'));
@@ -52,18 +52,19 @@ class PaymentComponent extends Component
 
     public function createOrder()
     {
+
         try {
             $order = new Order();
             $order->invoice_id = CalcCart::generateInvoiceId();
             $order->user_id = auth()->user()->id;
-            $order->address = session()->get('address');
+            $order->address_id = session()->get('address');
             $order->discount = CalcCart::getDiscount(CalcCart::cartTotal());
             $order->delivery_charge = session()->get('deliveryPrice') ?? 0;
             $order->subtotal = CalcCart::cartTotal();
             $total = CalcCart::cartTotal() + session()->get('deliveryPrice');
             $order->grand_total = $total - session()->get('discount');
             $order->product_qty = Cart::content()->count();
-            $order->payment_method = null;
+            $order->payment_method = 'Cash on delivery';
             $order->payment_status = 'pending';
             $order->payment_approve_date = null;
             $order->transection_id = null;
@@ -83,6 +84,7 @@ class PaymentComponent extends Component
                 $orderItem->product_option = json_encode($product->options->product_options);
                 $orderItem->save();
             }
+            $this->dispatch('Product_added_to_cart');
             return true;
         }catch (\Exception $e) {
             logger($e);

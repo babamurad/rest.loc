@@ -18,4 +18,9 @@ class OrderItem extends Model
         'product_size',
         'product_option',
     ];
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class);
+    }
 }

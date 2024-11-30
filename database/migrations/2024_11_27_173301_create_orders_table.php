@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('invoice_id');
             $table->foreignId('user_id')->constrained();
-            $table->text('address');
+            $table->foreignId('address_id')->constrained();
             $table->decimal('discount', 8, 2);
             $table->decimal('delivery_charge', 8, 2);
             $table->decimal('subtotal', 8, 2);

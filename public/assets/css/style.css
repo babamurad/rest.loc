@@ -6777,3 +6777,7 @@ svg rect{
     background-color: rgba(0, 0, 0, 0.6);
 }
 
+.form-check input:checked {
+    background-color: var(--colorPrimary);
+    border-color: var(--colorPrimary);
+}

@@ -9,7 +9,7 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\WithFileUploads;
 
-#[Title('Setting')]
+#[Title('Payment Gateway Settings')]
 class PaymentGatewaySettingComponent extends Component
 {
     use WithFileUploads;
@@ -17,6 +17,8 @@ class PaymentGatewaySettingComponent extends Component
     public $status = 0;
     public $paypal_account_mode = 'sandbox';
     public $activeTab;
+
+    public $asyr_status, $asyr_currency, $asyr_client_id, $asyr_secret_key, $asyr_logo, $new_asyr_logo;
 
 
     #[Layout('livewire.admin.layouts.admin-app')]
@@ -31,7 +33,11 @@ class PaymentGatewaySettingComponent extends Component
         $settings = PaymentGatewaySetting::all();
 
         foreach ($settings as $setting) {
-            if (in_array($setting->key, ['status', 'paypal_account_mode', 'paypal_country', 'paypal_currency', 'client_id', 'secret_key', 'paypal_logo'])) {
+            if (in_array($setting->key, [
+                'status', 'paypal_account_mode', 'paypal_country', 'paypal_currency', 'client_id', 'secret_key', 'paypal_logo',
+                'asyr_status', 'asyr_currency', 'asyr_client_id', 'asyr_secret_key', 'asyr_logo',
+
+            ])) {
                 $this->{$setting->key} = $setting->value;
             }
         }
@@ -40,6 +46,30 @@ class PaymentGatewaySettingComponent extends Component
     public function changeTab($active)
     {
         $this->activeTab = $active;
+    }
+
+    public function asyrSettingUpdate()
+    {
+        $validatedData = $this->validate([
+            'asyr_status' => ['boolean', 'nullable'],
+            'asyr_currency' => ['required','string'],
+            'asyr_client_id' => ['required','string'],
+            'asyr_secret_key' => ['required','string'],
+            //'paypal_logo' => ['image', 'max:5000', 'nullable'],
+        ]);
+
+        if ($this->new_asyr_logo) {
+            $imageName = 'uploads/images/' . Carbon::now()->timestamp.'-'.$this->new_asyr_logo->getClientOriginalName();
+            //dd($imageName);
+            $this->new_asyr_logo->storeAs($imageName);
+            $validatedData['asyr_logo'] = $imageName;
+        }
+
+        foreach ($validatedData as $key => $value) {
+            PaymentGatewaySetting::updateOrCreate(['key' => $key], ['value' => $value]);
+        }
+
+        toastr()->success(__('Altyn Asyr cart Updated Successfully!'));
     }
 
     public function paypalSettingUpdate()

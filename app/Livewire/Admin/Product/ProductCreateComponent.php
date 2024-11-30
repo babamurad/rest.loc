@@ -63,16 +63,12 @@ class ProductCreateComponent extends Component
 
     public function generateSKU()
     {
+
         $categoryName = Category::find($this->category_id)->name;
         return $this->sku = strtoupper(substr($categoryName, 0, 3)) . '-' . strtoupper(substr($this->name, 0, 3)) . '-' . strtoupper(substr($this->price, 0, 5));
     }
 
     public function updatedPrice()
-    {
-        $this->generateSKU();
-    }
-
-    public function updatedName()
     {
         $this->generateSKU();
     }

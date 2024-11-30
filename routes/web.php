@@ -11,6 +11,9 @@ use App\Livewire\Admin\Coupon\CouponIndexComponent;
 use App\Livewire\Admin\Delivery\DeliveryAreaComponent;
 use App\Livewire\Admin\Delivery\DeliveryAreaCreate;
 use App\Livewire\Admin\Delivery\DeliveryAreaEdit;
+use App\Livewire\Admin\Order\OrderIndexComponent;
+use App\Livewire\Admin\Order\OrderViewComponent;
+use App\Livewire\Admin\OrderComponent;
 use App\Livewire\Admin\PaymentGatewaySettingComponent;
 use App\Livewire\Admin\Product\ProductCreateComponent;
 use App\Livewire\Admin\Product\ProductEditComponent;
@@ -92,6 +95,9 @@ Route::middleware(['auth', 'admin:admin'])->prefix('admin')->group(function () {
     Route::get('delivery-area/edit/{id}', DeliveryAreaEdit::class)->name('admin.delivery-area.edit');
 
     Route::get('payment-settings', PaymentGatewaySettingComponent::class)->name('admin.payment-settings');
+
+    Route::get('orders', OrderIndexComponent::class)->name('admin.orders.index');
+    Route::get('orders/{id}', OrderViewComponent::class)->name('admin.orders.show');
 
     Route::get('test', TestComponent::class)->name('admin.test');
 });

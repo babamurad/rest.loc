@@ -74,7 +74,7 @@ class CheckOutComponent extends Component
         $address->email = $this->email;
         $address->phone = $this->phone;
         $address->type = $this->type;
-        $address->address = $this->address;
+        $address->address = $this->address_id;
         $address->save();
         flash()->success(__('Address has been added.'));
         $this->dispatch('close-modal');
@@ -108,8 +108,7 @@ class CheckOutComponent extends Component
             toastr()->error(__('Please select Address.'));
         else {
             $address = Address::with('deliveryArea')->where('id', '=', $this->address_id)->first();
-            //dd($address);
-            session()->put('address', $address->address);
+            session()->put('address', $this->address_id);
             session()->put('deliveryPrice', $address->deliveryArea?->delivery_fee);
             session()->put('discount', CalcCart::getDiscount($this->cartTotalSum));
             $this->redirect('payment', navigate:true);

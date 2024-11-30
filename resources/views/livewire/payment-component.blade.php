@@ -32,7 +32,7 @@
                     <div class="fp__payment_area">
                         <div class="row">
                             <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp" data-wow-duration="1s">
-                                <a class="fp__single_payment" href="#" wire:click.prevent="invoice">
+                                <a class="fp__single_payment" href="#">
                                     <img src="{{ asset('images/paypal.webp') }}" alt="payment method" class="img-fluid w-100">
                                 </a>
                             </div>
@@ -42,6 +42,16 @@
                                     <img src="{{ asset('images/mastercard.jpg') }}" alt="payment method" class="img-fluid w-100">
                                 </a>
                             </div>
+
+                            <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp">
+                                <div class="form-check" style="cursor: pointer;">
+                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" style="cursor: pointer;">
+                                    <label class="form-check-label" for="flexCheckDefault" style="margin-left: 0.4rem;  cursor: pointer;  margin-top: 0.2rem;">
+                                        <span class="icon"> <i class="fas fa-money-bill-alt"></i> {{__('Pay on delivery')}}</span>
+                                    </label>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -55,7 +65,7 @@
                         <p>discount: <span>{{ $discount }}</span></p>
                         <p class="total"><span>total:</span> <span>{{ $total + $deliveryPrice - $discount }}</span></p>
 
-                        <a class=" common_btn" href=" #">checkout</a>
+                        <a class=" common_btn" href="javascript:;" wire:click.prevent="invoice">checkout</a>
                     </div>
                 </div>
             </div>

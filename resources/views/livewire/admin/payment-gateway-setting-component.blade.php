@@ -6,7 +6,7 @@
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>{{__('All gateways')}} {{ $activeTab }}</h4>
+                    <h4>{{__('All gateways')}}</h4>
 {{--                    +16468796749--}}
                 </div>
                 <div class="card-body" x-data="{ currentTab: $wire.entangle('activeTab') }">
@@ -28,11 +28,77 @@
                             <div class="tab-content no-padding" id="myTab2Content">
 
                                 <div class="tab-pane fade" x-show="currentTab === 'altyn_asyr'"  :class="{ ' show active': currentTab === 'altyn_asyr' }">
-                                    Sed sed metus vel lacus hendrerit tempus. Sed efficitur velit tortor, ac efficitur est lobortis quis. Nullam lacinia metus erat, sed fermentum justo rutrum ultrices. Proin quis iaculis tellus. Etiam ac vehicula eros, pharetra consectetur dui. Aliquam convallis neque eget tellus efficitur, eget maximus massa imperdiet. Morbi a mattis velit. Donec hendrerit venenatis justo, eget scelerisque tellus pharetra a.
-                                    <button class="btn btn-primary" wire:click="paypalSettingUpdate" >Check</button>
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="asyr_status">Altyn Asyr {{__('Status')}}</label>
+                                                        <select name="asyr_status" class="form-control @error('asyr_status') is-invalid @enderror" wire:model="asyr_status">
+                                                            <option value="1">{{__('Active')}}</option>
+                                                            <option value="0">{{__('Inactive')}}</option>
+                                                        </select>
+                                                        @error('asyr_status') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="asyr_currency">{{__('Altyn Asyr Currency')}}</label>
+                                                        <select name="asyr_currency" class="form-control @error('asyr_currency') is-invalid @enderror" wire:model="asyr_currency">
+                                                            <option value="">{{__('Select')}}</option>
+                                                            <option value="manat">{{__('Manat')}}</option>
+                                                        </select>
+                                                        @error('asyr_currency') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="asyr_client_id">{{__('Altyn Asyr client ID')}}</label>
+                                                        <input name="asyr_client_id" type="text" class="form-control @error('asyr_client_id') is-invalid @enderror" wire:model="asyr_client_id">
+                                                        @error('asyr_client_id') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                                    </div></div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="asyr_secret_key">{{__('Altyn Asyr Secret Key')}}</label>
+                                                        <input name="asyr_secret_key" type="text" class="form-control @error('sasyr_secret_key') is-invalid @enderror" wire:model="asyr_secret_key">
+                                                        @error('asyr_secret_key') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="image-preview @error('new_asyr_logo') border-danger @enderror"  style="
+                                                @if(strlen($new_asyr_logo) == 0 || $new_asyr_logo == '')
+                                                    background-image: url({{ asset($asyr_logo) }});
+                                                @elseif($new_asyr_logo)
+                                                    background-image: url({{ $new_asyr_logo->temporaryUrl() }});
+                                                @else
+                                                    background-image: url({{ asset('uploads/sliders/placeholder.jpg') }});
+                                                @endif
+                                                    background-size: cover;
+                                                @error('$new_asyr_logo') border: 2px dashed #dc3545; @enderror
+                                                    background-position: center center; width: 40%;">
+                                                    <label for="new_asyr_logo" id="image-label">Choose File</label>
+                                                    <input type="file" name="new_asyr_logo" id="new_asyr_logo" wire:model="new_asyr_logo">
+                                                </div>
+                                                @error('new_asyr_logo') <div class="invalid-feedback" style="display: block;">{{$message}}</div> @enderror
+                                            <!-- Загрузка в процессе -->
+                                                <div wire:loading wire:target="new_asyr_logo">
+                                                    <p>Идет загрузка...</p> <!-- Сообщение, пока идет загрузка -->
+                                                </div>
+                                            </div>
+
+
+                                            <button class="btn btn-primary" wire:click="asyrSettingUpdate">{{__('Save')}}</button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" x-show="currentTab === 'paypal'"  :class="{ ' show active': currentTab === 'paypal' }">
-                                    <div class="card ">
+                                    <div class="card">
                                         <div class="card-body">
                                             <div class="row">
                                                 <div class="col-sm-6">
