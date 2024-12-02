@@ -65,7 +65,7 @@ class PaymentComponent extends Component
             $order->grand_total = $total - session()->get('discount');
             $order->product_qty = Cart::content()->count();
             $order->payment_method = 'Cash on delivery';
-            $order->payment_status = 'pending';
+            $order->payment_status = 'PENDING';
             $order->payment_approve_date = null;
             $order->transection_id = null;
             $order->coupon_info = json_encode(session()->get('coupon'));

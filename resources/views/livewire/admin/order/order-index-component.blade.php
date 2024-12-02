@@ -39,7 +39,8 @@
                             <th scope="col">User Name</th>
                             <th scope="col">Qty</th>
                             <th scope="col">Total</th>
-                            <th scope="col">Status</th>
+                            <th scope="col">Payment Status</th>
+                            <th scope="col">Order Status</th>
                             <th scope="col">Date</th>
                             <th scope="col" class="text-center">Actions</th>
                         </tr>
@@ -59,7 +60,14 @@
                                         <span class="badge badge-info">{{ $order->product_qty  }}</span>
                                     </td>
                                     <td>
-                                        <span class="badge badge-danger">{{ $order->grand_total }} m.</span>
+                                        <span class="badge text-danger">{{ $order->grand_total }} m.</span>
+                                    </td>
+                                    <td>
+                                        @if($order->payment_status == 'COMPLETED')
+                                            <span class="badge badge-success">Completed</span>
+                                        @elseif($order->payment_status == 'PENDING')
+                                            <span class="badge badge-warning">Pending</span>
+                                        @endif
                                     </td>
                                     <td>
                                         @if($order->order_status == 'COMPLETED')
@@ -70,6 +78,8 @@
                                             <span class="badge badge-danger">Declined</span>
                                         @elseif($order->order_status == 'IN_PROCESS')
                                             <span class="badge badge-info">In process</span>
+                                         @elseif($order->order_status == 'DELIVERED')
+                                            <span class="badge badge-info">Delivered</span>
                                         @endif
                                     </td>
                                     <td>
@@ -79,9 +89,9 @@
                                         <a href="{{ route('admin.orders.show', ['id' => $order->id]) }}" class="btn btn-icon btn-primary btn-sm">
                                             <i class="far fa-eye"></i>
                                         </a>
-                                        <a href="#" class="btn btn-icon btn-warning btn-sm" data-toggle="modal" data-target="#orderStatus">
+                                        <button href="#" class="btn btn-warning btn-sm" wire:click="showStatusModal({{ $order->id }})">
                                             <i class="fas fa-truck-loading"></i>
-                                        </a>
+                                        </button>
                                         <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#ConfirmDelete" wire:click="deleteId({{ $order->id }})">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
@@ -104,13 +114,18 @@
         window.addEventListener('closeModal', event=> {
             $('#ConfirmDelete').modal('hide');
         })
+
+        window.addEventListener('show-update-modal', event=> {
+            $('#orderStatus').modal('show');
+        })
+        window.addEventListener('close-update-modal', event=> {
+            $('#orderStatus').modal('hide');
+        })
     </script>
 
 
-
-
     <!-- Modal -->
-    <div class="modal fade" id="orderStatus" tabindex="-1" role="dialog" aria-labelledby="orderStatusLabel" aria-hidden="true">
+    <div wire:ignore class="modal fade" id="orderStatus" tabindex="-1" role="dialog" aria-labelledby="orderStatusLabel" aria-hidden="true" style="background-color: rgb(70 70 70 / 30%);">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -120,19 +135,38 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    ...
+                        <div class="form-group">
+                            <label for="payment_status">Payment Status</label>
+                            <select class="form-control" name="payment_status" id="payment_status" wire:model="payment_status">
+                                <option value="PENDING">Pending</option>
+                                <option value="COMPLETED">Completed</option>
+                            </select>
+                            @error('payment_status') <div class="invalid-feedback">{{$message}}</div> @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="order_status">Order Status</label>
+                            <select class="form-control @error('order_status') is-invalid @enderror" wire:model="order_status">
+                                <option value="PENDING">Pending</option>
+                                <option value="IN_PROCESS">In process</option>
+                                <option value="DELIVERED">Delivered</option>
+                                <option value="DECLINED">Declined</option>
+                            </select>
+                            @error('order_status') <div class="invalid-feedback d-block">{{$message}}</div> @enderror
+                        </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Update</button>
+                    <button type="button" class="btn btn-primary" wire:click="update">Update</button>
                 </div>
             </div>
         </div>
     </div>
 
+{{--    close-update-modal--}}
+
     <!-- Modal -->
 
-    <div wire:ignore class="modal fade" id="ConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="ConfirmDelete" aria-hidden="true" style="background-color: rgb(70 70 70 / 50%);">
+    <div wire:ignore class="modal fade" id="ConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="ConfirmDelete" aria-hidden="true" style="background-color: rgb(70 70 70 / 30%);">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
