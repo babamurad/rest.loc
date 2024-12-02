@@ -172,8 +172,7 @@
                                     <div class="col-sm-12 col-md-12">
                                         <div class="form-group">
                                             <label>Show at home?</label>
-                                            <select class="form-control @error('show_at_home') is-invalid @enderror"
-                                                    wire:model="show_at_home">
+                                            <select class="form-control @error('show_at_home') is-invalid @enderror" wire:model="show_at_home">
                                                 <option value="1">Yes</option>
                                                 <option value="0">No</option>
                                             </select>

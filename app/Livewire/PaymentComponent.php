@@ -70,7 +70,7 @@ class PaymentComponent extends Component
             $order->transection_id = null;
             $order->coupon_info = json_encode(session()->get('coupon'));
             $order->currency_name = null;
-            $order->order_status = 'pending';
+            $order->order_status = 'PENDING';
             $order->save();
 
             foreach (\Cart::content() as $product) {

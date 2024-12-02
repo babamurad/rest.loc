@@ -9,6 +9,26 @@
                     <h4>{{ __('All Orders') }}</h4>
 
                 </div>
+                <div class="card-header-action mt-3">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="form-inline">
+                                <div class="form-group">
+                                    <label class="mr-2" for="perp">{{__('Show')}}</label>
+                                    <select class="custom-select" id="perp" wire:model.live="perPage">
+                                        <option selected="8">8</option>
+                                        <option value="16">16</option>
+                                        <option value="25">25</option>
+                                        <option value="40">40</option>
+                                    </select>
+                                    <label class="ml-2">
+                                        {{__('entries')}}
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="card-body">
 
                     <table class="table table-hover">

@@ -31,7 +31,7 @@
                 <div class="col-lg-8">
                     <div class="fp__payment_area">
                         <div class="row">
-                            <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp" data-wow-duration="1s">
+                            {{--<div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp" data-wow-duration="1s">
                                 <a class="fp__single_payment" href="#">
                                     <img src="{{ asset('images/paypal.webp') }}" alt="payment method" class="img-fluid w-100">
                                 </a>
@@ -41,11 +41,11 @@
                                    href="#">
                                     <img src="{{ asset('images/mastercard.jpg') }}" alt="payment method" class="img-fluid w-100">
                                 </a>
-                            </div>
+                            </div>--}}
 
-                            <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp">
+                            <div class="col-lg-3 col-6 col-sm-4 col-md-3 wow fadeInUp mt-5">
                                 <div class="form-check" style="cursor: pointer;">
-                                    <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" style="cursor: pointer;">
+                                    <input class="form-check-input" type="checkbox" checked id="flexCheckDefault" style="cursor: pointer;">
                                     <label class="form-check-label" for="flexCheckDefault" style="margin-left: 0.4rem;  cursor: pointer;  margin-top: 0.2rem;">
                                         <span class="icon"> <i class="fas fa-money-bill-alt"></i> {{__('Pay on delivery')}}</span>
                                     </label>

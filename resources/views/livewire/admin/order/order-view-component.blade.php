@@ -21,35 +21,17 @@
                             <div class="col-md-6">
                                 <address>
                                     <strong>Deliver To:</strong><br>
-                                    <strong>Name:</strong>
-                                    @foreach($order->user->addresses as $address)
-                                        <span>
-                                            {{ @$address->first_name . ' ' . @$address->last_name }}<br>
-                                        </span>
-                                        @break
-                                    @endforeach
-                                    <strong>Phone: </strong>
-                                    @foreach($order->user->addresses as $address)
-                                        <span>
-                                            {{ $address->phone }}<br>
-                                        </span>
-                                        @break
-                                    @endforeach
-                                    <strong>Address:
-                                        @foreach($order->user->addresses as $address)
-                                            <span>
-                                                {{ $address->address }}<br>
-                                            </span>
-                                        @break
-                                        @endforeach
-                                    </strong>
+                                    <strong>Name:</strong> {{ $order->address->first_name }} {{ $order->address->last_name }} <br>
+                                    <strong>Phone: {{ $order->address->phone }}</strong><br>
+                                    <strong>Address:{{ $order->address->address }}</strong><br>
                                     <strong>Area: {{ $order->address->deliveryArea->area_name }}
                                     </strong>
                                 </address>
                             </div>
                             <div class="col-md-6 text-md-right">
                                 <address>
-
+                                    <strong>Order Date:</strong><br>
+                                    {{ \Carbon\Carbon::create($order->created_at)->format('F d, Y / H:i') }}<br>
                                 </address>
                             </div>
                         </div>
@@ -59,6 +41,18 @@
                                     <strong>Payment Method:</strong><br>
                                     {{ $order->payment_method }}<br>
                                     <strong>Payment Status:</strong>
+                                    @if($order->order_status == 'DELIVERED')
+                                        <span class="badge badge-success">COMPLETED</span>
+                                    @elseif($order->order_status == 'PENDING')
+                                        <span class="badge badge-warning">{{ ucfirst($order->payment_status) }}</span>
+                                    @elseif($order->order_status == 'DECLINE')
+                                        <span class="badge badge-danger">Declined</span>
+                                    @endif
+                                </address>
+                            </div>
+                            <div class="col-md-6 text-md-right">
+                                <address>
+                                    <strong>Order Status:</strong><br>
                                     @if($order->payment_status == 'COMPLETED')
                                         <span class="badge badge-success">COMPLETED</span>
                                     @elseif($order->payment_status == 'PENDING')
@@ -66,12 +60,6 @@
                                     @else
                                         <span class="badge badge-danger">Declined</span>
                                     @endif
-                                </address>
-                            </div>
-                            <div class="col-md-6 text-md-right">
-                                <address>
-                                    <strong>Order Date:</strong><br>
-                                    {{ \Carbon\Carbon::create($order->created_at)->format('F d, Y') }}<br>
                                 </address>
                             </div>
                         </div>
@@ -87,47 +75,81 @@
                                 <tr>
                                     <th data-width="40">#</th>
                                     <th>Item</th>
+                                    <th>Size&Options</th>
                                     <th class="text-center">Price</th>
                                     <th class="text-center">Quantity</th>
                                     <th class="text-right">Totals</th>
                                 </tr>
-                                @php $sum = 0; @endphp
+
                                 @foreach($order->orderItems as $item)
                                 <tr>
                                     <td>{{ ++$loop->index }}</td>
-                                    <td>{{ ucfirst($item->product_name) }}</td>
-                                    <td class="text-center">{{ $item->unit_price }}</td>
+                                    <td>
+                                        {{ ucfirst($item->product_name) }}
+                                    </td>
+                                    <td>
+                                        <ul>
+                                            <li><span>Size: {{ @json_decode($item->product_size)->name }}</span>
+                                                <span>{{ @json_decode($item->product_size)->price }} m.</span></li>
+                                            @php $optSum = 0; @endphp
+                                            @foreach(json_decode($item->product_option) as $option)
+                                                <li>{{ $option->name }}: {{ $option->price }} m.</li>
+                                                @php $optSum += $option->price @endphp
+                                            @endforeach
+                                        </ul>
+                                    </td>
+                                    <td class="text-center">{{ $item->unit_price }} m.</td>
                                     <td class="text-center">{{ $item->qty }}</td>
-                                    <td class="text-right">{{ @$item->unit_price * @$item->qty }}</td>
-                                    @php $sum += $item->unit_price * $item->qty; @endphp
+                                    <td class="text-right">{{ $optSum + ($item->unit_price + @json_decode($item->product_size)->price) * $item->qty }} m.</td>
+
                                 </tr>
                                 @endforeach
                             </table>
                         </div>
                         <div class="row mt-4">
                             <div class="col-lg-8">
-                                <div class="section-title">Payment Method</div>
-                                <p class="section-lead">The payment method that we provide is to make it easier for you to pay invoices.</p>
-                                <div class="images">
-                                    <img src="{{ asset('admin/assets/img/visa.png') }}" alt="visa">
-                                    <img src="{{ asset('admin/assets/img/jcb.png') }}" alt="jcb">
-                                    <img src="{{ asset('admin/assets/img/mastercard.png') }}" alt="mastercard">
-                                    <img src="{{ asset('admin/assets/img/paypal.png') }}" alt="paypal">
+                                @include('livewire.admin.components.alerts')
+                                <div class="col-md-4">
+                                    <form wire:submit.prevent="update">
+                                        <div class="form-group">
+                                            <label for="payment_status">Payment Status</label>
+                                            <select class="form-control" name="payment_status" id="payment_status" wire:model="payment_status">
+                                                <option value="pending">Pending</option>
+                                                <option value="completed">Completed</option>
+                                            </select>
+                                            @error('payment_status') <div class="invalid-feedback">{{$message}}</div> @enderror
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="order_status">Order Status</label>
+                                            <select class="form-control @error('order_status') is-invalid @enderror" wire:model="order_status">
+                                                <option value="pending">Pending</option>
+                                                <option value="in_process">In process</option>
+                                                <option value="delivered">Delivered</option>
+                                                <option value="declined">Declined</option>
+                                            </select>
+                                            @error('order_status') <div class="invalid-feedback d-block">{{$message}}</div> @enderror
+                                        </div>
+                                        <button type="submit" class="btn btn-info">Update</button>
+                                    </form>
                                 </div>
                             </div>
                             <div class="col-lg-4 text-right">
                                 <div class="invoice-detail-item">
                                     <div class="invoice-detail-name">Subtotal</div>
-                                    <div class="invoice-detail-value">${{ $sum }}</div>
+                                    <div class="invoice-detail-value">{{ $order->subtotal }} m.</div>
                                 </div>
                                 <div class="invoice-detail-item">
                                     <div class="invoice-detail-name">Shipping</div>
-                                    <div class="invoice-detail-value">$15</div>
+                                    <div class="invoice-detail-value">{{ $order->delivery_charge ?? 0 }} m.</div>
+                                </div>
+                                <div class="invoice-detail-item">
+                                    <div class="invoice-detail-name">Discount</div>
+                                    <div class="invoice-detail-value"><span class="text-danger">{{ @json_decode($order->coupon_info)->discount? @json_decode($order->coupon_info)->discount . ' %' : '' }}</span> {{ $order->discount }} m.</div>
                                 </div>
                                 <hr class="mt-2 mb-2">
                                 <div class="invoice-detail-item">
                                     <div class="invoice-detail-name">Total</div>
-                                    <div class="invoice-detail-value invoice-detail-value-lg">$685.99</div>
+                                    <div class="invoice-detail-value invoice-detail-value-lg"><strong>{{ $order->grand_total }} m.</strong></div>
                                 </div>
                             </div>
                         </div>
