@@ -1,5 +1,5 @@
 <section class="section">
-    <div class="section-header">
+    <div id="sect-head" class="section-header">
         <h1>Invoice</h1>
         <div class="section-header-breadcrumb">
             <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">Dashboard</a></div>
@@ -9,14 +9,13 @@
 
     <div class="section-body">
         <div class="invoice">
-            <div class="invoice-print">
+            <div id="invoice-print" class="invoice-print">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="invoice-title">
                             <h2>Invoice</h2>
                             <div class="invoice-number">Order #{{ $order->invoice_id }}</div>
                         </div>
-                        <hr>
                         <div class="row">
                             <div class="col-md-6">
                                 <address>
@@ -36,27 +35,27 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-6 col-sm-6">
                                 <address>
                                     <strong>Payment Method:</strong><br>
                                     {{ $order->payment_method }}<br>
                                     <strong>Payment Status:</strong>
-                                    @if($order->order_status == 'DELIVERED')
+                                    @if($order->payment_status == 'DELIVERED')
                                         <span class="badge badge-success">COMPLETED</span>
-                                    @elseif($order->order_status == 'PENDING')
+                                    @elseif($order->payment_status == 'PENDING')
                                         <span class="badge badge-warning">{{ ucfirst($order->payment_status) }}</span>
-                                    @elseif($order->order_status == 'DECLINE')
+                                    @elseif($order->payment_status == 'DECLINE')
                                         <span class="badge badge-danger">Declined</span>
                                     @endif
                                 </address>
                             </div>
-                            <div class="col-md-6 text-md-right">
+                            <div class="col-md-6 col-sm-6 text-md-right">
                                 <address>
-                                    <strong>Order Status:</strong><br>
-                                    @if($order->payment_status == 'COMPLETED')
+                                    <strong>Order Status:</strong>
+                                    @if($order->order_status == 'COMPLETED')
                                         <span class="badge badge-success">COMPLETED</span>
-                                    @elseif($order->payment_status == 'PENDING')
-                                        <span class="badge badge-warning">{{ ucfirst($order->payment_status) }}</span>
+                                    @elseif($order->order_status == 'PENDING')
+                                        <span class="badge badge-warning">{{ ucfirst($order->order_status) }}</span>
                                     @else
                                         <span class="badge badge-danger">Declined</span>
                                     @endif
@@ -66,10 +65,9 @@
                     </div>
                 </div>
 
-                <div class="row mt-4">
+                <div class="row">
                     <div class="col-md-12">
                         <div class="section-title">Order Summary</div>
-                        <p class="section-lead">All items here cannot be deleted.</p>
                         <div class="table-responsive">
                             <table class="table table-striped table-hover table-md">
                                 <tr>
@@ -122,10 +120,10 @@
                                         <div class="form-group">
                                             <label for="order_status">Order Status</label>
                                             <select class="form-control @error('order_status') is-invalid @enderror" wire:model="order_status">
-                                                <option value="pending">Pending</option>
-                                                <option value="in_process">In process</option>
-                                                <option value="delivered">Delivered</option>
-                                                <option value="declined">Declined</option>
+                                                <option value="PENDING">Pending</option>
+                                                <option value="IN_PROCESS">In process</option>
+                                                <option value="DELIVERED">Delivered</option>
+                                                <option value="DECLINED">Declined</option>
                                             </select>
                                             @error('order_status') <div class="invalid-feedback d-block">{{$message}}</div> @enderror
                                         </div>
@@ -162,9 +160,51 @@
                     <button class="btn btn-primary btn-icon icon-left"><i class="fas fa-credit-card"></i> Process Payment</button>
                     <button class="btn btn-danger btn-icon icon-left"><i class="fas fa-times"></i> Cancel</button>
                 </div>
-                <button class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
+                <button id="action-print" class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
             </div>
         </div>
     </div>
+    <style>
+        @media print{
+            .main-sidebar{
+                display: none;
+            }
+            #action-print{
+                display: none;
+            }
+            .navbar-bg{
+                display: none;
+            }
+            .section-header{
+                display: none;
+                margin-bottom: 0px;
+            }
+            #sect-head{
+                display: none;
+            }
+            .btn{
+                display: none;
+            }
+            .main-footer{
+                display: none;
+            }
+            .invoice{
+                margin-top: 0px;
+                padding-top: 0px;
+                padding-right: 0px;
+            }
+        }
+    </style>
 </section>
+
+@script
+<script>
+    $(function($){
+        $("#action-print").click(function(){
+            window.print();
+            return false;
+        });
+    });
+</script>
+@endscript
 

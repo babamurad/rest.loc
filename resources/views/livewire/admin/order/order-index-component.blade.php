@@ -50,10 +50,10 @@
                                 <tr>
                                     <th scope="row">{{ $loop->index + 1 }}</th>
                                     <td style="width: 20%;">
-                                        <a href="#" class="badge badge-primary">#-{{ $order->invoice_id  }}</a>
+                                        <a href="{{ route('admin.orders.show', ['id' => $order->id]) }}" class="badge badge-primary">#-{{ $order->invoice_id  }}</a>
                                     </td>
                                     <td>
-                                        <span class="badge badge-light">{{ $order->user->name }}</span>
+                                        <span class="badge badge-light">{{ $order->address->first_name . ' ' . $order->address->last_name }}</span>
                                     </td>
                                     <td>
                                         <span class="badge badge-info">{{ $order->product_qty  }}</span>
@@ -62,12 +62,14 @@
                                         <span class="badge badge-danger">{{ $order->grand_total }} m.</span>
                                     </td>
                                     <td>
-                                        @if($order->payment_status == 'COMPLETED')
-                                            <span class="badge badge-success">COMPLETED</span>
-                                        @elseif($order->payment_status == 'PENDING')
-                                            <span class="badge badge-warning">{{ ucfirst($order->payment_status) }}</span>
-                                        @else
+                                        @if($order->order_status == 'COMPLETED')
+                                            <span class="badge badge-success">Completed</span>
+                                        @elseif($order->order_status == 'PENDING')
+                                            <span class="badge badge-warning">Pending</span>
+                                        @elseif($order->order_status == 'DECLINED')
                                             <span class="badge badge-danger">Declined</span>
+                                        @elseif($order->order_status == 'IN_PROCESS')
+                                            <span class="badge badge-info">In process</span>
                                         @endif
                                     </td>
                                     <td>
@@ -77,7 +79,7 @@
                                         <a href="{{ route('admin.orders.show', ['id' => $order->id]) }}" class="btn btn-icon btn-primary btn-sm">
                                             <i class="far fa-eye"></i>
                                         </a>
-                                        <a href="#" class="btn btn-icon btn-warning btn-sm">
+                                        <a href="#" class="btn btn-icon btn-warning btn-sm" data-toggle="modal" data-target="#orderStatus">
                                             <i class="fas fa-truck-loading"></i>
                                         </a>
                                         <button class="btn btn-danger btn-sm" data-toggle="modal" data-target="#ConfirmDelete" wire:click="deleteId({{ $order->id }})">
@@ -103,6 +105,30 @@
             $('#ConfirmDelete').modal('hide');
         })
     </script>
+
+
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="orderStatus" tabindex="-1" role="dialog" aria-labelledby="orderStatusLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="orderStatusLabel">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Update</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal -->
 
