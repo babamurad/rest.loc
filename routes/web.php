@@ -25,6 +25,7 @@ use App\Livewire\Admin\Slider\SliderComponent;
 use App\Livewire\Admin\WhyChooseUs\WhyChooseUsComponent;
 use App\Livewire\Dashboard\ChangePassword;
 use App\Livewire\Dashboard\Dashboard;
+use App\Livewire\Dashboard\OrderComponent as UserOrders;
 use App\Livewire\Dashboard\Profile;
 use App\Livewire\HomeComponent;
 use App\Livewire\Pages\About;
@@ -58,6 +59,8 @@ Route::middleware('auth')->group(function () {
     Route::get('dashboard', Dashboard::class)->name('dashboard');
     Route::get('profile', Profile::class)->name('profile');
     Route::get('change-password', ChangePassword::class)->name('change-password');
+    Route::get('orders', UserOrders::class)->name('order.index');
+
     Route::get('logout', LogoutComponent::class)->name('logout');
     Route::get('checkout', CheckOutComponent::class)->name('checkout');
     Route::get('payment', PaymentComponent::class)->name('payment');

@@ -16,7 +16,7 @@
                                 <div class="form-group">
                                     <label class="mr-2" for="perp">{{__('Show')}}</label>
                                     <select class="custom-select" id="perp" wire:model.live="perPage">
-                                        <option selected="8">8</option>
+                                        <option selected value="8">8</option>
                                         <option value="16">16</option>
                                         <option value="25">25</option>
                                         <option value="40">40</option>
@@ -79,7 +79,7 @@
                                         @elseif($order->order_status == 'IN_PROCESS')
                                             <span class="badge badge-info">In process</span>
                                          @elseif($order->order_status == 'DELIVERED')
-                                            <span class="badge badge-info">Delivered</span>
+                                            <span class="badge badge-success">Delivered</span>
                                         @endif
                                     </td>
                                     <td>

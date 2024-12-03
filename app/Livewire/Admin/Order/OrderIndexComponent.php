@@ -48,7 +48,6 @@ class OrderIndexComponent extends Component
             $this->err = $e->getMessage();
             flash()->error('Something went wrong! Failed to delete.' . $e);
         }
-
     }
 
     public function showStatusModal($id)

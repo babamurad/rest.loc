@@ -104,7 +104,7 @@
                                 @endforeach
                             </table>
                         </div>
-                        <div class="row mt-4">
+                        <div class="row mt-2">
                             <div class="col-lg-8">
                                 @include('livewire.admin.components.alerts')
                                 <div class="col-md-4">
@@ -130,6 +130,11 @@
                                         <button type="submit" class="btn btn-info">Update</button>
                                     </form>
                                 </div>
+                                <div class="invoice-detail-item mt-3">
+                                    <div class="invoice-detail-name">Total</div>
+                                    <div class="invoice-detail-value invoice-detail-value-lg"><strong>{{ ucfirst(\App\Helpers\CalcCart::propis($order->grand_total)) }}</strong></div>
+                                </div>
+
                             </div>
                             <div class="col-lg-4 text-right">
                                 <div class="invoice-detail-item">
@@ -148,6 +153,7 @@
                                 <div class="invoice-detail-item">
                                     <div class="invoice-detail-name">Total</div>
                                     <div class="invoice-detail-value invoice-detail-value-lg"><strong>{{ $order->grand_total }} m.</strong></div>
+
                                 </div>
                             </div>
                         </div>
@@ -157,8 +163,7 @@
             <hr>
             <div class="text-md-right">
                 <div class="float-lg-left mb-lg-0 mb-3">
-                    <button class="btn btn-primary btn-icon icon-left"><i class="fas fa-credit-card"></i> Process Payment</button>
-                    <button class="btn btn-danger btn-icon icon-left"><i class="fas fa-times"></i> Cancel</button>
+                    <a href="{{ route('admin.orders.index') }}" class="btn btn-info btn-icon icon-left"><i class="fas fa-arrow-left"></i> {{__('Back')}}</a>
                 </div>
                 <button id="action-print" class="btn btn-warning btn-icon icon-left"><i class="fas fa-print"></i> Print</button>
             </div>
@@ -193,6 +198,7 @@
                 padding-top: 0px;
                 padding-right: 0px;
             }
+
         }
     </style>
 </section>
