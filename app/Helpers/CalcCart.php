@@ -131,9 +131,9 @@ class CalcCart
                     $chunkText .= ' ';
                 }
 
-                if ($index == 2){
+                if ($index == 1){
                     $integerText = $integerText . ' müň ' . $chunkText;
-                } elseif($index == 1) {
+                } elseif($index == 2) {
                     $integerText = $integerText . ' million ' . $chunkText;
                 } else {
                     $integerText = $integerText . $chunkText;

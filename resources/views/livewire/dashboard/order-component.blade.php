@@ -47,7 +47,7 @@
             </div>
         </div>
 
-        <div class="fp__invoice" x-show="viewOrder">
+        <div class="fp__invoice invoice-print" x-show="viewOrder">
             <a class="go_back" @click="viewOrder=false"><i class="fas fa-long-arrow-alt-left"></i> go back</a>
             <div class="fp__track_order">
                 <ul>
@@ -57,14 +57,14 @@
                     ">order declined</li>
                     @else
                     <li class="
-                        {{ in_array($selectOrder->order_status, ['DELIVERED']) ? 'active' : '' }}
-                    ">order delivered</li>
-                    <li class="
                     {{ in_array($selectOrder->order_status, ['PENDING', 'IN_PROCESS', 'DELIVERED', 'DECLINED']) ? 'active' : '' }}
                     ">order pending</li>
                     <li class="
                     {{ in_array($selectOrder->order_status, ['IN_PROCESS', 'DELIVERED', 'DECLINED']) ? 'active' : '' }}
                     ">order process</li>
+                    <li class="
+                        {{ in_array($selectOrder->order_status, ['DELIVERED']) ? 'active' : '' }}
+                    ">order delivered</li>
                     @endif
 {{--                    <li>order declined</li> --}}
                 </ul>
@@ -73,12 +73,15 @@
                 <div class="header_address">
                     <h4>invoice to</h4>
                     <p>{{ $selectOrder->address->address }}</p>
+                    <p>{{ $selectOrder->address->deliveryArea->area_name }}</p>
                     <p>{{ $selectOrder->address->phone }}</p>
                 </div>
-                <div class="header_address">
-                    <p><b>invoice no: </b><span>4574</span></p>
-                    <p><b>Order ID:</b> <span> #{{ $selectOrder->invoice_id }}</span></p>
-                    <p><b>date:</b> <span>{{ \Carbon\Carbon::create($selectOrder->created_at)->format('d.m.Y') }}</span></p>
+                <div class="header_address" style="width: 38%;">
+                    <p><b style="width: 140px;">invoice no: </b><span>#{{ $selectOrder->invoice_id }}</span></p>
+                    <p><b style="width: 140px;">Payment status: </b><span>#{{ $selectOrder->payment_status }}</span></p>
+                    <p><b style="width: 140px;">Payment method: </b><span>#{{ $selectOrder->payment_method }}</span></p>
+                    <p><b style="width: 140px;">Transaction Id: </b><span>#{{ $selectOrder->transaction_id }}</span></p>
+                    <p><b style="width: 140px;">date:</b> <span>{{ \Carbon\Carbon::create($selectOrder->created_at)->format('d.m.Y') }}</span></p>
                 </div>
             </div>
             <div class="fp__invoice_body">
@@ -161,13 +164,95 @@
                                 <b>{{ $selectOrder->grand_total }}</b>
                             </td>
                         </tr>
+                        <tr>
+                            <td class="package">
+                                <b>{{__('Amount in words')}}</b>
+                            </td>
+                            <td class="total" colspan="4">
+                                <b>{{ \App\Helpers\CalcCart::propis($selectOrder->grand_total) }}</b>
+                            </td>
+                        </tr>
                         </tfoot>
                     </table>
                 </div>
             </div>
-            <a class="print_btn common_btn" href="#"><i class="far fa-print"></i> print
+            <a id="action-print" class="print_btn common_btn" href="javascript:;"><i class="far fa-print"></i> print
                 PDF</a>
 
         </div>
     </div>
+    <style>
+    @media print{
+        .main-sidebar{
+        display: none;
+        }
+        #action-print{
+        display: none;
+        }
+        .navbar-bg{
+        display: none;
+        }
+        .section-header{
+        display: none;
+        margin-bottom: 0px;
+        }
+        #sect-head{
+        display: none;
+        }
+        .btn{
+        display: none;
+        }
+        .main-footer{
+        display: none;
+        }
+        .invoice{
+        margin-top: 0px;
+        padding-top: 0px;
+        padding-right: 0px;
+        }
+        .navbar{
+            display: none;
+        }
+        .fp__topbar{
+            display: none;
+        }
+        .fp__breadcrumb{
+            display: none;
+        }
+        .fp__dashboard_menu{
+            display: none;
+        }
+        .fp_dashboard_body h3{
+            display: none;
+        }
+        .fp__track_order{
+            display: none;
+        }
+        .go_back{
+            display: none;
+        }
+        .fp__scroll_btn{
+            display: none;
+        }
+        footer{
+            display: none;
+        }
+        .fp__invoice .fp__invoice_header{
+            margin: 0;
+            padding: 0;
+        }
+
+    }
+    </style>
+    @script
+    <script>
+        $(function($){
+            $("#action-print").click(function(){
+                window.print();
+                return false;
+            });
+        });
+
+    </script>
+    @endscript
 </div>

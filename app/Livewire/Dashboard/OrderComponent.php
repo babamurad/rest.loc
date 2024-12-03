@@ -5,7 +5,9 @@ namespace App\Livewire\Dashboard;
 use App\Models\Order;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Livewire\Attributes\Title;
 
+#[Title('User Orders')]
 class OrderComponent extends Component
 {
     use WithPagination;
@@ -15,6 +17,7 @@ class OrderComponent extends Component
     public $viewOrder = false;
 
     public $perPage=8;
+
 
     public function render()
     {
