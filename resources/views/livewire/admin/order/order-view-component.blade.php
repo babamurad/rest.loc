@@ -88,7 +88,8 @@
                                     <td>
                                         <ul>
                                             <li><span>Size: {{ @json_decode($item->product_size)->name }}</span>
-                                                <span>{{ @json_decode($item->product_size)->price }} m.</span></li>
+                                                <span>{{ @json_decode($item->product_size)->price }} m.</span>
+                                            </li>
                                             @php $optSum = 0; @endphp
                                             @foreach(json_decode($item->product_option) as $option)
                                                 <li>{{ $option->name }}: {{ $option->price }} m.</li>

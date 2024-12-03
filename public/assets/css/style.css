@@ -5604,7 +5604,7 @@ CHECKOUT PAGE START
 }
 
 .fp__track_order ul li {
-    width: 20%;
+    width: 33.333%;
     position: relative;
     font-size: 16px;
     font-weight: 500;
@@ -5649,19 +5649,19 @@ CHECKOUT PAGE START
     z-index: 2;
 }
 
-.fp__track_order ul li:nth-child(2)::before {
+.fp__track_order ul li:nth-child(1)::before {
     content: "\f00c";
 }
 
-.fp__track_order ul li:nth-child(3)::before {
+.fp__track_order ul li:nth-child(2)::before {
     content: "\f291";
 }
 
-.fp__track_order ul li:nth-child(4)::before {
+.fp__track_order ul li:nth-child(3)::before {
     content: "\f0d1";
 }
 
-.fp__track_order ul li:nth-child(5)::before {
+.fp__track_order ul li:nth-child(4)::before {
     content: "\f466";
 }
 
@@ -5671,6 +5671,14 @@ CHECKOUT PAGE START
 
 .fp__track_order ul li.active::before {
     background: #4caf50;
+    color: var(--colorWhite);
+}
+.fp__track_order ul li.decline_status::after {
+    background: #d50303;
+}
+
+.fp__track_order ul li.decline_status::before {
+    background: #d50303;
     color: var(--colorWhite);
 }
 
@@ -5765,7 +5773,7 @@ CHECKOUT PAGE START
     text-transform: capitalize;
 }
 
-.fp__invoice table tr td .size {
+.mfp__invoice table tr td .size {
     color: var(--colorPrimary);
 }
 
@@ -5816,7 +5824,7 @@ CHECKOUT PAGE START
 }
 
 .fp_dashboard_body .fp__invoice {
-    display: none;
+    /*display: none;*/
     background: #faf6f3fa;
     border-radius: 5px;
     padding: 30px;
@@ -6781,3 +6789,57 @@ svg rect{
     background-color: var(--colorPrimary);
     border-color: var(--colorPrimary);
 }
+.mfp__invoice table {
+    border: 0.5px solid #ddd;
+    margin: 0;
+    border-bottom: 0.5px solid #ddd;
+}
+.mfp__invoice .go_back {
+    background: var(--colorPrimary);
+    border-radius: 30px;
+    padding: 8px 15px;
+    font-size: 14px;
+    text-transform: capitalize;
+    color: var(--colorWhite) !important;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all linear .3s;
+    -webkit-transition: all linear .3s;
+}
+.mfp__invoice table {
+    border: 0.5px solid #ddd;
+    margin: 0;
+    border-bottom: 0.5px solid #ddd;
+}
+.mfp__invoice table tr th {
+    background: var(--colorPrimary);
+    border: none;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: capitalize;
+    color: var(--colorWhite) !important;
+}
+.mfp__invoice table tr {
+    border: transparent;
+    border-right: 0;
+}
+.mfp__invoice .sl_no {
+    min-width: 60px;
+}
+.mfp__invoice .package {
+    width: 40%;
+    text-align: left;
+}
+.mfp__invoice table tr td {
+    color: var(--colorBlack);
+    vertical-align: middle;
+}
+/*.mfp__invoice table tr td .size, .mfp__invoice table tr td .coca_cola, .mfp__invoice table tr td .coca_cola2 {
+    display: block;
+    color: var(--colorBlack);
+    text-transform: capitalize;
+}*/
+.package .size {
+    color: var(--colorPrimary) !important;
+}
+
