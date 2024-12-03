@@ -128,7 +128,7 @@
                                 <b>{{ $selectOrder->product_qty }}</b>
                             </td>
                             <td class="total">
-                                <b>{{ $selectOrder->subtotal }} m.</b>
+                                <b>{{ $selectOrder->subtotal }} <small style="text-transform: lowercase;">m.</small></b>
                             </td>
                         </tr>
                         <tr>
@@ -165,10 +165,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td class="package">
+                            <td class="package"  colspan="2">
                                 <b>{{__('Amount in words')}}</b>
                             </td>
-                            <td class="total" colspan="4">
+                            <td class="total" colspan="3">
                                 <b>{{ \App\Helpers\CalcCart::propis($selectOrder->grand_total) }}</b>
                             </td>
                         </tr>
