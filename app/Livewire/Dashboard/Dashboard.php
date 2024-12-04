@@ -33,8 +33,8 @@ class Dashboard extends Component
             if (file_exists('images/' . $user->avatar)) {
                 try {
                     unlink('images/' . $user->avatar);
-                } catch (Exception $ex){
-
+                } catch (\Exception $e){
+                    flash()->error('Something went wrong! Failed to delete.' . $e);
                 };
             }
             $imageName = Carbon::now()->timestamp.'.'.$this->newimage->extension();

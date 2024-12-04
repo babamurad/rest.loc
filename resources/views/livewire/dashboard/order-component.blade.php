@@ -16,32 +16,31 @@
                         <th>Amount</th>
                         <th>Action</th>
                     </tr>
-                    @foreach($orders as $order)
-                    <tr>
-                        <td>
-                            <h5>#{{ $order->invoice_id }}</h5>
-                        </td>
-                        <td>
-                            <p>{{ \Carbon\Carbon::create($order->created_at)->format('F d, Y') }}</p>
-                        </td>
-                        <td>
-                            @if($order->order_status == 'IN_PROCESS')
-                            <span class="active">{{ $order->order_status }}</span>
-                            @elseif($order->order_status == 'PENDING')
-                            <span class="complete">{{ $order->order_status }}</span>
-                            @elseif($order->order_status == 'DECLINED')
-                            <span class="cancel">{{ $order->order_status }}</span>
-                            @elseif($order->order_status == 'DELIVERED')
-                            <span class="complete">{{ $order->order_status }}</span>
-                            @endif
-                        </td>
-                        <td>
-                            <h5>{{ $order->grand_total }} m.</h5>
-                        </td>
-                        <td><a class="view_invoice" @click="$wire.invoice({{ $order->id }}); viewOrder=true;">View Details</a></td>
-                    </tr>
-                    @endforeach
-
+                        @foreach($orders as $order)
+                        <tr>
+                            <td>
+                                <h5>#{{ $order->invoice_id }}</h5>
+                            </td>
+                            <td>
+                                <p>{{ \Carbon\Carbon::create($order->created_at)->format('F d, Y') }}</p>
+                            </td>
+                            <td>
+                                @if($order->order_status == 'IN_PROCESS')
+                                <span class="active">{{ $order->order_status }}</span>
+                                @elseif($order->order_status == 'PENDING')
+                                <span class="complete">{{ $order->order_status }}</span>
+                                @elseif($order->order_status == 'DECLINED')
+                                <span class="cancel">{{ $order->order_status }}</span>
+                                @elseif($order->order_status == 'DELIVERED')
+                                <span class="complete">{{ $order->order_status }}</span>
+                                @endif
+                            </td>
+                            <td>
+                                <h5>{{ $order->grand_total }} m.</h5>
+                            </td>
+                            <td><a class="view_invoice" @click="$wire.invoice({{ $order->id }}); viewOrder=true;">View Details</a></td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -52,19 +51,11 @@
             <div class="fp__track_order">
                 <ul>
                     @if($selectOrder->order_status === 'DECLINED')
-                    <li class=" decline_status
-                    {{ in_array($selectOrder->order_status, ['DECLINED']) ? 'active' : '' }}
-                    ">order declined</li>
+                    <li class=" decline_status {{ in_array($selectOrder->order_status, ['DECLINED']) ? 'active' : '' }}">order declined</li>
                     @else
-                    <li class="
-                    {{ in_array($selectOrder->order_status, ['PENDING', 'IN_PROCESS', 'DELIVERED', 'DECLINED']) ? 'active' : '' }}
-                    ">order pending</li>
-                    <li class="
-                    {{ in_array($selectOrder->order_status, ['IN_PROCESS', 'DELIVERED', 'DECLINED']) ? 'active' : '' }}
-                    ">order process</li>
-                    <li class="
-                        {{ in_array($selectOrder->order_status, ['DELIVERED']) ? 'active' : '' }}
-                    ">order delivered</li>
+                    <li class="{{ in_array($selectOrder->order_status, ['PENDING', 'IN_PROCESS', 'DELIVERED', 'DECLINED']) ? 'active' : '' }}">order pending</li>
+                    <li class="{{ in_array($selectOrder->order_status, ['IN_PROCESS', 'DELIVERED', 'DECLINED']) ? 'active' : '' }}">order process</li>
+                    <li class="{{ in_array($selectOrder->order_status, ['DELIVERED']) ? 'active' : '' }}">order delivered</li>
                     @endif
 {{--                    <li>order declined</li> --}}
                 </ul>
@@ -181,6 +172,18 @@
 
         </div>
     </div>
+
+    @script
+    <script>
+        $(function($){
+            $("#action-print").click(function(){
+                window.print();
+                return false;
+            });
+        });
+    </script>
+    @endscript
+
     <style>
     @media print{
         .main-sidebar{
@@ -244,15 +247,4 @@
 
     }
     </style>
-    @script
-    <script>
-        $(function($){
-            $("#action-print").click(function(){
-                window.print();
-                return false;
-            });
-        });
-
-    </script>
-    @endscript
 </div>
