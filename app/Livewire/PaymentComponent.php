@@ -40,10 +40,10 @@ class PaymentComponent extends Component
 //            CalcCart::createOrder();
             if ($this->createOrder()) {
                 //redirect user to payment host
-//                session()->forget('address');
-//                session()->forget('deliveryPrice');
-//                session()->forget('discount');
-//                Cart::destroy();
+                session()->forget('address');
+                session()->forget('deliveryPrice');
+                session()->forget('discount');
+                Cart::destroy();
                 toastr()->success(__('Your order has been accepted'));
             } else {
                 toastr()->error(__('Failed to create order. Please try again later'));

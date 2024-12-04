@@ -36,7 +36,6 @@ class PaymentGatewaySettingComponent extends Component
             if (in_array($setting->key, [
                 'status', 'paypal_account_mode', 'paypal_country', 'paypal_currency', 'client_id', 'secret_key', 'paypal_logo',
                 'asyr_status', 'asyr_currency', 'asyr_client_id', 'asyr_secret_key', 'asyr_logo',
-
             ])) {
                 $this->{$setting->key} = $setting->value;
             }

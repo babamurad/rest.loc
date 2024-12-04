@@ -9,7 +9,7 @@
                     <h1>user dashboard</h1>
                     <ul>
                         <li><a href="/" wire:navigate>home</a></li>
-                        <li><a href="#">dashboard</a></li>
+                        <li><a href="javascript:;">dashboard</a></li>
                     </ul>
                 </div>
             </div>

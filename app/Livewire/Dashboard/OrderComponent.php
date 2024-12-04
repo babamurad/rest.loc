@@ -25,11 +25,6 @@ class OrderComponent extends Component
         return view('livewire.dashboard.order-component', compact('orders'));
     }
 
-    public function mount()
-    {
-        $this->selectOrder = Order::with('orderItems', 'address')->first();
-    }
-
     public function invoice($id)
     {
         $this->selectOrder = Order::with('orderItems', 'user', 'address')->findOrFail($id);

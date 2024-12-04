@@ -3,7 +3,7 @@
 >
 {{--     x-data="{viewOrder: @entangle('viewOrder')}"--}}
     <div class="fp_dashboard_body"  x-data="{viewOrder: @entangle('viewOrder')}">
-        <h3>order list {{ $viewOrder }}</h3>
+        <h3>order list</h3>
         @include('components.layouts.preloader')
         <div class="fp_dashboard_order" x-show="!viewOrder">
             <div class="table-responsive">
@@ -45,7 +45,7 @@
                 </table>
             </div>
         </div>
-
+    @if($selectOrder)
         <div class="fp__invoice invoice-print" x-show="viewOrder">
             <a class="go_back" @click="viewOrder=false"><i class="fas fa-long-arrow-alt-left"></i> go back</a>
             <div class="fp__track_order">
@@ -67,10 +67,10 @@
                     <p>{{ $selectOrder->address->deliveryArea->area_name }}</p>
                     <p>{{ $selectOrder->address->phone }}</p>
                 </div>
-                <div class="header_address" style="width: 38%;">
+                <div class="header_address" style="width: 40%;">
                     <p><b style="width: 140px;">invoice no: </b><span>#{{ $selectOrder->invoice_id }}</span></p>
                     <p><b style="width: 140px;">Payment status: </b><span>#{{ $selectOrder->payment_status }}</span></p>
-                    <p><b style="width: 140px;">Payment method: </b><span>#{{ $selectOrder->payment_method }}</span></p>
+                    <p><b style="width: 140px;">Payment method: </b><span><small>{{ $selectOrder->payment_method }}</small></span></p>
                     <p><b style="width: 140px;">Transaction Id: </b><span>#{{ $selectOrder->transaction_id }}</span></p>
                     <p><b style="width: 140px;">date:</b> <span>{{ \Carbon\Carbon::create($selectOrder->created_at)->format('d.m.Y') }}</span></p>
                 </div>
@@ -91,7 +91,7 @@
                             <td class="sl_no">01</td>
                             <td class="package">
                                 <p>{{ $item->product_name }}</p>
-                                <span class="size">{{ @json_decode($item->product_size)->name }}: {{ @json_decode($item->product_size)->price }}</span>
+                                <span class="size">{{ @json_decode($item->product_size)->name }}: {{ @json_decode($item->product_size)->price }} <small style="text-decoration: none;"></small></span>
                                 @php $optSum = 0; @endphp
                                 @foreach(json_decode($item->product_option) as $option)
                                     <span class="coca_cola">{{ $option->name }}: {{ $option->price }}</span>
@@ -130,7 +130,7 @@
                                 <b></b>
                             </td>
                             <td class="total coupon">
-                                <b>{{ $selectOrder->discount }}</b>
+                                <b>{{ $selectOrder->discount }} <small style="text-transform: lowercase;">m.</small></b>
                             </td>
                         </tr>
                         <tr>
@@ -141,7 +141,7 @@
                                 <b></b>
                             </td>
                             <td class="total coast">
-                                <b>{{ $selectOrder->delivery_charge }}</b>
+                                <b>{{ $selectOrder->delivery_charge }} <small style="text-transform: lowercase;">m.</small></b>
                             </td>
                         </tr>
                         <tr>
@@ -152,7 +152,7 @@
                                 <b></b>
                             </td>
                             <td class="total">
-                                <b>{{ $selectOrder->grand_total }}</b>
+                                <b>{{ $selectOrder->grand_total }} <small style="text-transform: lowercase;">m.</small></b>
                             </td>
                         </tr>
                         <tr>
@@ -167,22 +167,22 @@
                     </table>
                 </div>
             </div>
-            <a id="action-print" class="print_btn common_btn" href="javascript:;"><i class="far fa-print"></i> print
-                PDF</a>
+            <button type="button" id="action-print" class="print_btn common_btn"><i class="far fa-print"></i> print
+                PDF</button>
 
         </div>
+            @script
+            <script>
+                $(function($){
+                    $("#action-print").click(function(){
+                        window.print();
+                        return false;
+                    });
+                });
+            </script>
+            @endscript
+    @endif
     </div>
-
-    @script
-    <script>
-        $(function($){
-            $("#action-print").click(function(){
-                window.print();
-                return false;
-            });
-        });
-    </script>
-    @endscript
 
     <style>
     @media print{
@@ -240,7 +240,7 @@
         footer{
             display: none;
         }
-        .fp__invoice .fp__invoice_header{
+        .fp__invoice .fp__invoice_header .invoice-print .container{
             margin: 0;
             padding: 0;
         }

@@ -6746,7 +6746,7 @@ a:hover svg path {
 .icon {
     border: 1px solid var(--colorPrimary);
     text-transform: capitalize;
-    padding: 2px 15px;
+    /*padding: 2px 15px;*/
     border-radius: 2px;
     display: inline-block;
     font-size: 14px;

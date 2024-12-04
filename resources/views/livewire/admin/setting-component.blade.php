@@ -7,11 +7,6 @@
             <div class="card card-primary">
                 <div class="card-header">
                     <h4>All settings</h4>
-                    <div class="card-header-action">
-                        <a href="#" class="btn btn-primary" wire:navigate>
-                            Create New
-                        </a>
-                    </div>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -21,7 +16,7 @@
                                     <a class="nav-link active" id="home-tab4" data-toggle="tab" href="#general" role="tab" aria-controls="home" aria-selected="true">General</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" id="profile-tab4" data-toggle="tab" href="#profile4" role="tab" aria-controls="profile" aria-selected="false">Profile</a>
+                                    <a class="nav-link" id="profile-tab4" data-toggle="tab" href="#pusher-settings" role="tab" aria-controls="pusher-settings" aria-selected="false">{{__('Pusher Settings')}}</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" id="contact-tab4" data-toggle="tab" href="#contact4" role="tab" aria-controls="contact" aria-selected="false">Contact</a>
@@ -58,8 +53,45 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="profile4" role="tabpanel" aria-labelledby="profile-tab4">
-                                    Sed sed metus vel lacus hendrerit tempus. Sed efficitur velit tortor, ac efficitur est lobortis quis. Nullam lacinia metus erat, sed fermentum justo rutrum ultrices. Proin quis iaculis tellus. Etiam ac vehicula eros, pharetra consectetur dui. Aliquam convallis neque eget tellus efficitur, eget maximus massa imperdiet. Morbi a mattis velit. Donec hendrerit venenatis justo, eget scelerisque tellus pharetra a.
+                                <div class="tab-pane fade" id="pusher-settings" role="tabpanel" aria-labelledby="pusher-settings">
+                                    <div class="card border">
+                                        <div class="card-body">
+                                            {{--
+                                            app_id = "1905944"
+                                            key = "e4438ee202f5ef502f3f"
+                                            secret = "52867af337f36ab4f0cf"
+                                            cluster = "ap2"
+                                            --}}
+                                            <div class="row">
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="app_id">{{__('Pusher Application ID')}}</label>
+                                                        <input name="app_id" type="text" class="form-control" wire:model="app_id">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="app_key">{{__('Pusher Application Key')}}</label>
+                                                        <input name="app_key" type="text" class="form-control" wire:model="app_key">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="app_secret">{{__('Pusher Application Secret')}}</label>
+                                                        <input name="app_secret" type="text" class="form-control" wire:model="app_secret">
+                                                    </div>
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <div class="form-group">
+                                                        <label for="app_cluster">{{__('Pusher Application Cluster')}}</label>
+                                                        <input name="app_cluster" type="text" class="form-control" wire:model="app_cluster">
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <button class="btn btn-primary" wire:click="updatePusherSettings">{{__('Save')}}</button>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="contact4" role="tabpanel" aria-labelledby="contact-tab4">
                                     Vestibulum imperdiet odio sed neque ultricies, ut dapibus mi maximus. Proin ligula massa, gravida in lacinia efficitur, hendrerit eget mauris. Pellentesque fermentum, sem interdum molestie finibus, nulla diam varius leo, nec varius lectus elit id dolor. Nam malesuada orci non ornare vulputate. Ut ut sollicitudin magna. Vestibulum eget ligula ut ipsum venenatis ultrices. Proin bibendum bibendum augue ut luctus.
