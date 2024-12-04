@@ -12,3 +12,10 @@ window.Echo = new Echo({
     forceTLS: (import.meta.env.VITE_REVERB_SCHEME ?? 'https') === 'https',
     enabledTransports: ['ws', 'wss'],
 });
+
+console.log('import.meta');
+
+window.Echo.channel('order-placed')
+    .listen('RTOrderPlacedNotificationEvent', (e) => {
+    console.log(e);
+});

@@ -27,12 +27,8 @@
     <!-- Start GA -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-94034622-3"></script>
     <script>
-
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-
-        gtag('config', 'UA-94034622-3');
+        var pusherKey = "{{ config('settings.app_key') }}";
+        var pusherCluster = "{{ config('settings.app_cluster') }}";
     </script>
     <!-- /END GA -->
     @vite(['resources/js/app.js'])
@@ -94,7 +90,7 @@
         // toastr.options.progressBar = true;
         // toastr.options.closeButton = true;
 
-        toastr.options = {
+        /*toastr.options = {
             "closeButton": true, // Если нужно оставить кнопку закрытия
             "progressBar": true, // Если хотите прогресс-бар
             "positionClass": "toast-top-right", // Позиция уведомления
@@ -107,7 +103,7 @@
             "showMethod": "fadeIn",
             "hideMethod": "fadeOut",
             "preventDuplicates": true // Предотвращает повторяющиеся уведомления
-        };
+        };*/
 
         @if ($errors->any())
             @foreach ($errors->all() as $error)

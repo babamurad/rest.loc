@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin;
 
 use App\Models\Setting;
+use App\Services\PaymentGatewaySettingsService;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -65,6 +66,13 @@ class SettingComponent extends Component
                 ['value' => $value]
             );
         }
+//        dd(Setting::pluck('value', 'key'));
+        /*$settingService = app(PaymentGatewaySettingsService::class);
+        $settingService->clearCachedSettings();*/
+        // В сервисе или хелпере
+        /*foreach (Setting::pluck('value', 'key') as $key=>$value) {
+            config()->set('settings.' . $key, $value);
+        }*/
         toastr()->success('Pusher settings saved successfully.');
     }
 }

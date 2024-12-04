@@ -1,4 +1,7 @@
 import axios from 'axios';
+import Echo from 'laravel-echo';
+import Pusher from 'pusher-js';
+
 window.axios = axios;
 
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
@@ -9,4 +12,21 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
  * allow your team to quickly build robust real-time web applications.
  */
 
-import './echo';
+// import './echo';
+window.Pusher = Pusher;
+
+window.Echo = new Echo({
+    broadcaster: 'reverb',
+    key: pusherKey,
+    cluster: pusherCluster,
+    wsHost: import.meta.env.VITE_REVERB_HOST,
+    wsPort: import.meta.env.VITE_REVERB_PORT ?? 80,
+    wssPort: import.meta.env.VITE_REVERB_PORT ?? 443,
+    forceTLS: (import.meta.env.VITE_REVERB_SCHEME ?? 'https') === 'https',
+    enabledTransports: ['ws', 'wss'],
+});
+
+window.Echo.channel('order-placed')
+    .listen('RTOrderPlacedNotificationEvent', (e) => {
+        console.log(e);
+    });
