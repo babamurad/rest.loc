@@ -2,7 +2,6 @@
 
 namespace App\Events;
 
-use App\Models\Setting;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Broadcasting\PresenceChannel;
@@ -11,17 +10,17 @@ use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class RTOrderPlacedNotificationEvent implements ShouldBroadcast
+class MessageSent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
+    public $message;
 
-    public $order;
     /**
      * Create a new event instance.
      */
-    public function __construct($order)
+    public function __construct($message)
     {
-        $this->order = $order;
+        $this->message = $message;
     }
 
     /**
@@ -31,8 +30,14 @@ class RTOrderPlacedNotificationEvent implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
+        \Log::info('Broadcasting on channel: chat');
         return [
-            new Channel('order-placed', $this->order->id),
+            new Channel('chat'),
         ];
+    }
+
+    public function broadcastAs()
+    {
+        return 'message.sent';
     }
 }

@@ -105,6 +105,6 @@ Route::middleware(['auth', 'admin:admin'])->prefix('admin')->group(function () {
     Route::get('test', TestComponent::class)->name('admin.test');
 
     Route::get('notif', function (){
-        \App\Events\RTOrderPlacedNotificationEvent::dispatch("hello there!");
+        \App\Events\MessageSent::dispatch("hello there!");
     });
 });

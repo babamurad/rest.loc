@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Events\MessageSent;
+use App\Events\RTOrderPlacedNotificationEvent;
 use App\Models\Order;
 use App\Models\OrderItem;
 use Livewire\Component;
@@ -35,15 +37,29 @@ class PaymentComponent extends Component
         $this->deliveryPrice = session()->get('deliveryPrice') ?? 0;
     }
 
+    public function sendMessage()
+    {
+        $message = 'Your order has been accepted';
+        event(new MessageSent($message));
+        return response()->json(['status' => 'Message sent!']);
+    }
+
     public function invoice()
     {
 //            CalcCart::createOrder();
             if ($this->createOrder()) {
+
+//                $message = 'Your order has been accepted';
+//
+//                broadcast(new MessageSent($message));
+                //broadcast(new MessageSent('Test message'));
+
+                //return response()->json(['status' => 'Message sent!']);
                 //redirect user to payment host
-                session()->forget('address');
+                /*session()->forget('address');
                 session()->forget('deliveryPrice');
                 session()->forget('discount');
-                Cart::destroy();
+                Cart::destroy();*/
                 toastr()->success(__('Your order has been accepted'));
             } else {
                 toastr()->error(__('Failed to create order. Please try again later'));
@@ -85,6 +101,7 @@ class PaymentComponent extends Component
                 $orderItem->save();
             }
             $this->dispatch('Product_added_to_cart');
+            event(new RTOrderPlacedNotificationEvent($order));
             return true;
         }catch (\Exception $e) {
             logger($e);

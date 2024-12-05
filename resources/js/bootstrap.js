@@ -16,7 +16,7 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 window.Pusher = Pusher;
 
 window.Echo = new Echo({
-    broadcaster: 'reverb',
+    broadcaster: 'pusher',
     key: pusherKey,
     cluster: pusherCluster,
     wsHost: import.meta.env.VITE_REVERB_HOST,
@@ -26,7 +26,28 @@ window.Echo = new Echo({
     enabledTransports: ['ws', 'wss'],
 });
 
-window.Echo.channel('order-placed')
+window.Echo.connector.pusher.connection.bind('connected', () => {
+    console.log("Pusher connected");
+    // Now, Echo is fully initialized, you can use Echo.private() here
+    window.Echo.channel('order-placed')
+        .listen('RTOrderPlacedNotificationEvent', (e) => {
+            alert(e);
+            console.log(e);
+            // Handle the event data
+        });
+});
+
+/*Echo.channel('order-placed')
+    .listen('NewMessage', (e) => {
+        console.log(e.message);
+    });*/
+
+/*window.Echo.channel('order-placed')
+    .listen('.message.sent', (e) => {  // Обратите внимание на точку перед именем события
+        console.log('New message:', e.message);
+    });*/
+
+/*window.Echo.channel('order-placed')
     .listen('RTOrderPlacedNotificationEvent', (e) => {
         console.log(e);
-    });
+    });*/
