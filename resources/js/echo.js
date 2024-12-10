@@ -13,8 +13,11 @@ window.Echo = new Echo({
     enabledTransports: ['ws', 'wss'],
 });
 
+<<<<<<< HEAD
 //console.log('import.meta');
 
+=======
+>>>>>>> a8e8e3998b59918244e5ca6150febc7d4add159d
 window.Echo.channel('order-placed')
     .listen('RTOrderPlacedNotificationEvent', (e) => {
     //console.log(e);

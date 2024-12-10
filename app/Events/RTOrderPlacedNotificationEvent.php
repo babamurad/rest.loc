@@ -16,10 +16,16 @@ class RTOrderPlacedNotificationEvent implements ShouldBroadcast
     /**
      * Create a new event instance.
      */
+<<<<<<< HEAD
     public function __construct(Order $order)
     {
         $this->orderId = $order->id;
         $this->message = $order->message;
+=======
+    public function __construct($order)
+    {
+        $this->order = $order;
+>>>>>>> a8e8e3998b59918244e5ca6150febc7d4add159d
     }
 
     /**
@@ -29,6 +35,7 @@ class RTOrderPlacedNotificationEvent implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
+<<<<<<< HEAD
         return ['order-placed'];
     }
 
@@ -39,5 +46,10 @@ class RTOrderPlacedNotificationEvent implements ShouldBroadcast
     public function broadcastAs()
     {
         return 'order-event';
+=======
+        return [
+            new Channel('order-placed', $this->order->id),
+        ];
+>>>>>>> a8e8e3998b59918244e5ca6150febc7d4add159d
     }
 }

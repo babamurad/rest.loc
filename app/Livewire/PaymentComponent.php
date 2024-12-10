@@ -2,6 +2,8 @@
 
 namespace App\Livewire;
 
+use App\Events\MessageSent;
+use App\Events\RTOrderPlacedNotificationEvent;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\OrderPlacedNotification;
@@ -40,6 +42,13 @@ class PaymentComponent extends Component
         $this->deliveryPrice = session()->get('deliveryPrice') ?? 0;
     }
 
+    public function sendMessage()
+    {
+        $message = 'Your order has been accepted';
+        event(new MessageSent($message));
+        return response()->json(['status' => 'Message sent!']);
+    }
+
     public function invoice()
     {
         // event(new RTOrderPlacedNotificationEvent/TestNotofication(['order' => $this->order]));
@@ -47,12 +56,27 @@ class PaymentComponent extends Component
 
 //            CalcCart::createOrder();
             if ($this->createOrder()) {
+
+//                $message = 'Your order has been accepted';
+//
+//                broadcast(new MessageSent($message));
+                //broadcast(new MessageSent('Test message'));
+
+                //return response()->json(['status' => 'Message sent!']);
                 //redirect user to payment host
+<<<<<<< HEAD
                 // session()->forget('address');
                 // session()->forget('deliveryPrice');
                 // session()->forget('discount');
                 // Cart::destroy();
                 toastr()->success(message: __(key: 'Your order has been accepted'));
+=======
+                /*session()->forget('address');
+                session()->forget('deliveryPrice');
+                session()->forget('discount');
+                Cart::destroy();*/
+                toastr()->success(__('Your order has been accepted'));
+>>>>>>> a8e8e3998b59918244e5ca6150febc7d4add159d
             } else {
                 toastr()->error(__('Failed to create order. Please try again later'));
             }
@@ -92,11 +116,15 @@ class PaymentComponent extends Component
                 $orderItem->save();
             }
             $this->dispatch('Product_added_to_cart');
+<<<<<<< HEAD
 
             $this->order = $order;
 
             $this->notification();
 
+=======
+            event(new RTOrderPlacedNotificationEvent($order));
+>>>>>>> a8e8e3998b59918244e5ca6150febc7d4add159d
             return true;
         }catch (\Exception $e) {
             logger($e);
