@@ -13,9 +13,9 @@ window.Echo = new Echo({
     enabledTransports: ['ws', 'wss'],
 });
 
-console.log('import.meta');
+//console.log('import.meta');
 
 window.Echo.channel('order-placed')
     .listen('RTOrderPlacedNotificationEvent', (e) => {
-    console.log(e);
+    //console.log(e);
 });

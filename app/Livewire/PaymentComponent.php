@@ -4,12 +4,17 @@ namespace App\Livewire;
 
 use App\Models\Order;
 use App\Models\OrderItem;
+use App\Models\OrderPlacedNotification;
+use Illuminate\Notifications\Notifiable;
 use Livewire\Component;
 use App\Helpers\CalcCart;
 use Cart;
+use Pusher\Pusher;
 
 class PaymentComponent extends Component
 {
+    use Notifiable;
+    public $order;
     public $total;
     public $deliveryPrice;
     public $discount;
@@ -37,14 +42,17 @@ class PaymentComponent extends Component
 
     public function invoice()
     {
+        // event(new RTOrderPlacedNotificationEvent/TestNotofication(['order' => $this->order]));
+        // event(new RTOrderPlacedNotificationEvent($this->order));
+
 //            CalcCart::createOrder();
             if ($this->createOrder()) {
                 //redirect user to payment host
-                session()->forget('address');
-                session()->forget('deliveryPrice');
-                session()->forget('discount');
-                Cart::destroy();
-                toastr()->success(__('Your order has been accepted'));
+                // session()->forget('address');
+                // session()->forget('deliveryPrice');
+                // session()->forget('discount');
+                // Cart::destroy();
+                toastr()->success(message: __(key: 'Your order has been accepted'));
             } else {
                 toastr()->error(__('Failed to create order. Please try again later'));
             }
@@ -52,7 +60,6 @@ class PaymentComponent extends Component
 
     public function createOrder()
     {
-
         try {
             $order = new Order();
             $order->invoice_id = CalcCart::generateInvoiceId();
@@ -85,10 +92,41 @@ class PaymentComponent extends Component
                 $orderItem->save();
             }
             $this->dispatch('Product_added_to_cart');
+
+            $this->order = $order;
+
+            $this->notification();
+
             return true;
         }catch (\Exception $e) {
             logger($e);
             return false;
         }
+    }
+
+
+    public function notification()
+    {
+        $options = array(
+            'cluster' => env('PUSHER_APP_CLUSTER'),
+            'encrypted' => true
+            );
+
+            $pusher = new Pusher(
+                env('PUSHER_APP_KEY'),
+                env('PUSHER_APP_SECRET'),
+                env('PUSHER_APP_ID'),
+                $options
+            );
+
+            $data = '#' . $this->order->invoice_id . __(' a new order has been placed!');
+
+            $pusher->trigger('order-placed', 'order-event', $data);
+            OrderPlacedNotification::create([
+                'order_id' => $this->order->id,
+                //'user_id' => $this->order->user_id,
+                'message' => $data,
+                'created_at' => now()
+            ]);
     }
 }

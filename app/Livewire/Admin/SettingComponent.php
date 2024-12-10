@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin;
 
+use App\Events\RTOrderPlacedNotificationEvent;
 use App\Models\Setting;
 use App\Services\PaymentGatewaySettingsService;
 use Livewire\Component;

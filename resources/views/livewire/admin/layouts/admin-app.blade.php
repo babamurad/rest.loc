@@ -29,9 +29,15 @@
     <script>
         var pusherKey = "{{ config('settings.app_key') }}";
         var pusherCluster = "{{ config('settings.app_cluster') }}";
+
     </script>
+
     <!-- /END GA -->
-    @vite(['resources/js/app.js'])
+    {{-- @vite(['resources/js/app.js']) --}}
+
+// Enable pusher logging - don't include this in production
+@stack('pusher')
+//// Enable pusher logging - don't include this in production
 </head>
 
 <body>

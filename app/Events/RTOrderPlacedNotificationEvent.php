@@ -2,43 +2,24 @@
 
 namespace App\Events;
 
-use App\Models\Setting;
-use Illuminate\Broadcasting\Channel;
-use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
-use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
-use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Foundation\Events\Dispatchable;
+use Illuminate\Broadcasting\InteractsWithSockets;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
 class RTOrderPlacedNotificationEvent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
-    public $order;
+    public $orderId;
+    public $message;
     /**
      * Create a new event instance.
      */
-    public function __construct($order = null)
+    public function __construct(Order $order)
     {
-        $this->setConfig();
-        $this->order = $order;
-    }
-
-    function setConfig()
-    {
-        $keys = ['app_id', 'app_key', 'app_secret', 'app_cluster'];
-        $settings = Setting::whereIn('key', $keys)->get();
-        // Преобразование результатов в ассоциативный массив для удобства использования
-        $settingsArray = $settings->pluck('value', 'key')->toArray();
-        // Использование значений:
-        $appId = $settingsArray['app_id'];
-        $appKey = $settingsArray['app_key'];
-// ... и так далее
-        config(['broadcasting.connections.pusher.key' => $settingsArray['app_key']]);
-        config(['broadcasting.connections.pusher.app_secret' => $settingsArray['app_secret']]);
-        config(['broadcasting.connections.pusher.app_id' => $settingsArray['app_id']]);
-        config(['broadcasting.connections.pusher.options.app_cluster' => $settingsArray['app_cluster']]);
+        $this->orderId = $order->id;
+        $this->message = $order->message;
     }
 
     /**
@@ -48,8 +29,15 @@ class RTOrderPlacedNotificationEvent implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        return [
-            new Channel('order-placed'),
-        ];
+        return ['order-placed'];
+    }
+
+    /**
+     * The event's broadcast name.
+     * @return string
+     */
+    public function broadcastAs()
+    {
+        return 'order-event';
     }
 }
