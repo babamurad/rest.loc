@@ -1,34 +1,5 @@
 <nav class="navbar navbar-expand-lg main-navbar">
 
-    <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
-    <script>
-        // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
-
-        var pusher = new Pusher('e4438ee202f5ef502f3f', {
-            cluster: 'ap2'
-        });
-
-        var channel = pusher.subscribe('order-placed');
-        channel.bind('order-event', function(data) {
-
-            //console.log(JSON.stringify(data));
-            var html = `<a href="" class="dropdown-item">
-                  <div class="dropdown-item-icon bg-info text-white">
-                    <i class="fas fa-bell"></i>
-                  </div>
-                  <div class="dropdown-item-desc">
-                    data
-                    <div class="time">Yesterday</div>
-                  </div>
-                </a>`;
-
-
-            $('.rt_notification').append(html);
-            $('#bell').addClass('nav-link-lg beep');
-        });
-    </script>
-
     <form class="form-inline mr-auto">
         <ul class="navbar-nav mr-3">
             <li><a href="#" data-toggle="sidebar" class="nav-link nav-link-lg"><i class="fas fa-bars"></i></a></li>

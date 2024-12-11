@@ -35,9 +35,35 @@
     <!-- /END GA -->
     {{-- @vite(['resources/js/app.js']) --}}
 
-// Enable pusher logging - don't include this in production
-@stack('pusher')
-//// Enable pusher logging - don't include this in production
+<script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
+    <script>
+        // Enable pusher logging - don't include this in production
+        Pusher.logToConsole = true;
+
+        var pusher = new Pusher('e4438ee202f5ef502f3f', {
+            cluster: 'ap2'
+        });
+
+        var channel = pusher.subscribe('order-placed');
+
+        channel.bind('order-event', function(data) {
+
+            var html = `
+            <a href="orders/${data.id}" class="dropdown-item">
+                  <div class="dropdown-item-icon bg-info text-white">
+                    <i class="fas fa-bell"></i>
+                  </div>
+                  <div class="dropdown-item-desc">
+                    #${data.invoice_id}  a new order has been placed!
+                    <div class="time">Yesterday</div>
+                  </div>
+            </a>
+                `;
+
+            $('.rt_notification').prepend(html);
+            $('#bell').addClass('nav-link-lg beep');
+        });
+    </script>
 </head>
 
 <body>

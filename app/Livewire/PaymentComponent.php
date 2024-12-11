@@ -64,19 +64,13 @@ class PaymentComponent extends Component
 
                 //return response()->json(['status' => 'Message sent!']);
                 //redirect user to payment host
-<<<<<<< HEAD
+
                 // session()->forget('address');
                 // session()->forget('deliveryPrice');
                 // session()->forget('discount');
                 // Cart::destroy();
                 toastr()->success(message: __(key: 'Your order has been accepted'));
-=======
-                /*session()->forget('address');
-                session()->forget('deliveryPrice');
-                session()->forget('discount');
-                Cart::destroy();*/
-                toastr()->success(__('Your order has been accepted'));
->>>>>>> a8e8e3998b59918244e5ca6150febc7d4add159d
+
             } else {
                 toastr()->error(__('Failed to create order. Please try again later'));
             }
@@ -116,15 +110,14 @@ class PaymentComponent extends Component
                 $orderItem->save();
             }
             $this->dispatch('Product_added_to_cart');
-<<<<<<< HEAD
+
+
 
             $this->order = $order;
 
             $this->notification();
+            //$this->dispatch('order-created');
 
-=======
-            event(new RTOrderPlacedNotificationEvent($order));
->>>>>>> a8e8e3998b59918244e5ca6150febc7d4add159d
             return true;
         }catch (\Exception $e) {
             logger($e);
@@ -147,13 +140,13 @@ class PaymentComponent extends Component
                 $options
             );
 
-            $data = '#' . $this->order->invoice_id . __(' a new order has been placed!');
 
-            $pusher->trigger('order-placed', 'order-event', $data);
+            $pusher->trigger('order-placed', 'order-event', $this->order);
+
             OrderPlacedNotification::create([
                 'order_id' => $this->order->id,
                 //'user_id' => $this->order->user_id,
-                'message' => $data,
+                'message' => '#' . $this->order->invoice_id . __(' a new order has been placed!'),
                 'created_at' => now()
             ]);
     }

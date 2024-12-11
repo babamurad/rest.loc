@@ -21,6 +21,7 @@ class NavBarComponent extends Component
     }
 
     #[On('avatar-changed')]
+    #[On('order-created')]
     public function render()
     {
         $messages = OrderPlacedNotification::where('seen', 0)->latest()->take(5)->get();

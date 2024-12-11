@@ -104,10 +104,4 @@ Route::middleware(['auth', 'admin:admin'])->prefix('admin')->group(function () {
 
     Route::get('test', TestComponent::class)->name('admin.test');
 
-<<<<<<< HEAD
-=======
-    Route::get('notif', function (){
-        \App\Events\MessageSent::dispatch("hello there!");
-    });
->>>>>>> a8e8e3998b59918244e5ca6150febc7d4add159d
 });
