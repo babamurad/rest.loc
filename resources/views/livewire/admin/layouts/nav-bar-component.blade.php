@@ -3,7 +3,7 @@
 <script src="https://js.pusher.com/8.2.0/pusher.min.js"></script>
     <script>
         // Enable pusher logging - don't include this in production
-        Pusher.logToConsole = true;
+        //Pusher.logToConsole = true;
 
         var pusher = new Pusher('e4438ee202f5ef502f3f', {
             cluster: 'ap2'
@@ -37,7 +37,7 @@
         const dateString = data.created_at;
         const formattedDate = formatDate(dateString);
 
-        console.log(formattedDate);
+        //console.log(formattedDate);
 
             var html = `
             <a href="orders/${data.id}" class="dropdown-item">
@@ -52,7 +52,6 @@
                 `;
 
             $('.rt_notification').prepend(html);
-            //$('#bell').addClass('nav-link-lg beep');
             $('#bell').addClass('beep');
         });
     </script>
