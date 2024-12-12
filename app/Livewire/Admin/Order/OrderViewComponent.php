@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Order;
 
 use App\Models\Order;
+use App\Models\OrderPlacedNotification;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
@@ -32,6 +33,8 @@ class OrderViewComponent extends Component
         $this->order = Order::with('orderItems', 'user', 'address')->findOrFail($id);
         $this->payment_status = $this->order->payment_status;
         $this->order_status = $this->order->order_status;
+        $notification = OrderPlacedNotification::where('order_id', $this->order->id)->update(['seen' => 1]);
+
     }
 
     public function update()

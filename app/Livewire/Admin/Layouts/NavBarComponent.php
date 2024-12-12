@@ -20,11 +20,47 @@ class NavBarComponent extends Component
         return $this->redirect('/login');
     }
 
+    public function getFormattedDate($date)
+    {
+        // Исходная дата в формате ISO 8601
+        $dateString = $date;
+
+        // Создаем объект DateTime
+        $date = new \DateTime($dateString);
+
+        // Получаем текущую дату
+        $now = new \DateTime();
+
+        // Вычисляем разницу в секундах
+        $interval = $date->diff($now);
+
+        // Форматируем дату в зависимости от разницы
+        if ($interval->days > 0) {
+            return $interval->days . ' день' . ($interval->days > 1 ? 'а' : '') . ' назад';
+        } elseif ($interval->h > 0) {
+            return $interval->h . ' час' . ($interval->h > 1 ? 'а' : '') . ' назад';
+        } elseif ($interval->i > 0) {
+            return $interval->i . ' минут' . ($interval->i > 1 ? 'ы' : 'у') . ' назад';
+        } else {
+            return 'только что';
+        }
+    }
+
+    public function markAllSeen()
+    {
+        $notification = OrderPlacedNotification::query()->update(['seen' => 1]);
+        if ($notification) {
+            toastr()->success('Все уведомления прочитаны');
+        } else {
+            toastr()->error('Не удалось прочитать уведомления');
+        }
+    }
+
     #[On('avatar-changed')]
-    #[On('order-created')]
+    // #[On('order-created')]
     public function render()
     {
-        $messages = OrderPlacedNotification::where('seen', 0)->latest()->take(5)->get();
+        $messages = OrderPlacedNotification::where('seen', 0)->latest()->take(15)->get();
         return view('livewire.admin.layouts.nav-bar-component', compact('messages'));
     }
 }
