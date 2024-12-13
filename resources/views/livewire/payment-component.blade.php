@@ -66,7 +66,6 @@
                         <p class="total"><span>total:</span> <span>{{ $total + $deliveryPrice - $discount }}</span></p>
 
                         <a class=" common_btn" href="javascript:;" wire:click.prevent="invoice">checkout</a>
-                        <button class=" common_btn" wire:click="notification">notification</button>
                     </div>
                 </div>
             </div>

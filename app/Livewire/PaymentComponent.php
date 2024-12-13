@@ -12,6 +12,7 @@ use Livewire\Component;
 use App\Helpers\CalcCart;
 use Cart;
 use Pusher\Pusher;
+use Illuminate\Support\Facades\Auth;
 
 class PaymentComponent extends Component
 {
@@ -65,10 +66,10 @@ class PaymentComponent extends Component
                 //return response()->json(['status' => 'Message sent!']);
                 //redirect user to payment host
 
-                // session()->forget('address');
-                // session()->forget('deliveryPrice');
-                // session()->forget('discount');
-                // Cart::destroy();
+               /*  session()->forget('address');
+                session()->forget('deliveryPrice');
+                session()->forget('discount');
+                Cart::destroy(); */
                 toastr()->success(message: __(key: 'Your order has been accepted'));
 
             } else {
@@ -81,7 +82,7 @@ class PaymentComponent extends Component
         try {
             $order = new Order();
             $order->invoice_id = CalcCart::generateInvoiceId();
-            $order->user_id = auth()->user()->id;
+            $order->user_id = Auth::id();
             $order->address_id = session()->get('address');
             $order->discount = CalcCart::getDiscount(CalcCart::cartTotal());
             $order->delivery_charge = session()->get('deliveryPrice') ?? 0;

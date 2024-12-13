@@ -6843,3 +6843,31 @@ svg rect{
     color: var(--colorPrimary) !important;
 }
 
+.active>.page-link, .page-link.active {
+    z-index: 3;
+    color: var(--bs-pagination-active-color);
+    background-color: #f86f03;
+    border-color: #f86f03;
+    width: 50px !important;
+    height: 50px !important;
+    padding: 0 !important;
+    line-height: 50px !important;
+    text-align: center !important;
+    font-size: 16px !important;
+    border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+}
+.page-link {
+    color: #010f1c;
+    width: 50px !important;
+    /* height: 50px !important; */
+    padding: 0 !important;
+    line-height: 50px !important;
+    text-align: center !important;
+}
+.page-item:not(:first-child) .page-link {
+    margin-left: 0px;
+}
+.page-item:not(:last-child) .page-link {
+    margin-right: 0px;
+}

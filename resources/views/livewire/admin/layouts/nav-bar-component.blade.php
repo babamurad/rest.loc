@@ -5,54 +5,109 @@
         // Enable pusher logging - don't include this in production
         //Pusher.logToConsole = true;
 
+        let soundInitialized = false;
+        const notificationSound = new Audio('/sounds/multimedia-message-arrival-sound.mp3');
+
+        // Инициализация при первой загрузке
+        document.addEventListener('DOMContentLoaded', initializeSoundState);
+
+        // Обработчик событий Livewire
+        document.addEventListener('livewire:navigated', initializeSoundState);
+        document.addEventListener('livewire:navigating', initializeSoundState);
+
+        function initializeSoundState() {
+            const savedState = localStorage.getItem('soundInitialized');
+            if (savedState === 'true') {
+                notificationSound.volume = 0.5;
+                soundInitialized = true;
+                document.getElementById('soundIcon')?.classList.remove('fa-volume-mute');
+                document.getElementById('soundIcon')?.classList.add('fa-volume-up');
+            } else {
+                notificationSound.volume = 0;
+                soundInitialized = false;
+                document.getElementById('soundIcon')?.classList.remove('fa-volume-up');
+                document.getElementById('soundIcon')?.classList.add('fa-volume-mute');
+            }
+            localStorage.setItem('soundInitialized', soundInitialized.toString());
+        }
+
         var pusher = new Pusher('e4438ee202f5ef502f3f', {
             cluster: 'ap2'
         });
 
         var channel = pusher.subscribe('order-placed');
 
+        function initSound() {
+            if (soundInitialized) {
+                notificationSound.volume = 0;
+                soundInitialized = false;
+                localStorage.setItem('soundInitialized', 'false');
+                document.getElementById('soundIcon').classList.remove('fa-volume-up');
+                document.getElementById('soundIcon').classList.add('fa-volume-mute');
+            } else {
+                notificationSound.load();
+                notificationSound.volume = 0.5;
+                soundInitialized = true;
+                localStorage.setItem('soundInitialized', 'true');
+                document.getElementById('soundIcon').classList.remove('fa-volume-mute');
+                document.getElementById('soundIcon').classList.add('fa-volume-up');
+            }
+        }
+
         channel.bind('order-event', function(data) {
+            try {
+                if (!data || !data.id || !data.invoice_id || !data.created_at) {
+                    console.error('Получены некорректные данные заказа');
+                    return;
+                }
 
-            function formatDate(dateString) {
-        const date = new Date(dateString);
-        const now = new Date();
-        const diffInMs = now - date;
+                notificationSound.play().catch(function(error) {
+                    console.log('Ошибка воспроизведения звука:', error);
+                });
 
-        const seconds = Math.floor(diffInMs / 1000);
-        const minutes = Math.floor(seconds / 60);
-        const hours = Math.floor(minutes / 60);
-        const days = Math.floor(hours / 24);
+                function formatDate(dateString) {
+                    const date = new Date(dateString);
+                    const now = new Date();
+                    const diffInMs = now - date;
 
-        if (days > 0) {
-            return `${days} день${days === 1 ? '' : 'а'} назад`;
-        } else if (hours > 0) {
-            return `${hours} час${hours === 1 ? '' : 'а'} назад`;
-        } else if (minutes > 0) {
-            return `${minutes} минут${minutes === 1 ? 'у' : 'ы'} назад`;
-        } else {
-            return 'только что';
-        }
-        }
+                    const seconds = Math.floor(diffInMs / 1000);
+                    const minutes = Math.floor(seconds / 60);
+                    const hours = Math.floor(minutes / 60);
+                    const days = Math.floor(hours / 24);
 
-        const dateString = data.created_at;
-        const formattedDate = formatDate(dateString);
+                    if (days > 0) {
+                        return `${days} д. назад`;
+                    } else if (hours > 0) {
+                        return `${hours} ч. назад`;
+                    } else if (minutes > 0) {
+                        return `${minutes} мин. назад`;
+                    } else {
+                        return 'только что';
+                    }
+                }
 
-        //console.log(formattedDate);
+                const dateString = data.created_at;
+                const formattedDate = formatDate(dateString);
 
-            var html = `
-            <a href="orders/${data.id}" class="dropdown-item">
-                  <div class="dropdown-item-icon bg-info text-white">
-                    <i class="fas fa-bell"></i>
-                  </div>
-                  <div class="dropdown-item-desc">
-                    #${data.invoice_id}  a new order has been placed!
-                    <div class="time">${formattedDate}</div>
-                  </div>
-            </a>
-                `;
+                //console.log(formattedDate);
 
-            $('.rt_notification').prepend(html);
-            $('#bell').addClass('beep');
+                var html = `
+                <a href="orders/${data.id}" class="dropdown-item">
+                      <div class="dropdown-item-icon bg-info text-white">
+                        <i class="fas fa-bell"></i>
+                      </div>
+                      <div class="dropdown-item-desc">
+                        #${data.invoice_id}  a new order has been placed!
+                        <div class="time">${formattedDate}</div>
+                      </div>
+                </a>
+                    `;
+
+                $('.rt_notification').prepend(html);
+                $('#bell').addClass('beep');
+            } catch (error) {
+                console.error('Ошибка при обработке уведомления:', error);
+            }
         });
     </script>
 
@@ -66,6 +121,7 @@
 
 
     <ul class="navbar-nav navbar-right">
+
         <li class="dropdown dropdown-list-toggle">
         <a id="bell" href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg {{ count($messages) > 0 ? 'beep' : '' }}">
         <i class="far fa-bell"></i></a>
@@ -95,6 +151,11 @@
                     <a href="{{ route('admin.orders.index') }}">View All <i class="fas fa-chevron-right"></i></a>
                 </div>
             </div>
+        </li>
+        <li>
+            <button onclick="initSound()" class="btn btn-sm btn-primary">
+                <i id="soundIcon" class="fas fa-volume-mute"></i>
+            </button>
         </li>
 
         <li class="dropdown"><a href="#" data-toggle="dropdown"

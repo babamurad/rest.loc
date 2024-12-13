@@ -1,7 +1,6 @@
 <div class="tab-pane fade"  x-show="activeTab === 'order-list'"
      :class="activeTab === 'order-list' ? 'tab-pane fade active show' : 'tab-pane fade'"
 >
-{{--     x-data="{viewOrder: @entangle('viewOrder')}"--}}
     <div class="fp_dashboard_body"  x-data="{viewOrder: @entangle('viewOrder')}">
         <h3>order list</h3>
         @include('components.layouts.preloader')
@@ -45,6 +44,9 @@
                 </table>
             </div>
         </div>
+    {{-- {{ $orders->links('components.simple-bootstrap') }} --}}
+
+        
     @if($selectOrder)
         <div class="fp__invoice invoice-print" x-show="viewOrder">
             <a class="go_back" @click="viewOrder=false"><i class="fas fa-long-arrow-alt-left"></i> go back</a>
@@ -57,7 +59,6 @@
                     <li class="{{ in_array($selectOrder->order_status, ['IN_PROCESS', 'DELIVERED', 'DECLINED']) ? 'active' : '' }}">order process</li>
                     <li class="{{ in_array($selectOrder->order_status, ['DELIVERED']) ? 'active' : '' }}">order delivered</li>
                     @endif
-{{--                    <li>order declined</li> --}}
                 </ul>
             </div>
             <div class="fp__invoice_header">
@@ -165,19 +166,18 @@
                         </tr>
                         </tfoot>
                     </table>
-                </div>
-            </div>
+                </div>                
+            </div>            
+            
             <button type="button" id="action-print" class="print_btn common_btn"><i class="far fa-print"></i> print
                 PDF</button>
 
         </div>
             @script
             <script>
-                $(function($){
-                    $("#action-print").click(function(){
-                        window.print();
-                        return false;
-                    });
+                document.getElementById('action-print').addEventListener('click', function() {
+                    window.print();
+                    return false;
                 });
             </script>
             @endscript

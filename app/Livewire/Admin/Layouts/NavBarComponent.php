@@ -36,11 +36,11 @@ class NavBarComponent extends Component
 
         // Форматируем дату в зависимости от разницы
         if ($interval->days > 0) {
-            return $interval->days . ' день' . ($interval->days > 1 ? 'а' : '') . ' назад';
+            return $interval->days . ' дн.' . ' назад';
         } elseif ($interval->h > 0) {
-            return $interval->h . ' час' . ($interval->h > 1 ? 'а' : '') . ' назад';
+            return $interval->h . ' ч.' . ' назад';
         } elseif ($interval->i > 0) {
-            return $interval->i . ' минут' . ($interval->i > 1 ? 'ы' : 'у') . ' назад';
+            return $interval->i . ' мин.' . ' назад';
         } else {
             return 'только что';
         }
