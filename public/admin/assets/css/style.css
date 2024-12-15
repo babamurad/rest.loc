@@ -2882,3 +2882,6 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
     color: #fff;
     padding: 5px 10px;
 }
+.navbar-bg{
+  height: 4.5rem!important;
+}

@@ -1,5 +1,7 @@
 <?php
 
+use App\Livewire\Admin\AdminChatComponent;
+use App\Livewire\Admin\AdminChatConversation;
 use App\Livewire\Admin\AdminDashboardComponent;
 use App\Livewire\Admin\AdminProfileComponent;
 use App\Livewire\Admin\Category\CategoryCreateComponent;
@@ -32,6 +34,7 @@ use App\Livewire\Pages\About;
 use App\Livewire\Pages\CartComponent;
 use App\Livewire\Pages\CheckOutComponent;
 use App\Livewire\PaymentComponent;
+use App\Livewire\Dashboard\MessageComponent;
 use App\Livewire\ProductDetails;
 use App\Livewire\User\ForgotPasswordComponent;
 use App\Livewire\User\LoginComponent;
@@ -56,7 +59,7 @@ Route::middleware('guest')->group(function () {
 
 
 Route::middleware('auth')->group(function () {
-    Route::get('dashboard', Dashboard::class)->name('dashboard');
+    Route::get('dashboard/{activeTab?}', Dashboard::class)->name('dashboard');
     Route::get('profile', Profile::class)->name('profile');
     Route::get('change-password', ChangePassword::class)->name('change-password');
     Route::get('orders', UserOrders::class)->name('order.index');
@@ -64,6 +67,7 @@ Route::middleware('auth')->group(function () {
     Route::get('logout', LogoutComponent::class)->name('logout');
     Route::get('checkout', CheckOutComponent::class)->name('checkout');
     Route::get('payment', PaymentComponent::class)->name('payment');
+    Route::get('messages', MessageComponent::class)->name('messages');
 });
 
 
@@ -97,6 +101,9 @@ Route::middleware(['auth', 'admin:admin'])->prefix('admin')->group(function () {
     Route::get('delivery-area/create', DeliveryAreaCreate::class)->name('admin.delivery-area.create');
     Route::get('delivery-area/edit/{id}', DeliveryAreaEdit::class)->name('admin.delivery-area.edit');
 
+    Route::get('chat', AdminChatComponent::class)->name('admin.chat');
+    Route::get('chat/{id}', AdminChatConversation::class)->name('admin.chat.user');
+
     Route::get('payment-settings', PaymentGatewaySettingComponent::class)->name('admin.payment-settings');
 
     Route::get('orders', OrderIndexComponent::class)->name('admin.orders.index');
@@ -105,3 +112,5 @@ Route::middleware(['auth', 'admin:admin'])->prefix('admin')->group(function () {
     Route::get('test', TestComponent::class)->name('admin.test');
 
 });
+
+date_default_timezone_set("Asia/Ashgabat");

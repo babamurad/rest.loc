@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "*.blade.php": "blade"
+    },
+    "emmet.includeLanguages": {
+        "blade": "html"
+    }
+} 

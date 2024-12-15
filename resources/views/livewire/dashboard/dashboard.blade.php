@@ -1,3 +1,178 @@
+@push('message')
+    <style>
+        .main_menu .menu_icon li .message_icon {
+    font-size: 17px;
+    position: relative;
+    bottom: -3px;
+}
+
+.main_menu .menu_icon li .message_icon span {
+    top: -14px;
+}
+
+.fp__dashboard_menu button b {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 50%;
+    background: var(--colorPrimary);
+    text-align: center;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--colorWhite);
+}
+
+.fp__chat_area {
+    border: 1px solid #eee;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.fp__chat_body {
+    padding: 30px;
+    padding-bottom: 0;
+    height: 510px;
+    overflow: hidden;
+    overflow-y: auto;
+}
+
+.fp__chat_body::-webkit-scrollbar {
+    background: #fff;
+    width: 5px;
+}
+
+.fp__chat_body::-webkit-scrollbar-thumb {
+    background: #ddd;
+}
+
+.fp__chating {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: start;
+    margin-bottom: 30px;
+}
+
+.fp__chating_img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+}
+
+.fp__chating_text {
+    margin-left: 20px;
+    max-width: 84%;
+}
+
+.fp__chating_text p {
+    background: #F5F9FF;
+    color: var(--colorBlack);
+    padding: 15px;
+    border-radius: 10px;
+    margin-bottom: 5px;
+    border: 1px solid #eeeeee73;
+}
+
+.fp__chating_text span {
+    display: block;
+}
+
+.tf_chat_right {
+    justify-content: end;
+    flex-direction: row-reverse;
+}
+
+.tf_chat_right .fp__chating_text {
+    margin-left: 0;
+    margin-right: 20px;
+}
+
+.tf_chat_right .fp__chating_text span {
+    text-align: right;
+}
+
+.fp__single_chat_bottom {
+    border-top: 1px solid #5e5b5b17;
+    position: relative;
+    background: var(--colorWhite);
+}
+
+.fp__single_chat_bottom label {
+    position: absolute;
+    top: 50%;
+    left: 30px;
+    transform: translateY(-50%);
+    font-size: 13px;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    background: #eee;
+    color: var(--colorPrimary);
+    line-height: 31px;
+    text-align: center;
+    border-radius: 50%;
+    transition: all linear .3s;
+    -webkit-transition: all linear .3s;
+    -moz-transition: all linear .3s;
+    -ms-transition: all linear .3s;
+    -o-transition: all linear .3s;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+}
+
+.fp__single_chat_bottom label:hover {
+    background: var(--colorPrimary);
+    color: var(--colorWhite);
+}
+
+.fp__single_chat_bottom input {
+    width: 100%;
+    border: none;
+    padding: 20px 80px 20px 75px;
+}
+
+.fp__massage_btn {
+    position: absolute;
+    top: 50%;
+    right: 30px;
+    font-size: 18px;
+    width: 40px;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background: var(--colorPrimary);
+    transform: translateY(-50%);
+    color: var(--colorWhite);
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    -ms-border-radius: 50%;
+    -o-border-radius: 50%;
+    transition: all linear .3s;
+    -webkit-transition: all linear .3s;
+    -moz-transition: all linear .3s;
+    -ms-transition: all linear .3s;
+    -o-transition: all linear .3s;
+    -webkit-transform: translateY(-50%);
+    -moz-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    -o-transform: translateY(-50%);
+}
+
+.fp__massage_btn:hover {
+    background: var(--colorBlack);
+}
+    </style>
+@endpush
+
 <div>
     <!--=============================
         BREADCRUMB START
@@ -23,9 +198,10 @@
     <!--=========================
         DASHBOARD START
     ==========================-->
-    <section class="fp__dashboard mt_120 xs_mt_90 mb_100 xs_mb_70" x-data="{ activeTab: 'v-pills-home', showDeleteConfirmed: false }">
+    <section class="fp__dashboard mt_120 xs_mt_90 mb_100 xs_mb_70" x-data="{ activeTab: @entangle('activeTab'), showDeleteConfirmed: false }">
+        @include('components.layouts.preloader')
         <div class="container">
-            <div class="fp__dashboard_area">
+            <div class="fp__dashboard_area">                
                 <div class="row">
                     <div class="col-xl-3 col-lg-4 wow fadeInUp" data-wow-duration="1s">
                         <div class="fp__dashboard_menu">
@@ -34,8 +210,11 @@
                                     @if ($newimage)
                                         <img class="img-fluid w-100" src="{{ $newimage->temporaryUrl() }}"
                                             alt="{{ auth()->user()->name }}">
-                                    @else
+                                    @elseif($image)
                                         <img class="img-fluid w-100" src="{{ asset($image) }}"
+                                            alt="{{ auth()->user()->name }}">
+                                    @else
+                                        <img class="img-fluid w-100" src="{{ asset(auth()->user()->avatar) }}"
                                             alt="{{ auth()->user()->name }}">
                                     @endif
                                     @error('newimage')
@@ -50,8 +229,8 @@
                             <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist"
                                 aria-orientation="vertical">
                                 <button class="nav-link"
-                                    :class="activeTab === 'v-pills-home' ? 'nav-link active' : 'nav-link'"
-                                    @click="activeTab = 'v-pills-home'"><span><i class="fas fa-user"></i></span>
+                                    :class="activeTab === 'home' ? 'nav-link active' : 'nav-link'"
+                                    @click="activeTab = 'home'"><span><i class="fas fa-user"></i></span>
                                     Parsonal Info</button>
 
                                 <button class="nav-link"
@@ -63,6 +242,11 @@
                                     :class="activeTab === 'order-list' ? 'nav-link active' : 'nav-link'"
                                     @click="activeTab = 'order-list'">
                                     <span><i class="fas fa-shopping-bag"></i></span>Order</button>
+
+                                <button class="nav-link" :class="activeTab === 'messages' ? 'nav-link active' : 'nav-link'"
+                                    @click="activeTab = 'messages'"><span><i class="far fa-comment-dots"></i></span>
+                                    Messages <b>7</b>
+                                </button>
 
                                 <button class="nav-link" id="v-pills-messages-tab2" data-bs-toggle="pill"
                                     data-bs-target="#v-pills-messages2" type="button" role="tab"
@@ -94,8 +278,9 @@
 
                                 <livewire:dashboard.address />
 
-                                {{--                                @include('livewire.dashboard.address') --}}
                                 <livewire:dashboard.order-component />
+
+                                <livewire:dashboard.message-component />
 
                                 <div class="tab-pane fade " id="v-pills-messages2" role="tabpanel"
                                     aria-labelledby="v-pills-messages-tab2">

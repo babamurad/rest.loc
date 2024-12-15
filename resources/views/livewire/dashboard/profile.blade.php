@@ -1,5 +1,5 @@
-<div class="tab-pane fade" x-show="activeTab === 'v-pills-home'"
-     :class="activeTab === 'v-pills-home' ? 'tab-pane fade active show' : 'tab-pane fade'"
+<div class="tab-pane fade" x-show="activeTab === 'home'"
+     :class="activeTab === 'home' ? 'tab-pane fade active show' : 'tab-pane fade'"
 >
     <div class="fp_dashboard_body">
         <h3>Welcome to your Profile</h3>

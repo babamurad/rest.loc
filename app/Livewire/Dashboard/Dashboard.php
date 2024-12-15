@@ -17,17 +17,18 @@ class Dashboard extends Component
     use WithFileUploads;
     public $image;
     public $newimage;
+    public $activeTab;
 
-
-    public function mount()
+    public function mount($activeTab = 'home')
     {
-        $this->image = auth()->user()->avatar;
+        $this->activeTab = $activeTab;
+        $this->image = Auth::user()->avatar;
     }
 
     public function updatedNewimage()
     {
 
-        $user = User::FindOrFail(auth()->user()->id);
+        $user = User::FindOrFail(Auth::user()->id);
 
         if ($this->newimage){
             if (file_exists('images/' . $user->avatar)) {

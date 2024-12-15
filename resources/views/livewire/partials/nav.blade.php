@@ -64,7 +64,10 @@
                         </form>
                     </div>
                 </li>
+
                 <livewire:partials.basket-icon />
+                <livewire:partials.message-icon />
+                
                 <li>
                     @auth
                         <a href="{{ route('dashboard') }}" wire:navigate><i class="fas fa-user"></i></a>

@@ -43,11 +43,12 @@
                  </ul>
              </li>
 
+            <li  class="{{ request()->is('admin/chat') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.chat') }}" wire:navigate><i class="fas fa-comments"></i> <span>Messages</span></a>
+            </li>
+
             <li  class="{{ request()->is('admin/setting') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.setting') }}" wire:navigate><i class="fas fa-cogs"></i> <span>Settings</span></a>
-            </li>
-            <li  class="{{ request()->is('admin/test') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.test') }}" wire:navigate><i class="fas fa-cogs"></i> <span>Test</span></a>
             </li>
 
             {{-- <li class="dropdown">
