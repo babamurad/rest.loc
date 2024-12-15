@@ -38,7 +38,7 @@ class AdminChatConversation extends Component
 
         Chat::create([
             'sender_id' => Auth::user()->id,
-            'receiver_id' => 3,
+            'receiver_id' => $this->userId,
             'message' => $this->message,
         ]);
 

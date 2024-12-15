@@ -31,7 +31,7 @@ class MessageComponent extends Component
     {       
         $chats = Chat::orwhere('sender_id', Auth::user()->id)
             ->orWhere('receiver_id', Auth::user()->id)
-            ->orderBy('created_at', 'desc')
+            ->orderBy('created_at', 'asc')
             ->get();
         //dd($chats);
 

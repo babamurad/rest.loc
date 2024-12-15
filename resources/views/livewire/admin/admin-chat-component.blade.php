@@ -28,7 +28,7 @@
                                     <div class="media-body">
                                         <div class="mt-0 mb-1 font-weight-bold">{{ $chatUser->name }}</div>
                                         <div class="text-success text-small font-600-bold"><i class="fas fa-circle"></i>
-                                            Online</div>
+                                            Online {{ $userId }}</div>
                                     </div>
                                 </a>
                             </li>
