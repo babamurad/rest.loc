@@ -40,7 +40,7 @@ class AdminChatComponent extends Component
     public function render()
     {
         $userId = Auth::user()->id;
-        $chatUsers = User::whereIn('id', function($query) use ($userId) {
+        /* $chatUsers = User::whereIn('id', function($query) use ($userId) {
             $query->select('sender_id')
                 ->from('chats')
                 ->where('receiver_id', $userId);
@@ -55,7 +55,18 @@ class AdminChatComponent extends Component
         ->map(function($user) {
             $user->is_online = $user->isOnline();
             return $user;
-        });
+        }); */
+
+        $chatUsers = User::where('id', '!=', $userId)
+        ->whereHas('chats', function($query) use ($userId) {
+            $query->where('sender_id', $userId)
+                ->orWhere('receiver_id', $userId);
+        })
+        ->get()
+        ->map(function($user) {
+            $user->is_online = $user->isOnline();
+            return $user;
+        }); 
 
         $chatUser = $chatUsers->first();
         //dd($chatUser);

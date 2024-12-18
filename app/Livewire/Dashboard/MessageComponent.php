@@ -20,7 +20,7 @@ class MessageComponent extends Component
 
         Chat::create([
             'sender_id' => Auth::user()->id,
-            'receiver_id' => 6,
+            'receiver_id' => 3,
             'message' => $this->message,
         ]);
 

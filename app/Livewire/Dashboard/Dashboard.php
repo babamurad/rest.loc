@@ -44,7 +44,7 @@ class Dashboard extends Component
             $user->avatar = $imageName;
 
             $user->update();
-            flash()->success('User data has been updated successfully!');
+            flash()->success('User avatar image has been updated successfully!');
             $this->dispatch('change-profile-image');
         }
     }
