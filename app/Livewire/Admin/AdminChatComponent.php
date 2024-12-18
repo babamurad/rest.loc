@@ -14,6 +14,27 @@ class AdminChatComponent extends Component
     public $senderId;
     public $senderName;
     public $message;
+    public $chats;
+
+    public function mount()
+    {
+        $firstUser = User::where('id', '!=', Auth::user()->id)->first();
+        $this->senderId = $firstUser ? $firstUser->id : null;
+        $this->senderName = $firstUser ? $firstUser->name : '';
+
+        // Инициализируем чаты
+        if ($this->senderId) {
+            $this->chats = Chat::where(function($query) {
+                $query->where('sender_id', Auth::id())
+                    ->where('receiver_id', $this->senderId);
+            })->orWhere(function($query) {
+                $query->where('sender_id', $this->senderId)
+                    ->where('receiver_id', Auth::id());
+            })->orderBy('created_at', 'asc')->get();
+        } else {
+            $this->chats = collect([]); // Пустая коллекция если н��т собеседника
+        }
+    }
 
     #[Layout('livewire.admin.layouts.admin-app')]
     public function render()
@@ -30,16 +51,25 @@ class AdminChatComponent extends Component
                 ->where('sender_id', $userId);
         })
         ->where('id', '!=', $userId)
-        ->get();
+        ->get()
+        ->map(function($user) {
+            $user->is_online = $user->isOnline();
+            return $user;
+        });
 
         $chatUser = $chatUsers->first();
         //dd($chatUser);
 
-        $chats = Chat::with('sender')
-            ->where('sender_id', $this->senderId)
-            ->orWhere('receiver_id', $this->userId)
-            ->orderBy('created_at', 'asc')
-            ->get();
+        $chats = Chat::where(function($query) use ($userId) {
+            $query->where('sender_id', $this->senderId)
+                  ->where('receiver_id', $userId);
+        })
+        ->orWhere(function($query) use ($userId) {
+            $query->where('sender_id', $userId)
+                  ->where('receiver_id', $this->senderId);
+        })
+        ->orderBy('created_at')
+        ->get();
 
         return view('livewire.admin.admin-chat-component', [
             'chats' => $chats,
@@ -52,9 +82,14 @@ class AdminChatComponent extends Component
     public function setSenderId($id)
     {
         $this->senderId = $id;
-        //$this->dispatch('sender-id-set');
-        $this->senderName = User::find($this->senderId)->name;
-        //dd($this->senderId);
+        $this->senderName = User::find($id)->name;
+        $this->chats = Chat::where(function($query) {
+            $query->where('sender_id', Auth::id())
+                ->where('receiver_id', $this->senderId);
+        })->orWhere(function($query) {
+            $query->where('sender_id', $this->senderId)
+                ->where('receiver_id', Auth::id());
+        })->orderBy('created_at', 'asc')->get();
     }
 
     public function sendMessage($senderId)

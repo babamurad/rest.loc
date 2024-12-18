@@ -60,7 +60,7 @@ Route::middleware('guest')->group(function () {
 });
 
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth', 'track.activity'])->group(function () {
     Route::get('dashboard/{activeTab?}', Dashboard::class)->name('dashboard');
     Route::get('profile', Profile::class)->name('profile');
     Route::get('change-password', ChangePassword::class)->name('change-password');
@@ -73,7 +73,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::middleware(['auth', 'admin:admin'])->prefix('admin')->group(function () {
+Route::middleware(['auth', 'admin:admin', 'track-activity'])->prefix('admin')->group(function () {
     Route::get('dashboard', AdminDashboardComponent::class)->name('admin.dashboard');
     Route::get('profile', AdminProfileComponent::class)->name('admin.profile');
 

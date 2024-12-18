@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Order;
+use Illuminate\Support\Facades\Cache;
 
 class User extends Authenticatable
 {
@@ -67,5 +68,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Chat::class, 'sender_id')
             ->orWhere('receiver_id', $this->id);
+    }
+
+    public function isOnline()
+    {
+        return Cache::has('user-is-online-' . $this->id) &&
+               Cache::get('user-is-online-' . $this->id) > now()->subMinutes(5);
     }
 }
