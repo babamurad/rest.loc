@@ -60,7 +60,7 @@ Route::middleware('guest')->group(function () {
 });
 
 
-Route::middleware(['auth', 'track.activity'])->group(function () {
+Route::middleware(['auth', 'track-activity'])->group(function () {
     Route::get('dashboard/{activeTab?}', Dashboard::class)->name('dashboard');
     Route::get('profile', Profile::class)->name('profile');
     Route::get('change-password', ChangePassword::class)->name('change-password');

@@ -59,6 +59,7 @@
             <div class="fp__contact_form_area mt_100 xs_mt_70">
                 <div class="row">
                     <div class="col-xl-12 wow fadeInUp" data-wow-duration="1s">
+                        @include('components.layouts.preloader')
                         <form class="fp__contact_form" wire:submit.prevent="sendContactForm">
                             <h3>contact</h3>
                             <div class="row">

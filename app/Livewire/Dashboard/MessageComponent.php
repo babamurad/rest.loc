@@ -6,6 +6,7 @@ use App\Models\Chat;
 use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 
 class MessageComponent extends Component
 {
@@ -27,6 +28,7 @@ class MessageComponent extends Component
         toastr()->success(__('Message sent successfully'));
     }
 
+    #[On('change-profile-image')]
     public function render()
     {
         $chats = Chat::orwhere('sender_id', Auth::user()->id)

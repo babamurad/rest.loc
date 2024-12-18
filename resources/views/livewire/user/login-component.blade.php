@@ -31,7 +31,7 @@
                         <div class="fp__login_area">
                             <h2>Welcome back!</h2>
                             <p>sign in to continue</p>
-                            <form>
+                            <form wire:submit.prevent="login">
                                 <div class="row">
                                     <div class="col-xl-12">
                                         <div class="fp__login_imput">
@@ -66,7 +66,7 @@
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="fp__login_imput">
-                                            <button type="button" class="common_btn" wire:click.prevent="login">login</button>
+                                            <button type="submit" class="common_btn">login</button>
                                         </div>
                                     </div>
                                 </div>

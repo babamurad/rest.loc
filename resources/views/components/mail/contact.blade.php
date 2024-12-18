@@ -38,7 +38,8 @@
 <body>
     <div class="container">
         <img src="{{ asset('assets/images/logo.png') }}" alt="FoodPark" class="img-fluid">
-        <h2>Новое сообщение от {{ $sender_name }}</h2>
+        <h2>Новое сообщение от</h2>
+        <h3>{{ $sender_name }}</h3>
         <p><strong>Email:</strong> {{ $sender_email }}</p>
         <p><strong>Телефон:</strong> {{ $sender_phone }}</p>
         <p><strong>Тема:</strong> {{ $sender_subject }}</p>

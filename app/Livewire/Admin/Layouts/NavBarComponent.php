@@ -9,7 +9,7 @@ use Livewire\Component;
 
 class NavBarComponent extends Component
 {
-    public function logout(): null
+    public function logout()
     {
         Auth::logout();
         session()->invalidate();
@@ -17,7 +17,7 @@ class NavBarComponent extends Component
 
         // return redirect()->route('/');
 //        return $this->redirect('/login', navigate:true);
-        return $this->redirect('/login');
+        return redirect()->route('login');
     }
 
     public function getFormattedDate($date)
