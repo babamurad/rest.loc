@@ -1,7 +1,7 @@
 <div class="col-12 col-sm-6 col-lg-6">
     <div class="card chat-box" id="mychatbox" style="height: 100vh;">
         <div class="card-header">
-            <h4>Chat with Rizal</h4>
+            <h4>Chat with {{ $senderId }} {{ $senderName }}</h4>
         </div>
         <div class="card-body chat-content" tabindex="2" style="overflow: hidden; outline: none;">
             @foreach($chats as $chat)

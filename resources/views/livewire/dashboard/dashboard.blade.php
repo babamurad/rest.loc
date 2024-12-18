@@ -201,7 +201,7 @@
     <section class="fp__dashboard mt_120 xs_mt_90 mb_100 xs_mb_70" x-data="{ activeTab: @entangle('activeTab'), showDeleteConfirmed: false }">
         @include('components.layouts.preloader')
         <div class="container">
-            <div class="fp__dashboard_area">                
+            <div class="fp__dashboard_area">
                 <div class="row">
                     <div class="col-xl-3 col-lg-4 wow fadeInUp" data-wow-duration="1s">
                         <div class="fp__dashboard_menu">
@@ -213,9 +213,12 @@
                                     @elseif($image)
                                         <img class="img-fluid w-100" src="{{ asset($image) }}"
                                             alt="{{ auth()->user()->name }}">
-                                    @else
+                                    @elseif(auth()->user()->avatar)
                                         <img class="img-fluid w-100" src="{{ asset(auth()->user()->avatar) }}"
                                             alt="{{ auth()->user()->name }}">
+                                    @else
+                                        <img class="img-fluid w-100" src="{{ asset('assets/images/avatar-placeholder.jpg') }}"
+                                            alt="Placeholder">
                                     @endif
                                     @error('newimage')
                                         <p class="text-danger">{{ $message }}</p>

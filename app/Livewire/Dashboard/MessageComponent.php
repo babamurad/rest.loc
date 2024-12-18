@@ -19,7 +19,7 @@ class MessageComponent extends Component
 
         Chat::create([
             'sender_id' => Auth::user()->id,
-            'receiver_id' => 3,
+            'receiver_id' => 6,
             'message' => $this->message,
         ]);
 
@@ -28,7 +28,7 @@ class MessageComponent extends Component
     }
 
     public function render()
-    {       
+    {
         $chats = Chat::orwhere('sender_id', Auth::user()->id)
             ->orWhere('receiver_id', Auth::user()->id)
             ->orderBy('created_at', 'asc')

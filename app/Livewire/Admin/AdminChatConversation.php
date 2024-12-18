@@ -5,29 +5,42 @@ namespace App\Livewire\Admin;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
 use App\Models\Chat;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 class AdminChatConversation extends Component
 {
-    public $userId;
+    public $senderId = 7;
+    public $senderName;
     public $message;
 
     #[Layout('livewire.admin.layouts.admin-app')]
+    #[On('chat-message-sent')]
+    #[On('sender-id-set')]
     public function render()
     {
-        $chats = Chat::whereIn('sender_id', [Auth::user()->id, $this->userId])
-            ->orWhereIn('receiver_id', [Auth::user()->id, $this->userId])
+        $chats = Chat::where('sender_id', $this->senderId)
+            //->orWhere('receiver_id', $this->senderId)
             ->orderBy('created_at', 'asc')
             ->get();
-        return view('livewire.admin.admin-chat-conversation', compact('chats'));
+        //dd($chats);
+
+        return view('livewire.admin.admin-chat-conversation', [
+            'chats' => $chats,
+            'senderId' => $this->senderId,
+        ]);
     }
 
     public function mount($id = null)
     {
         if ($id) {
-            $this->userId = $id;
+            $this->senderId = $id;
         } else {
-            $this->userId = Auth::user()->id;
+            $this->senderId = Auth::user()->id;
         }
+
+        $this->senderName = User::find($this->senderId)->name;
+        //dd($this->senderId);
     }
 
     public function sendMessage()
@@ -38,7 +51,7 @@ class AdminChatConversation extends Component
 
         Chat::create([
             'sender_id' => Auth::user()->id,
-            'receiver_id' => $this->userId,
+            'receiver_id' => $this->senderId,
             'message' => $this->message,
         ]);
 

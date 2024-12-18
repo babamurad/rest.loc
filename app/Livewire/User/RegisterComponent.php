@@ -45,7 +45,7 @@ class RegisterComponent extends Component
         $user = new User();
         $user->name = $this->name;
         $user->email = $this->email;
-        $user->avatar = 'admin\assets\img\avatar-1.png';
+        $user->avatar = 'assets\admin\img\avatar\avatar-1.png';
         $user->password = Hash::make($this->password);
         $user->save();
 
