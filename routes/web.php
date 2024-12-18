@@ -32,6 +32,7 @@ use App\Livewire\Dashboard\Profile;
 use App\Livewire\HomeComponent;
 use App\Livewire\Pages\About;
 use App\Livewire\Pages\CartComponent;
+use App\Livewire\Pages\ContactComponent;
 use App\Livewire\Pages\CheckOutComponent;
 use App\Livewire\PaymentComponent;
 use App\Livewire\Dashboard\MessageComponent;
@@ -48,6 +49,7 @@ Route::get('/', HomeComponent::class)->name('home');
 Route::get('about', About::class)->name('about');
 Route::get('product-details/{slug}', ProductDetails::class)->name('product-details');
 Route::get('cart', CartComponent::class)->name('cart');
+Route::get('contact', ContactComponent::class)->name('contact');
 
 
 Route::middleware('guest')->group(function () {

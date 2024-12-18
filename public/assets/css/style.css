@@ -6871,3 +6871,20 @@ svg rect{
 .page-item:not(:last-child) .page-link {
     margin-right: 0px;
 }
+.is-invalid{
+    border: rgba(212, 6, 27, 0.603) 1px solid;
+    /* box-shadow: 0 0 0 0.25rem rgba(212, 6, 27, 0.25) !important; */
+    outline: 0 !important;
+    outline-offset: 0 !important;
+    border-radius: 0 !important;
+    -webkit-border-radius: 0 !important;
+    -moz-border-radius: 0 !important;
+    -ms-border-radius: 0 !important;
+    -o-border-radius: 0 !important;
+}
+.invalid-feedback{
+    display: block;
+    font-size: 14px;
+    color: rgba(212, 6, 27, 0.603);
+    margin-top: 5px;
+}
