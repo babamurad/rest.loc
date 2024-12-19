@@ -5,57 +5,28 @@ namespace App\Livewire\Admin;
 use App\Models\Chat;
 use Livewire\Component;
 use Livewire\Attributes\Layout;
+use Livewire\Attributes\Computed;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Livewire\Attributes\On;
+use Livewire\Attributes\ComponentName;
 
+#[ComponentName('admin-chat-component')]
 class AdminChatComponent extends Component
 {
     public $userId;
     public $senderId;
     public $senderName;
+    
     public $message;
     public $chats;
-
-    public function mount()
-    {
-        $firstUser = User::where('id', '!=', Auth::user()->id)->first();
-        $this->senderId = $firstUser ? $firstUser->id : null;
-        $this->senderName = $firstUser ? $firstUser->name : '';
-
-        // Инициализируем чаты
-        if ($this->senderId) {
-            $this->chats = Chat::where(function($query) {
-                $query->where('sender_id', Auth::id())
-                    ->where('receiver_id', $this->senderId);
-            })->orWhere(function($query) {
-                $query->where('sender_id', $this->senderId)
-                    ->where('receiver_id', Auth::id());
-            })->orderBy('created_at', 'asc')->get();
-        } else {
-            $this->chats = collect([]); // Пустая коллекция если н��т собеседника
-        }
-    }
+    
 
     #[Layout('livewire.admin.layouts.admin-app')]
+    //#[On('chatUpdated')]
     public function render()
     {
         $userId = Auth::user()->id;
-        /* $chatUsers = User::whereIn('id', function($query) use ($userId) {
-            $query->select('sender_id')
-                ->from('chats')
-                ->where('receiver_id', $userId);
-        })
-        ->orWhereIn('id', function($query) use ($userId) {
-            $query->select('receiver_id')
-                ->from('chats')
-                ->where('sender_id', $userId);
-        })
-        ->where('id', '!=', $userId)
-        ->get()
-        ->map(function($user) {
-            $user->is_online = $user->isOnline();
-            return $user;
-        }); */
 
         $chatUsers = User::where('id', '!=', $userId)
         ->whereHas('chats', function($query) use ($userId) {
@@ -80,7 +51,7 @@ class AdminChatComponent extends Component
                   ->where('receiver_id', $this->senderId);
         })
         ->orderBy('created_at')
-        ->get();
+        ->get();        
 
         return view('livewire.admin.admin-chat-component', [
             'chats' => $chats,
@@ -88,6 +59,26 @@ class AdminChatComponent extends Component
             'senderId' => $this->senderId,
             'chatUser' => $chatUser,
         ]);
+    }
+
+    public function mount()
+    {
+        $firstUser = User::where('id', '!=', Auth::user()->id)->first();
+        $this->senderId = $firstUser ? $firstUser->id : null;
+        $this->senderName = $firstUser ? $firstUser->name : '';
+
+        // Инициализируем чаты
+        if ($this->senderId) {
+            $this->chats = Chat::where(function($query) {
+                $query->where('sender_id', Auth::id())
+                    ->where('receiver_id', $this->senderId);
+            })->orWhere(function($query) {
+                $query->where('sender_id', $this->senderId)
+                    ->where('receiver_id', Auth::id());
+            })->orderBy('created_at', 'asc')->get();
+        } else {
+            $this->chats = collect([]); // Пустая коллекция если нет собеседника
+        }
     }
 
     public function setSenderId($id)
@@ -101,9 +92,12 @@ class AdminChatComponent extends Component
             $query->where('sender_id', $this->senderId)
                 ->where('receiver_id', Auth::id());
         })->orderBy('created_at', 'asc')->get();
+
+        // Добавляем диспатч события при смене пользователя
+        $this->dispatch('chatUpdated');
     }
 
-    public function sendMessage($senderId)
+    public function sendMessage()
     {
         $this->validate([
             'message' => 'required|string|max:1000',
@@ -111,16 +105,38 @@ class AdminChatComponent extends Component
 
         Chat::create([
             'sender_id' => Auth::user()->id,
-            'receiver_id' => $senderId,
+            'receiver_id' => $this->senderId,
             'message' => $this->message,
         ]);
-        // dd([
-        //     'sender_id' => Auth::user()->id,
-        //     'receiver_id' => $senderId,
-        //     'message' => $this->message,
-        // ]);
+
+        $this->chats = Chat::where(function($query) {
+            $query->where('sender_id', Auth::id())
+                ->where('receiver_id', $this->senderId);
+        })->orWhere(function($query) {
+            $query->where('sender_id', $this->senderId)
+                ->where('receiver_id', Auth::id());
+        })->orderBy('created_at', 'asc')->get();
 
         $this->message = '';
         toastr()->success(__('Message sent successfully'));
+    }
+
+    public function getListeners()
+    {
+        return [
+            'message-sent' => 'refreshMessages',
+            'echo:chat,MessageSent' => 'refreshMessages'
+        ];
+    }
+
+    public function refreshMessages()
+    {
+        $this->chats = Chat::where(function($query) {
+            $query->where('sender_id', Auth::id())
+                ->where('receiver_id', $this->senderId);
+        })->orWhere(function($query) {
+            $query->where('sender_id', $this->senderId)
+                ->where('receiver_id', Auth::id());
+        })->orderBy('created_at', 'asc')->get();
     }
 }

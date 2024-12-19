@@ -7,6 +7,7 @@ use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
+use App\Livewire\Admin\AdminChatComponent;
 
 class MessageComponent extends Component
 {
@@ -25,6 +26,7 @@ class MessageComponent extends Component
         ]);
 
         $this->message = '';
+        $this->dispatch('message-sent');
         toastr()->success(__('Message sent successfully'));
     }
 
