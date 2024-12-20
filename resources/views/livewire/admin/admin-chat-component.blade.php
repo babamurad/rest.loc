@@ -1,4 +1,4 @@
-<section class="section">    
+<section class="section">
 
     <div class="section-header">
         <h1>Messages</h1>
@@ -11,10 +11,10 @@
     <div class="section-body">
         <div class="row">
             <div class="col-sm-12">
-                @include('components.layouts.preloader')       
+                @include('components.layouts.preloader')
             </div>
         </div>
-        <div class="row align-items-center justify-content-center">            
+        <div class="row align-items-center justify-content-center">
             <div class="col-12 col-sm-6 col-lg-4">
                 <div class="card">
                     <div class="card-header">
@@ -24,11 +24,11 @@
                         <ul class="list-unstyled list-unstyled-border">
                             @foreach($chatUsers as $chatUser)
                             <li class="media btn {{ $senderId == $chatUser->id ? 'active bg-light rounded' : '' }}" wire:click="setSenderId({{ $chatUser->id }})">
-                                <a class="pl-3" href="javascript:;">
+                                <a class="pl-3 d-flex align-items-start" href="javascript:;">
                                     <img alt="image" class="mr-3 rounded-circle" width="50"
-                                    src="{{ asset($chatUser->avatar) }}">
+                                        src="{{ asset($chatUser->avatar) }}">
                                     <div class="media-body">
-                                        <div class="mt-0 mb-1 font-weight-bold">{{ $chatUser->id }} - {{ $chatUser->name }}</div>
+                                        <div class="mt-0 mb-1 font-weight-bold">{{ ucfirst($chatUser->name) }}</div>
                                         @if($chatUser->isOnline())
                                         <div class="text-success text-small font-weight-600"><i class="fas fa-circle"></i> Online</div>
                                         @else
