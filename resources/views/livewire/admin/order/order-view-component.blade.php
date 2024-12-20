@@ -133,7 +133,7 @@
                                 </div>
                                 <div class="invoice-detail-item mt-3">
                                     <div class="invoice-detail-name">Total</div>
-                                    <div class="invoice-detail-value invoice-detail-value-lg"><strong>{{ ucfirst(\App\Helpers\CalcCart::propis($order->grand_total)) }}</strong></div>
+                                    <div class="invoice-detail-value invoice-detail-value-lg" style="font-family: 'Font Awesome 5 Free' !important;"><strong style="::first-letter { text-transform: uppercase !important }">{{ \App\Helpers\CalcCart::propis($order->grand_total) }}</strong></div>
                                 </div>
 
                             </div>
@@ -171,6 +171,10 @@
         </div>
     </div>
     <style>
+        .capitalize-first::first-letter {
+            text-transform: uppercase;
+        }
+        
         @media print{
             .main-sidebar{
                 display: none;

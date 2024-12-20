@@ -63,8 +63,6 @@ class CheckOutComponent extends Component
 
     public function save()
     {
-        //dump($this->type);
-        //dd('validate');
         $address = new Address();
         $address->user_id = auth()->user()->id;
         $address->icon = '<i class="fas fa-home"></i>';
@@ -74,7 +72,7 @@ class CheckOutComponent extends Component
         $address->email = $this->email;
         $address->phone = $this->phone;
         $address->type = $this->type;
-        $address->address = $this->address_id;
+        $address->address = $this->address;
         $address->save();
         flash()->success(__('Address has been added.'));
         $this->dispatch('close-modal');
@@ -114,5 +112,10 @@ class CheckOutComponent extends Component
             $this->redirect('payment', navigate:true);
         }
 
+    }
+
+    public function cancel()
+    {
+        $this->dispatch('close-modal');
     }
 }

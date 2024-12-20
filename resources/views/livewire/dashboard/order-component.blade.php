@@ -161,7 +161,7 @@
                                 <b>{{__('Amount in words')}}</b>
                             </td>
                             <td class="total" colspan="3">
-                                <b>{{ \App\Helpers\CalcCart::propis($selectOrder->grand_total) }}</b>
+                                <b style="font-family: 'Font Awesome 5 Free' !important;">{{ ucfirst(\App\Helpers\CalcCart::propis($selectOrder->grand_total)) }}</b>
                             </td>
                         </tr>
                         </tfoot>
