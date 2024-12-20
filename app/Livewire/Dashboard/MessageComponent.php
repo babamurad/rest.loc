@@ -2,12 +2,13 @@
 
 namespace App\Livewire\Dashboard;
 
+use App\Events\MessageSent;
 use App\Models\Chat;
 use App\Models\User;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
-use App\Livewire\Admin\AdminChatComponent;
+use Pusher\Pusher;
 
 class MessageComponent extends Component
 {
@@ -25,8 +26,23 @@ class MessageComponent extends Component
             'message' => $this->message,
         ]);
 
+        // Используем существующий MessageSent event
+        event(new MessageSent($this->message));
+
+        $options = array(
+            'cluster' => env('PUSHER_APP_CLUSTER'),
+            'encrypted' => true
+            );
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+        $pusher->trigger('message-sent', 'message-event', $this->message);
+
         $this->message = '';
-        $this->dispatch('message-sent');
         toastr()->success(__('Message sent successfully'));
     }
 

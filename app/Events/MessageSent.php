@@ -21,6 +21,8 @@ class MessageSent implements ShouldBroadcast
     public function __construct($message)
     {
         $this->message = $message;
+        //dd('MessageSent event triggered');
+        \Log::info('MessageSent event triggered: ' . $message);
     }
 
     /**
@@ -30,14 +32,11 @@ class MessageSent implements ShouldBroadcast
      */
     public function broadcastOn(): array
     {
-        \Log::info('Broadcasting on channel: chat');
-        return [
-            new Channel('chat'),
-        ];
+        return ['message-sent'];
     }
 
     public function broadcastAs()
     {
-        return 'message.sent';
+        return 'message-sent-event';
     }
 }

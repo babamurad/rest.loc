@@ -9,9 +9,8 @@ use Livewire\Attributes\Computed;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Livewire\Attributes\On;
-use Livewire\Attributes\ComponentName;
+use Illuminate\Support\Facades\Log;
 
-#[ComponentName('admin-chat-component')]
 class AdminChatComponent extends Component
 {
     public $userId;
@@ -63,22 +62,30 @@ class AdminChatComponent extends Component
 
     public function mount()
     {
-        $firstUser = User::where('id', '!=', Auth::user()->id)->first();
-        $this->senderId = $firstUser ? $firstUser->id : null;
-        $this->senderName = $firstUser ? $firstUser->name : '';
+        $firstUser = User::where('id', '!=', Auth::user()->id)
+            ->whereHas('chats', function($query) {
+                $query->where('receiver_id', Auth::user()->id);
+            })
+            ->first();
 
-        // Инициализируем чаты
-        if ($this->senderId) {
-            $this->chats = Chat::where(function($query) {
-                $query->where('sender_id', Auth::id())
-                    ->where('receiver_id', $this->senderId);
-            })->orWhere(function($query) {
-                $query->where('sender_id', $this->senderId)
-                    ->where('receiver_id', Auth::id());
-            })->orderBy('created_at', 'asc')->get();
-        } else {
-            $this->chats = collect([]); // Пустая коллекция если нет собеседника
+        if (!$firstUser) {
+            Log::info('Нет пользователей с сообщениями');
+            return;
         }
+
+        $this->senderId = $firstUser->id;
+        $this->senderName = $firstUser->name;
+
+        // Загружаем сообщения
+        $this->chats = Chat::where(function($query) {
+            $query->where('sender_id', Auth::id())
+                ->where('receiver_id', $this->senderId);
+        })->orWhere(function($query) {
+            $query->where('sender_id', $this->senderId)
+                ->where('receiver_id', Auth::id());
+        })->orderBy('created_at', 'asc')->get();
+
+        Log::info('Загружено сообщений: ' . $this->chats->count());
     }
 
     public function setSenderId($id)
@@ -124,9 +131,10 @@ class AdminChatComponent extends Component
     public function getListeners()
     {
         return [
-            'message-sent' => 'refreshMessages',
-            'echo:chat,MessageSent' => 'refreshMessages'
+            "echo:message-sent,message-event" => 'refreshMessages',
+            "message-sent" => 'refreshMessages'
         ];
+        Log::info('Listeners: ' . json_encode($this->listeners));
     }
 
     public function refreshMessages()
