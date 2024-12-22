@@ -34,6 +34,12 @@ class AdminChatComponent extends Component
             $query->where('sender_id', $userId)
                 ->orWhere('receiver_id', $userId);
         })
+        ->withMax('chats', 'created_at')
+        ->withCount(['chats as unread_messages' => function($query) use ($userId) {
+            $query->where('receiver_id', $userId)
+                  ->where('is_read', false);
+        }])
+        ->orderByDesc('chats_max_created_at')
         ->get()
         ->map(function($user) {
             $user->is_online = $user->isOnline();
@@ -87,13 +93,19 @@ class AdminChatComponent extends Component
                 ->where('receiver_id', Auth::id());
         })->orderBy('created_at', 'asc')->get();
 
-        Log::info('Загружено сообщений: ' . $this->chats->count());
     }
 
     public function setSenderId($id)
     {
         $this->senderId = $id;
         $this->senderName = User::find($id)->name;
+        
+        // Отмечаем сообщения как прочитанные
+        Chat::where('sender_id', $id)
+            ->where('receiver_id', Auth::id())
+            ->where('is_read', false)
+            ->update(['is_read' => true]);
+
         $this->chats = Chat::where(function($query) {
             $query->where('sender_id', Auth::id())
                 ->where('receiver_id', $this->senderId);
@@ -102,7 +114,6 @@ class AdminChatComponent extends Component
                 ->where('receiver_id', Auth::id());
         })->orderBy('created_at', 'asc')->get();
 
-        // Добавляем диспатч события при смене пользователя
         $this->dispatch('chatUpdated');
         $this->dispatch('userSelected');
     }

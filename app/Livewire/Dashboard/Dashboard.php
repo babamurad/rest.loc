@@ -17,7 +17,7 @@ class Dashboard extends Component
     use WithFileUploads;
     public $image;
     public $newimage;
-    public $activeTab;
+    public $activeTab;    
 
     public function mount($activeTab = 'home')
     {

@@ -23,7 +23,7 @@
                     <div class="card-body">
                         <ul class="list-unstyled list-unstyled-border">
                             @foreach($chatUsers as $chatUser)
-                            <li class="media btn pb-0  {{ $senderId == $chatUser->id ? 'active bg-light rounded' : '' }}" wire:click="setSenderId({{ $chatUser->id }})">
+                            <li class="media btn pb-0 {{ $chatUser->unread_messages > 0 ? 'beep' : '' }} {{ $senderId == $chatUser->id ? 'active bg-light rounded' : '' }}" wire:click="setSenderId({{ $chatUser->id }})">
                                 <a class="pl-3 d-flex align-items-start" href="javascript:;">
                                     <img alt="image" class="mr-3 rounded-circle" width="50"
                                         src="{{ asset($chatUser->avatar) }}">
@@ -161,6 +161,14 @@
         channel.bind('message-event', function(data) {
             const chatContent = document.getElementById('chatContent');
             const isCurrentUser = data.sender_id == {{ Auth::id() }};
+            
+            // Добавляем обработку непрочитанных сообщений
+            if (!isCurrentUser) {
+                const userListItem = document.querySelector(`li[wire\\:click="setSenderId(${data.sender_id})"]`);
+                if (userListItem && !userListItem.classList.contains('beep')) {
+                    userListItem.classList.add('beep');
+                }
+            }
             
             const messageHtml = `
                 <div class="chat-item ${isCurrentUser ? 'chat-left' : 'chat-right'}">
