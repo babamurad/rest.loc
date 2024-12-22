@@ -104,6 +104,7 @@ class AdminChatComponent extends Component
 
         // Добавляем диспатч события при смене пользователя
         $this->dispatch('chatUpdated');
+        $this->dispatch('userSelected');
     }
 
     public function sendMessage()

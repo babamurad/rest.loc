@@ -50,7 +50,7 @@
                     <div class="card-header">
                         <h4>Chat with {{ $senderName }}</h4>
                     </div>
-                    <div class="card-body chat-content" id="chatContent" tabindex="2" style="height: 34rem; overflow-y: auto;">
+                    <div class="card-body chat-content" id="chatContent" tabindex="2" style="height: 34rem;">
                         @foreach($chats as $chat)
                             @if($chat->sender_id == Auth::user()->id)
                             <div class="chat-item chat-left" style=""><img src="{{ asset(auth()->user()->avatar) }}">
@@ -89,15 +89,55 @@
 
 <script>
     document.addEventListener('livewire:initialized', function () {
+        // Добавляем локализацию для русского языка
+        const months = {
+            0: 'января',
+            1: 'февраля',
+            2: 'марта',
+            3: 'апреля',
+            4: 'мая',
+            5: 'июня',
+            6: 'июля',
+            7: 'августа',
+            8: 'сентября',
+            9: 'октября',
+            10: 'ноября',
+            11: 'декабря'
+        };
+
+        function formatDate(date) {
+            const d = new Date(date);
+            return `${d.getDate()} ${months[d.getMonth()]}, ${d.getFullYear()} ${String(d.getHours()).padStart(2, '0')}:${String(d.getMinutes()).padStart(2, '0')}`;
+        }
+
         // Существующий код для прокрутки
         function scrollToBottom() {
             const chatContent = document.getElementById('chatContent');
             if (chatContent) {
-                setTimeout(() => {
-                    chatContent.scrollTop = chatContent.scrollHeight + 1000;
-                }, 100);
+                // Увеличиваем задержку и добавляем несколько попыток прокрутки
+                for (let i = 1; i <= 3; i++) {
+                    setTimeout(() => {
+                        chatContent.scrollTo({
+                            top: chatContent.scrollHeight,
+                            behavior: 'smooth'
+                        });
+                    }, i * 200); // 200мс, 400мс, 600мс
+                }
             }
         }
+
+        // Добавляем вызов скролла при загрузке страницы
+        scrollToBottom();
+
+        // Добавляем обработчик события Livewire
+        Livewire.on('messageSent', () => {
+            scrollToBottom();
+        });
+
+        // Добавляем обработчик для клика по пользователю
+        Livewire.on('userSelected', () => {
+            scrollToBottom();
+        });
 
         // Инициализация Pusher
         const pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
@@ -116,7 +156,7 @@
                     <img src="${isCurrentUser ? '{{ asset(auth()->user()->avatar) }}' : '{{ asset($chatUser->avatar) }}'}">
                     <div class="chat-details">
                         <div class="chat-text">${data.message}</div>
-                        <div class="chat-time">${new Date(data.created_at).toLocaleString()}</div>
+                        <div class="chat-time">${formatDate(data.created_at)}</div>
                     </div>
                 </div>
             `;

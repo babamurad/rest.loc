@@ -13,10 +13,14 @@
 
         scrollToBottom();
 
+        // Прослушивание события после отправки сообщения
+        Livewire.on('messageSent', () => {
+            scrollToBottom();
+        });
+
         let soundInitialized = false;
         const notificationSound = new Audio('/sounds/multimedia-message-arrival-sound.mp3');
 
-        // Инициализируем звук при первом клике пользователя
         document.addEventListener('click', function() {
             if (!soundInitialized) {
                 notificationSound.load();

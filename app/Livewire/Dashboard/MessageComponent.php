@@ -49,7 +49,7 @@ class MessageComponent extends Component
         ]);
 
         $this->message = '';
-        toastr()->success(__('Message sent successfully'));
+        $this->dispatch('messageSent');
     }
 
     public function getListeners()
