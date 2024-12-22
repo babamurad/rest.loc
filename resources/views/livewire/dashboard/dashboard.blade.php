@@ -247,8 +247,8 @@
                                     <span><i class="fas fa-shopping-bag"></i></span>Order</button>
 
                                 <button class="nav-link" :class="activeTab === 'messages' ? 'nav-link active' : 'nav-link'"
-                                    @click="activeTab = 'messages'"><span><i class="far fa-comment-dots"></i></span>
-                                    Messages <b>7</b>
+                                    @click="activeTab = 'messages'; $wire.markMessagesAsRead()"><span><i class="far fa-comment-dots"></i></span>
+                                    Messages <b>{{ $unreadMessages }}</b>
                                 </button>
 
                                 <button class="nav-link" id="v-pills-messages-tab2" data-bs-toggle="pill"

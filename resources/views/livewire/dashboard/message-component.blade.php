@@ -18,6 +18,8 @@
             scrollToBottom();
         });
 
+        Livewire.dispatch('new-message');
+
         let soundInitialized = false;
         const notificationSound = new Audio('/sounds/multimedia-message-arrival-sound.mp3');
 
@@ -37,6 +39,9 @@
         channel.bind('message-event', function(data) {
             if (data.receiver_id == {{ Auth::id() }}) {
                 const chatBody = document.querySelector('.fp__chat_body');
+                
+                // Добавляем обновление счетчика сообщений
+                Livewire.dispatch('updateMessageCount');
                 
                 const messageHtml = `
                     <div class="fp__chating">

@@ -2,10 +2,12 @@
 
 namespace App\Livewire\Dashboard;
 
+use App\Models\Chat;
 use App\Models\DeliveryArea;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithFileUploads;
 use Livewire\Attributes\Title;
@@ -17,12 +19,32 @@ class Dashboard extends Component
     use WithFileUploads;
     public $image;
     public $newimage;
-    public $activeTab;    
+    public $activeTab;  
+    public $unreadMessages;  
 
     public function mount($activeTab = 'home')
     {
         $this->activeTab = $activeTab;
         $this->image = Auth::user()->avatar;
+        $this->updateMessageCount();
+    }
+    
+    public function updateMessageCount()
+    {
+        $this->unreadMessages = Chat::where('receiver_id', Auth::id())
+            ->where('is_read', false)
+            ->count();
+        $this->dispatch('new-message');    
+    }
+
+    public function markMessagesAsRead()
+    {
+        Chat::where('receiver_id', Auth::id())
+            ->where('is_read', false)
+            ->update(['is_read' => true]);
+        
+        $this->updateMessageCount();
+        $this->dispatch('new-message');
     }
 
     public function updatedNewimage()

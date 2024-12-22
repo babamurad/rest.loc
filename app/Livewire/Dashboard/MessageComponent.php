@@ -61,15 +61,20 @@ class MessageComponent extends Component
     }
 
     public function refreshMessages($data = null)
-    {
-        Log::info('Получено новое сообщение:', $data ?? []);
-        
+    {        
         $this->chats = Chat::orwhere('sender_id', Auth::user()->id)
         ->orWhere('receiver_id', Auth::user()->id)
         ->orderBy('created_at', 'asc')
         ->get();
+    } 
+    
+    public function markMessagesAsRead()
+    {
+        Chat::where('receiver_id', Auth::id())
+            ->where('is_read', false)
+            ->update(['is_read' => true]);
 
-        $this->dispatch('chatUpdated');
+        $this->dispatch('new-message');
     }
 
     #[On('change-profile-image')]
