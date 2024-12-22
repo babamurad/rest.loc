@@ -20,6 +20,7 @@
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
 
     @stack('message')
+    @stack('notif')
 
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
 </head>

@@ -23,7 +23,7 @@
                     <div class="card-body">
                         <ul class="list-unstyled list-unstyled-border">
                             @foreach($chatUsers as $chatUser)
-                            <li class="media btn {{ $senderId == $chatUser->id ? 'active bg-light rounded' : '' }}" wire:click="setSenderId({{ $chatUser->id }})">
+                            <li class="media btn pb-0  {{ $senderId == $chatUser->id ? 'active bg-light rounded' : '' }}" wire:click="setSenderId({{ $chatUser->id }})">
                                 <a class="pl-3 d-flex align-items-start" href="javascript:;">
                                     <img alt="image" class="mr-3 rounded-circle" width="50"
                                         src="{{ asset($chatUser->avatar) }}">
@@ -89,6 +89,7 @@
 
 <script>
     document.addEventListener('livewire:initialized', function () {
+        // Существующий код для прокрутки
         function scrollToBottom() {
             const chatContent = document.getElementById('chatContent');
             if (chatContent) {
@@ -98,11 +99,29 @@
             }
         }
 
-        // Прокрутка при инициализации
-        scrollToBottom();
+        // Инициализация Pusher
+        const pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
+            cluster: '{{ env('PUSHER_APP_CLUSTER') }}'
+        });
 
-        // Прокрутка при обновлении чата
-        Livewire.on('chatUpdated', () => {
+        const channel = pusher.subscribe('message-sent');
+        
+        channel.bind('message-event', function(data) {
+            
+            const chatContent = document.getElementById('chatContent');
+            const isCurrentUser = data.sender_id == {{ Auth::id() }};
+            
+            const messageHtml = `
+                <div class="chat-item ${isCurrentUser ? 'chat-left' : 'chat-right'}">
+                    <img src="${isCurrentUser ? '{{ asset(auth()->user()->avatar) }}' : '{{ asset($chatUser->avatar) }}'}">
+                    <div class="chat-details">
+                        <div class="chat-text">${data.message}</div>
+                        <div class="chat-time">${new Date(data.created_at).toLocaleString()}</div>
+                    </div>
+                </div>
+            `;
+            
+            chatContent.insertAdjacentHTML('beforeend', messageHtml);
             scrollToBottom();
         });
     });

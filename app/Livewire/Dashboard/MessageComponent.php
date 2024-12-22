@@ -5,6 +5,7 @@ namespace App\Livewire\Dashboard;
 use App\Events\MessageSent;
 use App\Models\Chat;
 use App\Models\User;
+use Illuminate\Support\Facades\Log;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
@@ -13,6 +14,8 @@ use Pusher\Pusher;
 class MessageComponent extends Component
 {
     public $message;
+    public $chats;
+    public $senderId;
 
     public function sendMessage()
     {
@@ -20,19 +23,16 @@ class MessageComponent extends Component
             'message' => 'required|string|max:1000',
         ]);
 
-        Chat::create([
+        $chat = Chat::create([
             'sender_id' => Auth::user()->id,
-            'receiver_id' => 3,
+            'receiver_id' => User::where('role', 'admin')->first()->id,
             'message' => $this->message,
         ]);
-
-        // Используем существующий MessageSent event
-        event(new MessageSent($this->message));
 
         $options = array(
             'cluster' => env('PUSHER_APP_CLUSTER'),
             'encrypted' => true
-            );
+        );
 
         $pusher = new Pusher(
             env('PUSHER_APP_KEY'),
@@ -40,21 +40,47 @@ class MessageComponent extends Component
             env('PUSHER_APP_ID'),
             $options
         );
-        $pusher->trigger('message-sent', 'message-event', $this->message);
+        
+        $pusher->trigger('message-sent', 'message-event', [
+            'message' => $this->message,
+            'sender_id' => Auth::user()->id,
+            'receiver_id' => User::where('role', 'admin')->first()->id,
+            'created_at' => $chat->created_at,
+        ]);
 
         $this->message = '';
         toastr()->success(__('Message sent successfully'));
     }
 
+    public function getListeners()
+    {
+        return [
+            'echo-private:message-sent.message-event' => 'refreshMessages',
+            'message-sent' => 'refreshMessages'
+        ];
+    }
+
+    public function refreshMessages($data = null)
+    {
+        Log::info('Получено новое сообщение:', $data ?? []);
+        
+        $this->chats = Chat::orwhere('sender_id', Auth::user()->id)
+        ->orWhere('receiver_id', Auth::user()->id)
+        ->orderBy('created_at', 'asc')
+        ->get();
+
+        $this->dispatch('chatUpdated');
+    }
+
     #[On('change-profile-image')]
     public function render()
     {
-        $chats = Chat::orwhere('sender_id', Auth::user()->id)
+        $this->chats = Chat::orwhere('sender_id', Auth::user()->id)
             ->orWhere('receiver_id', Auth::user()->id)
             ->orderBy('created_at', 'asc')
             ->get();
         //dd($chats);
 
-        return view('livewire.dashboard.message-component', compact('chats'));
+        return view('livewire.dashboard.message-component');
     }
 }

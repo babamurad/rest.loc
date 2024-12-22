@@ -157,4 +157,12 @@ return [
     */
 
     'pagination_theme' => 'tailwind',
+
+    'asset_url' => null,
+    'middleware_group' => 'web',
+    'manifest_path' => null,
+    
+    'headers' => [
+        'Content-Type' => 'application/javascript',
+    ],
 ];

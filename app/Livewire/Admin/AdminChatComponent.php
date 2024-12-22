@@ -10,6 +10,8 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Livewire\Attributes\On;
 use Illuminate\Support\Facades\Log;
+use App\Events\MessageSent;
+use Pusher\Pusher;
 
 class AdminChatComponent extends Component
 {
@@ -110,10 +112,32 @@ class AdminChatComponent extends Component
             'message' => 'required|string|max:1000',
         ]);
 
-        Chat::create([
+        $chat = Chat::create([
             'sender_id' => Auth::user()->id,
             'receiver_id' => $this->senderId,
             'message' => $this->message,
+        ]);
+
+         // Используем существующий MessageSent event
+         //event(new MessageSent($this->message));
+
+         $options = array(
+            'cluster' => env('PUSHER_APP_CLUSTER'),
+            'encrypted' => true
+        );
+
+        $pusher = new Pusher(
+            env('PUSHER_APP_KEY'),
+            env('PUSHER_APP_SECRET'),
+            env('PUSHER_APP_ID'),
+            $options
+        );
+        
+        $pusher->trigger('message-sent', 'message-event', [
+            'message' => $this->message,
+            'sender_id' => Auth::user()->id,
+            'receiver_id' => $this->senderId,
+            'created_at' => $chat->created_at,
         ]);
 
         $this->chats = Chat::where(function($query) {
@@ -131,14 +155,15 @@ class AdminChatComponent extends Component
     public function getListeners()
     {
         return [
-            "echo:message-sent,message-event" => 'refreshMessages',
-            "message-sent" => 'refreshMessages'
+            'echo-private:message-sent.message-event' => 'refreshMessages',
+            'message-sent' => 'refreshMessages'
         ];
-        Log::info('Listeners: ' . json_encode($this->listeners));
     }
 
-    public function refreshMessages()
+    public function refreshMessages($data = null)
     {
+        Log::info('Получено новое сообщение:', $data ?? []);
+        
         $this->chats = Chat::where(function($query) {
             $query->where('sender_id', Auth::id())
                 ->where('receiver_id', $this->senderId);
@@ -146,5 +171,7 @@ class AdminChatComponent extends Component
             $query->where('sender_id', $this->senderId)
                 ->where('receiver_id', Auth::id());
         })->orderBy('created_at', 'asc')->get();
+
+        $this->dispatch('chatUpdated');
     }
 }

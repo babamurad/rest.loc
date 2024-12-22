@@ -14,15 +14,17 @@ class MessageSent implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
     public $message;
+    public $sender_id;
+    public $receiver_id;
 
     /**
      * Create a new event instance.
      */
-    public function __construct($message)
+    public function __construct($sender_id, $receiver_id, $message)
     {
         $this->message = $message;
-        //dd('MessageSent event triggered');
-        \Log::info('MessageSent event triggered: ' . $message);
+        $this->sender_id = $sender_id;
+        $this->receiver_id = $receiver_id;
     }
 
     /**
@@ -38,5 +40,14 @@ class MessageSent implements ShouldBroadcast
     public function broadcastAs()
     {
         return 'message-sent-event';
+    }
+
+    public function broadcastWith()
+    {
+        return [
+            'message' => $this->message,
+            'sender_id' => $this->sender_id,
+            'receiver_id' => $this->receiver_id
+        ];
     }
 }
