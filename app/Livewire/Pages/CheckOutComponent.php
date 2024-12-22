@@ -8,6 +8,7 @@ use App\Models\Coupon;
 use App\Models\DeliveryArea;
 use Livewire\Component;
 use Cart;
+use Illuminate\Support\Facades\Auth;
 
 class CheckOutComponent extends Component
 {
@@ -55,7 +56,7 @@ class CheckOutComponent extends Component
         }
 
         $this->cartTotalSum = $this->cartTotal();
-        $addresses = Address::where('user_id', auth()->user()->id)->with('deliveryArea')->get();
+        $addresses = Address::where('user_id', Auth::user()->id)->with('deliveryArea')->get();
         //dd($addresses->count());
         $areas = DeliveryArea::where('status', 1)->orderBy('area_name', 'asc')->get();
         return view('livewire.pages.check-out-component', compact('addresses', 'areas'));
@@ -64,7 +65,7 @@ class CheckOutComponent extends Component
     public function save()
     {
         $address = new Address();
-        $address->user_id = auth()->user()->id;
+        $address->user_id = Auth::user()->id;
         $address->icon = '<i class="fas fa-home"></i>';
         $address->delivery_area_id = $this->delivery_area_id;
         $address->first_name = $this->first_name;

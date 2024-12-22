@@ -37,7 +37,7 @@
                         <div class="fp__check_form">
                             <h5>select address <a href="#" data-bs-toggle="modal" data-bs-target="#address_modal"><i class="fas fa-plus"></i> add address</a></h5>
                             <div class="fp__address_modal">
-                                <div class="modal fade" id="address_modal" data-bs-backdrop="static"
+                                <div wire:ignore class="modal fade" id="address_modal" data-bs-backdrop="static"
                                      data-bs-keyboard="false" tabindex="-1" aria-labelledby="address_modalLabel"
                                      aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered">

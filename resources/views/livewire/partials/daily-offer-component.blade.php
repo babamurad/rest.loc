@@ -4,12 +4,12 @@
         <div class="row wow fadeInUp" data-wow-duration="1s">
             <div class="col-md-8 col-lg-7 col-xl-6 m-auto text-center">
                 <div class="fp__section_heading mb_50">
-                    <h4>{{ $titles->top_title }}</h4>
-                    <h2>{{ $titles->title }}</h2>
+                    <h4>{{ $titles->top_title?? '' }}</h4>
+                    <h2>{{ $titles->title?? '' }}</h2>
                     <span>
                             <img src="{{ asset('assets/images/heading_shapes.png') }}" alt="shapes" class="img-fluid w-100">
                     </span>
-                    <p>{{ $titles->sub_title }}</p>
+                    <p>{{ $titles->sub_title?? '' }}</p>
                 </div>
             </div>
         </div>

@@ -169,7 +169,7 @@
                 </div>                
             </div>            
             
-            <button type="button" id="action-print" class="print_btn common_btn"><i class="far fa-print"></i> print
+            <button type="button" id="action-print" class="print_btn common_btn"><i class="fas fa-print"></i> print
                 PDF</button>
 
         </div>

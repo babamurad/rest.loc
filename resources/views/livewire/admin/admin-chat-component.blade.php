@@ -89,6 +89,18 @@
 
 <script>
     document.addEventListener('livewire:initialized', function () {
+        // Перемещаем объявление переменных в глобальную область видимости функции
+        let soundInitialized = false;
+        const notificationSound = new Audio('/sounds/notification-sound-for-messenger-messages.mp3');
+
+        // Инициализация звука при первом клике пользователя
+        document.addEventListener('click', function() {
+            if (!soundInitialized) {
+                notificationSound.load();
+                soundInitialized = true;
+            }
+        }, { once: true });
+
         // Добавляем локализацию для русского языка
         const months = {
             0: 'января',
@@ -137,7 +149,7 @@
         // Добавляем обработчик для клика по пользователю
         Livewire.on('userSelected', () => {
             scrollToBottom();
-        });
+        });        
 
         // Инициализация Pusher
         const pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
@@ -147,7 +159,6 @@
         const channel = pusher.subscribe('message-sent');
         
         channel.bind('message-event', function(data) {
-            
             const chatContent = document.getElementById('chatContent');
             const isCurrentUser = data.sender_id == {{ Auth::id() }};
             
@@ -163,6 +174,13 @@
             
             chatContent.insertAdjacentHTML('beforeend', messageHtml);
             scrollToBottom();
+
+            // Воспроизводим звук только если он был инициализирован
+            if (soundInitialized) {
+                notificationSound.play().catch(function(error) {
+                    console.log('Ошибка воспроизведения звука:', error);
+                });
+            }
         });
     });
 </script>
