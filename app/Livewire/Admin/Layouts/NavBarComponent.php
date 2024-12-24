@@ -2,7 +2,9 @@
 
 namespace App\Livewire\Admin\Layouts;
 
+use App\Models\Chat;
 use App\Models\OrderPlacedNotification;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\On;
 use Livewire\Component;
@@ -61,6 +63,29 @@ class NavBarComponent extends Component
     public function render()
     {
         $messages = OrderPlacedNotification::where('seen', 0)->latest()->take(15)->get();
-        return view('livewire.admin.layouts.nav-bar-component', compact('messages'));
+        $chatUsers = User::where('id', '!=', Auth::user()->id)
+            ->whereHas('chats', function($query) {
+                $query->where('receiver_id', Auth::user()->id)
+                      ->where('is_read', false);
+            })
+            ->withMax('chats', 'created_at')
+            ->withCount(['chats as unread_messages' => function($query) {
+                $query->where('receiver_id', Auth::user()->id)
+                      ->where('is_read', false);
+            }])
+            ->orderByDesc('chats_max_created_at')
+            ->get()
+            ->map(function($user) {
+                $user->is_online = $user->isOnline();
+                return $user;
+            });
+        return view('livewire.admin.layouts.nav-bar-component', compact('messages', 'chatUsers'));
+    }
+
+    public function getListeners()
+    {
+        return [
+            'refresh' => '$refresh'
+        ];
     }
 }
