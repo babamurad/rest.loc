@@ -51,23 +51,29 @@
                         <h4>Chat with {{ $senderName }}</h4>
                     </div>
                     <div class="card-body chat-content" id="chatContent" tabindex="2" style="height: 34rem;">
-                        @foreach($chats as $chat)
-                            @if($chat->sender_id == Auth::user()->id)
-                            <div class="chat-item chat-left" style=""><img src="{{ asset(auth()->user()->avatar) }}">
-                                <div class="chat-details">
-                                    <div class="chat-text">{{ $chat->message }}</div>
-                                    <div class="chat-time">{{ \Carbon\Carbon::create($chat->created_at)->format('F d, Y H:i') }}</div>
+                        @if($chats && count($chats) > 0)
+                            @foreach($chats as $chat)
+                                @if($chat->sender_id == Auth::user()->id)
+                                <div class="chat-item chat-left" style=""><img src="{{ asset(auth()->user()->avatar) }}">
+                                    <div class="chat-details">
+                                        <div class="chat-text">{{ $chat->message }}</div>
+                                        <div class="chat-time">{{ \Carbon\Carbon::create($chat->created_at)->format('F d, Y H:i') }}</div>
+                                    </div>
                                 </div>
-                            </div>
-                            @else
-                            <div class="chat-item chat-right" style=""><img src="{{ asset($chat->sender->avatar) }}">
-                                <div class="chat-details">
-                                    <div class="chat-text">{{ $chat->message }}</div>
-                                    <div class="chat-time">{{ \Carbon\Carbon::create($chat->created_at)->format('F d, Y H:i') }}</div>
+                                @else
+                                <div class="chat-item chat-right" style=""><img src="{{ asset($chat->sender->avatar) }}">
+                                    <div class="chat-details">
+                                        <div class="chat-text">{{ $chat->message }}</div>
+                                        <div class="chat-time">{{ \Carbon\Carbon::create($chat->created_at)->format('F d, Y H:i') }}</div>
+                                    </div>
                                 </div>
+                                @endif
+                            @endforeach
+                        @else
+                            <div class="text-center mt-4">
+                                <p>Нет сообщений</p>
                             </div>
-                            @endif
-                        @endforeach
+                        @endif
                     </div>
                     <div class="card-footer chat-form">
                         <form id="chat-form" wire:submit.prevent="sendMessage">
@@ -93,7 +99,7 @@
         let soundInitialized = false;
         const notificationSound = new Audio('/sounds/notification-sound-for-messenger-messages.mp3');
 
-        // Инициализация звука при первом клике пользователя
+        // Инициализация звука при первом клике п��льзователя
         document.addEventListener('click', function() {
             if (!soundInitialized) {
                 notificationSound.load();

@@ -65,11 +65,12 @@ Route::middleware(['auth', 'track-activity'])->group(function () {
     Route::get('profile', Profile::class)->name('profile');
     Route::get('change-password', ChangePassword::class)->name('change-password');
     Route::get('orders', UserOrders::class)->name('order.index');
+    // Route::get('messages', MessageComponent::class)->name('messages');
 
     Route::get('logout', LogoutComponent::class)->name('logout');
     Route::get('checkout', CheckOutComponent::class)->name('checkout');
     Route::get('payment', PaymentComponent::class)->name('payment');
-    Route::get('messages', MessageComponent::class)->name('messages');
+    
 });
 
 
@@ -103,8 +104,8 @@ Route::middleware(['auth', 'admin:admin', 'track-activity'])->prefix('admin')->g
     Route::get('delivery-area/create', DeliveryAreaCreate::class)->name('admin.delivery-area.create');
     Route::get('delivery-area/edit/{id}', DeliveryAreaEdit::class)->name('admin.delivery-area.edit');
 
-    Route::get('chat', AdminChatComponent::class)->name('admin.chat');
-    Route::get('chat/{id}', AdminChatConversation::class)->name('admin.chat.user');
+    Route::get('chat/{id?}', AdminChatComponent::class)->name('admin.chat');
+    Route::get('chat/user/{id}', AdminChatConversation::class)->name('admin.chat.user');
 
     Route::get('payment-settings', PaymentGatewaySettingComponent::class)->name('admin.payment-settings');
 

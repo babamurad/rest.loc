@@ -68,31 +68,36 @@ class AdminChatComponent extends Component
         ]);
     }
 
-    public function mount()
+    public function mount($id = null)
     {
-        $firstUser = User::where('id', '!=', Auth::user()->id)
-            ->whereHas('chats', function($query) {
-                $query->where('receiver_id', Auth::user()->id);
-            })
-            ->first();
+        if ($id) {
+            $this->senderId = $id;
+        } else {
+            $firstUser = User::where('id', '!=', Auth::user()->id)
+                ->whereHas('chats', function($query) {
+                    $query->where('receiver_id', Auth::user()->id);
+                })
+                ->first();
 
-        if (!$firstUser) {
-            Log::info('Нет пользователей с сообщениями');
-            return;
+            if (!$firstUser) {
+                Log::info('Нет пользователей с сообщениями');
+                return;
+            }
+            
+            $this->senderId = $firstUser->id;
+            $this->senderName = $firstUser->name;
+
+            $this->chats = Chat::where(function($query) {
+                $query->where('sender_id', Auth::id())
+                    ->where('receiver_id', $this->senderId);
+            })->orWhere(function($query) {
+                $query->where('sender_id', $this->senderId)
+                    ->where('receiver_id', Auth::id());
+            })->orderBy('created_at', 'asc')->get();
+            
         }
-
-        $this->senderId = $firstUser->id;
-        $this->senderName = $firstUser->name;
-
-        // Загружаем сообщения
-        $this->chats = Chat::where(function($query) {
-            $query->where('sender_id', Auth::id())
-                ->where('receiver_id', $this->senderId);
-        })->orWhere(function($query) {
-            $query->where('sender_id', $this->senderId)
-                ->where('receiver_id', Auth::id());
-        })->orderBy('created_at', 'asc')->get();
-
+        
+        $this->setSenderId($this->senderId);
     }
 
     public function setSenderId($id)
@@ -174,7 +179,7 @@ class AdminChatComponent extends Component
 
     public function refreshMessages($data = null)
     {
-        Log::info('Получено новое сообщение:', $data ?? []);
+        Log::info('Получено новое соо��щение:', $data ?? []);
         
         $this->chats = Chat::where(function($query) {
             $query->where('sender_id', Auth::id())

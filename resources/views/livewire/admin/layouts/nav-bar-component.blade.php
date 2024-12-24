@@ -171,10 +171,8 @@
                 }
 
                 // Добавляем класс beep
-                const messageIcon = document.getElementById('message-icon');
-                if (messageIcon && !messageIcon.classList.contains('beep')) {
-                    messageIcon.classList.add('beep');
-                }
+                const messageIcon = document.getElementById('message-icon');                
+                messageIcon.classList.add('beep');
 
                 // Обновляем Livewire компонент
                 Livewire.dispatch('refresh');
@@ -196,7 +194,9 @@
 
     <ul class="navbar-nav navbar-right">
 
-        <li class="dropdown dropdown-list-toggle"><a id="message-icon" href="#" data-toggle="dropdown" class="nav-link nav-link-lg message-toggle"><i class="far fa-envelope"></i></a>
+        <li class="dropdown dropdown-list-toggle"><a id="message-icon" href="#" data-toggle="dropdown" 
+            class="nav-link nav-link-lg message-toggle {{ count($chatUsers) > 0 ? 'beep' : '' }}">
+            <i class="far fa-envelope"></i></a>
             <div class="dropdown-menu dropdown-list dropdown-menu-right">
               <div class="dropdown-header">Messages
                 <div class="float-right">
@@ -205,7 +205,7 @@
               </div>
               <div class="dropdown-list-content dropdown-list-message">
                 @foreach ($chatUsers as $chatUser)
-                <a href="{{ route('admin.chat') }}" class="dropdown-item dropdown-item-unread">
+                <a href="{{ route('admin.chat', $chatUser->id) }}" class="dropdown-item dropdown-item-unread">
                   <div class="dropdown-item-avatar">
                     <img alt="image" src="{{ asset($chatUser->avatar) }}" class="rounded-circle">
                     <div class="is-online"></div>
