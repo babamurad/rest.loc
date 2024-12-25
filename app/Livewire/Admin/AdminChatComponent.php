@@ -135,10 +135,7 @@ class AdminChatComponent extends Component
             'message' => $this->message,
         ]);
 
-         // Используем существующий MessageSent event
-         //event(new MessageSent($this->message));
-
-         $options = array(
+        $options = array(
             'cluster' => env('PUSHER_APP_CLUSTER'),
             'encrypted' => true
         );
@@ -150,12 +147,17 @@ class AdminChatComponent extends Component
             $options
         );
         
-        $pusher->trigger('message-sent', 'message-event', [
+        $data = [
             'message' => $this->message,
             'sender_id' => Auth::user()->id,
             'receiver_id' => $this->senderId,
             'created_at' => $chat->created_at,
-        ]);
+        ];
+        
+        $pusher->trigger('message-sent', 'message-event', $data);
+
+        // Добавляем диспетчеризацию события для обновления иконки
+        $this->dispatch('message-sent', $data)->to('partials.message-icon');
 
         $this->chats = Chat::where(function($query) {
             $query->where('sender_id', Auth::id())
@@ -179,7 +181,7 @@ class AdminChatComponent extends Component
 
     public function refreshMessages($data = null)
     {
-        Log::info('Получено новое соо��щение:', $data ?? []);
+        Log::info('Получено новое сообщение:', $data ?? []);
         
         $this->chats = Chat::where(function($query) {
             $query->where('sender_id', Auth::id())

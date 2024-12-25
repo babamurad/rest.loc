@@ -65,7 +65,6 @@ Route::middleware(['auth', 'track-activity'])->group(function () {
     Route::get('profile', Profile::class)->name('profile');
     Route::get('change-password', ChangePassword::class)->name('change-password');
     Route::get('orders', UserOrders::class)->name('order.index');
-    // Route::get('messages', MessageComponent::class)->name('messages');
 
     Route::get('logout', LogoutComponent::class)->name('logout');
     Route::get('checkout', CheckOutComponent::class)->name('checkout');

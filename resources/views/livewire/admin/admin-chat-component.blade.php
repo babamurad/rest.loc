@@ -48,7 +48,7 @@
             <div class="col-12 col-sm-6 col-lg-6">
                 <div class="card chat-box" id="mychatbox">
                     <div class="card-header">
-                        <h4>Chat with {{ $senderName }}</h4>
+                        <h4>Chat with <strong class="text-primary">{{ $senderName }}</strong></h4>
                     </div>
                     <div class="card-body chat-content" id="chatContent" tabindex="2" style="height: 34rem;">
                         @if($chats && count($chats) > 0)
@@ -99,7 +99,7 @@
         let soundInitialized = false;
         const notificationSound = new Audio('/sounds/notification-sound-for-messenger-messages.mp3');
 
-        // Инициализация звука при первом клике п��льзователя
+        // Инициализация звука при первом клике пользователя
         document.addEventListener('click', function() {
             if (!soundInitialized) {
                 notificationSound.load();
