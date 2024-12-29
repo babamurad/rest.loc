@@ -285,7 +285,7 @@
 
                                 <livewire:dashboard.message-component />
 
-                               <livewire:dashboard.wishlist-component />
+                                <livewire:dashboard.wishlist-component />
 
                                 <div class="tab-pane fade" id="v-pills-messages" role="tabpanel"
                                     aria-labelledby="v-pills-messages-tab">
@@ -497,6 +497,7 @@
                 if (data.receiver_id == {{ Auth::id() }}) {
                     // Обновляем счетчик непрочитанных сообщений
                     @this.updateUnreadCount();
+                    @this.updateMessageCount();
                     
                     // Воспроизводим звук уведомления, если он определен
                     if (typeof notificationSound !== 'undefined') {

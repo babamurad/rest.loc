@@ -21,6 +21,7 @@
 
     @stack('message')
     @stack('notif')
+    
 
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
 </head>

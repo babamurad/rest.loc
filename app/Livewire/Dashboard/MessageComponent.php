@@ -77,6 +77,15 @@ class MessageComponent extends Component
         $this->dispatch('new-message');
     }
 
+    public function updateUnreadCount()
+    {
+        $unreadCount = Chat::where('receiver_id', Auth::id())
+            ->where('is_read', false)
+            ->count();
+
+        $this->dispatch('unreadCountUpdated', ['count' => $unreadCount]);
+    }
+
     #[On('change-profile-image')]
     public function render()
     {
