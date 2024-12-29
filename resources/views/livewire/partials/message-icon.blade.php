@@ -20,7 +20,7 @@ document.addEventListener('livewire:initialized', function () {
             // Проверяем, является ли текущий пользователь получателем
             if (data.receiver_id == {{ Auth::id() }}) {
                 // Обновляем счетчик непрочитанных сообщений
-                @this.updateUnreadCount();
+                //@this.updateUnreadCount();
                 
                 // Воспроизводим звук уведомления, если он определен
                 if (typeof notificationSound !== 'undefined') {

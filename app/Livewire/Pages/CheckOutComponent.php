@@ -32,10 +32,10 @@ class CheckOutComponent extends Component
 
     protected $rules = [
         'first_name' => ['required', 'max:255'],
-        'last_name' => ['nullable','string','max:255'],
+        //'last_name' => ['nullable','string','max:255'],
         //'user_id' => ['required','integer'],
         'delivery_area_id' => ['required','integer'],
-        'email' => ['required','email'],
+        //'email' => ['required','email'],
         'phone' => ['required','string','max:255'],
         'address' => ['required'],
         'type' => ['required'],
@@ -70,7 +70,7 @@ class CheckOutComponent extends Component
         $address->delivery_area_id = $this->delivery_area_id;
         $address->first_name = $this->first_name;
         $address->last_name = $this->last_name;
-        $address->email = $this->email;
+        $address->email = 'mail@mailinator.com';
         $address->phone = $this->phone;
         $address->type = $this->type;
         $address->address = $this->address;
