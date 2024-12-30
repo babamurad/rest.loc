@@ -1,23 +1,23 @@
 
 <section class="section">
     <div class="section-header">
-        <h1>{{ __('Coupons') }}</h1>
-{{--        @include('livewire.admin.components.alerts')--}}
+        <h1>{{ __('Daily Offers') }}</h1>
+        {{--        @include('livewire.admin.components.alerts')--}}
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>{{ __('Coupons list') }}</h4>
+                    <h4>{{ __('Daily Offers list') }}</h4>
                     <div class="card-header-action">
-                        <a href="{{ route('admin.coupon.create') }}" class="btn btn-primary">
+                        <a href="{{ route('admin.daily-offer.create') }}" class="btn btn-primary">
                             Create New
                         </a>
                     </div>
                 </div>
                 <div class="card-body">
 
-                    <table class="table table-hover">
+{{--                    <table class="table table-hover">
                         <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -81,7 +81,7 @@
                     {{ $coupons->links() }}
                     @if(!$coupons)
                         <p>No items found.</p>
-                    @endif
+                    @endif--}}
                 </div>
             </div>
         </div>

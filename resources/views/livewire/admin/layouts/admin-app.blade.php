@@ -19,6 +19,7 @@
 
     @stack('toast-css')
     @stack('tab-css')
+    @stack('select2')
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/assets/css/components.css') }}">
@@ -116,5 +117,6 @@
         @endif
     </script>
 @stack('summernote-js')
+@stack('select2-js')
 </body>
 </html>

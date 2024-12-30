@@ -15,6 +15,9 @@
             <li  class="{{ request()->is('admin/slider') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.slider') }}" wire:navigate><i class="fas fa-images"></i> <span>Slider</span></a>
             </li>
+            <li  class="{{ request()->is('admin/daily') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.daily') }}" wire:navigate><i class="fas fa-images"></i> <span>{{ __('Daily Offer') }}</span></a>
+            </li>
             <li  class="{{ request()->is('admin/why-choose-us') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.why-choose-us') }}" wire:navigate><i class="fas fa-clipboard-check"></i> <span>Why choose us</span></a>
             </li>
