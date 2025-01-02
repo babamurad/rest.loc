@@ -157,6 +157,7 @@
         </div>
     </div>
     <!-- CART POPUT END -->
+
     @include('components.layouts.preloader')
     <div class="container">
         <div class="row wow fadeInUp" data-wow-duration="1s">

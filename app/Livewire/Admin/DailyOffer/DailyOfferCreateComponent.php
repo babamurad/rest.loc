@@ -29,7 +29,10 @@ class DailyOfferCreateComponent extends Component
     public function updatedSearch()
     {
         // Фильтрация продуктов по имени
-        $this->filteredProducts = Product::where('name', 'like', '%'.$this->search.'%')->where('show_at_home', 1)->get();
+        $this->filteredProducts = Product::where('name', 'like', '%'.$this->search.'%')
+            ->where('show_at_home', 1)
+            //->whereDoesntHave('dailyoffer') // Исключаем продукты, имеющие запись в dailyoffer
+            ->get();
         //dd($this->filteredProducts); // Вывод отфильтрованных продуктов для проверки
     }
 
@@ -51,6 +54,10 @@ class DailyOfferCreateComponent extends Component
 
     public function create()
     {
+        if (DailyOffer::where('product_id', $this->productId)->first()) {
+            toastr()->error('Product already in daily offer');
+            return;
+        }
         $dailyOffer = new DailyOffer();
         $dailyOffer->product_id = $this->productId;
         $dailyOffer->status = $this->status;

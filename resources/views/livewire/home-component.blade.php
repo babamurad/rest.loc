@@ -22,10 +22,14 @@
     ==============================-->
 
 
+
     <!--=============================
         OFFER ITEM START
     ==============================-->
     <livewire:partials.daily-offer-component />
+    <!--=============================
+        OFFER ITEM END
+    ==============================-->
 
     <!-- CART POPUT START -->
     {{--<div class="fp__cart_popup">

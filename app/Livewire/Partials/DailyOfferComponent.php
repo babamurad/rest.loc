@@ -9,18 +9,26 @@ use Livewire\Component;
 
 class DailyOfferComponent extends Component
 {
+    public $product;
+    public $closeModal = false;
 
-    public function getProduct($id)
+    public function test()
     {
-        dd('modal');
-        $this->dispatch('loading-product');
+        dd('test');
+    }
+
+    public function productDaily($id)
+    {
+        dd($id);
         $this->isLoading = true;
         $this->product = Product::with('sizes', 'options')->findOrFail($id);
         $this->isLoading = false;
         $this->closeModal = false;
         $this->dispatch('product-loaded');
-        $this->dispatch('show-modal');
+        $this->dispatch('show-modal-daily');
     }
+
+
 
     public function render()
     {
