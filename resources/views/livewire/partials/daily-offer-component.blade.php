@@ -26,7 +26,9 @@
                         <a class="title" href="#">{{ ucfirst($dailyOffer->product->name) }}</a>
                         <p>Lightly smoked and minced pork tenderloin topped</p>
                         <ul class="d-flex flex-wrap">
-                            <li><a href="#" data-bs-toggle="modal" data-bs-target="#cartModal"><i
+                            <li><a href="javascript:;" data-bs-toggle="modal"
+                                   data-bs-target="#cartModal"
+                                   wire:click="getProduct({{ $dailyOffer->product->id }})"><i
                                         class="fas fa-shopping-basket"></i></a></li>
                             <li><a href="#"><i class="fas fa-heart"></i></a></li>
                             <li><a href="#"><i class="far fa-eye"></i></a></li>
