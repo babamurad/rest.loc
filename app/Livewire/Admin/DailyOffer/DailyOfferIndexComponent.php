@@ -25,10 +25,29 @@ class DailyOfferIndexComponent extends Component
         $this->delId = $id;
     }
 
+    public function ActInact($id)
+    {
+        $dailyOffer = DailyOffer::find($id);
+        $dailyOffer->status =!$dailyOffer->status;
+        $dailyOffer->save();
+    }
+
+    public function getDelId($id)
+    {
+        $this->delId = $id;
+    }
+
+    public function destroy()
+    {
+        DailyOffer::findOrFail($this->delId)->delete();
+        $this->dispatch('closeModal');
+        toastr()->flash('error', 'Item has been deleted.');
+    }
+
     #[Layout('livewire.admin.layouts.admin-app')]
     public function render()
     {
-        $dailyOffers = DailyOffer::with('product')->get();
+        $dailyOffers = DailyOffer::with('product')->paginate($this->perPage);
         return view('livewire.admin.daily-offer.daily-offer-index-component', compact('dailyOffers'));
     }
 }

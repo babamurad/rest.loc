@@ -24,7 +24,7 @@
                             <th scope="col">Image</th>
                             <th scope="col">Name</th>
                             <th scope="col">Status</th>
-                            <th scope="col" class="text-center" colspan="2">Actions</th>
+                            <th scope="col" class="text-center">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -40,22 +40,21 @@
                                     </td>
 
                                     <td>
-                                        <div class="form-group">
+                                        <div class="d-flex align-items-center">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" name="agree" class="custom-control-input" id="agree">
+                                                <input type="checkbox" class="custom-control-input" id="agree{{ $dailyOffer->id }}" wire:click="ActInact({{ $dailyOffer->id }})"
+                                                @if($dailyOffer->status) checked @endif>
+                                                <label class="custom-control-label" for="agree{{ $dailyOffer->id }}" >
                                                 @if ($dailyOffer->status)
-                                                <label class="custom-control-label" for="agree"><span class="badge badge-success">Active</span></label>
+                                                <span class="badge badge-success">Active</span>
                                                 @else
-                                                <label class="custom-control-label" for="agree"><span class="badge badge-danger">Inactive</span></label>
+                                                <span class="badge badge-danger">Inactive</span>
                                                 @endif
+                                                </label>
                                             </div>
                                         </div>
                                     </td>
-                                    <td class="text-center" style="width: 10%;">
-                                        <a href="#" class="btn btn-icon btn-primary">
-                                            <i class="far fa-edit"></i>
-                                        </a>
-                                    </td>
+
                                     <td class="text-left" style="width: 6%;">
                                         <button class="btn btn-danger" data-toggle="modal" data-target="#ConfirmDelete" wire:click="getDelId({{ $dailyOffer->id }})">
                                             <i class="fas fa-trash-alt"></i>
@@ -66,7 +65,7 @@
                         @endif
                         </tbody>
                     </table>
-{{--                    {{ $dailyOffers->links() }}--}}
+                    {{ $dailyOffers->links() }}
                     @if(!$dailyOffers)
                         <p>No items found.</p>
                     @endif

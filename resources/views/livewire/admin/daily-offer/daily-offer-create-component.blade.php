@@ -12,7 +12,7 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-6">
-                            <p>Выбран: {{ ucfirst($name) }}</p>
+                            <label>{{__('Search')}}</label>
                             <input type="text" wire:model.live="search" placeholder="Поиск продукта" class="form-control">
                             <ul>
                                 @foreach($filteredProducts as $product)
@@ -22,9 +22,9 @@
                                     </li>
                                 @endforeach
                             </ul>
+                            <p>Выбран: {{ ucfirst($name) }}</p>
                         </div>
                         <div class="col-sm-6 col-md-6">
-                            <p></p>
                             <div class="form-group">
                                 <label>{{__('Status')}}</label>
                                 <select class="form-control @error('status') is-invalid @enderror"  wire:model="status">
