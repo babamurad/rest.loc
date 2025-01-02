@@ -1,94 +1,37 @@
-@push('select2')
-    <link rel="stylesheet" href="{{ asset('admin\assets\modules\select2\dist\css\select2.min.css') }}">    
-@endpush
-@push('select2-js')
-<script>
-    $('#product-search').select2({
-        theme: 'bootstrap4',
-    });
-</script>
-@endpush
 <section class="section">
     <div class="section-header">
-        <h1>Daily</h1>
+        <h1>{{__('Daily Offer')}}</h1>
         @include('livewire.admin.components.alerts')
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>Create Coupon</h4>
+                    <h4>{{__('Create Daily Offer')}}</h4>
                 </div>
                 <div class="card-body">
                     <div class="row">
-                        <div class="col-sm-4 col-md-4">
-                            <div class="form-group">
-                                <label>{{__('Name')}}</label>
-                                <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name">
-                                @error('name') <div class="invalid-feedback">{{$message}}</div> @enderror
-                            </div>
+                        <div class="col-sm-6">
+                            <p>Выбран: {{ ucfirst($name) }}</p>
+                            <input type="text" wire:model.live="search" placeholder="Поиск продукта" class="form-control">
+                            <ul>
+                                @foreach($filteredProducts as $product)
+                                    <li class="product-item" style="cursor: pointer;" wire:click="addProduct({{ $product->id }})">
+                                        <img src="{{ asset($product->thumb_image) }}" alt="{{ $product->name }}" class="mr-2" width="42">
+                                        <span>{{ $product->name }}</span>
+                                    </li>
+                                @endforeach
+                            </ul>
                         </div>
-                        <div class="col-sm-4 col-md-4">
-                            <div class="form-group">
-                                <select name="product-search" id="product-search">
-                                    <option value="">Select Product</option>
-                                    @foreach($products as $product)
-                                        <option wire:key="{{ $product->id }}" value="{{ $product->id }}">{{ $product->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 col-md-4">
+                        <div class="col-sm-6 col-md-6">
+                            <p></p>
                             <div class="form-group">
                                 <label>{{__('Status')}}</label>
-                                <select class="form-control @error('link') is-invalid @enderror"  wire:model="status">
-                                    <option value="1">{{__('Yes')}}</option>
-                                    <option value="0">{{__('No')}}</option>
+                                <select class="form-control @error('status') is-invalid @enderror"  wire:model="status">
+                                    <option value="1" selected>{{__('Active')}}</option>
+                                    <option value="0">{{__('Inactive')}}</option>
                                 </select>
                                 @error('status') <div class="invalid-feedback">{{$message}}</div> @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 col-md-4">
-                            <div class="form-group">
-                                <label>{{__('Quantity')}}</label>
-                                <input type="number" class="form-control @error('quantity') is-invalid @enderror" wire:model="quantity">
-                                @error('quantity') <div class="invalid-feedback">{{$message}}</div> @enderror
-                            </div>
-                        </div>
-                        <div class="col-sm-4 col-md-4">
-                            <div class="form-group">
-                                <label>{{__('Minimum Purchase Price')}}</label>
-                                <input type="number" class="form-control @error('min_purchase_amount') is-invalid @enderror" wire:model="min_purchase_amount">
-                                @error('min_purchase_amount') <div class="invalid-feedback">{{$message}}</div> @enderror
-                            </div>
-                        </div>
-                        <div class="col-sm-4 col-md-4">
-                            <div class="form-group">
-                                <label>{{__('Expire Date')}}</label>
-                                <input type="date" class="form-control @error('expire_date') is-invalid @enderror" wire:model="expire_date">
-                                @error('expire_date') <div class="invalid-feedback">{{$message}}</div> @enderror
-                            </div>
-                        </div>
-
-                    </div>
-                    <div class="row">
-                        <div class="col-sm-4 col-md-4">
-                            <div class="form-group">
-                                <label>{{__('Discount type')}}</label>
-                                <select class="form-control @error('discount_type') is-invalid @enderror"  wire:model="discount_type">
-                                    <option value="percent">{{__('Percent')}}</option>
-                                    <option value="amount">{{__('Amount')}}</option>
-                                </select>
-                                @error('discount_type') <div class="invalid-feedback">{{$message}}</div> @enderror
-                            </div>
-                        </div>
-                        <div class="col-sm-4 col-md-4">
-                            <div class="form-group">
-                                <label>{{__('Discount Amount')}}</label>
-                                <input type="number" class="form-control @error('discount') is-invalid @enderror" wire:model="discount">
-                                @error('discount') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                     </div>
@@ -103,3 +46,29 @@
     </div>
 </section>
 
+@push('select2-css')
+    <link rel="stylesheet" href="{{ asset('admin/assets/modules/select2/dist/css/select2.min.css') }}">
+    <style>
+        .product-item {
+            /* Базовые стили */
+            color: #333;
+            cursor: pointer;
+            display: flex; /* Создаем гибкий контейнер для выравнивания элементов */
+            align-items: center; /* Выравниваем элементы по вертикали по центру */
+        }
+
+        .product-item:hover {
+            background-color: #f0f0f0;
+            color: #007bff;
+        }
+    </style>
+@endpush
+
+@push('select2-js')
+    <script src="{{ asset('admin/assets/modules/select2/dist/js/select2.full.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            $('#product_search').select2();
+        });
+    </script>
+@endpush

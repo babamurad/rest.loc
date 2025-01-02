@@ -2,6 +2,7 @@
 
 namespace App\Livewire\Admin\DailyOffer;
 
+use App\Models\DailyOffer;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Title;
 use Livewire\Component;
@@ -27,7 +28,7 @@ class DailyOfferIndexComponent extends Component
     #[Layout('livewire.admin.layouts.admin-app')]
     public function render()
     {
-        $coupons = '';
-        return view('livewire.admin.daily-offer.daily-offer-index-component', compact('coupons'));
+        $dailyOffers = DailyOffer::with('product')->get();
+        return view('livewire.admin.daily-offer.daily-offer-index-component', compact('dailyOffers'));
     }
 }
