@@ -40,11 +40,16 @@
                                     </td>
 
                                     <td>
-                                        @if ($dailyOffer->status)
-                                            <span class="badge badge-success">Active</span>
-                                        @else
-                                            <span class="badge badge-danger">Inactive</span>
-                                        @endif
+                                        <div class="form-group">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" name="agree" class="custom-control-input" id="agree">
+                                                @if ($dailyOffer->status)
+                                                <label class="custom-control-label" for="agree"><span class="badge badge-success">Active</span></label>
+                                                @else
+                                                <label class="custom-control-label" for="agree"><span class="badge badge-danger">Inactive</span></label>
+                                                @endif
+                                            </div>
+                                        </div>
                                     </td>
                                     <td class="text-center" style="width: 10%;">
                                         <a href="#" class="btn btn-icon btn-primary">
