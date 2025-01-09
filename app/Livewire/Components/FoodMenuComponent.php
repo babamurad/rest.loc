@@ -8,6 +8,7 @@ use App\Models\ProductOption;
 use App\Models\ProductSize;
 use Cart;
 use App\Models\Setting;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\Attributes\Renderless;
 
@@ -37,6 +38,7 @@ class FoodMenuComponent extends Component
         $this->product = Product::with('sizes', 'options')->first();
     }
 
+    #[On('show-product-details')]
     public function getProduct($id)
     {
         $this->dispatch('loading-product');
