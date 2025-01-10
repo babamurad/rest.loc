@@ -84,38 +84,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-6">
-            <div x-data="{ open: false }" class="mb-4">
-                <button x-on:click="open = ! open" class="btn btn-primary">Daily Offer Titles</button>
-
-                <div x-show="open" x-transition>
-                    <div class="row mt-4">
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Top Title</label>
-                                <input type="text" class="form-control @error('dtop_title') is-invalid @enderror" wire:model="dtop_title">
-                                @error('dtop_title') <div class="invalid-feedback">{{$message}}</div> @enderror
-                            </div>
-                        </div>
-                        <div class="col-sm-6">
-                            <div class="form-group">
-                                <label>Main Title</label> @error('dtitle') is-invalid @enderror
-                                <input type="text" class="form-control" wire:model="dtitle">
-                                @error('dtitle') <div class="invalid-feedback">{{$message}}</div> @enderror
-                            </div>
-                        </div>
-                        <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Sub Title</label>
-                                <input type="text" class="form-control @error('dsub_title') is-invalid @enderror" wire:model="dsub_title">
-                                @error('dsub_title') <div class="invalid-feedback">{{$message}}</div> @enderror
-                            </div>
-                        </div>
-                    </div>
-                    <button class="btn btn-primary"  x-on:click="open = ! open" wire:click="saveDailyTitle">Save</button>
-                </div>
-            </div>
-        </div>
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12">

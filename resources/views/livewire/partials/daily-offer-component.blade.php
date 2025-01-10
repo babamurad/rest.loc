@@ -10,7 +10,6 @@
                             <img src="{{ asset('assets/images/heading_shapes.png') }}" alt="shapes" class="img-fluid w-100">
                         </span>
                         <p>{{ $titles->sub_title ?? '' }}</p>
-                        <button wire:click="test()">Test</button>
                     </div>
                 </div>
             </div>        

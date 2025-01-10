@@ -1,8 +1,41 @@
 
 <section class="section">
     <div class="section-header">
-        <h1>{{ __('Daily Offers') }}</h1>
-        {{--        @include('livewire.admin.components.alerts')--}}
+        <h1>{{ __('Daily Offers') }}</h1>        
+    </div>
+    <div class="row">            
+        <div class="col-sm-6">
+            <div x-data="{ open: false }" class="mb-4">
+                <button x-on:click="open = ! open" class="btn btn-primary">Daily Offer Titles</button>
+
+                <div x-show="open" x-transition>
+                    <div class="row mt-4">
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Top Title</label>
+                                <input type="text" class="form-control @error('top_title') is-invalid @enderror" wire:model="top_title">
+                                @error('top_title') <div class="invalid-feedback">{{$message}}</div> @enderror
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="form-group">
+                                <label>Main Title</label> @error('title') is-invalid @enderror
+                                <input type="text" class="form-control" wire:model="title">
+                                @error('title') <div class="invalid-feedback">{{$message}}</div> @enderror
+                            </div>
+                        </div>
+                        <div class="col-sm-12">
+                            <div class="form-group">
+                                <label>Sub Title</label>
+                                <input type="text" class="form-control @error('sub_title') is-invalid @enderror" wire:model="sub_title">
+                                @error('sub_title') <div class="invalid-feedback">{{$message}}</div> @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary"  x-on:click="open = ! open" wire:click="saveDailyTitle">Save</button>
+                </div>
+            </div>
+        </div>
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12">

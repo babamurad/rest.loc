@@ -14,10 +14,6 @@ class WhyChooseUsComponent extends Component
     public $top_title;
     public $sub_title;
 
-    public $dtitle;
-    public $dtop_title;
-    public $dsub_title;
-
     public $delId;
 
     public function destroy()
@@ -50,24 +46,7 @@ class WhyChooseUsComponent extends Component
         toastr()->success('Заголовки сохранены');
     }
 
-    public function saveDailyTitle()
-    {
-        $this->validate(
-            [
-                'dtitle' => 'required|max:255',
-                'dtop_title' => 'required|max:255',
-                'dsub_title' => 'required|max:255',
-            ]
-        );
-
-        WhyChooseUs::where('key', 2)->update([
-            'title' => $this->dtitle,
-            'top_title' => $this->dtop_title,
-            'sub_title' => $this->dsub_title,
-        ]);
-//        dd('validate');
-        toastr()->success('Заголовки сохранены');
-    }
+    
 
     public function mount()
     {
@@ -76,12 +55,6 @@ class WhyChooseUsComponent extends Component
             $this->title = $titles->title;
             $this->top_title = $titles->top_title;
             $this->sub_title = $titles->sub_title;
-        }
-        $dtitles = WhyChooseUs::where('key', 2)->first();
-        if ($dtitles) {
-            $this->dtitle = $dtitles->title;
-            $this->dtop_title = $dtitles->top_title;
-            $this->dsub_title = $dtitles->sub_title;
         }
     }
 
