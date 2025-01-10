@@ -14,14 +14,19 @@
     <link rel="stylesheet" href="{{ asset('assets/css/nice-select.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/venobox.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/animate.css') }}">
+        <!--jquery library js-->
+    <script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
     <link rel="stylesheet" href="{{ asset('assets/css/jquery.exzoom.css') }}">
 
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
 
+    <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+    
     @stack('message')
     @stack('notif')
     @stack('mdb-css')    
+        
 
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
 </head>
@@ -222,10 +227,9 @@
 ==============================-->
 
 
-<!--jquery library js-->
-<script src="{{ asset('assets/js/jquery-3.6.0.min.js') }}"></script>
+
 <!--bootstrap js-->
-<script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script> --}}
 <!--font-awesome js-->
 <script src="{{ asset('assets/js/Font-Awesome.js') }}"></script>
 <!-- slick slider -->

@@ -133,6 +133,7 @@
                                         >
                                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" wire:loading></span>
                                             <span class="text-white" wire:loading.remove>add to cart</span>
+                                            <button id="myButtonClose">Close</button>
                                             <span class="text-white" wire:loading>Loading...</span>
                                         </button>
                                         @else
@@ -170,6 +171,7 @@
                         </span>
                     <p>Objectively pontificate quality models before intuitive information. Dramatically
                         recaptiualize multifunctional materials.</p>
+
                 </div>
             </div>
         </div>
@@ -211,7 +213,6 @@
                                     ${{ $product->price }}
                                 @endif
                             </h5>
-{{--                            wire:click="openModal({{ $product->id }})"--}}
                             <ul class="d-flex flex-wrap justify-content-center">
                                 <li><a
                                         href="javascript:;"
@@ -229,11 +230,24 @@
                 </div>
             @endforeach
         </div>
+<button id="myButton">Open</button>
+
+
     </div>
 
 
     @push('modal')
         <script>
+            $(document).ready(function() {
+
+                $('#myButton').click(function() {
+                    $('#cartModal').modal('show');
+                });
+                $('#myButtonClose').click(function() {
+                    $('#cartModal').modal('hide');
+                });
+
+
             window.addEventListener('show-modal', event => {
                 $('#cartModal').modal('show');
             });
@@ -247,6 +261,7 @@
                 this.count = 1;
                 this.totalSummary = 0;
             });
+        });
 
 /*            window.addEventListener('error_message', event => {
                 toastr.error('Something went wrong!');

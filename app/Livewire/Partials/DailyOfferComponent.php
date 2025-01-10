@@ -9,9 +9,6 @@ use Livewire\Component;
 
 class DailyOfferComponent extends Component
 {
-    public $product;
-    //protected $listeners = ['show-product' => 'productDaily'];
-
     public function productDaily($id)
     {
         $this->dispatch('show-product-details', $id);
@@ -23,11 +20,5 @@ class DailyOfferComponent extends Component
         $dailyOffers = DailyOffer::where('status', 1)->with('product')->get();
         // dd($dailyOffers->count());
         return view('livewire.partials.daily-offer-component', compact('titles', 'dailyOffers'));
-    }
-
-    public function showModal()
-    {
-        dd('test');
-        $this->dispatch('show-modal-home');
     }
 }

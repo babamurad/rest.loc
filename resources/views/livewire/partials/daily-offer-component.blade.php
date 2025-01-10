@@ -30,8 +30,8 @@
                         href="{{ route('product-details', ['slug' => $dailyOffer->product->slug]) }}">{{ ucfirst($dailyOffer->product->name) }}</a>
                     <p>{{ $dailyOffer->product->short_description }}</p>
                     <ul class="d-flex flex-wrap">
-                        <li><a href="javascript:;" class="call-product-daily" wire:click="productDaily({{ $dailyOffer->product->id }})"><i
-                                    class="fas fa-shopping-basket"></i></a></li>
+                        <li><a href="#" class="call-product-daily" wire:click.prevent="productDaily({{ $dailyOffer->product->id }})">
+                            <i class="fas fa-shopping-basket"></i></a></li>
                         <li><a href="#"><i class="fas fa-heart"></i></a></li>
                         <li><a href="#"><i class="far fa-eye"></i></a></li>
                     </ul>
@@ -49,7 +49,7 @@
 
     
     
-    <script>
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function () {
             document.addEventListener('click', function (event) {
                 if (event.target.closest('.call-product-daily')) {
@@ -63,7 +63,7 @@
                 }
             });
         });
-    </script>
+    </script> --}}
     
 </section>    
         
@@ -99,7 +99,7 @@
     @endpush
     
     @push('mdb-css')   
-{{-- <link rel="stylesheet" href="{{ asset('assets/css/bootstrap2.min.css') }}"> --}}
+{{--  --}}
 <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
 
 <style>
