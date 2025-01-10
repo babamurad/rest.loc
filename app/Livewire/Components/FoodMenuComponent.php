@@ -18,6 +18,8 @@ class FoodMenuComponent extends Component
     public $isLoading = false;
     public $closeModal = false;
     public $totalSummary = 0;
+    public $isModalOpen = false;
+    public $isModalOpen2 = false;
 
     public function render()
     {
@@ -38,16 +40,20 @@ class FoodMenuComponent extends Component
         $this->product = Product::with('sizes', 'options')->first();
     }
 
+    public function toggleModal()
+    {
+        //dd('toggleModal');
+        $this->isModalOpen = !$this->isModalOpen;
+        $this->isModalOpen2 = !$this->isModalOpen2;
+    }
+
     #[On('show-product-details')]
     public function getProduct($id)
     {
-        $this->dispatch('loading-product');
         $this->isLoading = true;
         $this->product = Product::with('sizes', 'options')->findOrFail($id);
         $this->isLoading = false;
-        $this->closeModal = false;
-        $this->dispatch('product-loaded');
-        $this->dispatch('show-modal');
+        $this->isModalOpen = true;
     }
 
     public function addToCart($id, $count, $summa, $sizeId, $sizeName, $sizePrice, $checkedOptions)

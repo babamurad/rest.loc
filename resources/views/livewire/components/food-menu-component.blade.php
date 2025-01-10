@@ -7,18 +7,20 @@
              summa : 0,
              count : 1,
              sizeId: 0,
+             showModal: false,
+             isModalOpen: @entangle('isModalOpen'),
+             isModalOpen2: @entangle('isModalOpen2'),
              getTotalOptionPrice() {
-            // Calculate the total price of selected options
-            let totalOptionPrice = 0;
-            for (const option of this.checkedOptions) {
-              totalOptionPrice += parseFloat(option); // Ensure number conversion
-            }
-            return totalOptionPrice;
-            },
-            resetOptions() {
-            this.checkedOptions = [];
-            },
-            resetVariables() {
+                let totalOptionPrice = 0;
+                for (const option of this.checkedOptions) {
+                    totalOptionPrice += parseFloat(option);
+                }
+                return totalOptionPrice;
+             },
+             resetOptions() {
+                this.checkedOptions = [];
+             },
+             resetVariables() {
                  this.totalSummary = 0;
                  this.selectedSize = { id: null, name: '', price: 0 };
                  this.checkedOptions = [];
@@ -27,20 +29,30 @@
                  this.count = 1;
              }
          }"
-         @shown.bs.modal="resetVariables()"
+         @shown.bs.modal="resetVariables()",
+         @keydown.escape.window="isModalOpen = false"
 >
 
     <!-- CART POPUT START -->
     <div class="fp__cart_popup">
-        <div wire:ignore.self class="modal fade"
-             id="cartModal" tabindex="-1" aria-hidden="true"
-             wire:loading.class="d-none"
-             wire:target="getProduct">
+        <div x-show="showModal" x-transition:enter="transition ease-out duration-300"
+             x-transition:enter-start="opacity-0 transform scale-90"
+             x-transition:enter-end="opacity-100 transform scale-100"
+             x-transition:leave="transition ease-in duration-300"
+             x-transition:leave-start="opacity-100 transform scale-100"
+             x-transition:leave-end="opacity-0 transform scale-90"
+             class="modal fade show" tabindex="-1" aria-hidden="true"
+             @if($closeModal)
+             style="display: block;"
+             @else
+             style="display: none;"
+             @endif
+             @click.away="showModal = false"
+             @keydown.escape.window="showModal = false">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i
-                                class="fal fa-times"></i></button>
+                        <button type="button" class="btn-close" @click="showModal = false"><i class="fal fa-times"></i></button>
                         @if($product)
                             <div class="fp__cart_popup_img">
                                 <img src="{{ $product->thumb_image }}" alt="{{ $product->name }}" class="img-fluid w-100">
@@ -133,7 +145,6 @@
                                         >
                                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" wire:loading></span>
                                             <span class="text-white" wire:loading.remove>add to cart</span>
-                                            <button id="myButtonClose">Close</button>
                                             <span class="text-white" wire:loading>Loading...</span>
                                         </button>
                                         @else
@@ -171,7 +182,6 @@
                         </span>
                     <p>Objectively pontificate quality models before intuitive information. Dramatically
                         recaptiualize multifunctional materials.</p>
-
                 </div>
             </div>
         </div>
@@ -216,9 +226,7 @@
                             <ul class="d-flex flex-wrap justify-content-center">
                                 <li><a
                                         href="javascript:;"
-                                        @click="resetVariables()"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#cartModal"
+                                        @click="resetVariables(); showModal = true"
                                         wire:click="getProduct({{ $product->id }})">
                                         <i class="fas fa-shopping-basket"></i></a>
                                 </li>
@@ -230,49 +238,39 @@
                 </div>
             @endforeach
         </div>
-<button id="myButton">Open</button>
 
+        
+        <div class="mt-3">
+            <button wire:click="toggleModal">Открыть модальное окно</button>
+            <div x-show="isModalOpen2" class="fade show" tabindex="-1" aria-hidden="true"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 transform scale-90"
+                 x-transition:enter-end="opacity-100 transform scale-100"
+                 x-transition:leave="transition ease-in duration-300"
+                 x-transition:leave-start="opacity-100 transform scale-100"
+                 x-transition:leave-end="opacity-0 transform scale-90"
+                 style="display: none;" 
+                 
+                 @click.away="isModalOpen2 = false"
+                 @keydown.escape.window="isModalOpen2 = false">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <button type="button" class="btn-close" @click="isModalOpen2 = false"><i class="fal fa-times"></i></button>
+                            <!-- Ваше содержимое модального окна -->
+                            <p>Содержимое модального окна</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>       
 
     </div>
 
+    
 
     @push('modal')
-        <script>
-            $(document).ready(function() {
-
-                $('#myButton').click(function() {
-                    $('#cartModal').modal('show');
-                });
-                $('#myButtonClose').click(function() {
-                    $('#cartModal').modal('hide');
-                });
-
-
-            window.addEventListener('show-modal', event => {
-                $('#cartModal').modal('show');
-            });
-            window.addEventListener('close-modal', event => {
-                $('#cartModal').modal('hide');
-                this.selectedSize = { id: null, name: '', price: 0 };
-                this.checkedOptions = [];
-                this.checkedOptionsId = [];
-                this.totalOptionPrice = 0;
-                this.summa = 0;
-                this.count = 1;
-                this.totalSummary = 0;
-            });
-        });
-
-/*            window.addEventListener('error_message', event => {
-                toastr.error('Something went wrong!');
-            });*/
-            /*document.addEventListener('DOMContentLoaded', function () {
-                window.addEventListener('show-modal', event => {
-                    const modalElement = new bootstrap.Modal(document.getElementById('cartModal'));
-                    modalElement.show();
-                });
-            });*/
-        </script>
+        
     @endpush
     <style>
         .modal {
