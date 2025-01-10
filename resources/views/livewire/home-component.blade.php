@@ -1,13 +1,11 @@
 <div>
 
-
-
     <!--=============================
         BANNER START
     ==============================-->
-{{--    <livewire:components.slider-component />--}}
+   <livewire:components.slider-component />
 {{--    <livewire:partials.carousel />--}}
-    @livewire('components.slider-component')
+    {{-- @livewire('components.slider-component') --}}
     <!--=============================
         BANNER END
     ==============================-->
@@ -32,8 +30,8 @@
     ==============================-->
 
     <!-- CART POPUT START -->
-    {{--<div class="fp__cart_popup">
-        <div class="modal fade" id="cartModal" tabindex="-1" aria-hidden="true">
+    {{-- <div class="fp__cart_popup">
+        <div class="modal fade" id="cartModalHome" tabindex="-1" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body">
@@ -112,8 +110,9 @@
                 </div>
             </div>
         </div>
-    </div>--}}
+    </div> --}}
     <!-- CART POPUT END -->
+
     <!--=============================
         OFFER ITEM END
     ==============================-->
@@ -135,7 +134,7 @@
         <div class="container">
             <div class="row add_slider wow fadeInUp" data-wow-duration="1s">
                 <div class="col-xl-4">
-                    <a href="#" class="fp__add_slider_single" style="background: url({{ asset('assets/images/offer_slider_3.png') }});">
+                    <a href="#" class="fp__add_slider_single" style="background: url({{ asset('assets/images/offer_slider_3.png') }});" >
                         <div class="text">
                             <h3>red chicken</h3>
                             <p>Lorem ipsum dolor sit amet consectetur.</p>

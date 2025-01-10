@@ -14,7 +14,6 @@ class DailyOfferComponent extends Component
 
     public function productDaily($id)
     {
-        dd($id);
         $this->dispatch('show-product-details', $id);
     }
 
@@ -22,7 +21,13 @@ class DailyOfferComponent extends Component
     {
         $titles = WhyChooseUs::where('id', 2)->first();
         $dailyOffers = DailyOffer::where('status', 1)->with('product')->get();
-        //dd($dailyOffers);
+        // dd($dailyOffers->count());
         return view('livewire.partials.daily-offer-component', compact('titles', 'dailyOffers'));
+    }
+
+    public function showModal()
+    {
+        dd('test');
+        $this->dispatch('show-modal-home');
     }
 }

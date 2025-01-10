@@ -21,8 +21,7 @@
 
     @stack('message')
     @stack('notif')
-    @stack('mdb-css')
-    
+    @stack('mdb-css')    
 
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
 </head>

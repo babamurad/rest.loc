@@ -12,4 +12,9 @@ class HomeComponent extends Component
     {
         return view('livewire.home-component');
     }
+
+    public function showModal()
+    {
+        dd('test');
+    }
 }
