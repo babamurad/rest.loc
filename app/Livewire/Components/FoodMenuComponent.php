@@ -18,6 +18,7 @@ class FoodMenuComponent extends Component
     public $isLoading = false;
     public $closeModal = false;
     public $totalSummary = 0;
+    public $showModal = false;
     public $isModalOpen = false;
     public $isModalOpen2 = false;
 
@@ -43,6 +44,7 @@ class FoodMenuComponent extends Component
     public function toggleModal()
     {
         //dd('toggleModal');
+        // $this->showModal = true;
         $this->isModalOpen = !$this->isModalOpen;
         $this->isModalOpen2 = !$this->isModalOpen2;
     }
@@ -52,8 +54,8 @@ class FoodMenuComponent extends Component
     {
         $this->isLoading = true;
         $this->product = Product::with('sizes', 'options')->findOrFail($id);
-        $this->isLoading = false;
-        $this->isModalOpen = true;
+        $this->isLoading = false;        
+        $this->showModal = true;
     }
 
     public function addToCart($id, $count, $summa, $sizeId, $sizeName, $sizePrice, $checkedOptions)
@@ -118,12 +120,10 @@ class FoodMenuComponent extends Component
                     'weight' => $summa,
                     'options' => $options,
                 ]);
-                //$this->closeModal = true;
-                //$this->dispatch('cart-updated');
-                //session()->flash('success', __('Product has been added to cart!'));
-                $this->dispatch('close-modal');
-                //$this->dispatch('clear-options');
                 $this->dispatch('Product_added_to_cart');
+
+                $this->showModal = false;
+                
                 toastr()->success(__('Product has been added to cart!'));
             } catch (\Exception $e) {
                 //toastr()->error(__('Something went worng!'));

@@ -33,23 +33,52 @@
          @keydown.escape.window="isModalOpen = false"
 >
 
+
     <!-- CART POPUT START -->
     <div class="fp__cart_popup">
+        <div x-show="showModal" class="modal-backdrop" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);"></div>
+        <div class="loader loader--style6 preloader" wire:loading.delay>
+            {{--     wire:loading.delay--}}
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                     width="24px" height="30px" viewBox="0 0 24 30" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                <rect x="0" y="13" width="4" height="5" fill="#333">
+                    <animate attributeName="height" attributeType="XML"
+                             values="5;21;5"
+                             begin="0s" dur="0.6s" repeatCount="indefinite" />
+                    <animate attributeName="y" attributeType="XML"
+                             values="13; 5; 13"
+                             begin="0s" dur="0.6s" repeatCount="indefinite" />
+                </rect>
+                    <rect x="10" y="13" width="4" height="5" fill="#333">
+                        <animate attributeName="height" attributeType="XML"
+                                 values="5;21;5"
+                                 begin="0.15s" dur="0.6s" repeatCount="indefinite" />
+                        <animate attributeName="y" attributeType="XML"
+                                 values="13; 5; 13"
+                                 begin="0.15s" dur="0.6s" repeatCount="indefinite" />
+                    </rect>
+                    <rect x="20" y="13" width="4" height="5" fill="#333">
+                        <animate attributeName="height" attributeType="XML"
+                                 values="5;21;5"
+                                 begin="0.3s" dur="0.6s" repeatCount="indefinite" />
+                        <animate attributeName="y" attributeType="XML"
+                                 values="13; 5; 13"
+                                 begin="0.3s" dur="0.6s" repeatCount="indefinite" />
+                    </rect>
+              </svg>
+        </div>
         <div x-show="showModal" x-transition:enter="transition ease-out duration-300"
              x-transition:enter-start="opacity-0 transform scale-90"
              x-transition:enter-end="opacity-100 transform scale-100"
              x-transition:leave="transition ease-in duration-300"
              x-transition:leave-start="opacity-100 transform scale-100"
              x-transition:leave-end="opacity-0 transform scale-90"
-             class="modal fade show" tabindex="-1" aria-hidden="true"
-             @if($closeModal)
-             style="display: block;"
-             @else
-             style="display: none;"
-             @endif
+             class="modal fade" tabindex="-1" aria-hidden="true"
+             :class="{ 'show': showModal }" 
+             :style="{ 'display': showModal ? 'block' : 'none' }"             
              @click.away="showModal = false"
              @keydown.escape.window="showModal = false">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog-centered" wire:loading.remove>
                 <div class="modal-content">
                     <div class="modal-body">
                         <button type="button" class="btn-close" @click="showModal = false"><i class="fal fa-times"></i></button>
@@ -170,7 +199,7 @@
     </div>
     <!-- CART POPUT END -->
 
-    @include('components.layouts.preloader')
+    {{-- @include('components.layouts.preloader') --}}
     <div class="container">
         <div class="row wow fadeInUp" data-wow-duration="1s">
             <div class="col-md-8 col-lg-7 col-xl-6 m-auto text-center">
@@ -242,14 +271,13 @@
         
         <div class="mt-3">
             <button wire:click="toggleModal">Открыть модальное окно</button>
-            <div x-show="isModalOpen2" class="fade show" tabindex="-1" aria-hidden="true"
+            <div x-show="isModalOpen2" class="modal fade" tabindex="-1" aria-hidden="true"
                  x-transition:enter="transition ease-out duration-300"
                  x-transition:enter-start="opacity-0 transform scale-90"
                  x-transition:enter-end="opacity-100 transform scale-100"
                  x-transition:leave="transition ease-in duration-300"
                  x-transition:leave-start="opacity-100 transform scale-100"
                  x-transition:leave-end="opacity-0 transform scale-90"
-                 style="display: none;" 
                  
                  @click.away="isModalOpen2 = false"
                  @keydown.escape.window="isModalOpen2 = false">
@@ -273,10 +301,11 @@
         
     @endpush
     <style>
-        .modal {
-            z-index: 2050;
+        
+        .show{
+            display: block !important;
+            background-color: 
         }
-
         .toast {
             z-index: 849;
         }
