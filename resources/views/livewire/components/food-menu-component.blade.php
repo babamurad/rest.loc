@@ -67,18 +67,13 @@
                     </rect>
               </svg>
         </div>
-        <div x-show="showModal" x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0 transform scale-90"
-             x-transition:enter-end="opacity-100 transform scale-100"
-             x-transition:leave="transition ease-in duration-300"
-             x-transition:leave-start="opacity-100 transform scale-100"
-             x-transition:leave-end="opacity-0 transform scale-90"
+        <div x-show="showModal" 
              class="modal fade" tabindex="-1" aria-hidden="true"
              :class="{ 'show': showModal }" 
              :style="{ 'display': showModal ? 'block' : 'none' }"             
              @click.away="showModal = false"
              @keydown.escape.window="showModal = false">
-            <div class="modal-dialog modal-dialog-centered" wire:loading.remove>
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body">
                         <button type="button" class="btn-close" @click="showModal = false"><i class="fal fa-times"></i></button>
@@ -266,32 +261,7 @@
                     </div>
                 </div>
             @endforeach
-        </div>
-
-        
-        <div class="mt-3">
-            <button wire:click="toggleModal">Открыть модальное окно</button>
-            <div x-show="isModalOpen2" class="modal fade" tabindex="-1" aria-hidden="true"
-                 x-transition:enter="transition ease-out duration-300"
-                 x-transition:enter-start="opacity-0 transform scale-90"
-                 x-transition:enter-end="opacity-100 transform scale-100"
-                 x-transition:leave="transition ease-in duration-300"
-                 x-transition:leave-start="opacity-100 transform scale-100"
-                 x-transition:leave-end="opacity-0 transform scale-90"
-                 
-                 @click.away="isModalOpen2 = false"
-                 @keydown.escape.window="isModalOpen2 = false">
-                <div class="modal-dialog modal-dialog-centered">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <button type="button" class="btn-close" @click="isModalOpen2 = false"><i class="fal fa-times"></i></button>
-                            <!-- Ваше содержимое модального окна -->
-                            <p>Содержимое модального окна</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>       
+        </div>      
 
     </div>
 

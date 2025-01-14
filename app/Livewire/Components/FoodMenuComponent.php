@@ -51,11 +51,12 @@ class FoodMenuComponent extends Component
 
     #[On('show-product-details')]
     public function getProduct($id)
-    {
+    {        
         $this->isLoading = true;
         $this->product = Product::with('sizes', 'options')->findOrFail($id);
-        $this->isLoading = false;        
+        $this->isLoading = false; 
         $this->showModal = true;
+        //dd($this->showModal);  
     }
 
     public function addToCart($id, $count, $summa, $sizeId, $sizeName, $sizePrice, $checkedOptions)

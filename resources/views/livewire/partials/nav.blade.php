@@ -1,13 +1,13 @@
 <nav class="navbar navbar-expand-lg main_menu">
-    <div class="container">
+    <div class="container" x-data="{ isOpen: false }">
         <a class="navbar-brand" href="/">
             <img src="{{ asset('assets/images/logo.png') }}" alt="FoodPark" class="img-fluid">
         </a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" @click="isOpen = !isOpen"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <i class="far fa-bars"></i>
         </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
+        <div class="collapse navbar-collapse" id="navbarNav"  :class="{ 'show': isOpen }">
             <ul class="navbar-nav m-auto">
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" aria-current="page" href="/">Home</a>
@@ -86,3 +86,4 @@
         </div>
     </div>
 </nav>
+
