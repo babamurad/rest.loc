@@ -7,9 +7,7 @@
              summa : 0,
              count : 1,
              sizeId: 0,
-             showModal: false,
-             isModalOpen: @entangle('isModalOpen'),
-             isModalOpen2: @entangle('isModalOpen2'),
+             showModal: @entangle('showModal'),
              getTotalOptionPrice() {
                 let totalOptionPrice = 0;
                 for (const option of this.checkedOptions) {
@@ -160,12 +158,12 @@
                                     <li>
                                         @if($product->quantity > 0)
                                         <button class="common_btn"
-                                                @if($closeModal)
+                                                @if(!$showModal)
                                                 data-bs-dismiss="modal"
                                                 aria-label="Close"
                                                 @endif
                                                 wire:click="addToCart('{{ $product->id }}', count, summa, selectedSize.id, selectedSize.name, selectedSize.price, checkedOptionsId)"
-                                                wire:loading.attr="disabled"
+                                                {{-- wire:loading.attr="disabled" --}}
                                         >
                                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" wire:loading></span>
                                             <span class="text-white" wire:loading.remove>add to cart</span>
@@ -178,7 +176,9 @@
                                                 <span class="text-white" wire:loading>Loading...</span>
                                             </button>
                                         @endif
-
+                                    </li>
+                                    <li>
+                                        <button class="btn common_btn btn-secondary" @click="showModal=false">Close</button>
                                     </li>
                                 </ul>
                             </div>

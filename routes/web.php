@@ -13,6 +13,9 @@ use App\Livewire\Admin\Coupon\CouponIndexComponent;
 use App\Livewire\Admin\DailyOffer\DailyOfferCreateComponent;
 use App\Livewire\Admin\DailyOffer\DailyOfferEditComponent;
 use App\Livewire\Admin\DailyOffer\DailyOfferIndexComponent;
+use App\Livewire\Admin\Banner\BannerIndex;
+use App\Livewire\Admin\Banner\BannerCreate;
+use App\Livewire\Admin\Banner\BannerEdit;
 use App\Livewire\Admin\Delivery\DeliveryAreaComponent;
 use App\Livewire\Admin\Delivery\DeliveryAreaCreate;
 use App\Livewire\Admin\Delivery\DeliveryAreaEdit;
@@ -87,6 +90,10 @@ Route::middleware(['auth', 'admin:admin', 'track-activity'])->prefix('admin')->g
     Route::get('daily-offer', DailyOfferIndexComponent::class)->name('admin.daily');
     Route::get('daily-offer/create', DailyOfferCreateComponent::class)->name('admin.daily-offer.create');
     Route::get('daily-offer/edit/{id}', DailyOfferEditComponent::class)->name('admin.daily-offer.edit');
+
+    Route::get('banner', BannerIndex::class)->name('admin.banner');
+    Route::get('banner/create', BannerCreate::class)->name('admin.banner.create');
+    Route::get('banner/edit/{id}', BannerEdit::class)->name('admin.banner.edit');
 
     Route::get('why-choose-us', WhyChooseUsComponent::class)->name('admin.why-choose-us');
     Route::get('wcu-create', \App\Livewire\Admin\WhyChooseUs\CreateComponent::class)->name('admin.wcu-create');
