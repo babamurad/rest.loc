@@ -28,23 +28,23 @@
                         </thead>
                         <tbody>
                         @if($banners)
-                            {{-- @foreach ($banners as $banner)
+                            @foreach ($banners as $banner)
                                 <tr>
                                     <th scope="row">{{ $loop->index + 1 }}</th>
                                     <td style="width: 20%;">
-                                        <img src="{{ asset($dailyOffer->product->thumb_image) }}" alt="{{$dailyOffer->product->name}}" style="width: 48px;">
+                                        <img src="{{ asset($banner->image) }}" alt="{{ $banner->title }}" style="width: 48px;">
                                     </td>
                                     <td>
-                                        {{ ucfirst($dailyOffer->product->name)  }}
+                                        {{ ucfirst($banner->title)  }}
                                     </td>
 
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="agree{{ $dailyOffer->id }}" wire:click="ActInact({{ $dailyOffer->id }})"
-                                                @if($dailyOffer->status) checked @endif>
-                                                <label class="custom-control-label" for="agree{{ $dailyOffer->id }}" >
-                                                @if ($dailyOffer->status)
+                                                <input type="checkbox" class="custom-control-input" id="agree{{ $banner->id }}" wire:click="ActInact({{ $banner->id }})"
+                                                @if($banner->status) checked @endif>
+                                                <label class="custom-control-label" for="agree{{ $banner->id }}" >
+                                                @if ($banner->status)
                                                 <span class="badge badge-success">Active</span>
                                                 @else
                                                 <span class="badge badge-danger">Inactive</span>
@@ -55,12 +55,12 @@
                                     </td>
 
                                     <td class="text-left" style="width: 6%;">
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#ConfirmDelete" wire:click="getDelId({{ $dailyOffer->id }})">
+                                        <button class="btn btn-danger" data-toggle="modal" data-target="#ConfirmDelete" wire:click="getDelId({{ $banner->id }})">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </td>
                                 </tr>
-                            @endforeach --}}
+                            @endforeach
                         @endif
                         </tbody>
                     </table>
