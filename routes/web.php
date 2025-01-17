@@ -10,6 +10,12 @@ use App\Livewire\Admin\Category\CategoryIndexComponent;
 use App\Livewire\Admin\Coupon\CouponCreateComponent;
 use App\Livewire\Admin\Coupon\CouponEditComponent;
 use App\Livewire\Admin\Coupon\CouponIndexComponent;
+use App\Livewire\Admin\DailyOffer\DailyOfferCreateComponent;
+use App\Livewire\Admin\DailyOffer\DailyOfferEditComponent;
+use App\Livewire\Admin\DailyOffer\DailyOfferIndexComponent;
+use App\Livewire\Admin\Banner\BannerIndex;
+use App\Livewire\Admin\Banner\BannerCreate;
+use App\Livewire\Admin\Banner\BannerEdit;
 use App\Livewire\Admin\Delivery\DeliveryAreaComponent;
 use App\Livewire\Admin\Delivery\DeliveryAreaCreate;
 use App\Livewire\Admin\Delivery\DeliveryAreaEdit;
@@ -69,7 +75,7 @@ Route::middleware(['auth', 'track-activity'])->group(function () {
     Route::get('logout', LogoutComponent::class)->name('logout');
     Route::get('checkout', CheckOutComponent::class)->name('checkout');
     Route::get('payment', PaymentComponent::class)->name('payment');
-    Route::get('messages', MessageComponent::class)->name('messages');
+
 });
 
 
@@ -80,6 +86,14 @@ Route::middleware(['auth', 'admin:admin', 'track-activity'])->prefix('admin')->g
     Route::get('slider', SliderComponent::class)->name('admin.slider');
     Route::get('slider/create', CreateComponent::class)->name('admin.slider.create');
     Route::get('slider/edit/{id}', EditSliderComponent::class)->name('admin.slider.edit');
+
+    Route::get('daily-offer', DailyOfferIndexComponent::class)->name('admin.daily');
+    Route::get('daily-offer/create', DailyOfferCreateComponent::class)->name('admin.daily-offer.create');
+    Route::get('daily-offer/edit/{id}', DailyOfferEditComponent::class)->name('admin.daily-offer.edit');
+
+    Route::get('banner', BannerIndex::class)->name('admin.banner');
+    Route::get('banner/create', BannerCreate::class)->name('admin.banner.create');
+    Route::get('banner/edit/{id}', BannerEdit::class)->name('admin.banner.edit');
 
     Route::get('why-choose-us', WhyChooseUsComponent::class)->name('admin.why-choose-us');
     Route::get('wcu-create', \App\Livewire\Admin\WhyChooseUs\CreateComponent::class)->name('admin.wcu-create');
@@ -103,8 +117,8 @@ Route::middleware(['auth', 'admin:admin', 'track-activity'])->prefix('admin')->g
     Route::get('delivery-area/create', DeliveryAreaCreate::class)->name('admin.delivery-area.create');
     Route::get('delivery-area/edit/{id}', DeliveryAreaEdit::class)->name('admin.delivery-area.edit');
 
-    Route::get('chat', AdminChatComponent::class)->name('admin.chat');
-    Route::get('chat/{id}', AdminChatConversation::class)->name('admin.chat.user');
+    Route::get('chat/{id?}', AdminChatComponent::class)->name('admin.chat');
+    Route::get('chat/user/{id}', AdminChatConversation::class)->name('admin.chat.user');
 
     Route::get('payment-settings', PaymentGatewaySettingComponent::class)->name('admin.payment-settings');
 

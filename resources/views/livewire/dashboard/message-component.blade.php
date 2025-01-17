@@ -11,9 +11,28 @@
             }
         }
 
+        // Наблюдаем за изменениями видимости элемента
+        const observer = new MutationObserver((mutations) => {
+            mutations.forEach((mutation) => {
+                if (mutation.target.classList.contains('active') && 
+                    mutation.target.classList.contains('show')) {
+                    scrollToBottom();
+                }
+            });
+        });
+
+        // Находим элемент вкладки сообщений
+        const messageTab = document.querySelector('[x-show="activeTab === \'messages\'"]');
+        if (messageTab) {
+            observer.observe(messageTab, {
+                attributes: true,
+                attributeFilter: ['class']
+            });
+        }
+
+        // Существующие обработчики
         scrollToBottom();
 
-        // Прослушивание события после отправки сообщения
         Livewire.on('messageSent', () => {
             scrollToBottom();
         });

@@ -5,8 +5,10 @@
         // Enable pusher logging - don't include this in production
         //Pusher.logToConsole = true;
 
-        let soundInitialized = false;
+            
+        let soundInitialized2 = false;
         const notificationSound = new Audio('/sounds/multimedia-message-arrival-sound.mp3');
+        const notificationSound2 = new Audio('/sounds/notification-sound-for-messenger-messages.mp3');
 
         // Инициализация при первой загрузке
         document.addEventListener('DOMContentLoaded', initializeSoundState);
@@ -109,6 +111,76 @@
                 console.error('Ошибка при обработке уведомления:', error);
             }
         });
+
+        // Добавляем подписку на канал сообщений
+        var messageChannel = pusher.subscribe('message-sent');
+
+        messageChannel.bind('message-event', function(data) {
+            try {
+                if (!data || !data.message || !data.sender_id || !data.created_at) {
+                    console.error('Получены некорректные данные сообщения');
+                    return;
+                }
+
+                // Воспроизводим звук уведомления
+                notificationSound2.play().catch(function(error) {
+                    console.log('Ошибка воспроизведения звука:', error);
+                });
+
+                function formatDate(dateString) {
+                    const date = new Date(dateString);
+                    const now = new Date();
+                    const diffInMs = now - date;
+
+                    const seconds = Math.floor(diffInMs / 1000);
+                    const minutes = Math.floor(seconds / 60);
+                    const hours = Math.floor(minutes / 60);
+                    const days = Math.floor(hours / 24);
+
+                    if (days > 0) {
+                        return `${days} д. назад`;
+                    } else if (hours > 0) {
+                        return `${hours} ч. назад`;
+                    } else if (minutes > 0) {
+                        return `${minutes} мин. назад`;
+                    } else {
+                        return 'только что';
+                    }
+                }
+
+                const formattedDate = formatDate(data.created_at);
+
+                var messageHtml = `
+                <a href="#" class="dropdown-item dropdown-item-unread">
+                    <div class="dropdown-item-avatar">
+                        <img alt="image" src="/avatar/${data.sender_id}" class="rounded-circle">
+                        <div class="is-online"></div>
+                    </div>
+                    <div class="dropdown-item-desc">
+                        <b>Новое сообщение</b>
+                        <p>${data.message}</p>
+                        <div class="time">${formattedDate}</div>
+                    </div>
+                </a>
+                `;
+
+                // Добавляем сообщение в начало списка
+                const messageContainer = document.querySelector('.dropdown-list-message');
+                if (messageContainer) {
+                    messageContainer.insertAdjacentHTML('afterbegin', messageHtml);
+                }
+
+                // Добавляем класс beep
+                const messageIcon = document.getElementById('message-icon');                
+                messageIcon.classList.add('beep');
+
+                // Обновляем Livewire компонент
+                Livewire.dispatch('refresh');
+
+            } catch (error) {
+                console.error('Ошибка при обработке сообщения:', error);
+            }
+        });
     </script>
 
     <form class="form-inline mr-auto">
@@ -122,6 +194,35 @@
 
     <ul class="navbar-nav navbar-right">
 
+        <li class="dropdown dropdown-list-toggle"><a id="message-icon" href="#" data-toggle="dropdown" 
+            class="nav-link nav-link-lg message-toggle {{ count($chatUsers) > 0 ? 'beep' : '' }}">
+            <i class="far fa-envelope"></i></a>
+            <div class="dropdown-menu dropdown-list dropdown-menu-right">
+              <div class="dropdown-header">Messages
+                <div class="float-right">
+                  <a href="#">Mark All As Read</a>
+                </div>
+              </div>
+              <div class="dropdown-list-content dropdown-list-message">
+                @foreach ($chatUsers as $chatUser)
+                <a href="{{ route('admin.chat', $chatUser->id) }}" class="dropdown-item dropdown-item-unread">
+                  <div class="dropdown-item-avatar">
+                    <img alt="image" src="{{ asset($chatUser->avatar) }}" class="rounded-circle">
+                    <div class="is-online"></div>
+                  </div>
+                  <div class="dropdown-item-desc">
+                    <b>{{ ucfirst($chatUser->name) }}</b>
+                    <p>{{ $chatUser->unread_messages }} unread messages</p>
+                    <div class="time">{{ $this->getFormattedDate($chatUser->chats_max_created_at) }}</div>
+                  </div>
+                </a>
+                @endforeach
+              </div>
+              <div class="dropdown-footer text-center">
+                <a href="#">View All <i class="fas fa-chevron-right"></i></a>
+              </div>
+            </div>
+          </li>
         <li class="dropdown dropdown-list-toggle">
         <a id="bell" href="#" data-toggle="dropdown" class="nav-link notification-toggle nav-link-lg {{ count($messages) > 0 ? 'beep' : '' }}">
         <i class="far fa-bell"></i></a>

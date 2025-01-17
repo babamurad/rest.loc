@@ -43,4 +43,18 @@ class Product extends Model
     {
         return $this->hasMany(ProductOption::class);
     }
+
+    public function getDiscountPercentAttribute()
+    {
+        if ($this->price > 0) {
+            return number_format(($this->price - $this->offer_price) * 100 / $this->price, 0);
+        } else {
+            return 0;
+        }
+    }
+
+    public function dailyoffer()
+    {
+        return $this->hasOne(DailyOffer::class);
+    }
 }

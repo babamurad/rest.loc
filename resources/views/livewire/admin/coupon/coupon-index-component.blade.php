@@ -8,7 +8,7 @@
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>{{ __('Categories list') }}</h4>
+                    <h4>{{ __('Coupons list') }}</h4>
                     <div class="card-header-action">
                         <a href="{{ route('admin.coupon.create') }}" class="btn btn-primary">
                             Create New

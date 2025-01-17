@@ -68,31 +68,36 @@ class AdminChatComponent extends Component
         ]);
     }
 
-    public function mount()
+    public function mount($id = null)
     {
-        $firstUser = User::where('id', '!=', Auth::user()->id)
-            ->whereHas('chats', function($query) {
-                $query->where('receiver_id', Auth::user()->id);
-            })
-            ->first();
+        if ($id) {
+            $this->senderId = $id;
+        } else {
+            $firstUser = User::where('id', '!=', Auth::user()->id)
+                ->whereHas('chats', function($query) {
+                    $query->where('receiver_id', Auth::user()->id);
+                })
+                ->first();
 
-        if (!$firstUser) {
-            Log::info('Нет пользователей с сообщениями');
-            return;
+            if (!$firstUser) {
+                Log::info('Нет пользователей с сообщениями');
+                return;
+            }
+            
+            $this->senderId = $firstUser->id;
+            $this->senderName = $firstUser->name;
+
+            $this->chats = Chat::where(function($query) {
+                $query->where('sender_id', Auth::id())
+                    ->where('receiver_id', $this->senderId);
+            })->orWhere(function($query) {
+                $query->where('sender_id', $this->senderId)
+                    ->where('receiver_id', Auth::id());
+            })->orderBy('created_at', 'asc')->get();
+            
         }
-
-        $this->senderId = $firstUser->id;
-        $this->senderName = $firstUser->name;
-
-        // Загружаем сообщения
-        $this->chats = Chat::where(function($query) {
-            $query->where('sender_id', Auth::id())
-                ->where('receiver_id', $this->senderId);
-        })->orWhere(function($query) {
-            $query->where('sender_id', $this->senderId)
-                ->where('receiver_id', Auth::id());
-        })->orderBy('created_at', 'asc')->get();
-
+        
+        $this->setSenderId($this->senderId);
     }
 
     public function setSenderId($id)
@@ -130,10 +135,7 @@ class AdminChatComponent extends Component
             'message' => $this->message,
         ]);
 
-         // Используем существующий MessageSent event
-         //event(new MessageSent($this->message));
-
-         $options = array(
+        $options = array(
             'cluster' => env('PUSHER_APP_CLUSTER'),
             'encrypted' => true
         );
@@ -145,12 +147,17 @@ class AdminChatComponent extends Component
             $options
         );
         
-        $pusher->trigger('message-sent', 'message-event', [
+        $data = [
             'message' => $this->message,
             'sender_id' => Auth::user()->id,
             'receiver_id' => $this->senderId,
             'created_at' => $chat->created_at,
-        ]);
+        ];
+        
+        $pusher->trigger('message-sent', 'message-event', $data);
+
+        // Добавляем диспетчеризацию события для обновления иконки
+        $this->dispatch('message-sent', $data)->to('partials.message-icon');
 
         $this->chats = Chat::where(function($query) {
             $query->where('sender_id', Auth::id())

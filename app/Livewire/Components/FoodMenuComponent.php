@@ -8,6 +8,7 @@ use App\Models\ProductOption;
 use App\Models\ProductSize;
 use Cart;
 use App\Models\Setting;
+use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\Attributes\Renderless;
 
@@ -17,6 +18,9 @@ class FoodMenuComponent extends Component
     public $isLoading = false;
     public $closeModal = false;
     public $totalSummary = 0;
+    public $showModal = false;
+    public $isModalOpen = false;
+    public $isModalOpen2 = false;
 
     public function render()
     {
@@ -37,15 +41,22 @@ class FoodMenuComponent extends Component
         $this->product = Product::with('sizes', 'options')->first();
     }
 
-    public function getProduct($id)
+    public function toggleModal()
     {
-        $this->dispatch('loading-product');
+        //dd('toggleModal');
+        // $this->showModal = true;
+        $this->isModalOpen = !$this->isModalOpen;
+        $this->isModalOpen2 = !$this->isModalOpen2;
+    }
+
+    #[On('show-product-details')]
+    public function getProduct($id)
+    {        
         $this->isLoading = true;
         $this->product = Product::with('sizes', 'options')->findOrFail($id);
-        $this->isLoading = false;
-        $this->closeModal = false;
-        $this->dispatch('product-loaded');
-        $this->dispatch('show-modal');
+        $this->isLoading = false; 
+        $this->showModal = true;
+        //dd($this->showModal);  
     }
 
     public function addToCart($id, $count, $summa, $sizeId, $sizeName, $sizePrice, $checkedOptions)
@@ -110,12 +121,10 @@ class FoodMenuComponent extends Component
                     'weight' => $summa,
                     'options' => $options,
                 ]);
-                //$this->closeModal = true;
-                //$this->dispatch('cart-updated');
-                //session()->flash('success', __('Product has been added to cart!'));
-                $this->dispatch('close-modal');
-                //$this->dispatch('clear-options');
                 $this->dispatch('Product_added_to_cart');
+
+                $this->showModal = false;
+                
                 toastr()->success(__('Product has been added to cart!'));
             } catch (\Exception $e) {
                 //toastr()->error(__('Something went worng!'));

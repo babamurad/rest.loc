@@ -7,18 +7,18 @@
              summa : 0,
              count : 1,
              sizeId: 0,
+             showModal: @entangle('showModal'),
              getTotalOptionPrice() {
-            // Calculate the total price of selected options
-            let totalOptionPrice = 0;
-            for (const option of this.checkedOptions) {
-              totalOptionPrice += parseFloat(option); // Ensure number conversion
-            }
-            return totalOptionPrice;
-            },
-            resetOptions() {
-            this.checkedOptions = [];
-            },
-            resetVariables() {
+                let totalOptionPrice = 0;
+                for (const option of this.checkedOptions) {
+                    totalOptionPrice += parseFloat(option);
+                }
+                return totalOptionPrice;
+             },
+             resetOptions() {
+                this.checkedOptions = [];
+             },
+             resetVariables() {
                  this.totalSummary = 0;
                  this.selectedSize = { id: null, name: '', price: 0 };
                  this.checkedOptions = [];
@@ -27,20 +27,54 @@
                  this.count = 1;
              }
          }"
-         @shown.bs.modal="resetVariables()"
+         @shown.bs.modal="resetVariables()",
+         @keydown.escape.window="isModalOpen = false"
 >
+
 
     <!-- CART POPUT START -->
     <div class="fp__cart_popup">
-        <div wire:ignore.self class="modal fade"
-             id="cartModal" tabindex="-1" aria-hidden="true"
-             wire:loading.class="d-none"
-             wire:target="getProduct">
+        <div x-show="showModal" class="modal-backdrop" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);"></div>
+        <div class="loader loader--style6 preloader" wire:loading.delay>
+            {{--     wire:loading.delay--}}
+                <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                     width="24px" height="30px" viewBox="0 0 24 30" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+                <rect x="0" y="13" width="4" height="5" fill="#333">
+                    <animate attributeName="height" attributeType="XML"
+                             values="5;21;5"
+                             begin="0s" dur="0.6s" repeatCount="indefinite" />
+                    <animate attributeName="y" attributeType="XML"
+                             values="13; 5; 13"
+                             begin="0s" dur="0.6s" repeatCount="indefinite" />
+                </rect>
+                    <rect x="10" y="13" width="4" height="5" fill="#333">
+                        <animate attributeName="height" attributeType="XML"
+                                 values="5;21;5"
+                                 begin="0.15s" dur="0.6s" repeatCount="indefinite" />
+                        <animate attributeName="y" attributeType="XML"
+                                 values="13; 5; 13"
+                                 begin="0.15s" dur="0.6s" repeatCount="indefinite" />
+                    </rect>
+                    <rect x="20" y="13" width="4" height="5" fill="#333">
+                        <animate attributeName="height" attributeType="XML"
+                                 values="5;21;5"
+                                 begin="0.3s" dur="0.6s" repeatCount="indefinite" />
+                        <animate attributeName="y" attributeType="XML"
+                                 values="13; 5; 13"
+                                 begin="0.3s" dur="0.6s" repeatCount="indefinite" />
+                    </rect>
+              </svg>
+        </div>
+        <div x-show="showModal" 
+             class="modal fade" tabindex="-1" aria-hidden="true"
+             :class="{ 'show': showModal }" 
+             :style="{ 'display': showModal ? 'block' : 'none' }"             
+             @click.away="showModal = false"
+             @keydown.escape.window="showModal = false">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-body">
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"><i
-                                class="fal fa-times"></i></button>
+                        <button type="button" class="btn-close" @click="showModal = false"><i class="fal fa-times"></i></button>
                         @if($product)
                             <div class="fp__cart_popup_img">
                                 <img src="{{ $product->thumb_image }}" alt="{{ $product->name }}" class="img-fluid w-100">
@@ -124,12 +158,12 @@
                                     <li>
                                         @if($product->quantity > 0)
                                         <button class="common_btn"
-                                                @if($closeModal)
+                                                @if(!$showModal)
                                                 data-bs-dismiss="modal"
                                                 aria-label="Close"
                                                 @endif
                                                 wire:click="addToCart('{{ $product->id }}', count, summa, selectedSize.id, selectedSize.name, selectedSize.price, checkedOptionsId)"
-                                                wire:loading.attr="disabled"
+                                                {{-- wire:loading.attr="disabled" --}}
                                         >
                                             <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" wire:loading></span>
                                             <span class="text-white" wire:loading.remove>add to cart</span>
@@ -142,7 +176,9 @@
                                                 <span class="text-white" wire:loading>Loading...</span>
                                             </button>
                                         @endif
-
+                                    </li>
+                                    <li>
+                                        <button class="btn common_btn btn-secondary" @click="showModal=false">Close</button>
                                     </li>
                                 </ul>
                             </div>
@@ -157,7 +193,8 @@
         </div>
     </div>
     <!-- CART POPUT END -->
-    @include('components.layouts.preloader')
+
+    {{-- @include('components.layouts.preloader') --}}
     <div class="container">
         <div class="row wow fadeInUp" data-wow-duration="1s">
             <div class="col-md-8 col-lg-7 col-xl-6 m-auto text-center">
@@ -210,13 +247,10 @@
                                     ${{ $product->price }}
                                 @endif
                             </h5>
-{{--                            wire:click="openModal({{ $product->id }})"--}}
                             <ul class="d-flex flex-wrap justify-content-center">
                                 <li><a
                                         href="javascript:;"
-                                        @click="resetVariables()"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#cartModal"
+                                        @click="resetVariables(); showModal = true"
                                         wire:click="getProduct({{ $product->id }})">
                                         <i class="fas fa-shopping-basket"></i></a>
                                 </li>
@@ -227,42 +261,21 @@
                     </div>
                 </div>
             @endforeach
-        </div>
+        </div>      
+
     </div>
 
+    
 
     @push('modal')
-        <script>
-            window.addEventListener('show-modal', event => {
-                $('#cartModal').modal('show');
-            });
-            window.addEventListener('close-modal', event => {
-                $('#cartModal').modal('hide');
-                this.selectedSize = { id: null, name: '', price: 0 };
-                this.checkedOptions = [];
-                this.checkedOptionsId = [];
-                this.totalOptionPrice = 0;
-                this.summa = 0;
-                this.count = 1;
-                this.totalSummary = 0;
-            });
-
-/*            window.addEventListener('error_message', event => {
-                toastr.error('Something went wrong!');
-            });*/
-            /*document.addEventListener('DOMContentLoaded', function () {
-                window.addEventListener('show-modal', event => {
-                    const modalElement = new bootstrap.Modal(document.getElementById('cartModal'));
-                    modalElement.show();
-                });
-            });*/
-        </script>
+        
     @endpush
     <style>
-        .modal {
-            z-index: 2050;
+        
+        .show{
+            display: block !important;
+            background-color: 
         }
-
         .toast {
             z-index: 849;
         }

@@ -68,21 +68,6 @@
                                                         </div>
                                                         <div class="col-md-6 col-lg-12 col-xl-6">
                                                             <div class="fp__check_single_form">
-                                                                <input type="text" placeholder="Last Name" class="@error('last_name') is-invalid @enderror" wire:model="last_name">
-                                                                @error('last_name') <div class="invalid-feedback">{{$message}}</div> @enderror
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-6 col-lg-12 col-xl-6">
-                                                            <div class="fp__check_single_form">
-                                                                <input type="email" placeholder="Email *" class="@error('email') is-invalid @enderror" wire:model="email">
-                                                                @error('email') <div class="invalid-feedback">{{$message}}</div> @enderror
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-6 col-lg-12 col-xl-6">
-                                                            <div class="fp__check_single_form">
                                                                 <input type="text" placeholder="Phone" class="@error('phone') is-invalid @enderror" wire:model="phone">
                                                                 @error('phone') <div class="invalid-feedback">{{$message}}</div> @enderror
                                                             </div>

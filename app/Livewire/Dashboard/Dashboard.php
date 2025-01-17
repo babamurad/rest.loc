@@ -86,6 +86,15 @@ class Dashboard extends Component
         $this->reset();
     }
 
+    public function updateUnreadCount()
+    {
+        $unreadCount = Chat::where('receiver_id', Auth::id())
+            ->where('is_read', false)
+            ->count();
+
+        $this->dispatch('unreadCountUpdated', ['count' => $unreadCount]);
+    }
+
     public function render()
     {
         $areas = DeliveryArea::where('status', 1)->orderBy('area_name', 'asc')->get();

@@ -17,8 +17,11 @@
     <link rel="stylesheet" href="{{ asset('admin/assets/modules/weather-icon/css/weather-icons-wind.min.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/assets/modules/summernote/summernote-bs4.css') }}">--}}
 
+    <script src="{{ asset('admin/assets/modules/jquery.min.js') }}"></script>
+
     @stack('toast-css')
     @stack('tab-css')
+    @stack('select2-css')
     <!-- Template CSS -->
     <link rel="stylesheet" href="{{ asset('admin/assets/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('admin/assets/css/components.css') }}">
@@ -64,12 +67,11 @@
 </div>
 
 <!-- General JS Scripts -->
-<script src="{{ asset('admin/assets/modules/jquery.min.js') }}"></script>
 <script src="{{ asset('admin/assets/modules/popper.js') }}"></script>
 <script src="{{ asset('admin/assets/modules/tooltip.js') }}"></script>
 <script src="{{ asset('admin/assets/modules/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('admin/assets/modules/nicescroll/jquery.nicescroll.min.js') }}"></script>
-{{-- <script src="{{ asset('admin/assets/modules/moment.min.js') }}"></script> --}}
+<script src="{{ asset('admin/assets/modules/moment.min.js') }}"></script>
 <script src="{{ asset('admin/assets/js/stisla.js') }}"></script>
 
 @stack('scripts')
@@ -116,5 +118,6 @@
         @endif
     </script>
 @stack('summernote-js')
+@stack('select2-js')
 </body>
 </html>

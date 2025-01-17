@@ -1,7 +1,7 @@
 <div class="main-sidebar sidebar-style-2">
     <aside id="sidebar-wrapper">
         <div class="sidebar-brand">
-            <a href="/" target="_blank">Datly</a>
+            <a href="/" target="_blank">Stisla</a>
         </div>
         <div class="sidebar-brand sidebar-brand-sm">
             <a href="/" target="_blank">St</a>
@@ -14,9 +14,6 @@
             <li class="menu-header">Starter</li>
             <li  class="{{ request()->is('admin/slider') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.slider') }}" wire:navigate><i class="fas fa-images"></i> <span>Slider</span></a>
-            </li>
-            <li  class="{{ request()->is('admin/why-choose-us') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.why-choose-us') }}" wire:navigate><i class="fas fa-clipboard-check"></i> <span>Why choose us</span></a>
             </li>
 
             <li class="dropdown">
@@ -45,6 +42,21 @@
 
             <li  class="{{ request()->is('admin/chat') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.chat') }}" wire:navigate><i class="fas fa-comments"></i> <span>Messages</span></a>
+            </li>
+
+            <li class="dropdown">
+                <a href="#" class="nav-link has-dropdown" data-toggle="dropdown"><i class="fas fa-columns"></i> <span>Sections</span></a>
+                <ul class="dropdown-menu">
+                    <li  class="{{ request()->is('admin/daily') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.daily') }}" wire:navigate><i class="fas fa-images"></i> <span>{{ __('Daily Offer') }}</span></a>
+                    </li>
+                    <li  class="{{ request()->is('admin/why-choose-us') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.why-choose-us') }}" wire:navigate><i class="fas fa-clipboard-check"></i> <span>{{ __('Why choose us') }}</span></a>
+                    </li>
+                    <li  class="{{ request()->is('admin/banner') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.banner') }}" wire:navigate><i class="fas fa-clipboard-check"></i> <span>{{ __('Banner') }}</span></a>
+                    </li>
+                </ul>
             </li>
 
             <li  class="{{ request()->is('admin/setting') ? 'active' : '' }}">

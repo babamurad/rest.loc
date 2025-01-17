@@ -48,26 +48,32 @@
             <div class="col-12 col-sm-6 col-lg-6">
                 <div class="card chat-box" id="mychatbox">
                     <div class="card-header">
-                        <h4>Chat with {{ $senderName }}</h4>
+                        <h4>Chat with <strong class="text-primary">{{ $senderName }}</strong></h4>
                     </div>
                     <div class="card-body chat-content" id="chatContent" tabindex="2" style="height: 34rem;">
-                        @foreach($chats as $chat)
-                            @if($chat->sender_id == Auth::user()->id)
-                            <div class="chat-item chat-left" style=""><img src="{{ asset(auth()->user()->avatar) }}">
-                                <div class="chat-details">
-                                    <div class="chat-text">{{ $chat->message }}</div>
-                                    <div class="chat-time">{{ \Carbon\Carbon::create($chat->created_at)->format('F d, Y H:i') }}</div>
+                        @if($chats && count($chats) > 0)
+                            @foreach($chats as $chat)
+                                @if($chat->sender_id == Auth::user()->id)
+                                <div class="chat-item chat-left" style=""><img src="{{ asset(auth()->user()->avatar) }}">
+                                    <div class="chat-details">
+                                        <div class="chat-text">{{ $chat->message }}</div>
+                                        <div class="chat-time">{{ \Carbon\Carbon::create($chat->created_at)->format('F d, Y H:i') }}</div>
+                                    </div>
                                 </div>
-                            </div>
-                            @else
-                            <div class="chat-item chat-right" style=""><img src="{{ asset($chat->sender->avatar) }}">
-                                <div class="chat-details">
-                                    <div class="chat-text">{{ $chat->message }}</div>
-                                    <div class="chat-time">{{ \Carbon\Carbon::create($chat->created_at)->format('F d, Y H:i') }}</div>
+                                @else
+                                <div class="chat-item chat-right" style=""><img src="{{ asset($chat->sender->avatar) }}">
+                                    <div class="chat-details">
+                                        <div class="chat-text">{{ $chat->message }}</div>
+                                        <div class="chat-time">{{ \Carbon\Carbon::create($chat->created_at)->format('F d, Y H:i') }}</div>
+                                    </div>
                                 </div>
+                                @endif
+                            @endforeach
+                        @else
+                            <div class="text-center mt-4">
+                                <p>Нет сообщений</p>
                             </div>
-                            @endif
-                        @endforeach
+                        @endif
                     </div>
                     <div class="card-footer chat-form">
                         <form id="chat-form" wire:submit.prevent="sendMessage">
