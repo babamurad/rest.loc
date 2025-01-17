@@ -56,6 +56,9 @@
                     <li  class="{{ request()->is('admin/banner') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.banner') }}" wire:navigate><i class="fas fa-clipboard-check"></i> <span>{{ __('Banner') }}</span></a>
                     </li>
+                    <li  class="{{ request()->is('admin/chef') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.chef') }}" wire:navigate><i class="fas fa-clipboard-check"></i> <span>{{ __('Chefs') }}</span></a>
+                    </li>
                 </ul>
             </li>
 

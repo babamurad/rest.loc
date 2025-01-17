@@ -16,7 +16,7 @@ class BannerIndex extends Component
     #[Layout('livewire.admin.layouts.admin-app')]
     public function render()
     {
-        $banners = Banner::paginate(10);
+        $banners = Banner::paginate(8);
 
         return view('livewire.admin.banner.banner-index', ['banners' => $banners]);
     }
@@ -30,7 +30,7 @@ class BannerIndex extends Component
     {
         Banner::findOrFail($this->delId)->delete();
         $this->dispatch('closeModal');
-        toastr()->success(__('Banner deleted successfully'));
+        toastr()->error(__('Banner deleted successfully'));
     }
 
     public function ActInact($id)

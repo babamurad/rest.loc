@@ -32,14 +32,14 @@
                         </div>
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
+                                <label>{{  __('Name') }}</label>
+                                <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="title">
+                                @error('name') <div class="invalid-feedback">{{$message}}</div> @enderror
+                            </div>
+                            <div class="form-group">
                                 <label>{{  __('Title') }}</label>
                                 <input type="text" class="form-control @error('title') is-invalid @enderror" wire:model="title">
                                 @error('title') <div class="invalid-feedback">{{$message}}</div> @enderror
-                            </div>
-                            <div class="form-group">
-                                <label>{{  __('Sub Title') }}</label>
-                                <input type="text" class="form-control @error('sub_title') is-invalid @enderror" wire:model="sub_title">
-                                @error('sub_title') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                             {{-- <div class="form-group">
                                 <label>Link</label>

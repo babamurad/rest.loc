@@ -1,15 +1,15 @@
 
 <section class="section">
     <div class="section-header">
-        <h1>{{ __('Banner Slider') }}</h1>        
+        <h1>{{ __('Chefs') }}</h1>        
     </div>    
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>{{ __('Banners List') }}</h4>
+                    <h4>{{ __('Chefs List') }}</h4>
                     <div class="card-header-action">
-                        <a href="{{ route('admin.banner.create') }}" class="btn btn-primary">
+                        <a href="{{ route('admin.chef.create') }}" class="btn btn-primary">
                             Create New
                         </a>
                     </div>
@@ -21,34 +21,34 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">Image</th>
+                            <th scope="col">Name</th>
                             <th scope="col">Title</th>
-                            <th scope="col">Sub Title</th>
                             <th scope="col">Status</th>
                             <th scope="col" class="text-center">Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                        @if($banners)
-                            @foreach ($banners as $banner)
+                        @if($chefs)
+                            @foreach ($chefs as $chef)
                                 <tr>
                                     <th scope="row">{{ $loop->index + 1 }}</th>
                                     <td style="width: 20%;">
-                                        <img src="{{ asset($banner->image) }}" alt="{{ $banner->title }}" style="width: 92px;">
+                                        <img src="{{ asset($chef->image) }}" alt="{{ $chef->title }}" style="width: 92px;">
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.banner.edit', ['id' => $banner->id]) }}">{{ ucfirst($banner->title)  }}</a>                                        
+                                        <a href="{{ route('admin.chef.edit', ['id' => $chef->id]) }}">{{ ucfirst($chef->name)  }}</a>                                        
                                     </td>
                                     <td>
-                                        {{ ucfirst($banner->sub_title)  }}                                       
+                                        {{ ucfirst($chef->title)  }}                                       
                                     </td>
 
                                     <td>
                                         <div class="d-flex align-items-center">
                                             <div class="custom-control custom-checkbox">
-                                                <input type="checkbox" class="custom-control-input" id="agree{{ $banner->id }}" wire:click="ActInact({{ $banner->id }})"
-                                                @if($banner->status) checked @endif>
-                                                <label class="custom-control-label" for="agree{{ $banner->id }}" >
-                                                @if ($banner->status)
+                                                <input type="checkbox" class="custom-control-input" id="agree{{ $chef->id }}" wire:click="ActInact({{ $chef->id }})"
+                                                @if($chef->status) checked @endif>
+                                                <label class="custom-control-label" for="agree{{ $chef->id }}" >
+                                                @if ($chef->status)
                                                 <span class="badge badge-success">Active</span>
                                                 @else
                                                 <span class="badge badge-danger">Inactive</span>
@@ -59,10 +59,10 @@
                                     </td>
 
                                     <td class="text-center" style="width: 16%;">
-                                        <a href="{{ route('admin.banner.edit', ['id' => $banner->id]) }}" class="btn btn-icon btn-primary">
+                                        <a href="{{ route('admin.chef.edit', ['id' => $chef->id]) }}" class="btn btn-icon btn-primary">
                                             <i class="far fa-edit"></i>
                                         </a>
-                                        <button class="btn btn-danger" data-toggle="modal" data-target="#ConfirmDelete" wire:click="getDelId({{ $banner->id }})">
+                                        <button class="btn btn-danger" data-toggle="modal" data-target="#ConfirmDelete" wire:click="getDelId({{ $chef->id }})">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
                                     </td>
@@ -72,10 +72,10 @@
                         </tbody>
                     </table>
                     
-                    @if(!$banners)
+                    @if(!$chefs)
                         <p>No items found.</p>
                     @else
-                        {{ $banners->links() }}
+                        {{ $chefs->links() }}
                     @endif
                 </div>
             </div>

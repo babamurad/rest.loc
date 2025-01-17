@@ -73,7 +73,7 @@ class EditSliderComponent extends Component
         $this->sort_order = $slider->sort_order;
         $this->status = $slider->status;
         $this->image = $slider->image;
-    }
+    } 
 
     #[Layout('livewire.admin.layouts.admin-app')]
     public function render()
