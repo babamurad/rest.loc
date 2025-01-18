@@ -24,6 +24,7 @@
                             <th scope="col">Name</th>
                             <th scope="col">Title</th>
                             <th scope="col">Status</th>
+                            <th scope="col">Show at home</th>
                             <th scope="col" class="text-center">Actions</th>
                         </tr>
                         </thead>
@@ -33,10 +34,10 @@
                                 <tr>
                                     <th scope="row">{{ $loop->index + 1 }}</th>
                                     <td style="width: 20%;">
-                                        <img src="{{ asset($chef->image) }}" alt="{{ $chef->title }}" style="width: 92px;">
+                                        <img src="{{ asset($chef->image) }}" alt="{{ $chef->title }}" style="width: 92px;border: #c1c1c1 1px solid;">
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.chef.edit', ['id' => $chef->id]) }}">{{ ucfirst($chef->name)  }}</a>                                        
+                                        <a href="{{ route('admin.chef.edit', ['id' => $chef->id]) }}">{{ $chef->name  }}</a>                                        
                                     </td>
                                     <td>
                                         {{ ucfirst($chef->title)  }}                                       
@@ -52,6 +53,21 @@
                                                 <span class="badge badge-success">Active</span>
                                                 @else
                                                 <span class="badge badge-danger">Inactive</span>
+                                                @endif
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="d-flex align-items-center">
+                                            <div class="custom-control custom-checkbox">
+                                                <input type="checkbox" class="custom-control-input" id="showAtHome{{ $chef->id }}" wire:click="showAtHome({{ $chef->id }})"
+                                                @if($chef->show_at_home) checked @endif>
+                                                <label class="custom-control-label" for="showAtHome{{ $chef->id }}" >
+                                                @if ($chef->show_at_home)
+                                                <span class="badge badge-success">Yes</span>
+                                                @else
+                                                <span class="badge badge-danger">No</span>
                                                 @endif
                                                 </label>
                                             </div>

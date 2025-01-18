@@ -31,4 +31,18 @@ class ChefIndex extends Component
         $this->dispatch('closeModal');
         toastr()->error(__('Chef deleted successfully'));
     }
+
+    public function ActInact($id)
+    {
+        $chef = Chef::findOrFail($id);
+        $chef->status = !$chef->status;
+        $chef->save();
+    }
+
+    public function showAtHome($id)
+    {
+        $chef = Chef::findOrFail($id);
+        $chef->show_at_home = !$chef->show_at_home;
+        $chef->save();
+    }
 }

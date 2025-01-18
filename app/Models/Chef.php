@@ -29,4 +29,11 @@ class Chef extends Model
         'show_at_home',
         'status',
     ];
+
+    // Геттер для поля name
+    public function getNameAttribute($value)
+    {
+        //return ucfirst($value); // Преобразует первую букву в заглавную
+        return ucwords(strtolower($value)); // Делает каждое слово заглавным
+    }
 }
