@@ -16,9 +16,15 @@ use App\Livewire\Admin\DailyOffer\DailyOfferIndexComponent;
 use App\Livewire\Admin\Banner\BannerIndex;
 use App\Livewire\Admin\Banner\BannerCreate;
 use App\Livewire\Admin\Banner\BannerEdit;
+
 use App\Livewire\Admin\Chef\ChefCreate;
 use App\Livewire\Admin\Chef\ChefEdit;
 use App\Livewire\Admin\Chef\ChefIndex;
+
+use App\Livewire\Admin\Testimonial\TestimonialIndex;
+use App\Livewire\Admin\Testimonial\TestimonialCreate;
+use App\Livewire\Admin\Testimonial\TestimonialEdit;
+
 use App\Livewire\Admin\Delivery\DeliveryAreaComponent;
 use App\Livewire\Admin\Delivery\DeliveryAreaCreate;
 use App\Livewire\Admin\Delivery\DeliveryAreaEdit;
@@ -103,6 +109,10 @@ Route::middleware(['auth', 'admin:admin', 'track-activity'])->prefix('admin')->g
     Route::get('chef', ChefIndex::class)->name('admin.chef');
     Route::get('chef/create', ChefCreate::class)->name('admin.chef.create');
     Route::get('chef/edit/{id}', ChefEdit::class)->name('admin.chef.edit');
+
+    Route::get('testimonial', TestimonialIndex::class)->name('admin.testimonial');
+    Route::get('testimonial/create', TestimonialCreate::class)->name('admin.testimonial.create');
+    Route::get('testimonial/edit/{id}', TestimonialEdit::class)->name('admin.testimonial.edit');
 
     Route::get('why-choose-us', WhyChooseUsComponent::class)->name('admin.why-choose-us');
     Route::get('wcu-create', \App\Livewire\Admin\WhyChooseUs\CreateComponent::class)->name('admin.wcu-create');

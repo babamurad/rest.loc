@@ -59,7 +59,7 @@
                     <x-icons.section />
                      <span>Sections</span></a>
                 <ul class="dropdown-menu">
-                    <li  class="{{ request()->is('admin/daily') ? 'active' : '' }}">
+                    <li  class="{{ request()->is('admin/daily-offer') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.daily') }}" wire:navigate>
                             <x-icons.offer />
                              <span>{{ __('Daily Offer') }}</span></a>
@@ -78,6 +78,11 @@
                         <a class="nav-link" href="{{ route('admin.chef') }}" wire:navigate>
                             <x-icons.chef />
                             <span>{{ __('Chefs') }}</span></a>
+                    </li>
+                    <li  class="{{ request()->is('admin/testimonial') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.testimonial') }}" wire:navigate>
+                            <x-icons.testimonials />
+                            <span>{{ __('Testimonial') }}</span></a>
                     </li>
                 </ul>
             </li>
