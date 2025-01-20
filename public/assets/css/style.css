@@ -6893,3 +6893,7 @@ svg rect{
     transform: translateY(0);
     transition: all 0.3s ease-in-out;
 }
+
+.fp__pagination p{
+    display: none;
+}

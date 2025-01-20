@@ -2908,3 +2908,9 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
   display: inline-block;
   vertical-align: top;
 }
+.main-sidebar .sidebar-menu li a svg{
+  width: 28px;
+  margin-right: 20px;
+  text-align: center;
+  margin-left: 5px;
+}

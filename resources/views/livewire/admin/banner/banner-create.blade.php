@@ -51,8 +51,8 @@
                                     <div class="form-group">
                                         <label>Status</label>
                                         <select class="form-control " wire:model="status">
-                                            <option value="1">Yes</option>
-                                            <option value="0">No</option>
+                                            <option value="1">{{ __('Active') }}</option>
+                                            <option value="0">{{ __('Inactive') }}</option>
                                         </select>
                                         <!--[if BLOCK]><![endif]--><!--[if ENDBLOCK]><![endif]-->
                                     </div>
