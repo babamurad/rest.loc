@@ -1,8 +1,8 @@
 
 <section class="section">
     <div class="section-header">
-        <h1>{{ __('Testimonials') }}</h1>        
-    </div> 
+        <h1>{{ __('Testimonials') }}</h1>
+    </div>
     <div class="row">
         <div class="col-sm-7">
             <div x-data="{ open: false }" class="mb-4">
@@ -36,12 +36,12 @@
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>{{ __('testimonials List') }}</h4>
+                    <h4>{{ __('Testimonials List') }}</h4>
                     <div class="card-header-action">
                         <a href="{{ route('admin.testimonial.create') }}" class="btn btn-primary">
                             Create New
@@ -71,10 +71,10 @@
                                         <img class="rounded mb-1" src="{{ asset($testimonial->image) }}" alt="{{ $testimonial->title }}" style="width: 92px;border: #c1c1c1 1px solid;">
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.testimonial.edit', ['id' => $testimonial->id]) }}">{{ $testimonial->name  }}</a>                                        
+                                        <a href="{{ route('admin.testimonial.edit', ['id' => $testimonial->id]) }}">{{ $testimonial->name  }}</a>
                                     </td>
                                     <td>
-                                        {{ ucfirst($testimonial->title)  }}                                       
+                                        {{ ucfirst($testimonial->title)  }}
                                     </td>
 
                                     <td>
@@ -121,7 +121,7 @@
                         @endif
                         </tbody>
                     </table>
-                    
+
                     @if(!$testimonials)
                         <p>No items found.</p>
                     @else

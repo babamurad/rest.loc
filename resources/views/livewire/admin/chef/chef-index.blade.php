@@ -1,12 +1,12 @@
 
 <section class="section">
     <div class="section-header">
-        <h1>{{ __('Testimonials') }}</h1>
+        <h1>{{ __('Chefs') }}</h1>
     </div>
     <div class="row">
         <div class="col-sm-7">
             <div x-data="{ open: false }" class="mb-4">
-                <button x-on:click="open = ! open" class="btn btn-primary">Testimonials Section Titles</button>
+                <button x-on:click="open = ! open" class="btn btn-primary">Chefs Section Titles</button>
 
                 <div x-show="open" x-transition>
                     <form wire:submit.prevent='saveTitle'>

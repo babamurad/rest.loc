@@ -57,14 +57,12 @@ class ChefIndex extends Component
                     ]
                 );
             } else {
-                WhyChooseUs::create(
-                    [
-                        'key' => '3',
-                        'title' => $this->title,
-                        'top_title' => $this->top_title,
-                        'sub_title' => $this->sub_title,
-                    ]
-                );
+                $wsu = new WhyChooseUs();
+                $wsu->key = '3';
+                $wsu->title = $this->title;
+                $wsu->top_title = $this->top_title;
+                $wsu->sub_title = $this->sub_title;
+                $wsu->save();
             }
 
             toastr()->success('Заголовки сохранены');
