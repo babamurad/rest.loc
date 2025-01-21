@@ -1,14 +1,15 @@
 
 <section class="section">
     <div class="section-header">
-        <h1>{{ __('Testimonials') }}</h1>        
-    </div> 
+        <h1>{{ __('Testimonials') }}</h1>
+    </div>
     <div class="row">
         <div class="col-sm-7">
             <div x-data="{ open: false }" class="mb-4">
                 <button x-on:click="open = ! open" class="btn btn-primary">Testimonials Section Titles</button>
 
                 <div x-show="open" x-transition>
+                    <form wire:submit.prevent='saveTitle'>
                     <div class="row mt-4">
                         <div class="col-sm-6">
                             <div class="form-group">
@@ -19,7 +20,7 @@
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Main Title</label> @error('title') is-invalid @enderror
+                                <label class="@error('title') is-invalid @enderror">Main Title</label>
                                 <input type="text" class="form-control" wire:model="title">
                                 @error('title') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
@@ -32,11 +33,12 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary"  x-on:click="open = ! open" wire:click="saveTitle">Save</button>
+                    <button type="submit" class="btn btn-primary"  x-on:click="open = ! open">Save</button>
+                    </form>
                 </div>
             </div>
         </div>
-    </div>   
+    </div>
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">
@@ -71,10 +73,10 @@
                                         <img class="rounded mb-1" src="{{ asset($chef->image) }}" alt="{{ $chef->title }}" style="width: 92px;border: #c1c1c1 1px solid;">
                                     </td>
                                     <td>
-                                        <a href="{{ route('admin.chef.edit', ['id' => $chef->id]) }}">{{ $chef->name  }}</a>                                        
+                                        <a href="{{ route('admin.chef.edit', ['id' => $chef->id]) }}">{{ $chef->name  }}</a>
                                     </td>
                                     <td>
-                                        {{ ucfirst($chef->title)  }}                                       
+                                        {{ ucfirst($chef->title)  }}
                                     </td>
 
                                     <td>
@@ -121,7 +123,7 @@
                         @endif
                         </tbody>
                     </table>
-                    
+
                     @if(!$chefs)
                         <p>No items found.</p>
                     @else

@@ -35,6 +35,7 @@ class ChefIndex extends Component
         }
     }
 
+
     public function saveTitle()
     {
         $this->validate(
@@ -44,12 +45,34 @@ class ChefIndex extends Component
                 'sub_title' => 'required|max:255',
             ]
         );
-        WhyChooseUs::where('key', 3)->update([
-           'title' => $this->title,
-           'top_title' => $this->top_title,
-           'sub_title' => $this->sub_title,
-        ]);
-        toastr()->success('Заголовки сохранены');
+
+        try {
+            $existingRecord = WhyChooseUs::where('key', 3)->first();
+            if ($existingRecord) {
+                $existingRecord->update(
+                    [
+                        'title' => $this->title,
+                        'top_title' => $this->top_title,
+                        'sub_title' => $this->sub_title,
+                    ]
+                );
+            } else {
+                WhyChooseUs::create(
+                    [
+                        'key' => '3',
+                        'title' => $this->title,
+                        'top_title' => $this->top_title,
+                        'sub_title' => $this->sub_title,
+                    ]
+                );
+            }
+
+            toastr()->success('Заголовки сохранены');
+        } catch (\Exception $e) {
+            // Логирование ошибки для отладки
+            \Log::error('Ошибка при сохранении данных: ' . $e->getMessage());
+            toastr()->error('Произошла ошибка при сохранении данных');
+        }
     }
 
     public function getDelId($id)
