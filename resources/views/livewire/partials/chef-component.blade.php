@@ -37,6 +37,10 @@
                             @if($chef->linkedin)
                             <li><a href="{{ $chef->linkedin }}"><i class="fab fa-linkedin-in"></i></a></li>
                             @endif
+                            {{-- <x-icons.imo /> --}}
+                            @if($chef->imo)
+                            <li><a href="{{ $chef->imo }}">Imo</a></li>
+                            @endif
                         </ul>
                     </div>
                 </div>
