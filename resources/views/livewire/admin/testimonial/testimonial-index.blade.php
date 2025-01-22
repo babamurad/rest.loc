@@ -5,7 +5,7 @@
     </div>
     <div class="row">
         <div class="col-sm-7">
-            <div x-data="{ open: false }" class="mb-4">
+            <div x-data="{ open: @entangle('open') }" class="mb-4">
                 <button x-on:click="open = ! open" class="btn btn-primary">Testimonials Section Titles</button>
 
                 <div x-show="open" x-transition>
@@ -32,7 +32,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary"  x-on:click="open = ! open" wire:click="saveTitle">Save</button>
+                    <button class="btn btn-primary" wire:click="saveTitle">Save</button>
                 </div>
             </div>
         </div>
