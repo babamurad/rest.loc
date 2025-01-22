@@ -1,13 +1,13 @@
 <section class="section">
     <div class="section-header">
-        <h1>{{__('Create Chef Item')}}</h1>
+        <h1>{{__('Create Testimonial Item')}}</h1>
         @include('livewire.admin.components.alerts')
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>{{__('Create Chef')}}</h4>
+                    <h4>{{__('Create Testimonial')}}</h4>
                 </div>
                 <div class="card-body">
                     <div class="row">

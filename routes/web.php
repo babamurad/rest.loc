@@ -59,6 +59,7 @@ use App\Livewire\User\RegisterComponent;
 use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\TestComponent;
 use App\Livewire\Pages\ChefPageComponent;
+use App\Livewire\Pages\TestimonialPageComponent;
 
 
 Route::get('/', HomeComponent::class)->name('home');
@@ -67,6 +68,7 @@ Route::get('product-details/{slug}', ProductDetails::class)->name('product-detai
 Route::get('cart', CartComponent::class)->name('cart');
 Route::get('contact', ContactComponent::class)->name('contact');
 Route::get('chefs', ChefPageComponent::class)->name('chefs');
+Route::get('testimonial', TestimonialPageComponent::class)->name('testimonial');
 
 
 Route::middleware('guest')->group(function () {

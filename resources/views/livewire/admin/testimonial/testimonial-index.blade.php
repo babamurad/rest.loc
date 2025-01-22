@@ -84,7 +84,7 @@
                                                 @if($testimonial->status) checked @endif>
                                                 <label class="custom-control-label" for="agree{{ $testimonial->id }}" >
                                                 @if ($testimonial->status)
-                                                <span class="badge badge-success">Active</span>
+                                                <span class="badge badge-primary">Active</span>
                                                 @else
                                                 <span class="badge badge-danger">Inactive</span>
                                                 @endif
@@ -99,7 +99,7 @@
                                                 @if($testimonial->show_at_home) checked @endif>
                                                 <label class="custom-control-label" for="showAtHome{{ $testimonial->id }}" >
                                                 @if ($testimonial->show_at_home)
-                                                <span class="badge badge-success">Yes</span>
+                                                <span class="badge badge-primary">Yes</span>
                                                 @else
                                                 <span class="badge badge-danger">No</span>
                                                 @endif
