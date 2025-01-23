@@ -60,6 +60,7 @@ use Illuminate\Support\Facades\Route;
 use App\Livewire\Admin\TestComponent;
 use App\Livewire\Pages\ChefPageComponent;
 use App\Livewire\Pages\TestimonialPageComponent;
+use App\Livewire\Admin\NewsLetterComponent;
 
 
 Route::get('/', HomeComponent::class)->name('home');
@@ -115,6 +116,8 @@ Route::middleware(['auth', 'admin:admin', 'track-activity'])->prefix('admin')->g
     Route::get('testimonial', TestimonialIndex::class)->name('admin.testimonial');
     Route::get('testimonial/create', TestimonialCreate::class)->name('admin.testimonial.create');
     Route::get('testimonial/edit/{id}', TestimonialEdit::class)->name('admin.testimonial.edit');
+
+    Route::get('newsletter', NewsLetterComponent::class)->name('admin.newsletter');
 
     Route::get('why-choose-us', WhyChooseUsComponent::class)->name('admin.why-choose-us');
     Route::get('wcu-create', \App\Livewire\Admin\WhyChooseUs\CreateComponent::class)->name('admin.wcu-create');

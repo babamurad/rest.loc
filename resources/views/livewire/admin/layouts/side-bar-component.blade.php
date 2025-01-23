@@ -54,6 +54,10 @@
                 <a class="nav-link" href="{{ route('admin.chat') }}" wire:navigate><i class="fas fa-comments"></i> <span>Messages</span></a>
             </li>
 
+            <li  class="{{ request()->is('admin/newsletter') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.newsletter') }}" wire:navigate><i class="far fa-newspaper"></i> <span>Newsletter</span></a>
+            </li>
+
             <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                     <x-icons.section />
