@@ -70,18 +70,18 @@
                 
                 <li>
                     @auth
-                        <a href="{{ route('dashboard') }}" wire:navigate><i class="fas fa-user"></i></a>
+                        <a href="{{ route('dashboard') }}" wire:navigate style="padding: 0% !important;"><i class="fas fa-user"></i></a>
                     @endauth
 
                     @guest
-                        <a href="{{ route('register') }}"><i class="fas fa-user"></i></a>
+                        <a href="{{ route('register') }}" wire:navigate style="padding: 0% !important;"><i class="fas fa-user"></i></a>
                     @endguest
 
                 </li>
-                <li>
+                {{-- <li>
                     <a class="common_btn" href="#" data-bs-toggle="modal"
                        data-bs-target="#staticBackdrop">reservation</a>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </div>

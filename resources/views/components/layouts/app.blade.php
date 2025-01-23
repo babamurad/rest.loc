@@ -172,11 +172,9 @@
                 </div>
                 <div class="col-lg-3 col-sm-8 col-md-6 order-lg-4">
                     <div class="fp__footer_content">
-                        <h3>subscribe</h3>
-                        <form>
-                            <input type="text" placeholder="Subscribe">
-                            <button>Subscribe</button>
-                        </form>
+
+                        <livewire:components.subscribe-component /> 
+                                               
                         <div class="fp__footer_social_link">
                             <h5>follow us:</h5>
                             <ul class="d-flex flex-wrap">
@@ -198,7 +196,7 @@
             <div class="row">
                 <div class="col-12">
                     <div class="fp__footer_bottom_text d-flex flex-wrap justify-content-between">
-                        <p>Copyright 2024 <b>Datly</b> All Rights Reserved.</p>
+                        <p>Copyright {{ date('Y') }} <b>FoodPark</b> All Rights Reserved.</p>
                         <ul class="d-flex flex-wrap">
                             <li><a href="#">FAQs</a></li>
                             <li><a href="#">payment</a></li>

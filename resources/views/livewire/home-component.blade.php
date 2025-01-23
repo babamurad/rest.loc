@@ -206,7 +206,7 @@
     <!--=============================
         COUNTER START
     ==============================-->
-    <section class="fp__counter" style="background: url({{ asset('assets/images/counter_bg2.jpg') }});">
+    {{-- <section class="fp__counter" style="background: url({{ asset('assets/images/counter_bg2.jpg') }});">
         <div class="fp__counter_overlay pt_100 xs_pt_70 pb_100 xs_pb_70">
             <div class="container">
                 <div class="row">
@@ -249,7 +249,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!--=============================
         COUNTER END
     ==============================-->
@@ -258,7 +258,7 @@
     <!--=============================
         BLOG 2 START
     ==============================-->
-    <section class="fp__blog fp__blog2">
+    {{-- <section class="fp__blog fp__blog2">
         <div class="fp__blog_overlay pt_95 pt_xs_60 pb_100 xs_pb_70">
             <div class="container">
                 <div class="row wow fadeInUp" data-wow-duration="1s">
@@ -326,7 +326,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
     <!--=============================
         BLOG 2 END
     ==============================-->
