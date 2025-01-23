@@ -9,33 +9,18 @@
                 height: 300,
                 tabsize: 2,
                 toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough']],
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'clear']],                    
                     ['color', ['color']],
                     ['para', ['ul', 'ol', 'paragraph']],
                     ['table', ['table']],
                     ['insert', ['link', 'picture', 'video']],
-                    ['view', ['codeview']],
-                ],
-            });
-            $('#summernote2').summernote({
-                height: 300,
-                tabsize: 2,
-                toolbar: [
-                    ['style', ['bold', 'italic', 'underline', 'clear']],
-                    ['font', ['strikethrough']],
-                    ['color', ['color']],
-                    ['para', ['ul', 'ol', 'paragraph']],
-                    ['table', ['table']],
-                    ['insert', ['link', 'picture', 'video']],
-                    ['view', ['codeview']],
+                    ['view', ['fullscreen', 'codeview', 'help']],
                 ],
             });
             $('#summernote').on('summernote.change', function(we, contents, $editable) {
-            @this.set('long_description', contents)
-            });
-            $('#summernote2').on('summernote.change', function(we, contents, $editable) {
-            @this.set('seo_description', contents)
+                @this.set('message', contents)          
+                
             });
         });
     </script>
@@ -51,20 +36,24 @@
 
                 <div x-show="open" x-transition>
                     <form action="" wire:submit.prevent="sendNewsLetter">
+                        @csrf
                      <div class="row mt-4">                        
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Subject</label> @error('subject') is-invalid @enderror
-                                <input type="text" class="form-control" wire:model="subject">
+                                <label>Subject</label>
+                                <input type="text" class="form-control @error('subject') is-invalid @enderror" wire:model="subject">
                                 @error('subject') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                         <div class="col-sm-12">
-                            <div class="form-group">
-                                <label>Sub Title</label>
-                                <textarea name="message" id="summernote" cols="30" rows="10" wire:model="message"></textarea>
-                                @error('message') <div class="invalid-feedback">{{$message}}</div> @enderror
-                            </div>
+                              <div class="form-group">
+                                <label>Sub Title</label>                                
+                                <div wire:ignore>
+                                    <textarea  class="form-control" name="message" id="summernote" cols="30" rows="10" wire:model.lazy="message"></textarea>
+                                </div>                              
+                                @error('message') <div class="invalid-feedback" style="display: block;">{{$message}}</div> @enderror
+                            </div> 
+                            
                         </div>
                     </div>
                     <button type="submit" class="btn btn-primary">{{ __('Send') }}</button>   
@@ -83,6 +72,7 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
+                            <th scope="col">ID</th>
                             <th scope="col">Email</th>
                             <th scope="col" class="text-center">Actions</th>
                         </tr>
@@ -92,6 +82,7 @@
                             @foreach ($subscribes as $subscribe)
                                 <tr>
                                     <th scope="row">{{ $loop->index + 1 }}</th>
+                                    <td>{{ $subscribe->id }}</td>                                   
                                     <td>{{ $subscribe->email }}</td>                                   
 
                                     <td class="text-center" style="width: 16%;">

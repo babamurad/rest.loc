@@ -118,6 +118,7 @@
         @endif
     </script>
 @stack('summernote-js')
+@stack('scripts')
 @stack('select2-js')
 </body>
 </html>
