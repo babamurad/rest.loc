@@ -27,10 +27,11 @@ class NewsLetterComponent extends Component
 
     public function sendNewsLetter()
     {
+        
         $this->validate([
             'subject' => 'required|max:255',
             'message' => 'required'
-        ]);
+        ]);        
 
         $subscribers = Subscriber::pluck('email')->toArray();
 

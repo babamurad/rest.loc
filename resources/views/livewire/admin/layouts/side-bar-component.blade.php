@@ -22,11 +22,13 @@
 
             <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
-                    <x-icons.orders />
+                    <x-icons.all-orders />                    
                      <span>{{ __('Orders') }}</span></a>
                 <ul class="dropdown-menu">
-                    <li><a class="nav-link" href="{{ route('admin.orders.index') }}">{{__('All Orders')}}</a></li>
-                    <li><a class="nav-link" href="#">Products</a></li>
+                    <li><a class="nav-link" href="{{ route('admin.orders.index') }}">
+                        <x-icons.orders />
+                        {{__('All Orders')}}</a></li>
+                    {{-- <li><a class="nav-link" href="#">Products</a></li> --}}
                 </ul>
             </li>
 
@@ -35,8 +37,12 @@
                     <x-icons.resto />
                     <span>Manage Restaurant</span></a>
                  <ul class="dropdown-menu">
-                     <li><a class="nav-link" href="{{ route('admin.category.index') }}">Product Categories</a></li>
-                     <li><a class="nav-link" href="{{ route('admin.product.index') }}">Products</a></li>
+                     <li><a class="nav-link" href="{{ route('admin.category.index') }}">
+                        <x-icons.category />
+                        Categories</a></li>
+                     <li><a class="nav-link" href="{{ route('admin.product.index') }}">
+                        <x-icons.product />
+                        Products</a></li>
                  </ul>
              </li>
              <li class="dropdown">
@@ -44,9 +50,15 @@
                     <x-icons.ecom />
                     <span>Manage Ecommerce</span></a>
                  <ul class="dropdown-menu">
-                     <li><a class="nav-link" href="{{ route('admin.coupon') }}">{{__('Coupon')}}</a></li>
-                     <li><a class="nav-link" href="{{ route('admin.delivery-area') }}">{{__('Delivery Area')}}</a></li>
-                     <li><a class="nav-link" href="{{ route('admin.payment-settings') }}">{{__('Payment Gateways')}}</a></li>
+                     <li><a class="nav-link" href="{{ route('admin.coupon') }}">
+                        <x-icons.coupon />
+                        {{__('Coupon')}}</a></li>
+                     <li><a class="nav-link" href="{{ route('admin.delivery-area') }}">
+                        <x-icons.area />
+                        {{__('Delivery Area')}}</a></li>
+                     <li><a class="nav-link" href="{{ route('admin.payment-settings') }}">
+                        <x-icons.payment />
+                        {{__('Payment Gateways')}}</a></li>
                  </ul>
              </li>
 
@@ -55,23 +67,23 @@
             </li>
 
             <li  class="{{ request()->is('admin/newsletter') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.newsletter') }}" wire:navigate><i class="far fa-newspaper"></i> <span>Newsletter</span></a>
+                <a class="nav-link" href="{{ route('admin.newsletter') }}"><i class="far fa-newspaper"></i> <span>Newsletter</span></a>
             </li>
 
             <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                     <x-icons.section />
                      <span>Sections</span></a>
-                <ul class="dropdown-menu">
-                    <li  class="{{ request()->is('admin/daily-offer') ? 'active' : '' }}">
-                        <a class="nav-link" href="{{ route('admin.daily') }}" wire:navigate>
-                            <x-icons.offer />
-                             <span>{{ __('Daily Offer') }}</span></a>
-                    </li>
+                <ul class="dropdown-menu">                    
                     <li  class="{{ request()->is('admin/why-choose-us') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.why-choose-us') }}" wire:navigate>
                             <x-icons.choose />
                              <span>{{ __('Why choose us') }}</span></a>
+                    </li>
+                    <li  class="{{ request()->is('admin/daily-offer') ? 'active' : '' }}">
+                        <a class="nav-link" href="{{ route('admin.daily') }}" wire:navigate>
+                            <x-icons.offer />
+                             <span>{{ __('Daily Offer') }}</span></a>
                     </li>
                     <li  class="{{ request()->is('admin/banner') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.banner') }}" wire:navigate>

@@ -2914,3 +2914,6 @@ body:not(.sidebar-mini) .sidebar-style-2 .sidebar-menu li.active ul.dropdown-men
   text-align: center;
   margin-left: 5px;
 }
+.main-sidebar .sidebar-menu li ul.dropdown-menu li a {
+  padding-left: 50px;
+}

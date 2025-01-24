@@ -68,7 +68,9 @@
                                 <tr>
                                     <th scope="row">{{ $loop->index + 1 }}</th>
                                     <td style="width: 20%;">
-                                        <img class="rounded mb-1" src="{{ asset($testimonial->image) }}" alt="{{ $testimonial->title }}" style="width: 92px;border: #c1c1c1 1px solid;">
+                                        <a href="{{ route('admin.testimonial.edit', ['id' => $testimonial->id]) }}">
+                                           <img class="rounded mb-1" src="{{ asset($testimonial->image) }}" alt="{{ $testimonial->title }}" style="width: 92px;border: #c1c1c1 1px solid;"> 
+                                        </a>                                        
                                     </td>
                                     <td>
                                         <a href="{{ route('admin.testimonial.edit', ['id' => $testimonial->id]) }}">{{ $testimonial->name  }}</a>

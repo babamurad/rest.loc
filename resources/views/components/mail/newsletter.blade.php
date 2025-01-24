@@ -40,7 +40,7 @@
         <img src="{{ asset('assets/images/logo.png') }}" alt="FoodPark" class="img-fluid">
         <h2>Рассылка</h2>
         <h3>{{ $mailSubject }}</h3>
-        <p>{{ $mailMessage }}</p>
+        <p>{!! $mailMessage !!}</p>
     </div>
 </body>
 </html>
