@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class FooterInfo extends Model
 {
     use HasFactory;
-    protected $fillable = ['short_info', 'address', 'phone', 'email', 'copyright'];
+    protected $fillable = ['logo', 'short_info', 'address', 'phone', 'email', 'copyright'];
 }

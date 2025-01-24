@@ -103,6 +103,11 @@
                 </ul>
             </li>
 
+            <li  class="{{ request()->is('admin/footer-info') ? 'active' : '' }}">
+                <a class="nav-link" href="{{ route('admin.footer-info') }}" wire:navigate>
+                    <x-icons.info />
+                    <span>FooterInfo</span></a>
+            </li>
             <li  class="{{ request()->is('admin/setting') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.setting') }}" wire:navigate><i class="fas fa-cogs"></i> <span>Settings</span></a>
             </li>
