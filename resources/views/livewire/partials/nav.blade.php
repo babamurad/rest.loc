@@ -45,7 +45,7 @@
                 </li>
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('contact') ? 'active' : '' }}" href="{{ route('contact') }}">contact</a>
-                </li>
+                </li>                
             </ul>
             <ul class="menu_icon d-flex flex-wrap">
                 <li>
@@ -78,6 +78,8 @@
                     @endguest
 
                 </li>
+                <li><a href="#">tm</a></li>
+                <li><a href="#">ru</a></li>
                 {{-- <li>
                     <a class="common_btn" href="#" data-bs-toggle="modal"
                        data-bs-target="#staticBackdrop">reservation</a>

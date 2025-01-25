@@ -47,7 +47,7 @@
                 </ul>
             </div>
             <div class="col-xl-6 col-md-4 d-none d-md-block">
-                <ul class="topbar_icon d-flex flex-wrap">
+                <ul class="topbar_icon d-flex flex-wrap">                    
                     @guest
                         <li><a href="{{ route('login') }}" wire:navigate>Login</a></li>
                         <li><a href="{{ route('register') }}" wire:navigate>Register</a></li>
