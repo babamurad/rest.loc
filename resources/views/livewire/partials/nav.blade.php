@@ -16,7 +16,7 @@
                     <a class="nav-link {{ request()->is('about') ? 'active' : '' }}" href="{{ route('about') }}" wire:navigate>{{ __('About') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="menu.html">{{ __('Menu') }}</a>
+                    <a class="nav-link" href="{{ route('menu') }}">{{ __('Menu') }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('chefs') }}">{{ __('Chefs') }}</a>
@@ -78,8 +78,8 @@
                     @endguest
 
                 </li> 
-                <li><a class="lang-btn" href="#">tm</a></li>
-                <li><a class="lang-btn" href="#">ru</a></li>
+                {{-- <li><a class="lang-btn" href="#">tm</a></li>
+                <li><a class="lang-btn" href="#">ru</a></li> --}}
                 {{-- <li>
                     <a class="common_btn" href="#" data-bs-toggle="modal"
                        data-bs-target="#staticBackdrop">reservation</a>
