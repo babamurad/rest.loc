@@ -46,10 +46,18 @@ class MenuComponent extends Component
         //dd($this->categoryId);
     }
 
-    public function selectCategory($id) {
+    public function selectCategory($id) 
+    {
+        $this->resetPage();
         $this->categoryId = $id;
         $this->categoryName = ucfirst(Category::find($id)->name);
         $this->isOpened = false;
+    }
+
+    public function resetCategory()
+    {
+        $this->categoryId = null;
+        $this->categoryName = null;
     }
 
 }

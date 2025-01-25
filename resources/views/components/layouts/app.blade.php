@@ -26,6 +26,7 @@
     @stack('message')
     @stack('notif')
     @stack('mdb-css')    
+    @stack('scripts-pusher')    
         
 
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
@@ -248,10 +249,10 @@
 <!-- simplyCountdownjs -->
 <script src="{{ asset('assets/js/simplyCountdown.js') }}"></script>
 <!-- counter up js -->
-<script src="{{ asset('assets/js/jquery.waypoints.min.js') }}"></script>
-<script src="{{ asset('assets/js/jquery.countup.min.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/jquery.waypoints.min.js') }}"></script> --}}
+{{-- <script src="{{ asset('assets/js/jquery.countup.min.js') }}"></script> --}}
 <!-- nice select js -->
-<script src="{{ asset('assets/js/jquery.nice-select.min.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/jquery.nice-select.min.js') }}"></script> --}}
 <!-- venobox js -->
 <script src="{{ asset('assets/js/venobox.min.js') }}"></script>
 <!-- sticky sidebar js -->

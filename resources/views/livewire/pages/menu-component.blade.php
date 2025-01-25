@@ -2,14 +2,14 @@
     <!--=============================
         BREADCRUMB START
     ==============================-->
-    <section class="fp__breadcrumb" style="background: url(images/counter_bg.jpg);">
+    <section class="fp__breadcrumb" style="background: url({{ asset('assets/images/counter_bg.jpg') }});">
         <div class="fp__breadcrumb_overlay">
             <div class="container">
                 <div class="fp__breadcrumb_text">
                     <h1>Foods menu</h1>
                     <ul>
-                        <li><a href="index.html">home</a></li>
-                        <li><a href="#">menu</a></li>
+                        <li><a href="{{ route('home') }}">home</a></li>
+                        <li><a href="javascript:;">menu</a></li>
                     </ul>
                 </div>
             </div>
@@ -31,14 +31,21 @@
                         <input type="text" placeholder="Search..." wire:model.live="search">
                     </div>
                     <div class="col-xl-6 col-md-4">
-                        <div x-data="{ isOpen: @entangle('isOpen').defer }" x-init="selectComponent($el)">
+                        <div x-data="{ isOpen: @entangle('isOpen').defer }">
                             <div @click="isOpen = !isOpen" class="custom-select d-flex justify-content-between">
                               <span>{{ $categoryName?? "Select Category" }}</span> 
                               <i class="fa fa-chevron-down mt-1" :class="{ 'rotate-180': isOpen }"></i>
                             </div>
-                            <ul x-show="isOpen" class="dropdown">
+                            <ul x-show="isOpen" class="dropdown-category"
+                                x-transition:enter="transition ease-out duration-300" 
+                                x-transition:enter-start="opacity-0 transform scale-y-0" 
+                                x-transition:enter-end="opacity-100 transform scale-y-100" 
+                                x-transition:leave="transition ease-in duration-300" 
+                                x-transition:leave-start="opacity-100 transform scale-y-100" 
+                                x-transition:leave-end="opacity-0 transform scale-y-0">
+                                <li wire:click="resetCategory" @click="isOpen =false"> <b>Select Category</b> </li>
                                 @foreach($categories as $category)
-                                  <li wire:click="selectCategory({{ $category->id }})" @click="isOpen =false">{{ Str::ucfirst($category->name) }}</li>
+                                  <li wire:click="selectCategory({{ $category->id }})" @click="isOpen =false">{{ Str::ucfirst($category->name) }} <span>{{ $category->products->count() }}</span> </li>
                                 @endforeach
                             </ul>
                         </div>

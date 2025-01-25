@@ -18,31 +18,20 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('menu') }}">{{ __('Menu') }}</a>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="{{ route('chefs') }}">{{ __('Chefs') }}</a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link" href="#">{{ __('Pages') }} <i class="far fa-angle-down"></i></a>
                     <ul class="droap_menu">
-                        <li><a href="menu_details.html">menu details</a></li>
-                        <li><a href="blog_details.html">blog details</a></li>
-                        <li><a href="cart_view.html">cart view</a></li>
-                        <li><a href="{{ route('checkout') }}">checkout</a></li>
-                        <li><a href="payment.html">payment</a></li>
-                        <li><a href="{{ route('testimonial') }}">testimonial</a></li>
-                        <li><a href="search_menu.html">search result</a></li>
-                        <li><a href="404.html">404/Error</a></li>
-                        <li><a href="faq.html">FAQs</a></li>
-                        <li><a href="sign_in.html">sign in</a></li>
-                        <li><a href="sign_up.html">sign up</a></li>
-                        <li><a href="forgot_password.html">forgot password</a></li>
-                        <li><a href="privacy_policy.html">privacy policy</a></li>
-                        <li><a href="terms_condition.html">terms and condition</a></li>
+                        <li><a href="{{ route('checkout') }}">{{ __('Checkout') }}</a></li>
+                        <li><a href="{{ route('testimonial') }}">{{ __('Testimonial') }}</a></li>
+                        <li><a href="{{ route('chefs') }}">{{ __('Chefs') }}</a></li>
                     </ul>
                 </li>
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link" href="blogs.html">{{ __('Blog') }}</a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link {{ request()->is('contact') ? 'active' : '' }}" href="{{ route('contact') }}">{{ __('Contact') }}</a>
                 </li>                
@@ -78,8 +67,8 @@
                     @endguest
 
                 </li> 
-                {{-- <li><a class="lang-btn" href="#">tm</a></li>
-                <li><a class="lang-btn" href="#">ru</a></li> --}}
+                {{-- {{-- <li><a class="lang-btn" href="#">tm</a></li> --}}
+                {{-- <li><a class="lang-btn" href="#">ru</a></li>  --}}
                 {{-- <li>
                     <a class="common_btn" href="#" data-bs-toggle="modal"
                        data-bs-target="#staticBackdrop">reservation</a>
