@@ -6897,3 +6897,20 @@ svg rect{
 .fp__pagination p{
     display: none;
 }
+
+.lang-btn{
+    background: var(--colorPrimary);
+    text-transform: capitalize !important;
+    color: var(--colorWhite) !important;
+    padding: 5px 12px !important;
+    border-radius: 30px;
+    font-size: 15px !important;
+    font-weight: 600 !important;
+    position: relative;
+    transition: all linear .3s;
+    -webkit-transition: all linear .3s;
+}
+.main_menu .menu_icon li:last-child a {
+    padding: 5px 12px !important;
+    margin-right: 0;
+}

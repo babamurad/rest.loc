@@ -10,19 +10,19 @@
         <div class="collapse navbar-collapse" id="navbarNav"  :class="{ 'show': isOpen }">
             <ul class="navbar-nav m-auto">
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" aria-current="page" href="/">Home</a>
+                    <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" aria-current="page" href="/">{{ __('Home') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('about') ? 'active' : '' }}" href="{{ route('about') }}" wire:navigate>about</a>
+                    <a class="nav-link {{ request()->is('about') ? 'active' : '' }}" href="{{ route('about') }}" wire:navigate>{{ __('About') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="menu.html">menu</a>
+                    <a class="nav-link" href="menu.html">{{ __('Menu') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('chefs') }}">chefs</a>
+                    <a class="nav-link" href="{{ route('chefs') }}">{{ __('Chefs') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">pages <i class="far fa-angle-down"></i></a>
+                    <a class="nav-link" href="#">{{ __('Pages') }} <i class="far fa-angle-down"></i></a>
                     <ul class="droap_menu">
                         <li><a href="menu_details.html">menu details</a></li>
                         <li><a href="blog_details.html">blog details</a></li>
@@ -41,10 +41,10 @@
                     </ul>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="blogs.html">blog</a>
+                    <a class="nav-link" href="blogs.html">{{ __('Blog') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link {{ request()->is('contact') ? 'active' : '' }}" href="{{ route('contact') }}">contact</a>
+                    <a class="nav-link {{ request()->is('contact') ? 'active' : '' }}" href="{{ route('contact') }}">{{ __('Contact') }}</a>
                 </li>                
             </ul>
             <ul class="menu_icon d-flex flex-wrap">
@@ -77,15 +77,16 @@
                         <a href="{{ route('register') }}" wire:navigate style="padding: 0% !important;"><i class="fas fa-user"></i></a>
                     @endguest
 
-                </li>
-                <li><a href="#">tm</a></li>
-                <li><a href="#">ru</a></li>
+                </li> 
+                <li><a class="lang-btn" href="#">tm</a></li>
+                <li><a class="lang-btn" href="#">ru</a></li>
                 {{-- <li>
                     <a class="common_btn" href="#" data-bs-toggle="modal"
                        data-bs-target="#staticBackdrop">reservation</a>
                 </li> --}}
             </ul>
         </div>
-    </div>
+    </div>   
+    
 </nav>
 

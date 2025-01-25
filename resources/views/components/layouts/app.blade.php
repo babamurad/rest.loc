@@ -49,15 +49,15 @@
             <div class="col-xl-6 col-md-4 d-none d-md-block">
                 <ul class="topbar_icon d-flex flex-wrap">                    
                     @guest
-                        <li><a href="{{ route('login') }}" wire:navigate>Login</a></li>
-                        <li><a href="{{ route('register') }}" wire:navigate>Register</a></li>
+                        <li><a href="{{ route('login') }}" wire:navigate>{{ __('Login') }}</a></li>
+                        <li><a href="{{ route('register') }}" wire:navigate>{{ __('Register') }}</a></li>
                     @endguest
                     @auth
                         @if(auth()->user()->role === 'admin')
-                                <li><a href="{{ route('admin.dashboard') }}" wire:navigate>Dashboard</a></li>
-                                <li><a href="{{ route('dashboard') }}" wire:navigate>User Dashboard</a></li>
+                                <li><a href="{{ route('admin.dashboard') }}" wire:navigate>{{ __('Dashboard') }}</a></li>
+                                <li><a href="{{ route('dashboard') }}" wire:navigate>{{ __('User Dashboard') }}</a></li>
                         @else
-                                <li><a href="{{ route('dashboard') }}" wire:navigate>Dashboard</a></li>
+                                <li><a href="{{ route('dashboard') }}" wire:navigate>{{ __('Dashboard') }}</a></li>
                         @endif
                         <livewire:user.logout-component />
                     @endauth
