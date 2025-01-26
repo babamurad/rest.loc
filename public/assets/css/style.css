@@ -6968,3 +6968,6 @@ svg rect{
     font-weight: 600;
     right: 14px;
 }
+.show{
+    display: block !important;
+}

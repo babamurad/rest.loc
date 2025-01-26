@@ -35,15 +35,9 @@ x-data="{
         <div x-show="showModal" class="modal-backdrop" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);"></div>
         <div x-show="showModal" 
              class="modal fade"
-             :class="{ 'show': showModal }" 
-             {{-- :style="{ 'display': showModal ? 'block' : 'none' }"   --}}
-             @if ($showModal)
-               style="display: block;"
-               @else
-               style="display: none;"  
-             @endif           
-             {{-- @click.away="showModal = false"
-             @keydown.escape.window="showModal = false" --}}
+             :class="{ 'show': showModal }"  
+             {{-- @click.away="showModal = false" --}}
+             {{-- @keydown.escape.window="showModal = false" --}}
              >
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">

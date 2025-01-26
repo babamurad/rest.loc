@@ -6,6 +6,11 @@ use Livewire\Component;
 use App\Models\Category;
 use App\Models\Product;
 use Livewire\WithPagination;
+use Cart;
+use App\Models\ProductOption;
+use App\Models\ProductSize;
+use Livewire\Attributes\On;
+
 
 class MenuComponent extends Component
 {
@@ -65,7 +70,7 @@ class MenuComponent extends Component
         $this->categoryName = null;
     }
 
-    // #[On('show-product-details')]
+    #[On('show-product-details')]
     public function getProduct($id)
     {        
         $this->isLoading = true;
@@ -75,4 +80,78 @@ class MenuComponent extends Component
         //dd($this->showModal);  
     }
 
+    public function addToCart($id, $count, $summa, $sizeId, $sizeName, $sizePrice, $checkedOptions)
+    {
+        $product = Product::with('sizes', 'options')->findOrFail($id);
+        if(number_format($product->quantity) < $count) {
+            toastr()->error('Данный продукт недоступен в таком количестве. Доступно только ' . $product->quantity . ' единиц.');
+        } else {
+            try {
+                $productOptions = $product->options->whereIn('id', $checkedOptions);
+
+                $options = [
+                    'product_size' => [],
+                    'product_options' => [],
+                    'product_info' => [
+                        'id' => $product->id,
+                        'name' => $product->name,
+                        'slug' => $product->slug,
+                        'price' => $product->price,
+                        'offer_price' => $product->offer_price,
+                        'discount' => $product->discount,
+                        'short_description' => $product->short_description,
+                        'long_description' => $product->long_description,
+                        'image' => $product->thumb_image,
+                        'sku' => $product->sku,
+                        'quantity' => $count,
+                        'total_price' => $summa,
+                        'total_weight' => 0,
+                        'category_id' => $product->category_id,
+                        'category_name' => $product->category->name,
+                        'created_at' => $product->created_at,
+                        'updated_at' => $product->updated_at,
+                        'is_featured' => $product->is_featured,
+                        'show_at_home' => $product->show_at_home,
+                        'status' => $product->status,
+                    ]
+                ];
+// Size option can be empty
+                $options['product_size'] = [
+                    'id' => $sizeId ?? null,
+                    'name' => $sizeName ?? null,
+                    'price' => $sizePrice ?? 0,
+                ];
+// Product options can be empty
+                if ($productOptions->count() > 0) {
+                    foreach ($productOptions as $option) {
+                        $options['product_options'][] = [
+                            'id' => $option->id,
+                            'name' => $option->name,
+                            'price' => $option->price,
+                        ];
+                    }
+                }
+
+                //instance('cart')->
+                //weight using as rowTotal
+                Cart::add([
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'qty' => $count,
+                    'price' => $product->offer_price > 0 ? $product->offer_price : $product->price,
+                    'weight' => $summa,
+                    'options' => $options,
+                ]);
+                $this->dispatch('Product_added_to_cart');
+
+                $this->showModal = false;
+                
+                toastr()->success(__('Product has been added to cart!'));
+            } catch (\Exception $e) {
+                //toastr()->error(__('Something went worng!'));
+                toastr()->error($e);
+            }
+        }
+
+    }
 }
