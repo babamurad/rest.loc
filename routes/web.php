@@ -72,7 +72,7 @@ Route::get('cart', CartComponent::class)->name('cart');
 Route::get('contact', ContactComponent::class)->name('contact');
 Route::get('chefs', ChefPageComponent::class)->name('chefs');
 Route::get('testimonial', TestimonialPageComponent::class)->name('testimonial');
-Route::get('menu', MenuComponent::class)->name('menu');
+Route::get('menu/{id?}', MenuComponent::class)->name('menu');
 
 
 Route::middleware('guest')->group(function () {

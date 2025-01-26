@@ -17,6 +17,12 @@ class MenuComponent extends Component
     public $categoryId = null;
     public $categoryName = null;
     public $isOpened = false;
+    public $product;
+    public $isLoading = false;
+    public $closeModal = false;
+    public $totalSummary = 0;
+    public $showModal = false;
+    public $isModalOpen = false;
 
     public function render()
     {
@@ -35,15 +41,14 @@ class MenuComponent extends Component
 
         return view('livewire.pages.menu-component', compact('categories', 'products'));
     }
-
-    public function updatedSearch()
-    {
-        //$this->resetPage();
-    }
-
-    public function updatedCategoryId()
-    {
-        //dd($this->categoryId);
+    
+    public function mount($id = null)
+    {        
+        if ($id) {
+            $this->categoryId = $id;
+            $this->categoryName = ucfirst(Category::find($id)->name);
+        }
+        $this->product = Product::with('sizes', 'options')->first();
     }
 
     public function selectCategory($id) 
@@ -58,6 +63,16 @@ class MenuComponent extends Component
     {
         $this->categoryId = null;
         $this->categoryName = null;
+    }
+
+    // #[On('show-product-details')]
+    public function getProduct($id)
+    {        
+        $this->isLoading = true;
+        $this->product = Product::with('sizes', 'options')->findOrFail($id);
+        $this->isLoading = false; 
+        $this->showModal = true;
+        //dd($this->showModal);  
     }
 
 }

@@ -177,9 +177,6 @@
                                             </button>
                                         @endif
                                     </li>
-                                    <li>
-                                        <button class="btn common_btn btn-secondary" @click="showModal=false">Close</button>
-                                    </li>
                                 </ul>
                             </div>
                         @else
@@ -227,7 +224,7 @@
                     <div class="fp__menu_item">
                         <div class="fp__menu_item_img">
                             <img src="{{ asset($product->thumb_image) }}" alt="{{ $product->name }}" class="img-fluid w-100">
-                            <a class="category" href="#">{{ $product->category->name }}</a>
+                            <a class="category" href="{{ route('menu', ['id' => $product->category->id]) }}">{{ $product->category->name }}</a>
                         </div>
                         <div class="fp__menu_item_text">
                             <p class="rating">
