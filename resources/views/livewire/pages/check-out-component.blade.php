@@ -34,17 +34,21 @@
             <div class="row">
                 <div class="col-lg-8 col-lg-7 wow fadeInUp" data-wow-duration="1s">
                     <div class="fp__checkout_form">
-                        <div class="fp__check_form">
-                            <h5>select address <a href="#" data-bs-toggle="modal" data-bs-target="#address_modal"><i class="fas fa-plus"></i> add address</a></h5>
+                        <div class="fp__check_form" x-data="{showModal: @entangle('showModal')}">
+                            <h5>select address <a href="#" data-bs-toggle="modal" data-bs-target="#address_modal" x-on:click="showModal = ! showModal"><i class="fas fa-plus"></i> add address</a></h5>
                             <div class="fp__address_modal">
-                                <div wire:ignore class="modal fade" id="address_modal" data-bs-backdrop="static"
+                                <div x-show="showModal" class="modal-backdrop" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);"></div>
+                                <div wire:ignore class="modal fade animated" id="address_modal" data-bs-backdrop="static"
                                      data-bs-keyboard="false" tabindex="-1" aria-labelledby="address_modalLabel"
-                                     aria-hidden="true">
+                                     aria-hidden="true" x-show="showModal" :class="{ 'show': showModal }"
+                                >
                                     <div class="modal-dialog modal-dialog-centered">
                                         <div class="modal-content">
+                                            <form wire:submit.prevent="save">
+                                                @error('first_name') <div class="invalid-feedback">{{$message}}</div> @enderror
                                             <div class="modal-header">
                                                 <h1 class="modal-title fs-5" id="address_modalLabel">add new address</h1>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                <button type="button" class="btn-close" aria-label="Close" @click="showModal = false"></button>
                                             </div>
                                             <div class="modal-body">
                                                 <div class="fp_dashboard_new_address d-block">
@@ -61,8 +65,8 @@
                                                     </div>
                                                     <div class="row">
                                                         <div class="col-md-6 col-lg-12 col-xl-6">
-                                                            <div class="fp__check_single_form">
-                                                                <input type="text" placeholder="First Name" class="@error('first_name') is-invalid @enderror" wire:model="first_name">
+                                                            <div class="">
+                                                                <input type="text" placeholder="First Name" class="@error('first_name') is-invalid @enderror" wire:model.live="first_name">
                                                                 @error('first_name') <div class="invalid-feedback">{{$message}}</div> @enderror
                                                             </div>
                                                         </div>
@@ -109,10 +113,12 @@
 
                                             </div>
                                             <div class="d-flex justify-content-center mb-3">
-                                                <button type="button" class="common_btn cancel_new_address mx-4 w-25" wire:click.prevent="cancel">cancel</button>
-                                                <button type="submit" class="common_btn mx-4 w-25" wire:click="save">save address</button>
+                                                <button type="button" class="common_btn cancel_new_address mx-4 w-25" @click="showModal = false">cancel</button>
+                                                <button type="submit" class="common_btn mx-4 w-25">save address</button>
                                             </div>
+                                            </form>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>

@@ -12,8 +12,8 @@
                         <p>{{ $titles->sub_title ?? '' }}</p>
                     </div>
                 </div>
-            </div>        
-    
+            </div>
+
     {{-- Owlo carousel --}}
     <div class="row wow fadeInUp">
         <div wire:ignore class="owl-carousel owl-theme">
@@ -41,32 +41,14 @@
         </div>
         <div class="custom-dots"></div>
     </div>
-{{-- Owlo carousel --}}        
-        </div>    
-        
-    <!--Carousel Wrapper-->     
+{{-- Owlo carousel --}}
+        </div>
+
+    <!--Carousel Wrapper-->
 
 
-    
-    
-    {{-- <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            document.addEventListener('click', function (event) {
-                if (event.target.closest('.call-product-daily')) {
-                    const productId = event.target.closest('.call-product-daily').getAttribute('data-product-id');
-                    console.log('Calling productDaily with ID:', productId);
-                    if (window.Livewire) {
-                        window.Livewire.emit('productDaily', productId);
-                    } else {
-                        console.error('Livewire is not loaded');
-                    }
-                }
-            });
-        });
-    </script> --}}
-    
-</section>    
-        
+</section>
+
     @push('mdb-js')
         <script src="{{ asset('assets/js/owl.carousel.min.js') }}"></script>
         <script>
@@ -75,9 +57,25 @@
                 loop:true,
                 autoplaySpeed:500,
                 items:3,
+                nav:true,
                 autoplay:true,
                 dots: true,
                 dotsContainer: '.custom-dots',
+                responsive:{
+                    0:{
+                        items:1, // Number of items to show at 0px (extra small screens)
+                        nav:false // Hide navigation arrows on very small screens
+                    },
+                    600:{
+                        items:2, // Number of items to show at 600px and up
+                        nav:true
+                    },
+                    1000:{
+                        items:3, // Number of items to show at 1000px and up
+                        nav:true,
+                        loop:true
+                    }
+                }
             });
 
             var dotsContainer = $('.custom-dots');
@@ -97,8 +95,8 @@
             });
         </script>
     @endpush
-    
-    @push('mdb-css')   
+
+    @push('mdb-css')
 {{--  --}}
 <link rel="stylesheet" href="{{ asset('assets/css/owl.carousel.min.css') }}">
 
@@ -130,5 +128,5 @@
     }
 </style>
     @endpush
-    
+
 </div>

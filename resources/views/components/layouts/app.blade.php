@@ -22,12 +22,13 @@
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">
 
     <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-    
+
+    @livewireStyles
     @stack('message')
     @stack('notif')
-    @stack('mdb-css')    
-    @stack('scripts-pusher')    
-        
+    @stack('mdb-css')
+    @stack('scripts-pusher')
+
 
     <!-- <link rel="stylesheet" href="css/rtl.css"> -->
 </head>
@@ -48,7 +49,7 @@
                 </ul>
             </div>
             <div class="col-xl-6 col-md-4 d-none d-md-block">
-                <ul class="topbar_icon d-flex flex-wrap">                    
+                <ul class="topbar_icon d-flex flex-wrap">
                     @guest
                         <li><a href="{{ route('login') }}" wire:navigate>{{ __('Login') }}</a></li>
                         <li><a href="{{ route('register') }}" wire:navigate>{{ __('Register') }}</a></li>
@@ -183,8 +184,8 @@
                 <div class="col-lg-3 col-sm-8 col-md-6 order-lg-4">
                     <div class="fp__footer_content">
 
-                        <livewire:components.subscribe-component /> 
-                                               
+                        <livewire:components.subscribe-component />
+
                         <div class="fp__footer_social_link">
                             <h5>follow us:</h5>
                             <ul class="d-flex flex-wrap">
@@ -262,6 +263,7 @@
 <!-- ex zoom js -->
 <script src="{{ asset('assets/js/jquery.exzoom.js') }}"></script>
 
+@livewireScripts
 <!--main/custom js-->
 <script src="{{ asset('assets/js/main.js') }}"></script>
 <script>

@@ -14,7 +14,7 @@ class CheckOutComponent extends Component
 {
     public $delivery = 10;
     public $discount = 0;
-
+    public $showModal = false;
     public $address;
     public $user_id;
     public $icon;
@@ -31,14 +31,10 @@ class CheckOutComponent extends Component
     public $address_id;
 
     protected $rules = [
-        'first_name' => ['required', 'max:255'],
-        //'last_name' => ['nullable','string','max:255'],
-        //'user_id' => ['required','integer'],
-        'delivery_area_id' => ['required','integer'],
-        //'email' => ['required','email'],
-        'phone' => ['required','string','max:255'],
-        'address' => ['required'],
-        'type' => ['required'],
+        'first_name' => 'required|string|max:255',
+        'phone' => 'required|string|max:15',
+        'address' => 'required|string|max:500',
+        'delivery_area_id' => 'required|exists:areas,id',
     ];
 
     public function render()
@@ -64,6 +60,8 @@ class CheckOutComponent extends Component
 
     public function save()
     {
+        $this->validate();
+
         $address = new Address();
         $address->user_id = Auth::user()->id;
         $address->icon = '<i class="fas fa-home"></i>';
@@ -77,6 +75,7 @@ class CheckOutComponent extends Component
         $address->save();
         flash()->success(__('Address has been added.'));
         $this->dispatch('close-modal');
+        $this->showModal = false;
         $this->reset(['first_name', 'last_name', 'email', 'phone', 'type', 'address', 'delivery_area_id']);
     }
 
@@ -117,6 +116,7 @@ class CheckOutComponent extends Component
 
     public function cancel()
     {
-        $this->dispatch('close-modal');
+//        $this->dispatch('close-modal');
+        $this->showModal = false;
     }
 }
