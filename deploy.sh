@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# sh ./deploy.sh
+
 set -e
 
 git pull origin main
