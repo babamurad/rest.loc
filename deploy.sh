@@ -2,6 +2,8 @@
 
 # sh ./deploy.sh
 
+echo "Deploying..."
+
 set -e
 
 git pull origin main
@@ -37,3 +39,5 @@ php8.3 artisan event:cache
 php8.3 artisan queue:restart
 
 php8.3 artisan up
+
+echo "Done!"
