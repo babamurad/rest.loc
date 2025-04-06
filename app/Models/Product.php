@@ -58,3 +58,4 @@ class Product extends Model
         return $this->hasOne(DailyOffer::class);
     }
 }
+

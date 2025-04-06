@@ -1,1 +1,48 @@
 https://github.com/anayarojo/laravel-shopping-cart
+
+Компоненты администратора:
+    AdminChatComponent (уже есть тест)
+    AdminDashboardComponent
+    AdminProfileComponent
+    CategoryIndexComponent, CategoryCreateComponent, CategoryEditComponent
+    CouponIndexComponent, CouponCreateComponent, CouponEditComponent
+    DailyOfferIndexComponent, DailyOfferCreateComponent, DailyOfferEditComponent
+    BannerIndex, BannerCreate, BannerEdit
+    ChefIndex, ChefCreate, ChefEdit
+    TestimonialIndex, TestimonialCreate, TestimonialEdit
+    DeliveryAreaComponent, DeliveryAreaCreate, DeliveryAreaEdit
+    OrderIndexComponent, OrderViewComponent
+    WhyChooseUsComponent
+    NewsLetterComponent
+    FooterInfoComponent
+Компоненты пользователя:
+    HomeComponent
+    CartComponent
+    CheckOutComponent
+    PaymentComponent
+    ProductDetails
+    LoginComponent, RegisterComponent, ForgotPasswordComponent
+    Dashboard, Profile, ChangePassword, UserOrders
+    MenuComponent
+    ChefPageComponent
+    TestimonialPageComponent
+Общие компоненты:
+    FoodMenuComponent
+
+    Приоритет тестирования можно определить по важности функционала:
+        Высокий приоритет:
+            Компоненты аутентификации (Login, Register)
+            Компоненты заказа и оплаты (Cart, Checkout, Payment)
+            Компоненты управления продуктами и категориями
+        Средний приоритет:
+            Компоненты профиля и дашборда
+            Компоненты отображения продуктов и меню
+        Низкий приоритет:
+            Информационные компоненты (About, Contact)
+            Вспомогательные компоненты (Banner, Testimonial)
+        Для каждого компонента стоит тестировать:
+            Корректность рендеринга
+            Функциональность (методы, события)
+            Взаимодействие с базой данных
+            Валидацию форм (где применимо)
+            Авторизацию и доступ к функциям

@@ -158,43 +158,47 @@
         });        
 
         // Инициализация Pusher
-        const pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
-            cluster: '{{ env('PUSHER_APP_CLUSTER') }}'
-        });
+        @if(!app()->environment('testing'))
+            const pusher = new Pusher('{{ env('PUSHER_APP_KEY') }}', {
+                cluster: '{{ env('PUSHER_APP_CLUSTER') }}'
+            });
 
-        const channel = pusher.subscribe('message-sent');
-        
-        channel.bind('message-event', function(data) {
-            const chatContent = document.getElementById('chatContent');
-            const isCurrentUser = data.sender_id == {{ Auth::id() }};
+            const channel = pusher.subscribe('message-sent');
             
-            // Добавляем обработку непрочитанных сообщений
-            if (!isCurrentUser) {
-                const userListItem = document.querySelector(`li[wire\\:click="setSenderId(${data.sender_id})"]`);
-                if (userListItem && !userListItem.classList.contains('beep')) {
-                    userListItem.classList.add('beep');
+            channel.bind('message-event', function(data) {
+                const chatContent = document.getElementById('chatContent');
+                const isCurrentUser = data.sender_id == {{ Auth::id() }};
+                
+                // Добавляем обработку непрочитанных сообщений
+                if (!isCurrentUser) {
+                    const userListItem = document.querySelector(`li[wire\\:click="setSenderId(${data.sender_id})"]`);
+                    if (userListItem && !userListItem.classList.contains('beep')) {
+                        userListItem.classList.add('beep');
+                    }
                 }
-            }
-            
-            const messageHtml = `
-                <div class="chat-item ${isCurrentUser ? 'chat-left' : 'chat-right'}">
-                    <img src="${isCurrentUser ? '{{ asset(auth()->user()->avatar) }}' : '{{ asset($chatUser->avatar) }}'}">
-                    <div class="chat-details">
-                        <div class="chat-text">${data.message}</div>
-                        <div class="chat-time">${formatDate(data.created_at)}</div>
+                
+                const messageHtml = `
+                    <div class="chat-item ${isCurrentUser ? 'chat-left' : 'chat-right'}">
+                        <img src="${isCurrentUser ? '{{ asset(auth()->user()->avatar) }}' : '{{ asset(isset($chatUser) && $chatUser ? $chatUser->avatar : "admin/assets/img/avatar/avatar-1.png") }}'}">
+                        <div class="chat-details">
+                            <div class="chat-text">${data.message}</div>
+                            <div class="chat-time">${formatDate(data.created_at)}</div>
+                        </div>
                     </div>
-                </div>
-            `;
-            
-            chatContent.insertAdjacentHTML('beforeend', messageHtml);
-            scrollToBottom();
+                `;
+                
+                chatContent.insertAdjacentHTML('beforeend', messageHtml);
+                scrollToBottom();
 
-            // Воспроизводим звук только если он был инициализирован
-            if (soundInitialized) {
-                notificationSound.play().catch(function(error) {
-                    console.log('Ошибка воспроизведения звука:', error);
-                });
-            }
-        });
+                // Воспроизводим звук только если он был инициализирован
+                if (soundInitialized) {
+                    notificationSound.play().catch(function(error) {
+                        console.log('Ошибка воспроизведения звука:', error);
+                    });
+                }
+            });
+        @endif
     });
 </script>
+
+

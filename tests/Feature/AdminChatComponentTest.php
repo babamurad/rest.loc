@@ -39,8 +39,8 @@ class AdminChatComponentTest extends TestCase
 
     public function test_admin_can_send_message()
     {
-        $admin = User::factory()->create(['role' => 'admin']);
-        $user = User::factory()->create();
+        $admin = User::factory()->create(['role' => 'admin', 'avatar' => 'admin/assets/img/avatar/avatar-1.png']);
+        $user = User::factory()->create(['avatar' => 'admin/assets/img/avatar/avatar-2.png']);
         
         $this->actingAs($admin);
 
@@ -59,3 +59,4 @@ class AdminChatComponentTest extends TestCase
         ]);
     }
 }
+
