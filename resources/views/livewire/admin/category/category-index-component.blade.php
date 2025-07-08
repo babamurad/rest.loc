@@ -68,6 +68,9 @@
                         <p>No items found.</p>
                     @endif
                 </div>
+                <div class="card-footer">
+                    {{ $categories->links() }}
+                </div>
             </div>
         </div>
     </div>
