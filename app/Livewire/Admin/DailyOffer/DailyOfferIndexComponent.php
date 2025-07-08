@@ -29,25 +29,58 @@ class DailyOfferIndexComponent extends Component
         $this->delId = $id;
     }
 
+    /**
+     * Изменяет статус ежедневного предложения (активный/неактивный).
+     *
+     * @param int $id
+     * @return void
+     */
     public function ActInact($id)
     {
-        $dailyOffer = DailyOffer::find($id);
-        $dailyOffer->status =!$dailyOffer->status;
-        $dailyOffer->save();
+        try {
+            $dailyOffer = DailyOffer::find($id);
+            $dailyOffer->status = !$dailyOffer->status;
+            $dailyOffer->save();
+            toastr()->success('Статус изменен!');
+        } catch (\Exception $e) {
+            \Log::error('Ошибка при изменении статуса ежедневного предложения: ' . $e->getMessage());
+            toastr()->error('Ошибка при изменении статуса!');
+        }
     }
 
+    /**
+     * Получает ID для удаления.
+     *
+     * @param int $id
+     * @return void
+     */
     public function getDelId($id)
     {
         $this->delId = $id;
     }
 
+    /**
+     * Удаляет ежедневное предложение.
+     *
+     * @return void
+     */
     public function destroy()
     {
-        DailyOffer::findOrFail($this->delId)->delete();
-        $this->dispatch('closeModal');
-        toastr()->flash('error', 'Item has been deleted.');
+        try {
+            DailyOffer::findOrFail($this->delId)->delete();
+            $this->dispatch('closeModal');
+            toastr()->success('Предложение удалено!');
+        } catch (\Exception $e) {
+            \Log::error('Ошибка при удалении ежедневного предложения: ' . $e->getMessage());
+            toastr()->error('Ошибка при удалении!');
+        }
     }
 
+    /**
+     * Сохраняет заголовки для ежедневных предложений.
+     *
+     * @return void
+     */
     public function saveDailyTitle()
     {
         $this->validate(
@@ -58,13 +91,17 @@ class DailyOfferIndexComponent extends Component
             ]
         );
 
-        WhyChooseUs::where('key', 2)->update([
-            'title' => $this->title,
-            'top_title' => $this->top_title,
-            'sub_title' => $this->sub_title,
-        ]);
-//        dd('validate');
-        toastr()->success('Заголовки сохранены');
+        try {
+            WhyChooseUs::where('key', 2)->update([
+                'title' => $this->title,
+                'top_title' => $this->top_title,
+                'sub_title' => $this->sub_title,
+            ]);
+            toastr()->success('Заголовки сохранены');
+        } catch (\Exception $e) {
+            \Log::error('Ошибка при сохранении заголовков: ' . $e->getMessage());
+            toastr()->error('Ошибка при сохранении заголовков!');
+        }
     }
 
     public function mount()

@@ -6,17 +6,20 @@ use App\Models\Category;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 
+/**
+ * Фабрика для создания фейковых категорий.
+ */
 class CategoryFactory extends Factory
 {
     /**
-     * The name of the factory's corresponding model.
+     * Модель, соответствующая фабрике.
      *
      * @var string
      */
     protected $model = Category::class;
 
     /**
-     * Define the model's default state.
+     * Определяет состояние модели по умолчанию.
      *
      * @return array
      */
@@ -26,7 +29,7 @@ class CategoryFactory extends Factory
         return [
             'name' => $name,
             'slug' => Str::slug($name),
-            // Remove the image field as it doesn't exist in the database
+            // Убираем поле image, так как его нет в базе данных
             'order' => $this->faker->numberBetween(1, 100),
             'status' => 1,
         ];

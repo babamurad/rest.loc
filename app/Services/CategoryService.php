@@ -7,14 +7,16 @@ use App\Models\Category;
 class CategoryService
 {
     /**
-     * Delete category
+     * Удаление категории.
      *
-     * @param int $id
+     * @param int $id ID категории для удаления.
      * @return void
      */
     public function deleteCategory(int $id): void
     {
+        // Находим категорию по ID
         $item = Category::findOrFail($id);
+        // Удаляем категорию
         $item->delete();
     }
 }

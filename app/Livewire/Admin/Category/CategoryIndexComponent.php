@@ -9,10 +9,18 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use Livewire\WithPagination;
 
+/**
+ * Компонент для отображения списка категорий в административной панели.
+ */
 class CategoryIndexComponent extends Component
 {
     use WithPagination;
 
+    /**
+     * ID категории для удаления.
+     *
+     * @var int|null
+     */
     public $delId;
 
     /**
@@ -21,7 +29,7 @@ class CategoryIndexComponent extends Component
     private CategoryService $categoryService;
 
     /**
-     * Inject CategoryService
+     * Внедрение CategoryService.
      *
      * @param CategoryService $categoryService
      * @return void
@@ -32,7 +40,7 @@ class CategoryIndexComponent extends Component
     }
 
     /**
-     * Reset page number when searching
+     * Сброс номера страницы при поиске.
      *
      * @return void
      */
@@ -40,6 +48,12 @@ class CategoryIndexComponent extends Component
     {
         $this->resetPage();
     }
+
+    /**
+     * Отображение компонента.
+     *
+     * @return \Illuminate\Contracts\View\View|\Illuminate\Contracts\View\Factory
+     */
     #[Layout('livewire.admin.layouts.admin-app')]
     public function render()
     {
@@ -48,22 +62,31 @@ class CategoryIndexComponent extends Component
     }
 
     /**
-     * Delete category
+     * Удаление категории.
      *
      * @return \Illuminate\Http\RedirectResponse
      */
     public function destroy()
     {
         try {
+            // Удаляем категорию с помощью CategoryService
             $this->categoryService->deleteCategory($this->delId);
             $this->dispatch('closeModal');
-            toastr()->error('Deleted!');
+            toastr()->success('Категория удалена!');
         } catch (\Exception $e) {
-            toastr()->error('Error deleting category!');
+            // Логируем ошибку
+            \Log::error('Ошибка при удалении категории: ' . $e->getMessage());
+            toastr()->error('Ошибка при удалении категории!');
         }
         return redirect()->route('admin.category.index');
     }
 
+    /**
+     * Установка ID категории для удаления.
+     *
+     * @param int $id
+     * @return void
+     */
     public function deleteId($id)
     {
         $this->delId = $id;
