@@ -57,7 +57,7 @@ class CategoryIndexComponent extends Component
     #[Layout('livewire.admin.layouts.admin-app')]
     public function render()
     {
-        $categories = Category::with('products')->orderBy('order', 'asc')->paginate(10);
+        $categories = Category::with('products', 'children')->whereNull('parent_id')->orderBy('order', 'asc')->paginate(10);
         return view('livewire.admin.category.category-index-component', compact('categories'));
     }
 

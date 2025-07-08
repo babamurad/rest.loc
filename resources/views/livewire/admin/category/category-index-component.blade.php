@@ -5,6 +5,7 @@
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12">
+            @include('livewire.admin.category.category-tree', ['categories' => $categories])
             <div class="card card-primary">
                 <div class="card-header">
                     <h4>{{ __('Categories list') }}</h4>
