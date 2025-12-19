@@ -24,34 +24,6 @@ class CalcCart
         return $total;
     }
 
-    /** Create Order in Database */
-    public static function createOrder()
-    {
-        // Database connection and order creation logic
-        // Here you would insert the customer data and order details into your database
-        // and return the order ID
-        // Example: $orderID = DB::table('orders')->insertGetId($customerData);
-        // return $orderID;
-        $order = new Order();
-        $order->invoice_id = CalcCart::generateInvoiceId();
-        $order->user_id = auth()->user()->id;
-        $order->address = session()->get('address');
-        $order->discount = self::getDiscount(self::cartTotal());
-        $order->delivery_charge = session()->get('deliveryPrice') ?? 0;
-        $order->subtotal = self::cartTotal();
-        $total = self::cartTotal() + session()->get('deliveryPrice');
-        $order->grand_total = $total - session()->get('discount');
-        $order->product_qty = Cart::content()->count();
-        $order->payment_method = null;
-        $order->payment_status = 'pending';
-        $order->payment_approve_date = null;
-        $order->transection_id = null;
-        $order->coupon_info = json_encode(session()->get('coupon'));
-        $order->currency_name = null;
-        $order->order_status = 'pending';
-        $order->save();
-
-    }
 
     /** Clear Session Items */
     public static function clearCartSession()
@@ -61,8 +33,8 @@ class CalcCart
 
     public static function getDiscount($total)
     {
-        if(session()->has('coupon')) {
-            if(session()->get('coupon')['discount_type'] == 'percent')
+        if (session()->has('coupon')) {
+            if (session()->get('coupon')['discount_type'] == 'percent')
                 $discount = number_format(session()->get('coupon')['discount'] * $total / 100, 2);
             else
                 $discount = number_format(session()->get('coupon')['discount'], 2);
@@ -83,7 +55,7 @@ class CalcCart
     {
         $randomNumber = rand(1, 9999);
         $currentDateTime = now();
-        $invoiceId = $randomNumber.$currentDateTime->format('yd').$currentDateTime->format('s');
+        $invoiceId = $randomNumber . $currentDateTime->format('yd') . $currentDateTime->format('s');
         return $invoiceId;
     }
 
@@ -131,9 +103,9 @@ class CalcCart
                     $chunkText .= ' ';
                 }
 
-                if ($index == 1){
+                if ($index == 1) {
                     $integerText = $integerText . ' müň ' . $chunkText;
-                } elseif($index == 2) {
+                } elseif ($index == 2) {
                     $integerText = $integerText . ' million ' . $chunkText;
                 } else {
                     $integerText = $integerText . $chunkText;
@@ -146,6 +118,6 @@ class CalcCart
         $decimalPart = substr($decimalPart, 0, 2);
 
         // Возвращаем текстовое представление суммы
-        return $integerText . 'manat ' . $decimalPart .  ' teňňe';
+        return $integerText . 'manat ' . $decimalPart . ' teňňe';
     }
 }
