@@ -54,33 +54,33 @@
     <div class="row">
         <div class="col-sm-6">
             <div x-data="{ open: false }" class="mb-4">
-                <button x-on:click="open = ! open" class="btn btn-primary">Why Choose Us Titles</button>
+                <button x-on:click="open = ! open" class="btn btn-primary">{{ __('Why Choose Us Titles') }}</button>
 
                 <div x-show="open" x-transition>
                     <div class="row mt-4">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Top Title</label>
+                                <label>{{ __('Top Title') }}</label>
                                 <input type="text" class="form-control @error('top_title') is-invalid @enderror" wire:model="top_title">
                                 @error('top_title') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Main Title</label> @error('title') is-invalid @enderror
+                                <label>{{ __('Main Title') }}</label> @error('title') is-invalid @enderror
                                 <input type="text" class="form-control" wire:model="title">
                                 @error('title') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label>Sub Title</label>
+                                <label>{{ __('Sub Title') }}</label>
                                 <input type="text" class="form-control @error('sub_title') is-invalid @enderror" wire:model="sub_title">
                                 @error('sub_title') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary"  x-on:click="open = ! open" wire:click="saveTitle">Save</button>
+                    <button class="btn btn-primary"  x-on:click="open = ! open" wire:click="saveTitle">{{ __('Save') }}</button>
                 </div>
             </div>
         </div>
@@ -92,7 +92,7 @@
                     <h4>{{ __('Why choose us section items list') }}</h4>
                     <div class="card-header-action">
                         <a href="{{ route('admin.wcu-create') }}" class="btn btn-primary">
-                            Create New
+                            {{ __('Create New') }}
                         </a>
                     </div>
                 </div>
@@ -102,11 +102,11 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Icon</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Order</th>
-                            <th scope="col" colspan="2" class="text-center">Actions</th>
+                            <th scope="col">{{ __('Icon') }}</th>
+                            <th scope="col">{{ __('Title') }}</th>
+                            <th scope="col">{{ __('Status') }}</th>
+                            <th scope="col">{{ __('Order') }}</th>
+                            <th scope="col" colspan="2" class="text-center">{{ __('Actions') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -124,9 +124,9 @@
                                     </td>
                                     <td>
                                         @if ($choose->status)
-                                            <span class="badge badge-success">Active</span>
+                                            <span class="badge badge-success">{{ __('Active') }}</span>
                                         @else
-                                            <span class="badge badge-danger">Inactive</span>
+                                            <span class="badge badge-danger">{{ __('Inactive') }}</span>
                                         @endif
                                     </td>
 
@@ -147,7 +147,7 @@
                         </tbody>
                     </table>
                     @if(!$chooses)
-                        <p>No items found.</p>
+                        <p>{{ __('No items found.') }}</p>
                     @endif
                 </div>
             </div>

@@ -20,11 +20,11 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Min/Max</th>
-                            <th scope="col">Delivery</th>
-                            <th scope="col">Status</th>
-                            <th scope="col" class="text-center">Actions</th>
+                            <th scope="col">{{ __('Name') }}</th>
+                            <th scope="col">{{ __('Min/Max') }}</th>
+                            <th scope="col">{{ __('Delivery') }}</th>
+                            <th scope="col">{{ __('Status') }}</th>
+                            <th scope="col" class="text-center">{{ __('Actions') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -39,13 +39,13 @@
                                         <span class="badge badge-light">{{ $area->min_delivery_time  }} - {{ $area->max_delivery_time  }} {{__('minute')}}</span>
                                     </td>
                                     <td>
-                                        <span class="badge badge-info">{{ $area->delivery_fee  }} man.</span>
+                                        <span class="badge badge-info">{{ $area->delivery_fee  }} {{ __('manat') }}</span>
                                     </td>
                                     <td>
                                         @if ($area->status)
-                                            <span class="badge badge-success">Active</span>
+                                            <span class="badge badge-success">{{ __('Active') }}</span>
                                         @else
-                                            <span class="badge badge-danger">Inactive</span>
+                                            <span class="badge badge-danger">{{ __('Inactive') }}</span>
                                         @endif
                                     </td>
                                     <td class="text-center" style="width: 10%;">
@@ -63,7 +63,7 @@
                     </table>
                     {{ $areas->links() }}
                     @if(!$areas)
-                        <p>No items found.</p>
+                        <p>{{ __('No items found.') }}</p>
                     @endif
                 </div>
             </div>
@@ -82,17 +82,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ConfirmDelete">Удаление</h5>
+                    <h5 class="modal-title" id="ConfirmDelete">{{ __('Удаление') }}</h5>
                     <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close"></button>
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Вы действительно хотите удалить?</p>
+                    <p>{{ __('Вы действительно хотите удалить?') }}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-danger waves-effect waves-light" wire:click="destroy">Удалить</button>
+                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">{{ __('Отмена') }}</button>
+                    <button type="button" class="btn btn-danger waves-effect waves-light" wire:click="destroy">{{ __('Удалить') }}</button>
                 </div>
             </div>
         </div>

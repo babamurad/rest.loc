@@ -1,10 +1,10 @@
 <section class="section">
 
     <div class="section-header">
-        <h1>Messages</h1>
+        <h1>{{ __('Messages') }}</h1>
         <div class="section-header-breadcrumb">
-            <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">Dashboard</a></div>
-            <div class="breadcrumb-item"><a href="{{ route('admin.chat') }}">Messages</a></div>
+            <div class="breadcrumb-item active"><a href="{{ route('admin.dashboard') }}">{{ __('Dashboard') }}</a></div>
+            <div class="breadcrumb-item"><a href="{{ route('admin.chat') }}">{{ __('Messages') }}</a></div>
         </div>
     </div>
 
@@ -18,7 +18,7 @@
             <div class="col-12 col-sm-6 col-lg-4">
                 <div class="card">
                     <div class="card-header">
-                        <h4>Who's Online? {{ $senderId }}</h4>
+                        <h4>{{ __("Who's Online?") }} {{ $senderId }}</h4>
                     </div>
                     <div class="card-body">
                         <ul class="list-unstyled list-unstyled-border">
@@ -30,9 +30,9 @@
                                     <div class="media-body">
                                         <div class="mt-0 mb-1 font-weight-bold">{{ ucfirst($chatUser->name) }}</div>
                                         @if($chatUser->isOnline())
-                                        <div class="text-success text-small font-weight-600"><i class="fas fa-circle"></i> Online</div>
+                                        <div class="text-success text-small font-weight-600"><i class="fas fa-circle"></i> {{ __('Online') }}</div>
                                         @else
-                                        <div class="text-danger text-small font-weight-600"><i class="fas fa-circle"></i> Offline</div>
+                                        <div class="text-danger text-small font-weight-600"><i class="fas fa-circle"></i> {{ __('Offline') }}</div>
                                         @endif
                                     </div>
                                 </a>
@@ -48,7 +48,7 @@
             <div class="col-12 col-sm-6 col-lg-6">
                 <div class="card chat-box" id="mychatbox">
                     <div class="card-header">
-                        <h4>Chat with <strong class="text-primary">{{ $senderName }}</strong></h4>
+                        <h4>{{ __('Chat with') }} <strong class="text-primary">{{ $senderName }}</strong></h4>
                     </div>
                     <div class="card-body chat-content" id="chatContent" tabindex="2" style="height: 34rem;">
                         @if($chats && count($chats) > 0)
@@ -71,14 +71,14 @@
                             @endforeach
                         @else
                             <div class="text-center mt-4">
-                                <p>Нет сообщений</p>
+                                <p>{{ __('No messages') }}</p>
                             </div>
                         @endif
                     </div>
                     <div class="card-footer chat-form">
                         <form id="chat-form" wire:submit.prevent="sendMessage">
                             @csrf
-                            <input type="text" class="form-control" placeholder="Type a message" wire:model="message">
+                            <input type="text" class="form-control" placeholder="{{ __('Type a message') }}" wire:model="message">
                             @error('message')
                                 <span class="text-danger">{{ $message }}</span>
                             @enderror

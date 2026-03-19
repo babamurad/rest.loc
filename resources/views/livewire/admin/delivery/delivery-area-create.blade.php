@@ -1,6 +1,6 @@
 <section class="section">
     <div class="section-header">
-        <h1>Create Delivery Area</h1>
+        <h1>{{ __('Create Delivery Area') }}</h1>
         @include('livewire.admin.components.alerts')
     </div>
     <div class="row">
@@ -59,8 +59,8 @@
                     </div>
                 </div>
                 <div class="card-footer text-left">
-                    <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="create">Submit</button>
-                    <button class="btn btn-secondary" type="reset" wire:click="cancel">Cancel</button>
+                    <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="create">{{ __('Submit') }}</button>
+                    <button class="btn btn-secondary" type="reset" wire:click="cancel">{{ __('Cancel') }}</button>
                 </div>
 
             </div>

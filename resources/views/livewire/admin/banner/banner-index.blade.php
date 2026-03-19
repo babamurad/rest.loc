@@ -10,7 +10,7 @@
                     <h4>{{ __('Banners List') }}</h4>
                     <div class="card-header-action">
                         <a href="{{ route('admin.banner.create') }}" class="btn btn-primary">
-                            Create New
+                            {{ __('Create New') }}
                         </a>
                     </div>
                 </div>
@@ -20,11 +20,11 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Sub Title</th>
-                            <th scope="col">Status</th>
-                            <th scope="col" class="text-center">Actions</th>
+                            <th scope="col">{{ __('Image') }}</th>
+                            <th scope="col">{{ __('Title') }}</th>
+                            <th scope="col">{{ __('Sub Title') }}</th>
+                            <th scope="col">{{ __('Status') }}</th>
+                            <th scope="col" class="text-center">{{ __('Actions') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -49,9 +49,9 @@
                                                 @if($banner->status) checked @endif>
                                                 <label class="custom-control-label" for="agree{{ $banner->id }}" >
                                                 @if ($banner->status)
-                                                <span class="badge badge-success">Active</span>
+                                                <span class="badge badge-success">{{ __('Active') }}</span>
                                                 @else
-                                                <span class="badge badge-danger">Inactive</span>
+                                                <span class="badge badge-danger">{{ __('Inactive') }}</span>
                                                 @endif
                                                 </label>
                                             </div>
@@ -73,7 +73,7 @@
                     </table>
                     
                     @if(!$banners)
-                        <p>No items found.</p>
+                        <p>{{ __('No items found.') }}</p>
                     @else
                         {{ $banners->links() }}
                     @endif
@@ -93,17 +93,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Удаление</h5>
+                    <h5 class="modal-title">{{ __('Удаление') }}</h5>
                     <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close"></button>
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Вы действительно хотите удалить?</p>
+                    <p>{{ __('Вы действительно хотите удалить?') }}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-danger waves-effect waves-light" wire:click="destroy">Удалить</button>
+                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">{{ __('Отмена') }}</button>
+                    <button type="button" class="btn btn-danger waves-effect waves-light" wire:click="destroy">{{ __('Удалить') }}</button>
                 </div>
             </div>
         </div>

@@ -6,34 +6,34 @@
     <div class="row">
         <div class="col-sm-7">
             <div x-data="{ open: false }" class="mb-4">
-                <button x-on:click="open = ! open" class="btn btn-primary">Chefs Section Titles</button>
+                <button x-on:click="open = ! open" class="btn btn-primary">{{ __('Chefs Section Titles') }}</button>
 
                 <div x-show="open" x-transition>
                     <form wire:submit.prevent='saveTitle'>
                     <div class="row mt-4">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Top Title</label>
+                                <label>{{ __('Top Title') }}</label>
                                 <input type="text" class="form-control @error('top_title') is-invalid @enderror" wire:model="top_title">
                                 @error('top_title') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label class="@error('title') is-invalid @enderror">Main Title</label>
+                                <label class="@error('title') is-invalid @enderror">{{ __('Main Title') }}</label>
                                 <input type="text" class="form-control" wire:model="title">
                                 @error('title') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label>Sub Title</label>
+                                <label>{{ __('Sub Title') }}</label>
                                 <input type="text" class="form-control @error('sub_title') is-invalid @enderror" wire:model="sub_title">
                                 @error('sub_title') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-primary"  x-on:click="open = ! open">Save</button>
+                    <button type="submit" class="btn btn-primary"  x-on:click="open = ! open">{{ __('Save') }}</button>
                     </form>
                 </div>
             </div>
@@ -46,7 +46,7 @@
                     <h4>{{ __('Chefs List') }}</h4>
                     <div class="card-header-action">
                         <a href="{{ route('admin.chef.create') }}" class="btn btn-primary">
-                            Create New
+                            {{ __('Create New') }}
                         </a>
                     </div>
                 </div>
@@ -56,12 +56,12 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Show at home</th>
-                            <th scope="col" class="text-center">Actions</th>
+                            <th scope="col">{{ __('Image') }}</th>
+                            <th scope="col">{{ __('Name') }}</th>
+                            <th scope="col">{{ __('Title') }}</th>
+                            <th scope="col">{{ __('Status') }}</th>
+                            <th scope="col">{{ __('Show at home') }}</th>
+                            <th scope="col" class="text-center">{{ __('Actions') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -86,9 +86,9 @@
                                                 @if($chef->status) checked @endif>
                                                 <label class="custom-control-label" for="agree{{ $chef->id }}" >
                                                 @if ($chef->status)
-                                                <span class="badge badge-success">Active</span>
+                                                <span class="badge badge-success">{{ __('Active') }}</span>
                                                 @else
-                                                <span class="badge badge-danger">Inactive</span>
+                                                <span class="badge badge-danger">{{ __('Inactive') }}</span>
                                                 @endif
                                                 </label>
                                             </div>
@@ -101,9 +101,9 @@
                                                 @if($chef->show_at_home) checked @endif>
                                                 <label class="custom-control-label" for="showAtHome{{ $chef->id }}" >
                                                 @if ($chef->show_at_home)
-                                                <span class="badge badge-success">Yes</span>
+                                                <span class="badge badge-success">{{ __('Yes') }}</span>
                                                 @else
-                                                <span class="badge badge-danger">No</span>
+                                                <span class="badge badge-danger">{{ __('No') }}</span>
                                                 @endif
                                                 </label>
                                             </div>
@@ -125,7 +125,7 @@
                     </table>
 
                     @if(!$chefs)
-                        <p>No items found.</p>
+                        <p>{{ __('No items found.') }}</p>
                     @else
                         {{ $chefs->links() }}
                     @endif
@@ -145,17 +145,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Удаление</h5>
+                    <h5 class="modal-title">{{ __('Удаление') }}</h5>
                     <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close"></button>
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Вы действительно хотите удалить?</p>
+                    <p>{{ __('Вы действительно хотите удалить?') }}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-danger waves-effect waves-light" wire:click="destroy">Удалить</button>
+                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">{{ __('Отмена') }}</button>
+                    <button type="button" class="btn btn-danger waves-effect waves-light" wire:click="destroy">{{ __('Удалить') }}</button>
                 </div>
             </div>
         </div>

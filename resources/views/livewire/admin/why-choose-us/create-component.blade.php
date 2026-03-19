@@ -49,19 +49,19 @@
 @endpush
 <section class="section">
     <div class="section-header">
-        <h1>Why Choose Us</h1>
+        <h1>{{ __('Why choose us section') }}</h1>
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>Create WCU Item</h4>
+                    <h4>{{ __('Create WCU Item') }}</h4>
                 </div>
                 <div class="card-body">
                     <div class="row">
                         <div class="col-sm-12 col-md-6">
                             <div class="form-group">
-                                <label>Title</label>
+                                <label>{{ __('Title') }}</label>
                                 <input type="text" class="form-control @error('title') is-invalid @enderror" wire:model="title">
                                 @error('title') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
@@ -69,17 +69,17 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Sort Order</label>
+                                        <label>{{ __('Sort Order') }}</label>
                                         <input type="number" class="form-control @error('order') is-invalid @enderror" wire:model="order">
                                         @error('order') <div class="invalid-feedback">{{$message}}</div> @enderror
                                     </div>
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Status. Is Published?</label>
+                                        <label>{{ __('Status. Is Published?') }}</label>
                                         <select class="form-control @error('link') is-invalid @enderror"  wire:model="status">
-                                            <option value="1">Yes</option>
-                                            <option value="0">No</option>
+                                            <option value="1">{{ __('Yes') }}</option>
+                                            <option value="0">{{ __('No') }}</option>
                                         </select>
                                         @error('status') <div class="invalid-feedback">{{$message}}</div> @enderror
                                     </div>
@@ -88,7 +88,7 @@
                             <div class="row">
                                 <div class="col-sm-12">
                                     <div class="form-group">
-                                        <label>Textarea</label>
+                                        <label>{{ __('Short Description') }}</label>
                                         <textarea class="form-control @error('description') is-invalid @enderror" wire:model="description" rows="4"></textarea>
                                         @error('description') <div class="invalid-feedback">{{$message}}</div> @enderror
                                     </div>
@@ -96,8 +96,8 @@
                             </div>
 
                             <div class="card-footer text-left">
-                                <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="createItem">Submit</button>
-                                <button class="btn btn-secondary" type="reset" wire:click="cancel">Cancel</button>
+                                <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="createItem">{{ __('Submit') }}</button>
+                                <button class="btn btn-secondary" type="reset" wire:click="cancel">{{ __('Cancel') }}</button>
                             </div>
 
                         </div>
@@ -107,10 +107,10 @@
 
                             <div x-data="iconPicker" class="p-3">
                                 <div class="d-flex align-items-center mb-3">
-                                    <input type="text" x-model="icon" class="form-control me-2" placeholder="Выберите иконку" readonly wire:model.live="icon" />
+                                    <input type="text" x-model="icon" class="form-control me-2" placeholder="{{ __('Choose icon') }}" readonly wire:model.live="icon" />
 
                                     <button @click="open = true" class="btn btn-primary btn-lg">
-                                        <i :class="icon"></i> Выбрать иконку
+                                        <i :class="icon"></i> {{ __('Select Icon') }}
                                     </button>
 
                                 </div>

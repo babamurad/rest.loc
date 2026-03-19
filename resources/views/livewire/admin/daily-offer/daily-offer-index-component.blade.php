@@ -6,33 +6,33 @@
     <div class="row">            
         <div class="col-sm-6">
             <div x-data="{ open: false }" class="mb-4">
-                <button x-on:click="open = ! open" class="btn btn-primary">Daily Offer Titles</button>
+                <button x-on:click="open = ! open" class="btn btn-primary">{{ __('Daily Offer Titles') }}</button>
 
                 <div x-show="open" x-transition>
                     <div class="row mt-4">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Top Title</label>
+                                <label>{{ __('Top Title') }}</label>
                                 <input type="text" class="form-control @error('top_title') is-invalid @enderror" wire:model="top_title">
                                 @error('top_title') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Main Title</label> @error('title') is-invalid @enderror
+                                <label>{{ __('Main Title') }}</label> @error('title') is-invalid @enderror
                                 <input type="text" class="form-control" wire:model="title">
                                 @error('title') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label>Sub Title</label>
+                                <label>{{ __('Sub Title') }}</label>
                                 <input type="text" class="form-control @error('sub_title') is-invalid @enderror" wire:model="sub_title">
                                 @error('sub_title') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary"  x-on:click="open = ! open" wire:click="saveDailyTitle">Save</button>
+                    <button class="btn btn-primary"  x-on:click="open = ! open" wire:click="saveDailyTitle">{{ __('Save') }}</button>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
                     <h4>{{ __('Daily Offers list') }}</h4>
                     <div class="card-header-action">
                         <a href="{{ route('admin.daily-offer.create') }}" class="btn btn-primary">
-                            Create New
+                            {{ __('Create New') }}
                         </a>
                     </div>
                 </div>
@@ -54,10 +54,10 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Status</th>
-                            <th scope="col" class="text-center">Actions</th>
+                            <th scope="col">{{ __('Image') }}</th>
+                            <th scope="col">{{ __('Name') }}</th>
+                            <th scope="col">{{ __('Status') }}</th>
+                            <th scope="col" class="text-center">{{ __('Actions') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -79,9 +79,9 @@
                                                 @if($dailyOffer->status) checked @endif>
                                                 <label class="custom-control-label" for="agree{{ $dailyOffer->id }}" >
                                                 @if ($dailyOffer->status)
-                                                <span class="badge badge-success">Active</span>
+                                                <span class="badge badge-success">{{ __('Active') }}</span>
                                                 @else
-                                                <span class="badge badge-danger">Inactive</span>
+                                                <span class="badge badge-danger">{{ __('Inactive') }}</span>
                                                 @endif
                                                 </label>
                                             </div>
@@ -100,7 +100,7 @@
                     </table>
                     {{ $dailyOffers->links() }}
                     @if(!$dailyOffers)
-                        <p>No items found.</p>
+                        <p>{{ __('No items found.') }}</p>
                     @endif
                 </div>
             </div>

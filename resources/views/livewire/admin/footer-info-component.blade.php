@@ -43,7 +43,7 @@
 
                         </div>
                         <div class="col-sm-12 col-md-6">
-                            <label for="">Logo {{ asset($logo) }}</label>
+                            <label for="">{{ __('Logo') }} {{ asset($logo) }}</label>
                             <div class="image-preview img-fluid"
                                  style="
                                  @if($newlogo)
@@ -54,20 +54,20 @@
                                  background-size: cover;
                                  @error('logo') border: 2px dashed #dc3545; @enderror
                                  background-position: center center;  background-color: #F86F03;">
-                                <label for="image-upload" id="image-label">Choose File</label>
+                                <label for="image-upload" id="image-label">{{ __('Choose File') }}</label>
                                 <input type="file" name="logo" id="image-upload" wire:model="newlogo">
                             </div>
                             <!-- Загрузка в процессе -->
                             <div wire:loading wire:target="logo">
-                                <p>Идет загрузка...</p> <!-- Сообщение, пока идет загрузка -->
+                                <p>{{ __('Loading...') }}</p> <!-- Сообщение, пока идет загрузка -->
                             </div>
                         </div>
 
                     </div>
                 </div>
                 <div class="card-footer text-left">
-                    <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="updateFooterInfo">Submit</button>
-                    <button class="btn btn-secondary" type="reset" wire:click="cancel">Cancel</button>
+                    <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="updateFooterInfo">{{ __('Submit') }}</button>
+                    <button class="btn btn-secondary" type="reset" wire:click="cancel">{{ __('Cancel') }}</button>
                 </div>
             </div>
         </div>
