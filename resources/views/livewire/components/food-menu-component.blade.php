@@ -7,7 +7,7 @@
              summa : 0,
              count : 1,
              sizeId: 0,
-             showModal: @entangle('showModal'),
+             showModal: @entangle('showModal').live,
              getTotalOptionPrice() {
                 let totalOptionPrice = 0;
                 for (const option of this.checkedOptions) {
@@ -34,7 +34,7 @@
 
     <!-- CART POPUT START -->
     <div class="fp__cart_popup">
-        <div x-show="showModal" class="modal-backdrop" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);"></div>
+        <div x-show="showModal" x-cloak class="modal-backdrop" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5);"></div>
         <div class="loader loader--style6 preloader" wire:loading.delay>
             {{--     wire:loading.delay--}}
                 <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -66,6 +66,7 @@
               </svg>
         </div>
         <div x-show="showModal" 
+             x-cloak
              class="modal fade" tabindex="-1" aria-hidden="true"
              :class="{ 'show': showModal }" 
              :style="{ 'display': showModal ? 'block' : 'none' }"             
@@ -272,6 +273,9 @@
         .show{
             display: block !important;
             background-color: 
+        }
+        [x-cloak] {
+            display: none !important;
         }
         .toast {
             z-index: 849;

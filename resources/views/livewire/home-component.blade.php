@@ -4,7 +4,7 @@
         BANNER START
     ==============================-->
    <livewire:components.slider-component />
-{{--    <livewire:partials.carousel />--}}
+    {{--    <livewire:partials.carousel />--}}
     {{-- @livewire('components.slider-component') --}}
     <!--=============================
         BANNER END
