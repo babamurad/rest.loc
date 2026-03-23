@@ -7,6 +7,14 @@
 
     <title>{{ $title ?? 'Restaurant Template' }}</title>
     <link rel="icon" type="image/png" href="{{ asset('assets/images/favicon.png') }}">
+    
+    <!-- PWA -->
+    <meta name="theme-color" content="#ff7e00">
+    <link rel="manifest" href="{{ asset('manifest.json') }}">
+    <link rel="apple-touch-icon" href="{{ asset('assets/images/pwa-icon-512.png') }}">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="FoodPark">
     <link rel="stylesheet" href="{{ asset('assets/css/all.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ asset('assets/css/spacing.css') }}">
@@ -281,6 +289,16 @@
 
 @stack('mdb-js')
 @stack('modal')
+
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then(reg => console.log('Service Worker registered!', reg))
+                .catch(err => console.log('Service Worker registration failed: ', err));
+        });
+    }
+</script>
 
 </body>
 
