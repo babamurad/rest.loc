@@ -1,15 +1,15 @@
 <section class="section">
     <div class="section-header">
-        <h1>Slider</h1>
+        <h1>{{ __('Slider') }}</h1>
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>Slider</h4>
+                    <h4>{{ __('Slider') }}</h4>
                     <div class="card-header-action">
                         <a href="{{ route('admin.slider.create') }}" class="btn btn-primary" wire:navigate>
-                            Create New
+                            {{ __('Create New') }}
                         </a>
                     </div>
                 </div>
@@ -19,11 +19,11 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Offer</th>
-                            <th scope="col">Status</th>
-                            <th scope="col" colspan="2">Actions</th>
+                            <th scope="col">{{ __('Image') }}</th>
+                            <th scope="col">{{ __('Title') }}</th>
+                            <th scope="col">{{ __('Offer') }}</th>
+                            <th scope="col">{{ __('Status') }}</th>
+                            <th scope="col" colspan="2">{{ __('Actions') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -36,9 +36,9 @@
                                 <td>{{ $slider->offer }}</td>
                                 <td>
                                     @if($slider->status)
-                                        <span class="badge badge-success">Active</span>
+                                        <span class="badge badge-success">{{ __('Active') }}</span>
                                     @else
-                                        <span class="badge badge-danger">Inactive</span>
+                                        <span class="badge badge-danger">{{ __('Inactive') }}</span>
                                     @endif
                                 </td>
                                 <td class="flex">
@@ -61,24 +61,24 @@
                                              x-transition:leave-end="opacity-0 scale-90"
                                              class="modal" style="display: none;">
                                             <div class="modal-content">
-                                                <h2>Подтверждение удаления</h2>
-                                                <p>Вы уверены, что хотите удалить этот элемент?</p>
+                                                <h2>{{ __('Удаление') }}</h2>
+                                                <p>{{ __('Вы действительно хотите удалить?') }}</p>
                                                 <div class="row">
                                                     <div class="col-6">
-                                                        <button wire:click="cancel" @click="showModal = false" class="btn btn-secondary">Нет</button>
+                                                        <button wire:click="cancel" @click="showModal = false" class="btn btn-secondary">{{ __('Отмена') }}</button>
                                                     </div>
                                                     <div class="col-6">
-                                                        <button wire:click="confirmDeleteSlide" @click="showModal = false; $dispatch('delete-item')" class="btn btn-danger">Да</button>
+                                                        <button wire:click="confirmDeleteSlide" @click="showModal = false; $dispatch('delete-item')" class="btn btn-danger">{{ __('Удалить') }}</button>
                                                     </div>
                                                 </div>
                                             </div>
 
                                             <!-- Кнопки подтверждения и отмены -->
                                             <button @click="showModal = false; $dispatch('delete-item')" class="btn btn-danger">
-                                                Подтвердить удаление
+                                                {{ __('Удалить') }}
                                             </button>
                                             <button @click="showModal = false" class="btn btn-secondary">
-                                                Отмена
+                                                {{ __('Отмена') }}
                                             </button>
                                         </div>
                                     </div>
@@ -90,7 +90,7 @@
                         </tbody>
                     </table>
                     @else
-                    <p class="text-center">No items found.</p>
+                    <p class="text-center">{{ __('No items found.') }}</p>
                     @endif
                 </div>
             </div>

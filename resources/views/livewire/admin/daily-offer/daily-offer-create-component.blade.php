@@ -13,7 +13,7 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <label>{{__('Search')}}</label>
-                            <input type="text" wire:model.live="search" placeholder="Поиск продукта" class="form-control">
+                            <input type="text" wire:model.live="search" placeholder="{{ __('Search product') }}" class="form-control">
                             <ul>
                                 @foreach($filteredProducts as $product)
                                     <li class="product-item" style="cursor: pointer;" wire:click="addProduct({{ $product->id }})">
@@ -22,7 +22,7 @@
                                     </li>
                                 @endforeach
                             </ul>
-                            <p>Выбран: {{ ucfirst($name) }}</p>
+                            <p>{{ __('Selected') }}: {{ ucfirst($name) }}</p>
                         </div>
                         <div class="col-sm-6 col-md-6">
                             <div class="form-group">
@@ -37,8 +37,8 @@
                     </div>
                 </div>
                 <div class="card-footer text-left">
-                    <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="create">Submit</button>
-                    <button class="btn btn-secondary" type="reset" wire:click="cancel">Cancel</button>
+                    <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="create">{{ __('Submit') }}</button>
+                    <button class="btn btn-secondary" type="reset" wire:click="cancel">{{ __('Cancel') }}</button>
                 </div>
 
             </div>

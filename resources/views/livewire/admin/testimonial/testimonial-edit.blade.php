@@ -1,13 +1,13 @@
 <section class="section">
     <div class="section-header">
-        <h1>{{__('Create Testimonial Item')}}</h1>
+        <h1>{{ __('Edit Testimonial') }}</h1>
         @include('livewire.admin.components.alerts')
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>{{__('Edit Testimonial')}}</h4>
+                    <h4>{{ __('Edit Testimonial') }}</h4>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -22,12 +22,12 @@
                                  background-size: cover;
                                  @error('image') border: 2px dashed #dc3545; @enderror
                                  background-position: center center;>
-                                <label for="image-upload" id="image-label">Choose File</label>
+                                <label for="image-upload" id="image-label">{{ __('Choose File') }}</label>
                                 <input type="file" name="image" id="image-upload" wire:model="newimage">
                             </div>
                             <!-- Загрузка в процессе -->
                             <div wire:loading wire:target="image">
-                                <p>Идет загрузка...</p> <!-- Сообщение, пока идет загрузка -->
+                                <p>{{ __('Идет загрузка...') }}</p> <!-- Сообщение, пока идет загрузка -->
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
@@ -86,7 +86,7 @@
                     <div class="row">
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label>{{  __('Review') }}</label>
+                                <label>{{ __('Review') }}</label>
                                 <textarea class="form-control @error('review') is-invalid @enderror" rows="3" wire:model="review"></textarea>
                                 @error('review') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
@@ -95,8 +95,8 @@
                     
                 </div>
                 <div class="card-footer text-left">
-                    <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="update">Submit</button>
-                    <button class="btn btn-secondary" type="reset" wire:click="cancel">Cancel</button>
+                    <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="update">{{ __('Submit') }}</button>
+                    <button class="btn btn-secondary" type="reset" wire:click="cancel">{{ __('Cancel') }}</button>
                 </div>
 
             </div>

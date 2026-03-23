@@ -73,7 +73,7 @@
                         </div>
                         <div class="col-sm-3 offset-3">
                             <div class="input-group mt-2">
-                                <input type="text" class="form-control" placeholder="Search" wire:model.live.debounce.250ms="search">
+                                <input type="text" class="form-control" placeholder="{{ __('Search') }}" wire:model.live.debounce.250ms="search">
                             </div>
                         </div>
                     </div>
@@ -111,9 +111,9 @@
                                                 </a>
                                             </div>
                                             <div class="col-6 mt-1">
-                                                <span class="px-1 rounded badge-danger-light"><small>Price:{{ $product->price }}m.</small></span>
-                                                <span class="px-1 rounded badge-success-light"><small>Qty:{{ $product->quantity }}</small></span><br>
-                                                <span class="px-1 rounded badge-secondary-light"><small>ID - {{ $product->id }}</small></span>
+                                                <span class="px-1 rounded badge-danger-light"><small>{{ __('Price:') }}{{ $product->price }}{{ __('manat') }}</small></span>
+                                                <span class="px-1 rounded badge-success-light"><small>{{ __('Qty:') }}{{ $product->quantity }}</small></span><br>
+                                                <span class="px-1 rounded badge-secondary-light"><small>{{ __('ID - ') }}{{ $product->id }}</small></span>
                                             </div>
                                         </div>
 
@@ -131,7 +131,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <span class="badge badge-light">{{ $product->price }} m.</span>
+                                        <span class="badge badge-light">{{ $product->price }} {{ __('manat') }}</span>
                                     </td>
                                     <td>
                                         <span class="badge badge-info">{{ \Carbon\Carbon::create($product->created_at)->format('d.m.Y') }}</span>
@@ -169,17 +169,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ConfirmDelete">{{__('Удаление')}}</h5>
+                    <h5 class="modal-title" id="ConfirmDelete">{{ __('Удаление') }}</h5>
                     <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close"></button>
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>{{__('Вы действительно хотите удалить?')}}</p>
+                    <p>{{ __('Вы действительно хотите удалить?') }}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">{{__('Отмена')}}</button>
-                    <button type="button" class="btn btn-danger waves-effect waves-light" wire:click="destroy">{{__('Удалить')}}</button>
+                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">{{ __('Отмена') }}</button>
+                    <button type="button" class="btn btn-danger waves-effect waves-light" wire:click="destroy">{{ __('Удалить') }}</button>
                 </div>
             </div>
         </div>

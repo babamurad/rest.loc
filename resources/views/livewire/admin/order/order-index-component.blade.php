@@ -35,14 +35,14 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Invoice</th>
-                            <th scope="col">User Name</th>
-                            <th scope="col">Qty</th>
-                            <th scope="col">Total</th>
-                            <th scope="col">Payment Status</th>
-                            <th scope="col">Order Status</th>
-                            <th scope="col">Date</th>
-                            <th scope="col" class="text-center">Actions</th>
+                            <th scope="col">{{ __('Invoice') }}</th>
+                            <th scope="col">{{ __('User Name') }}</th>
+                            <th scope="col">{{ __('Qty') }}</th>
+                            <th scope="col">{{ __('Total') }}</th>
+                            <th scope="col">{{ __('Payment Status') }}</th>
+                            <th scope="col">{{ __('Order Status') }}</th>
+                            <th scope="col">{{ __('Date') }}</th>
+                            <th scope="col" class="text-center">{{ __('Actions') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -60,26 +60,26 @@
                                         <span class="badge badge-info">{{ $order->product_qty  }}</span>
                                     </td>
                                     <td>
-                                        <span class="badge text-danger">{{ $order->grand_total }} m.</span>
+                                        <span class="badge text-danger">{{ $order->grand_total }} {{ __('manat') }}</span>
                                     </td>
                                     <td>
                                         @if($order->payment_status == 'COMPLETED')
-                                            <span class="badge badge-success">Completed</span>
+                                            <span class="badge badge-success">{{ __('Completed') }}</span>
                                         @elseif($order->payment_status == 'PENDING')
-                                            <span class="badge badge-warning">Pending</span>
+                                            <span class="badge badge-warning">{{ __('Pending') }}</span>
                                         @endif
                                     </td>
                                     <td>
                                         @if($order->order_status == 'COMPLETED')
-                                            <span class="badge badge-success">Completed</span>
+                                            <span class="badge badge-success">{{ __('Completed') }}</span>
                                         @elseif($order->order_status == 'PENDING')
-                                            <span class="badge badge-warning">Pending</span>
+                                            <span class="badge badge-warning">{{ __('Pending') }}</span>
                                         @elseif($order->order_status == 'DECLINED')
-                                            <span class="badge badge-danger">Declined</span>
+                                            <span class="badge badge-danger">{{ __('Declined') }}</span>
                                         @elseif($order->order_status == 'IN_PROCESS')
-                                            <span class="badge badge-info">In process</span>
+                                            <span class="badge badge-info">{{ __('In process') }}</span>
                                          @elseif($order->order_status == 'DELIVERED')
-                                            <span class="badge badge-success">Delivered</span>
+                                            <span class="badge badge-success">{{ __('Delivered') }}</span>
                                         @endif
                                     </td>
                                     <td>
@@ -103,7 +103,7 @@
                     </table>
                     {{ $orders->links() }}
                     @if(!$orders)
-                        <p>No items found.</p>
+                        <p>{{ __('No items found.') }}</p>
                     @endif
                 </div>
             </div>
@@ -129,34 +129,34 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="orderStatusLabel">Modal title</h5>
+                    <h5 class="modal-title" id="orderStatusLabel">{{ __('Order Status Update') }}</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
                         <div class="form-group">
-                            <label for="payment_status">Payment Status</label>
+                            <label for="payment_status">{{ __('Payment Status') }}</label>
                             <select class="form-control" name="payment_status" id="payment_status" wire:model="payment_status">
-                                <option value="PENDING">Pending</option>
-                                <option value="COMPLETED">Completed</option>
+                                <option value="PENDING">{{ __('Pending') }}</option>
+                                <option value="COMPLETED">{{ __('Completed') }}</option>
                             </select>
                             @error('payment_status') <div class="invalid-feedback">{{$message}}</div> @enderror
                         </div>
                         <div class="form-group">
-                            <label for="order_status">Order Status</label>
+                            <label for="order_status">{{ __('Order Status') }}</label>
                             <select class="form-control @error('order_status') is-invalid @enderror" wire:model="order_status">
-                                <option value="PENDING">Pending</option>
-                                <option value="IN_PROCESS">In process</option>
-                                <option value="DELIVERED">Delivered</option>
-                                <option value="DECLINED">Declined</option>
+                                <option value="PENDING">{{ __('Pending') }}</option>
+                                <option value="IN_PROCESS">{{ __('In process') }}</option>
+                                <option value="DELIVERED">{{ __('Delivered') }}</option>
+                                <option value="DECLINED">{{ __('Declined') }}</option>
                             </select>
                             @error('order_status') <div class="invalid-feedback d-block">{{$message}}</div> @enderror
                         </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" wire:click="update">Update</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">{{ __('Close') }}</button>
+                    <button type="button" class="btn btn-primary" wire:click="update">{{ __('Update') }}</button>
                 </div>
             </div>
         </div>
@@ -170,17 +170,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="ConfirmDelete">Удаление</h5>
+                    <h5 class="modal-title" id="ConfirmDelete">{{ __('Удаление') }}</h5>
                     <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close"></button>
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Вы действительно хотите удалить?</p>
+                    <p>{{ __('Вы действительно хотите удалить?') }}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-danger waves-effect waves-light" wire:click="destroy">Удалить</button>
+                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">{{ __('Отмена') }}</button>
+                    <button type="button" class="btn btn-danger waves-effect waves-light" wire:click="destroy">{{ __('Удалить') }}</button>
                 </div>
             </div>
         </div>

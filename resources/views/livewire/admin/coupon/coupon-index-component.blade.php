@@ -11,7 +11,7 @@
                     <h4>{{ __('Coupons list') }}</h4>
                     <div class="card-header-action">
                         <a href="{{ route('admin.coupon.create') }}" class="btn btn-primary">
-                            Create New
+                            {{ __('Create New') }}
                         </a>
                     </div>
                 </div>
@@ -21,14 +21,14 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Code</th>
-                            <th scope="col">Quantity</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Discount Type</th>
-                            <th scope="col">Discount</th>
-                            <th scope="col">Expired Date</th>
-                            <th scope="col" class="text-center" colspan="2">Actions</th>
+                            <th scope="col">{{ __('Name') }}</th>
+                            <th scope="col">{{ __('Code') }}</th>
+                            <th scope="col">{{ __('Quantity') }}</th>
+                            <th scope="col">{{ __('Status') }}</th>
+                            <th scope="col">{{ __('Discount Type') }}</th>
+                            <th scope="col">{{ __('Discount') }}</th>
+                            <th scope="col">{{ __('Expire Date') }}</th>
+                            <th scope="col" class="text-center" colspan="2">{{ __('Actions') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -49,9 +49,9 @@
                                     </td>
                                     <td>
                                         @if ($coupon->status)
-                                            <span class="badge badge-success">Active</span>
+                                            <span class="badge badge-success">{{ __('Active') }}</span>
                                         @else
-                                            <span class="badge badge-danger">Inactive</span>
+                                            <span class="badge badge-danger">{{ __('Inactive') }}</span>
                                         @endif
                                     </td>
                                     <td>
@@ -80,7 +80,7 @@
                     </table>
                     {{ $coupons->links() }}
                     @if(!$coupons)
-                        <p>No items found.</p>
+                        <p>{{ __('No items found.') }}</p>
                     @endif
                 </div>
             </div>
@@ -98,17 +98,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Удаление</h5>
+                    <h5 class="modal-title">{{ __('Удаление') }}</h5>
                     <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close"></button>
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Вы действительно хотите удалить?</p>
+                    <p>{{ __('Вы действительно хотите удалить?') }}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-danger waves-effect waves-light" wire:click="destroy">Удалить</button>
+                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">{{ __('Отмена') }}</button>
+                    <button type="button" class="btn btn-danger waves-effect waves-light" wire:click="destroy">{{ __('Удалить') }}</button>
                 </div>
             </div>
         </div>

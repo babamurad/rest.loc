@@ -5,12 +5,13 @@
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12">
+            @include('livewire.admin.category.category-tree', ['categories' => $categories])
             <div class="card card-primary">
                 <div class="card-header">
                     <h4>{{ __('Categories list') }}</h4>
                     <div class="card-header-action">
                         <a href="{{ route('admin.category.create') }}" class="btn btn-primary">
-                            Create New
+                            {{ __('Create New') }}
                         </a>
                     </div>
                 </div>
@@ -20,11 +21,11 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Slug</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Order</th>
-                            <th scope="col" class="text-center">Actions</th>
+                            <th scope="col">{{ __('Name') }}</th>
+                            <th scope="col">{{ __('Slug') }}</th>
+                            <th scope="col">{{ __('Status') }}</th>
+                            <th scope="col">{{ __('Order') }}</th>
+                            <th scope="col" class="text-center">{{ __('Actions') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -42,9 +43,9 @@
                                     </td>
                                     <td>
                                         @if ($category->status)
-                                            <span class="badge badge-success">Active</span>
+                                            <span class="badge badge-success">{{ __('Active') }}</span>
                                         @else
-                                            <span class="badge badge-danger">Inactive</span>
+                                            <span class="badge badge-danger">{{ __('Inactive') }}</span>
                                         @endif
                                     </td>
 
@@ -67,6 +68,9 @@
                     @if(!$categories)
                         <p>No items found.</p>
                     @endif
+                </div>
+                <div class="card-footer">
+                    {{ $categories->links() }}
                 </div>
             </div>
         </div>

@@ -82,13 +82,13 @@
                                                     background-size: cover;
                                                 @error('$new_asyr_logo') border: 2px dashed #dc3545; @enderror
                                                     background-position: center center; width: 40%;">
-                                                    <label for="new_asyr_logo" id="image-label">Choose File</label>
+                                                    <label for="new_asyr_logo" id="image-label">{{ __('Choose File') }}</label>
                                                     <input type="file" name="new_asyr_logo" id="new_asyr_logo" wire:model="new_asyr_logo">
                                                 </div>
                                                 @error('new_asyr_logo') <div class="invalid-feedback" style="display: block;">{{$message}}</div> @enderror
                                             <!-- Загрузка в процессе -->
                                                 <div wire:loading wire:target="new_asyr_logo">
-                                                    <p>Идет загрузка...</p> <!-- Сообщение, пока идет загрузка -->
+                                                    <p>{{ __('Loading...') }}</p> <!-- Сообщение, пока идет загрузка -->
                                                 </div>
                                             </div>
 
@@ -179,13 +179,13 @@
                                                      background-size: cover;
                                                  @error('paypal_logo') border: 2px dashed #dc3545; @enderror
                                                     background-position: center center; width: 100%;">
-                                                    <label for="paypal_logo" id="image-label">Choose File</label>
+                                                    <label for="paypal_logo" id="image-label">{{ __('Choose File') }}</label>
                                                     <input type="file" name="new_logo" id="paypal_logo" wire:model="new_logo">
                                                 </div>
                                                 @error('new_logo') <div class="invalid-feedback" style="display: block;">{{$message}}</div> @enderror
                                                 <!-- Загрузка в процессе -->
                                                 <div wire:loading wire:target="paypal_logo">
-                                                    <p>Идет загрузка...</p> <!-- Сообщение, пока идет загрузка -->
+                                                    <p>{{ __('Loading...') }}</p> <!-- Сообщение, пока идет загрузка -->
                                                 </div>
                                             </div>
 

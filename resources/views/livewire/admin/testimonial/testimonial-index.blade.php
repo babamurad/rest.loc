@@ -6,33 +6,33 @@
     <div class="row">
         <div class="col-sm-7">
             <div x-data="{ open: @entangle('open') }" class="mb-4">
-                <button x-on:click="open = ! open" class="btn btn-primary">Testimonials Section Titles</button>
+                <button x-on:click="open = ! open" class="btn btn-primary">{{ __('Testimonials Section Titles') }}</button>
 
                 <div x-show="open" x-transition>
                     <div class="row mt-4">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Top Title</label>
+                                <label>{{ __('Top Title') }}</label>
                                 <input type="text" class="form-control @error('top_title') is-invalid @enderror" wire:model="top_title">
                                 @error('top_title') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Main Title</label> @error('title') is-invalid @enderror
+                                <label>{{ __('Main Title') }}</label> @error('title') is-invalid @enderror
                                 <input type="text" class="form-control" wire:model="title">
                                 @error('title') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                         <div class="col-sm-12">
                             <div class="form-group">
-                                <label>Sub Title</label>
+                                <label>{{ __('Sub Title') }}</label>
                                 <input type="text" class="form-control @error('sub_title') is-invalid @enderror" wire:model="sub_title">
                                 @error('sub_title') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-primary" wire:click="saveTitle">Save</button>
+                    <button class="btn btn-primary" wire:click="saveTitle">{{ __('Save') }}</button>
                 </div>
             </div>
         </div>
@@ -41,10 +41,10 @@
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>{{ __('Testimonials List') }}</h4>
+                    <h4>{{ __('Testimonials list') }}</h4>
                     <div class="card-header-action">
                         <a href="{{ route('admin.testimonial.create') }}" class="btn btn-primary">
-                            Create New
+                            {{ __('Create New') }}
                         </a>
                     </div>
                 </div>
@@ -54,12 +54,12 @@
                         <thead>
                         <tr>
                             <th scope="col">#</th>
-                            <th scope="col">Image</th>
-                            <th scope="col">Name</th>
-                            <th scope="col">Title</th>
-                            <th scope="col">Status</th>
-                            <th scope="col">Show at home</th>
-                            <th scope="col" class="text-center">Actions</th>
+                            <th scope="col">{{ __('Image') }}</th>
+                            <th scope="col">{{ __('Name') }}</th>
+                            <th scope="col">{{ __('Title') }}</th>
+                            <th scope="col">{{ __('Status') }}</th>
+                            <th scope="col">{{ __('Show at home') }}</th>
+                            <th scope="col" class="text-center">{{ __('Actions') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -86,9 +86,9 @@
                                                 @if($testimonial->status) checked @endif>
                                                 <label class="custom-control-label" for="agree{{ $testimonial->id }}" >
                                                 @if ($testimonial->status)
-                                                <span class="badge badge-primary">Active</span>
+                                                <span class="badge badge-primary">{{ __('Active') }}</span>
                                                 @else
-                                                <span class="badge badge-danger">Inactive</span>
+                                                <span class="badge badge-danger">{{ __('Inactive') }}</span>
                                                 @endif
                                                 </label>
                                             </div>
@@ -101,9 +101,9 @@
                                                 @if($testimonial->show_at_home) checked @endif>
                                                 <label class="custom-control-label" for="showAtHome{{ $testimonial->id }}" >
                                                 @if ($testimonial->show_at_home)
-                                                <span class="badge badge-primary">Yes</span>
+                                                <span class="badge badge-primary">{{ __('Yes') }}</span>
                                                 @else
-                                                <span class="badge badge-danger">No</span>
+                                                <span class="badge badge-danger">{{ __('No') }}</span>
                                                 @endif
                                                 </label>
                                             </div>
@@ -125,7 +125,7 @@
                     </table>
 
                     @if(!$testimonials)
-                        <p>No items found.</p>
+                        <p>{{ __('No items found.') }}</p>
                     @else
                         {{ $testimonials->links() }}
                     @endif

@@ -1,13 +1,13 @@
 <section class="section">
     <div class="section-header">
-        <h1>{{__('Create Chef Item')}}</h1>
+        <h1>{{__('Edit Chef')}}</h1>
         @include('livewire.admin.components.alerts')
     </div>
     <div class="row">
         <div class="col-sm-12 col-md-12">
             <div class="card card-primary">
                 <div class="card-header">
-                    <h4>{{__('Create Chef')}}</h4>
+                    <h4>{{__('Edit Chef')}}</h4>
                 </div>
                 <div class="card-body">
                     
@@ -23,12 +23,12 @@
                                  background-size: cover;
                                  @error('image') border: 2px dashed #dc3545; @enderror
                                  background-position: center center;>
-                                <label for="image-upload" id="image-label">Choose File</label>
+                                <label for="image-upload" id="image-label">{{ __('Choose File') }}</label>
                                 <input type="file" name="image" id="image-upload" wire:model="newimage">
                             </div>
                             <!-- Загрузка в процессе -->
                             <div wire:loading wire:target="image">
-                                <p>Идет загрузка...</p> <!-- Сообщение, пока идет загрузка -->
+                                <p>{{ __('Идет загрузка...') }}</p> <!-- Сообщение, пока идет загрузка -->
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
@@ -36,7 +36,7 @@
                                 <label>{{  __('Name') }}</label>
                                 <input type="text" class="form-control @error('name') is-invalid @enderror" wire:model="name" wire:keyup="generateSlug()">
                                 @error('name') <div class="invalid-feedback">{{$message}}</div> @enderror
-                                <label for=""><b>Slug:</b></label>
+                                <label for=""><b>{{ __('Slug') }}:</b></label>
                                 <span>{{ $slug }}</span>
                             </div>
 
@@ -54,19 +54,19 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Show at home</label>
+                                <label>{{ __('Show at home') }}</label>
                                 <select class="form-control " wire:model="show_at_home">
-                                    <option value="1">Yes</option>
-                                    <option value="0">No</option>
+                                    <option value="1">{{ __('Yes') }}</option>
+                                    <option value="0">{{ __('No') }}</option>
                                 </select>
                             </div>
                         </div>
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Status</label>
+                                <label>{{ __('Status') }}</label>
                                 <select class="form-control " wire:model="status">
-                                    <option value="1">Active</option>
-                                    <option value="0">Inactive</option>
+                                    <option value="1">{{ __('Active') }}</option>
+                                    <option value="0">{{ __('Inactive') }}</option>
                                 </select>
                             </div>
                         </div>
@@ -105,8 +105,8 @@
                     
                 </div>
                 <div class="card-footer text-left">
-                    <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="update">Submit</button>
-                    <button class="btn btn-secondary" type="reset" wire:click="cancel">Cancel</button>
+                    <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="update">{{ __('Submit') }}</button>
+                    <button class="btn btn-secondary" type="reset" wire:click="cancel">{{ __('Cancel') }}</button>
                 </div>
 
             </div>

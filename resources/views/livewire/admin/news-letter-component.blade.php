@@ -27,12 +27,12 @@
 @endpush
 <section class="section">
     <div class="section-header">
-        <h1>{{ __('Testimonials') }}</h1>
+        <h1>{{ __('Newsletter') }}</h1>
     </div>
     <div class="row">
         <div class="col-sm-7">
             <div x-data="{ open: @entangle('open') }" class="mb-4">
-                <button x-on:click="open = ! open" class="btn btn-primary">Send News Letter...</button>
+                <button x-on:click="open = ! open" class="btn btn-primary">{{ __('Send News Letter...') }}</button>
 
                 <div x-show="open" x-transition>
                     <form action="" wire:submit.prevent="sendNewsLetter">
@@ -40,14 +40,14 @@
                      <div class="row mt-4">                        
                         <div class="col-sm-6">
                             <div class="form-group">
-                                <label>Subject</label>
+                                <label>{{ __('Subject') }}</label>
                                 <input type="text" class="form-control @error('subject') is-invalid @enderror" wire:model="subject">
                                 @error('subject') <div class="invalid-feedback">{{$message}}</div> @enderror
                             </div>
                         </div>
                         <div class="col-sm-12">
                               <div class="form-group">
-                                <label>Sub Title</label>                                
+                                <label>{{ __('Message') }}</label>                                
                                 <div wire:ignore>
                                     <textarea  class="form-control" name="message" id="summernote" cols="30" rows="10" wire:model.lazy="message"></textarea>
                                 </div>                              
@@ -73,8 +73,8 @@
                         <tr>
                             <th scope="col">#</th>
                             <th scope="col">ID</th>
-                            <th scope="col">Email</th>
-                            <th scope="col" class="text-center">Actions</th>
+                            <th scope="col">{{ __('Email') }}</th>
+                            <th scope="col" class="text-center">{{ __('Actions') }}</th>
                         </tr>
                         </thead>
                         <tbody>
@@ -97,7 +97,7 @@
                     </table>
 
                     @if(!$subscribes)
-                        <p>No items found.</p>
+                        <p>{{ __('No items found.') }}</p>
                     @else
                         {{ $subscribes->links() }}
                     @endif
@@ -117,17 +117,17 @@
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Удаление</h5>
+                    <h5 class="modal-title">{{ __('Удаление') }}</h5>
                     <button type="button" class="close waves-effect waves-light" data-dismiss="modal" aria-label="Close"></button>
                     <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Вы действительно хотите удалить?</p>
+                    <p>{{ __('Вы действительно хотите удалить?') }}</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">Отмена</button>
-                    <button type="button" class="btn btn-danger waves-effect waves-light" wire:click="destroy">Удалить</button>
+                    <button type="button" class="btn btn-secondary waves-effect waves-light" data-dismiss="modal">{{ __('Отмена') }}</button>
+                    <button type="button" class="btn btn-danger waves-effect waves-light" wire:click="destroy">{{ __('Удалить') }}</button>
                 </div>
             </div>
         </div>

@@ -65,6 +65,18 @@ use App\Livewire\Admin\FooterInfoComponent;
 use App\Livewire\Pages\MenuComponent;
 
 
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+// Public routes
 Route::get('/', HomeComponent::class)->name('home');
 Route::get('about', About::class)->name('about');
 Route::get('product-details/{slug}', ProductDetails::class)->name('product-details');
@@ -75,85 +87,117 @@ Route::get('testimonial', TestimonialPageComponent::class)->name('testimonial');
 Route::get('menu/{id?}', MenuComponent::class)->name('menu');
 
 
+// Guest routes
 Route::middleware('guest')->group(function () {
+    // Registration route
     Route::get('register', RegisterComponent::class)->name('register');
+    // Login route
     Route::get('login', LoginComponent::class)->name('login');
 
+    // Forgot password route
     Route::get('forgot-password', ForgotPasswordComponent::class)->name('forgot-password');
 });
 
 
+// Authenticated user routes
 Route::middleware(['auth', 'track-activity'])->group(function () {
+    // Dashboard route
     Route::get('dashboard/{activeTab?}', Dashboard::class)->name('dashboard');
+    // Profile route
     Route::get('profile', Profile::class)->name('profile');
+    // Change password route
     Route::get('change-password', ChangePassword::class)->name('change-password');
+    // Orders route
     Route::get('orders', UserOrders::class)->name('order.index');
 
+    // Logout route
     Route::get('logout', LogoutComponent::class)->name('logout');
+    // Checkout route
     Route::get('checkout', CheckOutComponent::class)->name('checkout');
+    // Payment route
     Route::get('payment', PaymentComponent::class)->name('payment');
 
 });
 
 
+// Admin routes
 Route::middleware(['auth', 'admin:admin', 'track-activity'])->prefix('admin')->group(function () {
+    // Admin dashboard route
     Route::get('dashboard', AdminDashboardComponent::class)->name('admin.dashboard');
+    // Admin profile route
     Route::get('profile', AdminProfileComponent::class)->name('admin.profile');
 
+    // Slider routes
     Route::get('slider', SliderComponent::class)->name('admin.slider');
     Route::get('slider/create', CreateComponent::class)->name('admin.slider.create');
     Route::get('slider/edit/{id}', EditSliderComponent::class)->name('admin.slider.edit');
 
+    // Daily offer routes
     Route::get('daily-offer', DailyOfferIndexComponent::class)->name('admin.daily');
     Route::get('daily-offer/create', DailyOfferCreateComponent::class)->name('admin.daily-offer.create');
     Route::get('daily-offer/edit/{id}', DailyOfferEditComponent::class)->name('admin.daily-offer.edit');
 
+    // Banner routes
     Route::get('banner', BannerIndex::class)->name('admin.banner');
     Route::get('banner/create', BannerCreate::class)->name('admin.banner.create');
     Route::get('banner/edit/{id}', BannerEdit::class)->name('admin.banner.edit');
 
+    // Chef routes
     Route::get('chef', ChefIndex::class)->name('admin.chef');
     Route::get('chef/create', ChefCreate::class)->name('admin.chef.create');
     Route::get('chef/edit/{id}', ChefEdit::class)->name('admin.chef.edit');
 
+    // Testimonial routes
     Route::get('testimonial', TestimonialIndex::class)->name('admin.testimonial');
     Route::get('testimonial/create', TestimonialCreate::class)->name('admin.testimonial.create');
     Route::get('testimonial/edit/{id}', TestimonialEdit::class)->name('admin.testimonial.edit');
 
+    // Newsletter route
     Route::get('newsletter', NewsLetterComponent::class)->name('admin.newsletter');
     
+    // Footer info route
     Route::get('footer-info', FooterInfoComponent::class)->name('admin.footer-info');
 
+    // Why choose us routes
     Route::get('why-choose-us', WhyChooseUsComponent::class)->name('admin.why-choose-us');
     Route::get('wcu-create', \App\Livewire\Admin\WhyChooseUs\CreateComponent::class)->name('admin.wcu-create');
     Route::get('wcu-edit/{id}', \App\Livewire\Admin\WhyChooseUs\EditComponent::class)->name('admin.wcu-edit');
 
+    // Category routes
     Route::get('category', CategoryIndexComponent::class)->name('admin.category.index');
     Route::get('category/create', CategoryCreateComponent::class)->name('admin.category.create');
     Route::get('category/edit/{id}', CategoryEditComponent::class)->name('admin.category.edit');
 
+    // Product routes
     Route::get('product', ProductIndexComponent::class)->name('admin.product.index');
     Route::get('product/create', ProductCreateComponent::class)->name('admin.product.create');
     Route::get('product/edit/{id}', ProductEditComponent::class)->name('admin.product.edit');
 
+    // Setting route
     Route::get('setting', SettingComponent::class)->name('admin.setting');
 
+    // Coupon routes
     Route::get('coupon', CouponIndexComponent::class)->name('admin.coupon');
     Route::get('coupon/create', CouponCreateComponent::class)->name('admin.coupon.create');
     Route::get('coupon/edit/{id}', CouponEditComponent::class)->name('admin.coupon.edit');
 
+    // Delivery area routes
     Route::get('delivery-area', DeliveryAreaComponent::class)->name('admin.delivery-area');
     Route::get('delivery-area/create', DeliveryAreaCreate::class)->name('admin.delivery-area.create');
     Route::get('delivery-area/edit/{id}', DeliveryAreaEdit::class)->name('admin.delivery-area.edit');
 
+    // Chat routes
     Route::get('chat/{id?}', AdminChatComponent::class)->name('admin.chat');
     Route::get('chat/user/{id}', AdminChatConversation::class)->name('admin.chat.user');
 
+    // Payment settings route
     Route::get('payment-settings', PaymentGatewaySettingComponent::class)->name('admin.payment-settings');
 
+    // Orders routes
     Route::get('orders', OrderIndexComponent::class)->name('admin.orders.index');
     Route::get('orders/{id}', OrderViewComponent::class)->name('admin.orders.show');
 
+    // Test route
     Route::get('test', TestComponent::class)->name('admin.test');
 
 });

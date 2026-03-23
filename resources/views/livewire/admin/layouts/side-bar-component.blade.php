@@ -7,17 +7,17 @@
             <a href="/" target="_blank">St</a>
         </div>
         <ul class="sidebar-menu">
-            <li class="menu-header">Dashboard</li>
+            <li class="menu-header">{{ __('Dashboard') }}</li>
 
             <li class="{{ request()->is('admin/dashboard') ? 'active' : '' }}"><a class="nav-link" href="{{ route('admin.dashboard') }}" wire:navigate>
                 <x-icons.dashboard />
-                General Dashboard</a>
+                <span>{{ __('General Dashboard') }}</span></a>
             </li>
-            <li class="menu-header">Starter</li>
+            <li class="menu-header">{{ __('Starter') }}</li>
             <li  class="{{ request()->is('admin/slider') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.slider') }}" wire:navigate>
                     <x-icons.slider />
-                    <span>Slider</span></a>
+                    <span>{{ __('Slider') }}</span></a>
             </li>
 
             <li class="dropdown">
@@ -35,20 +35,20 @@
              <li class="dropdown">
                  <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                     <x-icons.resto />
-                    <span>Manage Restaurant</span></a>
+                    <span>{{ __('Manage Restaurant') }}</span></a>
                  <ul class="dropdown-menu">
                      <li><a class="nav-link" href="{{ route('admin.category.index') }}">
                         <x-icons.category />
-                        Categories</a></li>
+                        {{ __('Categories') }}</a></li>
                      <li><a class="nav-link" href="{{ route('admin.product.index') }}">
                         <x-icons.product />
-                        Products</a></li>
+                        {{ __('Products') }}</a></li>
                  </ul>
              </li>
              <li class="dropdown">
                  <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                     <x-icons.ecom />
-                    <span>Manage Ecommerce</span></a>
+                    <span>{{ __('Manage Ecommerce') }}</span></a>
                  <ul class="dropdown-menu">
                      <li><a class="nav-link" href="{{ route('admin.coupon') }}">
                         <x-icons.coupon />
@@ -58,22 +58,22 @@
                         {{__('Delivery Area')}}</a></li>
                      <li><a class="nav-link" href="{{ route('admin.payment-settings') }}">
                         <x-icons.payment />
-                        {{__('Payment Gateways')}}</a></li>
+                        {{ __('Payment Gateways') }}</a></li>
                  </ul>
              </li>
 
             <li  class="{{ request()->is('admin/chat') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.chat') }}" wire:navigate><i class="fas fa-comments"></i> <span>Messages</span></a>
+                <a class="nav-link" href="{{ route('admin.chat') }}" wire:navigate><i class="fas fa-comments"></i> <span>{{ __('Messages') }}</span></a>
             </li>
 
             <li  class="{{ request()->is('admin/newsletter') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.newsletter') }}"><i class="far fa-newspaper"></i> <span>Newsletter</span></a>
+                <a class="nav-link" href="{{ route('admin.newsletter') }}"><i class="far fa-newspaper"></i> <span>{{ __('Newsletter') }}</span></a>
             </li>
 
             <li class="dropdown">
                 <a href="#" class="nav-link has-dropdown" data-toggle="dropdown">
                     <x-icons.section />
-                     <span>Sections</span></a>
+                     <span>{{ __('Sections') }}</span></a>
                 <ul class="dropdown-menu">                    
                     <li  class="{{ request()->is('admin/why-choose-us') ? 'active' : '' }}">
                         <a class="nav-link" href="{{ route('admin.why-choose-us') }}" wire:navigate>
@@ -106,10 +106,10 @@
             <li  class="{{ request()->is('admin/footer-info') ? 'active' : '' }}">
                 <a class="nav-link" href="{{ route('admin.footer-info') }}" wire:navigate>
                     <x-icons.info />
-                    <span>FooterInfo</span></a>
+                    <span>{{ __('Footer Info') }}</span></a>
             </li>
             <li  class="{{ request()->is('admin/setting') ? 'active' : '' }}">
-                <a class="nav-link" href="{{ route('admin.setting') }}" wire:navigate><i class="fas fa-cogs"></i> <span>Settings</span></a>
+                <a class="nav-link" href="{{ route('admin.setting') }}" wire:navigate><i class="fas fa-cogs"></i> <span>{{ __('Settings') }}</span></a>
             </li>
 
             {{-- <li class="dropdown">

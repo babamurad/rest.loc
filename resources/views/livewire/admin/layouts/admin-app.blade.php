@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no" name="viewport">
-    <title>{{ $title ?? 'General Dashboard' }}</title>
+    <title>{{ $title ?? __('General Dashboard') }}</title>
 
     <link rel="icon" type="image/png" href="{{ asset('assets/images/icon.ico') }}">
 
@@ -57,7 +57,7 @@
 
         <footer class="main-footer">
             <div class="footer-left">
-                Copyright &copy; 2024 <div class="bullet"></div> Design By <a href="#">Charyyew Babamurad</a>
+                {{ __('Copyright') }} &copy; 2024 <div class="bullet"></div> {{ __('Design By') }} <a href="#">Charyyew Babamurad</a>
             </div>
             <div class="footer-right">
 

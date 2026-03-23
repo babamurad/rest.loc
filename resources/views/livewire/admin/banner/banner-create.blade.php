@@ -22,12 +22,12 @@
                                  background-size: cover;
                                  @error('image') border: 2px dashed #dc3545; @enderror
                                  background-position: center center; width: 80%;">
-                                <label for="image-upload" id="image-label">Choose File</label>
+                                 <label for="image-upload" id="image-label">{{ __('Choose File') }}</label>
                                 <input type="file" name="image" id="image-upload" wire:model="image">
                             </div>
                             <!-- Загрузка в процессе -->
                             <div wire:loading wire:target="image">
-                                <p>Идет загрузка...</p> <!-- Сообщение, пока идет загрузка -->
+                                <p>{{ __('Loading...') }}</p> <!-- Сообщение, пока идет загрузка -->
                             </div>
                         </div>
                         <div class="col-sm-12 col-md-6">
@@ -49,7 +49,7 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="form-group">
-                                        <label>Status</label>
+                                        <label>{{ __('Status') }}</label>
                                         <select class="form-control " wire:model="status">
                                             <option value="1">{{ __('Active') }}</option>
                                             <option value="0">{{ __('Inactive') }}</option>
@@ -63,8 +63,8 @@
                     
                 </div>
                 <div class="card-footer text-left">
-                    <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="create">Submit</button>
-                    <button class="btn btn-secondary" type="reset" wire:click="cancel">Cancel</button>
+                    <button class="btn btn-primary mr-1" type="submit" wire:click.prevent="create">{{ __('Submit') }}</button>
+                    <button class="btn btn-secondary" type="reset" wire:click="cancel">{{ __('Cancel') }}</button>
                 </div>
 
             </div>
