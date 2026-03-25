@@ -60,22 +60,24 @@ class ProductEditComponent extends Component
     {
         $product = Product::find($this->editId);
         $images = explode(',', $product->images);
-        //dd($images[$id]);
-        $img = $images[$key];//название файла которое нужно удалить
-        unset($images[$key]);//удалить название выбранного изображение с поля таблицы images
-        if (file_exists('uploads/products/' . $img)) {
-            // Удалить файл если существует
-            unlink('uploads/products/' . $img);
+        
+        if (isset($images[$key])) {
+            $img = $images[$key];
+            unset($images[$key]);
+            
+            if (\Illuminate\Support\Facades\Storage::disk('public_uploads')->exists($img)) {
+                \Illuminate\Support\Facades\Storage::disk('public_uploads')->delete($img);
+            } elseif (file_exists(public_path($img)) && is_file(public_path($img))) {
+                @unlink(public_path($img));
+            }
         }
-        $imeNames = '';
-        foreach ($images as $image) {
-            $imeNames = $imeNames . ',' . $image;
-        }
+        
+        $imeNames = implode(',', array_filter($images));
         $product->images = $imeNames;
 
         $product->update();
-        $this->images = explode(',', $imeNames);
-        toastr()->error('Image has been removed.');
+        $this->images = array_values(array_filter($images));
+        toastr()->success('Image has been removed.');
     }
 
     public function generateSlug()
@@ -96,13 +98,17 @@ class ProductEditComponent extends Component
         $product->name = $this->name;
         $product->slug = $this->slug;
 
-        if ($this->newimage){
-            if (file_exists('uploads/products/'.$this->thumb_image)){
-                unlink('uploads/products/' . $this->thumb_image);
+        $directory = 'uploads/products/' . $this->editId;
+
+        if ($this->newimage) {
+            // Delete old
+            if (\Illuminate\Support\Facades\Storage::disk('public_uploads')->exists($this->thumb_image)) {
+                \Illuminate\Support\Facades\Storage::disk('public_uploads')->delete($this->thumb_image);
+            } elseif (file_exists(public_path($this->thumb_image)) && is_file(public_path($this->thumb_image))) {
+                @unlink(public_path($this->thumb_image));
             }
-            $imageName ='uploads/products/' . Carbon::now()->timestamp.'.'.$this->newimage->getClientOriginalName();
-            $this->newimage->storeAs($imageName);
-            $product->thumb_image = $imageName;
+            
+            $product->thumb_image = $this->optimizeAndSaveImage($this->newimage, $directory);
         }
 
         $product->price = $this->price;
@@ -110,9 +116,9 @@ class ProductEditComponent extends Component
         $product->quantity = $this->quantity;
         $product->short_description = $this->short_description;
         $product->long_description = $this->long_description;
-        $product->category_id = $this->category_id; // используйте id категории
+        $product->category_id = $this->category_id;
 
-        $categoryName = Category::find($this->category_id)->name; // Либо используйте имя категории
+        $categoryName = Category::find($this->category_id)->name;
         $product->sku = $this->generateSKU($categoryName, $this->name, $this->price);
 
         $product->status = $this->status;
@@ -121,40 +127,15 @@ class ProductEditComponent extends Component
         $product->seo_title = $this->seo_title;
         $product->seo_description = $this->seo_description;
 
-        if ($this->newimage) {
-            if (file_exists('uploads/products/' . $this->editId)) {
-                try {
-                    //unlink('uploads/products/' . $this->editId . '/' . $this->thumb_image);
-                } catch (Exception $e) {
-                    // Handle the exception, e.g., log the error or display a user-friendly message
-                    //error_log("Error deleting thumbnail image: " . $e->getMessage());
-                }finally {
-                    // Закрыть соединение с базой данных или выполнить другие действия
-                    $imageName = 'uploads/products/' . $this->editId . '/' . Carbon::now()->timestamp . '-' . $this->newimage->getClientOriginalName();
-                    $this->newimage->storeAs($imageName); // Use $this->newimage, not $this->thumb_image
-                    $product->thumb_image = $imageName;
-                }
+        if (!empty($this->newimages)) {
+            $imagePaths = $product->images ? explode(',', $product->images) : [];
+            foreach ($this->newimages as $image) {
+                $imagePaths[] = $this->optimizeAndSaveImage($image, $directory);
             }
-
-
+            // Add new images to existing array
+            $product->images = implode(',', array_filter($imagePaths));
         }
 
-
-        if ($this->newimages)
-        {
-            $iamgesName = '';
-            foreach ($this->newimages as $key=>$image)
-            {
-                $imageName = 'uploads/products/' . $this->editId . '/' . Carbon::now()->timestamp . $key . '.' . $image->extension();
-                $image->storeAs($imageName);
-                if ($iamgesName == '')
-                {
-                    $iamgesName = $imageName;
-                } else { $iamgesName =$iamgesName . ',' . $imageName; }
-
-            }
-            $product->images = $iamgesName;
-        }
         $product->update();
 
         $this->reset(['name','slug','status','show_at_home']);
@@ -252,6 +233,21 @@ class ProductEditComponent extends Component
         $this->optionName = $option->name;
         $this->optionPrice = $option->price;
         $this->optionEdit = true;
+    }
+
+    private function optimizeAndSaveImage(\Illuminate\Http\UploadedFile $file, string $directory): string
+    {
+        $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+        $image = $manager->read($file->getRealPath());
+        $image->scaleDown(width: 800);
+        $encoded = $image->toWebp(quality: 80);
+        
+        $filename = \Carbon\Carbon::now()->timestamp . '-' . \Illuminate\Support\Str::random(10) . '.webp';
+        $path = $directory . '/' . $filename;
+        
+        \Illuminate\Support\Facades\Storage::disk('public_uploads')->put($path, (string) $encoded);
+        
+        return $path;
     }
 
     public function mount($id)

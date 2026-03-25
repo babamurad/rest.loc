@@ -25,12 +25,14 @@ class DatabaseSeeder extends Seeder
     //        'email' => 'test@example.com',
     //    ]);
 
-       $this->call(UserSeeder::class);
+    //    $this->call(UserSeeder::class);
+        // $this->call(DemoFoodSeeder::class);
+        $this->call(AdvancedFoodSeeder::class);
        Slider::factory(3)->create();
        $this->call(class: WhyChooseUsSeeder::class);
        $this->call(WcuSectionSeeder ::class);
-       $this->call(CategorySeeder::class);
-       Product::factory(20)->create();
-       Coupon::factory(3)->create();
+    //    $this->call(CategorySeeder::class);
+    //    Product::factory(20)->create();
+    //    Coupon::factory(3)->create();
     }
 }

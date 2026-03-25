@@ -126,25 +126,18 @@ class ProductCreateComponent extends Component
         $product->save();
 
         $this->productId = $product->id;
+        $directory = 'uploads/products/' . $this->productId;
 
-        $imageName ='uploads/products/' . $this->productId . '/' . Carbon::now()->timestamp.'-'.$this->thumb_image->getClientOriginalName();
-        $this->thumb_image->storeAs($imageName);
-        $product->thumb_image = $imageName;
+        if ($this->thumb_image) {
+            $product->thumb_image = $this->optimizeAndSaveImage($this->thumb_image, $directory);
+        }
 
-        if ($this->images)
-        {
-            $iamgesName = '';
-            foreach ($this->images as $key=>$image)
-            {
-                $imageName = 'uploads/products/' . $this->productId . '/' . Carbon::now()->timestamp.$key.'.'.$image->extension();
-                $image->storeAs($imageName);
-                if ($iamgesName == '')
-                {
-                    $iamgesName = $imageName;
-                } else { $iamgesName =$iamgesName.','. $imageName; }
-
+        if (!empty($this->images)) {
+            $imagePaths = [];
+            foreach ($this->images as $image) {
+                $imagePaths[] = $this->optimizeAndSaveImage($image, $directory);
             }
-            $product->images = $iamgesName;
+            $product->images = implode(',', $imagePaths);
         }
 
         $sizes = TempOption::where('temp_id', 1)->get();
@@ -289,6 +282,21 @@ class ProductCreateComponent extends Component
                 toastr()->error(__('Failed to delete option.'));
             }
         }
+
+    private function optimizeAndSaveImage(\Illuminate\Http\UploadedFile $file, string $directory): string
+    {
+        $manager = new \Intervention\Image\ImageManager(new \Intervention\Image\Drivers\Gd\Driver());
+        $image = $manager->read($file->getRealPath());
+        $image->scaleDown(width: 800);
+        $encoded = $image->toWebp(quality: 80);
+        
+        $filename = \Carbon\Carbon::now()->timestamp . '-' . \Illuminate\Support\Str::random(10) . '.webp';
+        $path = $directory . '/' . $filename;
+        
+        \Illuminate\Support\Facades\Storage::disk('public_uploads')->put($path, (string) $encoded);
+        
+        return $path;
+    }
 
     public function mount()
     {
